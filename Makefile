@@ -104,6 +104,9 @@ SRC				=\
 	scene/create.c	\
 	\
 	\
+		ttf_parser/ttf_parser.c	\
+	\
+	\
 	close_miniRT.c	\
 	color.c			\
 	init_minirt.c	\
@@ -201,6 +204,10 @@ fclean:	clean
 			$(MAKE_LIBFT) fclean
 			$(MAKE_MINILIBX) clean # MINILIBX has no fclean
 			$(RM) $(NAME)
+
+.PHONY:	debug
+debug: fclean
+			$(MAKE) run -j CFLAGS="$(DEBUG_CLFAGS)"
 
 .PHONY:	re
 re:		fclean
