@@ -29,7 +29,7 @@ void	ttf_parser(char *file_name)
 	if (file.data == NULL)
 	{
 		perror("ttf_parser failed");
-		return;
+		return ;
 	}
 	i = 0;
 	if (read_font_directory(&file, &i, &font_directory) < 0)
@@ -39,7 +39,9 @@ void	ttf_parser(char *file_name)
 	}
 	print_table_directory(font_directory.table_directory, font_directory.offset_subtable.num_tables);
 
-	free(file.data);
+	printf("\ni after read_font_directory == %zu\nfile.len == %zu\n", i, file.len);
+
+	free(file.data); // TODO this was not freed in above error cases
 }
 
 

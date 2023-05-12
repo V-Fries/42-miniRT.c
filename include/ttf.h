@@ -14,6 +14,20 @@
 
 # include <stdint.h>
 
+typedef struct s_cmap_encoding_subtable
+{
+	uint16_t	platform_id;
+	uint16_t	platform_specific_id;
+	uint32_t	offset;
+}	t_cmap_encoding_subtable;
+
+typedef struct s_cmap
+{
+	uint16_t					version;
+	uint16_t					number_subtables;
+	t_cmap_encoding_subtable	*subtables;
+}	t_cmap;
+
 /// @struct s_offset_subtable
 /// @var ::scaler_type
 /// number that identifies the font type

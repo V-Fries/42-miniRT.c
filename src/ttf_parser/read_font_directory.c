@@ -27,6 +27,14 @@ int	read_font_directory(const t_string *file, size_t *i,
 {
 	if (read_offset_subtable(file, i, &font_directory->offset_subtable) < 0)
 		return (-1);
+	if (font_directory->offset_subtable.scaler_type != 0x74727565
+		&& font_directory->offset_subtable.scaler_type != 0x00010000)
+	{
+		ft_putstr_fd("Unexpected font format, expected TrueType\n",
+			STDERR_FILENO);
+		ft_bzero(font_directory, sizeof(*font_directory));
+		return (-1);
+	}
 	if (read_table_directory(file, i, &font_directory->table_directory,
 			font_directory->offset_subtable.num_tables) < 0)
 		return (-1);
