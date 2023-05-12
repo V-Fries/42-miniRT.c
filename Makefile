@@ -104,7 +104,9 @@ SRC				=\
 	scene/create.c	\
 	\
 	\
-		ttf_parser/ttf_parser.c	\
+		ttf_parser/read_file.c				\
+		ttf_parser/read_font_directory.c	\
+		ttf_parser/ttf_parser.c				\
 	\
 	\
 	close_miniRT.c	\

@@ -22,8 +22,8 @@
 
 int	main(int argc, char **argv)
 {
-	ttf_parser("data/fonts/inconsolata/Inconsolata-VariableFont_wdth,wght.ttf");
-
+//	ttf_parser("data/fonts/inconsolata/Inconsolata-VariableFont_wdth,wght.ttf");
+	ttf_parser("data/fonts/Envy Code R PR7/Envy Code R.ttf");
 
 	(void)argc;(void)argv;
 //	t_engine	minirt;
