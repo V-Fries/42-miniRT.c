@@ -14,6 +14,8 @@
 
 # include <stdint.h>
 
+# include "libft.h"
+
 typedef struct s_format4
 {
 	uint16_t	format;
@@ -112,6 +114,9 @@ void		ttf_parser(char *file_name);
 int			read_font_directory(const t_string *file, size_t *i,
 				t_font_directory *font_directory);
 int			read_cmap(const t_string *file, size_t i, t_cmap *cmap);
+int			read_format4(const t_string *file, t_format4 **dest_format4,
+				size_t i);
+int			get_glyph_index(uint16_t code_point, t_format4 *format4);
 
 int			read_uint16(const t_string *file, size_t i, uint16_t *dest);
 uint16_t	read_uint16_unsafe(const char *str);

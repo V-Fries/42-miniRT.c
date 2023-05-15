@@ -26,6 +26,8 @@ void	ttf_parser(char *file_name)
 	t_string				file;
 	t_font_directory		font_directory;
 	size_t					i;
+	t_cmap					cmap;
+	t_format4				*format4;
 
 	file = ft_read_file(file_name);
 	if (file.data == NULL)
@@ -42,18 +44,42 @@ void	ttf_parser(char *file_name)
 	print_table_directory(font_directory.table_directory, font_directory.offset_subtable.num_tables);
 
 	const uint32_t	cmap_tag = read_uint32_unsafe("cmap");
+	uint32_t cmap_offset = 0;
 	for(int j = 0; j < font_directory.offset_subtable.num_tables; ++j)
 	{
 		if (font_directory.table_directory[j].tag == cmap_tag)
 		{
-			t_cmap c = {0};
-			if (read_cmap(&file, font_directory.table_directory[j].offset, &c) < 0)
+			ft_bzero(&cmap, sizeof(cmap));
+			cmap_offset = font_directory.table_directory[j].offset;
+			if (read_cmap(&file, font_directory.table_directory[j].offset, &cmap) < 0)
 				return (printf("Bad read_cmap()\n"), (void)0);
-			print_cmap(&c);
+			print_cmap(&cmap);
 			break ;
 		}
 	}
+	// TODO check if cmap was found
+	uint32_t	unicode_offset = 0;
+	for (int i = 0; i < cmap.number_subtables; i++)
+	{
+		if (cmap.subtables[i].platform_id == 0)
+		{
+			unicode_offset = cmap.subtables[i].offset;
+			break ;
+		}
+	}
+	if (read_format4(&file, &format4, unicode_offset + cmap_offset) < 0)
+	{
+		printf("Failed to read format4\n");
+		return ;
+	}
+	print_format4(format4);
 
+	uint16_t c = 'A';
+	while (ft_isalpha(c))
+	{
+		ft_printf("%c == %i\n", c, get_glyph_index(c, format4));
+		c++;
+	}
 
 
 	(void)print_format4;
