@@ -19,6 +19,7 @@
 
 static void print_table_directory(t_table_directory* tbl_dir, int tbl_size);
 static void print_cmap(t_cmap* c);
+static void print_format4(t_format4 *f4);
 
 void	ttf_parser(char *file_name)
 {
@@ -49,21 +50,13 @@ void	ttf_parser(char *file_name)
 			if (read_cmap(&file, font_directory.table_directory[j].offset, &c) < 0)
 				return (printf("Bad read_cmap()\n"), (void)0);
 			print_cmap(&c);
-//			(void)print_cmap;
-			printf("\n%u\n", c.subtables->platform_specific_id);
-			free(c.subtables);
+			break ;
 		}
 	}
-//	t_cmap cmap;
-//	if (read_cmap(&file, i, &cmap) < 0)
-//	{
-//		printf("Failed to parse font\n"); // TODO free
-//		return ;
-//	}
-//	print_cmap(&cmap);
 
-	printf("\ni after read_font_directory == %zu\nfile.len == %zu\n", i, file.len);
 
+
+	(void)print_format4;
 	free(file.data); // TODO this was not freed in above error cases
 }
 
@@ -71,7 +64,7 @@ void	ttf_parser(char *file_name)
 static void print_table_directory(t_table_directory* tbl_dir, int tbl_size)
 {
 	//TODO remove this function
-	printf("#)\ttag\tlen\toffset\n");
+	printf("\ntable_directory:\n#)\ttag\tlen\toffset\n");
 	for (int i = 0; i < tbl_size; ++i)
 	{
 		t_table_directory* t = tbl_dir + i;
@@ -97,5 +90,16 @@ static void print_cmap(t_cmap* c)
 			case 3: printf("Microsoft"); break;
 		}
 		printf("\n");
+	}
+}
+
+static void print_format4(t_format4 *f4)
+{
+	printf("Format: %d, Length: %d, Language: %d, Segment Count: %d\n", f4->format, f4->length, f4->language, f4->segCountX2/2);
+	printf("Search Params: (searchRange: %d, entrySelector: %d, rangeShift: %d)\n",
+		   f4->searchRange, f4->entrySelector, f4->rangeShift);
+	printf("Segment Ranges:\tstartCode\tendCode\tidDelta\tidRangeOffset\n");
+	for(int i = 0; i < f4->segCountX2/2; ++i) {
+		printf("--------------:\t% 9d\t% 7d\t% 7d\t% 12d\n", f4->startCode[i], f4->endCode[i], f4->idDelta[i], f4->idRangeOffset[i]);
 	}
 }
