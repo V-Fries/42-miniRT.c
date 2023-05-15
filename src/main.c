@@ -20,9 +20,10 @@
 
 //static bool	arguments_are_bad(int argc, char **argv);
 
+#include "stdio.h"
 int	main(int argc, char **argv)
 {
-//	ttf_parser("data/fonts/inconsolata/Inconsolata-VariableFont_wdth,wght.ttf");
+//	ttf_parser("data/fonts/inconsolata/Inconsolata-VariableFont_whuth,wght.ttf");
 	ttf_parser("data/fonts/Envy Code R PR7/Envy Code R.ttf");
 
 	(void)argc;(void)argv;

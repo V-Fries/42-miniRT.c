@@ -14,6 +14,32 @@
 
 # include <stdint.h>
 
+typedef struct s_format4
+{
+	uint16_t	format;
+	uint16_t	length;
+	uint16_t	language;
+	uint16_t	segCountX2;
+	uint16_t	searchRange;
+	uint16_t	entrySelector;
+	uint16_t	rangeShift;
+	uint16_t	*endCode;
+	uint16_t	reservedPad;
+	uint16_t	*startCode;
+	uint16_t	*idDelta;
+	uint16_t	*idRangeOffset;
+	uint16_t	*glyphIdArray;
+}	t_format4;
+
+/// @struct s_offset_subtable
+/// @var ::platform_id
+/// identifies the platform for which the encoding subtable is intended
+/// @var ::platform_specific_id
+/// identifies the encoding subtable within the context of the platform
+/// specified by platform_id
+/// @var ::offset
+/// gives the offset from the beginning of the cmap to the start of the encoding
+/// subtable
 typedef struct s_cmap_encoding_subtable
 {
 	uint16_t	platform_id;
@@ -21,6 +47,14 @@ typedef struct s_cmap_encoding_subtable
 	uint32_t	offset;
 }	t_cmap_encoding_subtable;
 
+/// @struct s_offset_subtable
+/// @var ::version
+/// specifies the version number of the cmap format
+/// @var ::number_subtables
+/// specifies the number of encoding subtables present in the cmap
+/// @var ::subtables
+/// array of t_cmap_encoding_subtable structures that represent the encoding
+/// subtables in the cmap
 typedef struct s_cmap
 {
 	uint16_t					version;
@@ -73,14 +107,17 @@ typedef struct s_ttf
 
 }	t_ttf;
 
-void	ttf_parser(char *file_name);
+void		ttf_parser(char *file_name);
 
-int		read_font_directory(const t_string *file, size_t *i,
-			t_font_directory *font_directory);
+int			read_font_directory(const t_string *file, size_t *i,
+				t_font_directory *font_directory);
+int			read_cmap(const t_string *file, size_t i, t_cmap *cmap);
 
-int		read_uint16(const t_string *file, size_t i, uint16_t *dest);
-int		read_uint32(const t_string *file, size_t i, uint32_t *dest);
-int		read_uint_16_move(const t_string *file, size_t *i, uint16_t *dest);
-int		read_uint_32_move(const t_string *file, size_t *i, uint32_t *dest);
+int			read_uint16(const t_string *file, size_t i, uint16_t *dest);
+uint16_t	read_uint16_unsafe(const char *str);
+int			read_uint32(const t_string *file, size_t i, uint32_t *dest);
+uint32_t	read_uint32_unsafe(const char *str);
+int			read_uint16_move(const t_string *file, size_t *i, uint16_t *dest);
+int			read_uint32_move(const t_string *file, size_t *i, uint32_t *dest);
 
 #endif

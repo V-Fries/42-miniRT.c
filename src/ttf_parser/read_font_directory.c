@@ -44,15 +44,15 @@ int	read_font_directory(const t_string *file, size_t *i,
 static int	read_offset_subtable(const t_string *file, size_t *i,
 				t_offset_subtable *offset_subtable)
 {
-	if (read_uint_32_move(file, i, &offset_subtable->scaler_type) < 0)
+	if (read_uint32_move(file, i, &offset_subtable->scaler_type) < 0)
 		return (-1);
-	if (read_uint_16_move(file, i, &offset_subtable->num_tables) < 0)
+	if (read_uint16_move(file, i, &offset_subtable->num_tables) < 0)
 		return (-1);
-	if (read_uint_16_move(file, i, &offset_subtable->search_range) < 0)
+	if (read_uint16_move(file, i, &offset_subtable->search_range) < 0)
 		return (-1);
-	if (read_uint_16_move(file, i, &offset_subtable->entry_selector) < 0)
+	if (read_uint16_move(file, i, &offset_subtable->entry_selector) < 0)
 		return (-1);
-	if (read_uint_16_move(file, i, &offset_subtable->range_shift) < 0)
+	if (read_uint16_move(file, i, &offset_subtable->range_shift) < 0)
 		return (-1);
 	return (0);
 }
@@ -70,13 +70,13 @@ static int	read_table_directory(const t_string *file, size_t *i,
 	while (++j < number_of_tables)
 	{
 		current_table_directory = *table_directory + j;
-		if (read_uint_32_move(file, i, &current_table_directory->tag) < 0)
+		if (read_uint32_move(file, i, &current_table_directory->tag) < 0)
 			return (error_in_read_table_directory(table_directory));
-		if (read_uint_32_move(file, i, &current_table_directory->check_sum) < 0)
+		if (read_uint32_move(file, i, &current_table_directory->check_sum) < 0)
 			return (error_in_read_table_directory(table_directory));
-		if (read_uint_32_move(file, i, &current_table_directory->offset) < 0)
+		if (read_uint32_move(file, i, &current_table_directory->offset) < 0)
 			return (error_in_read_table_directory(table_directory));
-		if (read_uint_32_move(file, i, &current_table_directory->length) < 0)
+		if (read_uint32_move(file, i, &current_table_directory->length) < 0)
 			return (error_in_read_table_directory(table_directory));
 	}
 	return (0);
