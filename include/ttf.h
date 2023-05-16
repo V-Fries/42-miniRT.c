@@ -16,6 +16,22 @@
 
 # include "libft.h"
 
+/// @typedef t_fixed is an unsigned 32 bit integer, the first 16 bits are used
+/// for the whole part, the second part is used for the decimal part
+typedef uint32_t	t_fixed;
+
+/// @typedef 16-bit signed integer that describes a quantity in FUnits, the
+/// smallest measurable distance in em space.
+typedef int16_t		t_fword;
+
+/// @typedef 16-bit unsigned integer that describes a quantity in FUnits, the
+/// smallest measurable distance in em space.
+typedef int16_t		t_ufword;
+
+/// @typedef The long internal format of a date in seconds since 12:00 midnight,
+/// January 1, 1904. It is represented as a signed 64-bit integer.
+typedef int64_t		t_long_date_time;
+
 typedef struct s_format4
 {
 	uint16_t	format;

@@ -189,7 +189,8 @@ all:
 			$(MAKE) $(NAME)
 
 .PHONY:		run
-run:		all
+run:
+			$(MAKE) -j
 			./miniRT data/test.rt
 
 $(NAME):	$(OBJS)
