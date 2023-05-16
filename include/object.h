@@ -62,4 +62,5 @@ int	free_objects(t_objects *objects);
 t_object	sphere_create(t_vector3 origin, float radius, t_vector3 albedo);
 
 void	print_object2(t_object object);
+
 #endif //OBJECT_H

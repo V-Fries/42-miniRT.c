@@ -18,7 +18,7 @@
 
 /// @typedef t_fixed is an unsigned 32 bit integer, the first 16 bits are used
 /// for the whole part, the second part is used for the decimal part
-typedef uint32_t	t_fixed;
+typedef int32_t		t_fixed;
 
 /// @typedef 16-bit signed integer that describes a quantity in FUnits, the
 /// smallest measurable distance in em space.
@@ -31,6 +31,31 @@ typedef int16_t		t_ufword;
 /// @typedef The long internal format of a date in seconds since 12:00 midnight,
 /// January 1, 1904. It is represented as a signed 64-bit integer.
 typedef int64_t		t_long_date_time;
+
+typedef struct s_head
+{
+	t_fixed				version;
+	t_fixed				fontRevision;
+
+	uint32_t			checkSumAdjustment;
+	uint32_t			magicNumber;
+	uint16_t			flags;
+	uint16_t			unitsPerEm;
+
+	t_long_date_time	created;
+	t_long_date_time	modified;
+
+	t_fword				xMin;
+	t_fword				yMin;
+	t_fword				xMax;
+	t_fword				yMax;
+
+	uint16_t			macStyle;
+	uint16_t			lowestRecPPEM;
+	int16_t				fontDirectionHint;
+	int16_t				indexToLocFormat;
+	int16_t				glyphDataFormat;
+}	t_head;
 
 typedef struct s_format4
 {

@@ -17,7 +17,7 @@
 static int	init_struct_variables(const t_string *file, t_format4 *format4,
 				size_t i, uint16_t length);
 static int	read_arrays__and_reserved_pad_content(const t_string *file,
-				t_format4 *format4, size_t i, const size_t i_starting_value);
+				t_format4 *format4, size_t i, size_t i_starting_value);
 static int	read_first_4_arrays(const t_string *file, t_format4 *format4,
 				size_t i);
 static int	read_glyph_id_array(const t_string *file, t_format4 *format4,
