@@ -18,6 +18,7 @@
 char		*get_next_line_multi_fd(int fd);
 char		*get_next_line(int fd);
 
+ssize_t		ft_print_error(const char *str);
 void		ft_print_position_in_code(const char *file, const char *function,
 				const int line);
 ssize_t		ft_putchar_fd(const char c, int fd);

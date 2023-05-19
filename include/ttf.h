@@ -147,18 +147,22 @@ typedef struct s_ttf_font_directory
 
 typedef struct s_ttf
 {
-
+	t_font_directory	font_directory;
+	uint32_t			cmap_offset;
+	t_cmap				cmap;
+	uint32_t			format4_offset;
+	t_format4			*format4;
 }	t_ttf;
 
-void		ttf_parser(char *file_name);
+int			ttf_parser(t_ttf *ttf, char *file_name);
 
-int			read_font_directory(const t_string *file, size_t *i,
+int			read_font_directory(const t_string *file,
 				t_font_directory *font_directory);
-int			read_cmap(const t_string *file, size_t i, t_cmap *cmap);
-int			read_format4(const t_string *file, t_format4 **dest_format4,
-				size_t i);
+int			read_cmap(const t_string *file, t_ttf *ttf);
+int			read_format4(const t_string *file, t_ttf *ttf);
 int			get_glyph_index(uint16_t code_point, t_format4 *format4);
 
+int64_t		ttf_get_table_offset(const t_ttf *ttf, const char *table_name);
 int			read_uint16(const t_string *file, size_t i, uint16_t *dest);
 uint16_t	read_uint16_unsafe(const char *str);
 int			read_uint32(const t_string *file, size_t i, uint32_t *dest);

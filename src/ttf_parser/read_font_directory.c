@@ -22,10 +22,12 @@ static int	read_table_directory(const t_string *file, size_t *i,
 				t_table_directory **table_directory, uint16_t number_of_tables);
 static int	error_in_read_table_directory(t_table_directory **table_directory);
 
-int	read_font_directory(const t_string *file, size_t *i,
-		t_font_directory *font_directory)
+int	read_font_directory(const t_string *file, t_font_directory *font_directory)
 {
-	if (read_offset_subtable(file, i, &font_directory->offset_subtable) < 0)
+	size_t	i;
+
+	i = 0;
+	if (read_offset_subtable(file, &i, &font_directory->offset_subtable) < 0)
 		return (-1);
 	if (font_directory->offset_subtable.scaler_type != 0x74727565
 		&& font_directory->offset_subtable.scaler_type != 0x00010000)
@@ -35,7 +37,7 @@ int	read_font_directory(const t_string *file, size_t *i,
 		ft_bzero(font_directory, sizeof(*font_directory));
 		return (-1);
 	}
-	if (read_table_directory(file, i, &font_directory->table_directory,
+	if (read_table_directory(file, &i, &font_directory->table_directory,
 			font_directory->offset_subtable.num_tables) < 0)
 		return (-1);
 	return (0);

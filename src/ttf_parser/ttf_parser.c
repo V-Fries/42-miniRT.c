@@ -17,73 +17,55 @@
 
 #include <stdio.h>
 
-static void print_table_directory(t_table_directory* tbl_dir, int tbl_size);
-static void print_cmap(t_cmap* c);
-static void print_format4(t_format4 *f4);
+static void	print_table_directory(t_table_directory *tbl_dir, int tbl_size);
+static void	print_cmap(t_cmap *c);
+static void	print_format4(t_format4 *f4);
 
-void	ttf_parser(char *file_name)
+int	ttf_parser(t_ttf *ttf, char *file_name)
 {
 	t_string				file;
-	t_font_directory		font_directory;
-	size_t					i;
-	t_cmap					cmap;
-	t_format4				*format4;
 
+	// TODO make errors show file_name
 	file = ft_read_file(file_name);
 	if (file.data == NULL)
 	{
 		perror("ttf_parser failed");
-		return ;
+		return (-1);
 	}
-	i = 0;
-	if (read_font_directory(&file, &i, &font_directory) < 0)
-	{
-		printf("Failed to parse font\n"); // TODO better error
-		return ;
-	}
-	print_table_directory(font_directory.table_directory, font_directory.offset_subtable.num_tables);
 
-	const uint32_t	cmap_tag = read_uint32_unsafe("cmap");
-	uint32_t cmap_offset = 0;
-	for(int j = 0; j < font_directory.offset_subtable.num_tables; ++j)
+	ft_bzero(ttf, sizeof(*ttf));
+
+	if (read_font_directory(&file, &ttf->font_directory) < 0)
 	{
-		if (font_directory.table_directory[j].tag == cmap_tag)
-		{
-			ft_bzero(&cmap, sizeof(cmap));
-			cmap_offset = font_directory.table_directory[j].offset;
-			if (read_cmap(&file, font_directory.table_directory[j].offset, &cmap) < 0)
-				return (printf("Bad read_cmap()\n"), (void)0);
-			print_cmap(&cmap);
-			break ;
-		}
+		ft_print_error("Failed to parse font directory\n");
+		free(file.data);
+		return (-1);
 	}
-	// TODO check if cmap was found
-	uint32_t	unicode_offset = 0;
-	for (int i = 0; i < cmap.number_subtables; i++)
-	{
-		if (cmap.subtables[i].platform_id == 0)
-		{
-			unicode_offset = cmap.subtables[i].offset;
-			break ;
-		}
-	}
-	if (read_format4(&file, &format4, unicode_offset + cmap_offset) < 0)
+	print_table_directory(ttf->font_directory.table_directory,
+		ttf->font_directory.offset_subtable.num_tables);
+
+	if (read_cmap(&file, ttf) < 0)
+		return (printf("Bad read_cmap()\n"), -1); // TODO free stuff
+	print_cmap(&ttf->cmap);
+
+	if (read_format4(&file, ttf) < 0)
 	{
 		printf("Failed to read format4\n");
-		return ;
+		return (-1); // TODO free stuff
 	}
-	print_format4(format4);
+	print_format4(ttf->format4);
 
 	uint16_t c = 'A';
 	while (ft_isalpha(c))
 	{
-		ft_printf("%c == %i\n", c, get_glyph_index(c, format4));
+		ft_printf("%c == %i\n", c, get_glyph_index(c, ttf->format4));
 		c++;
 	}
 
 
 	(void)print_format4;
 	free(file.data); // TODO this was not freed in above error cases
+	return (0);
 }
 
 

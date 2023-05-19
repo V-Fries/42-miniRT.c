@@ -23,8 +23,10 @@
 #include "stdio.h"
 int	main(int argc, char **argv)
 {
-//	ttf_parser("data/fonts/inconsolata/Inconsolata-VariableFont_whuth,wght.ttf");
-	ttf_parser("data/fonts/Envy Code R PR7/Envy Code R.ttf");
+	t_ttf	ttf;
+//	if (ttf_parser(&ttf, "data/fonts/inconsolata/Inconsolata-VariableFont_wdth,wght.ttf") < 0)
+	if (ttf_parser(&ttf, "data/fonts/Envy Code R PR7/Envy Code R.ttf") < 0)
+		return (1);
 
 	(void)argc;(void)argv;
 //	t_engine	minirt;

@@ -47,6 +47,7 @@ SRC =\
 	io/printf/formating/format.c		\
 	io/printf/formating/format_u_x.c	\
 	\
+	io/print_error.c			\
 	io/print_position_in_code.c	\
 	io/putchar_fd.c				\
 	io/putendl_fd.c				\

@@ -11,33 +11,37 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+
 #include "libft.h"
+
 #include "ttf.h"
 
 static int	init_struct_variables(const t_string *file, t_format4 *format4,
 				size_t i, uint16_t length);
-static int	read_arrays__and_reserved_pad_content(const t_string *file,
+static int	read_arrays_and_reserved_pad_content(const t_string *file,
 				t_format4 *format4, size_t i, size_t i_starting_value);
 static int	read_first_4_arrays(const t_string *file, t_format4 *format4,
 				size_t i);
 static int	read_glyph_id_array(const t_string *file, t_format4 *format4,
 				size_t i, size_t i_starting_value);
 
-int	read_format4(const t_string *file, t_format4 **format4, size_t i)
+int	read_format4(const t_string *file, t_ttf *ttf)
 {
 	uint16_t		length;
+	size_t			i;
 
+	i = ttf->cmap_offset + ttf->format4_offset;
 	if (read_uint16(file, i + 2, &length) < 0)
 		return (-1);
-	*format4 = ft_calloc(1, length + sizeof(uint16_t *) * 5);
-	if (*format4 == NULL)
+	ttf->format4 = ft_calloc(1, length + sizeof(uint16_t *) * 5);
+	if (ttf->format4 == NULL)
 	{
 		ft_putstr_fd("malloc() failed\n", STDERR_FILENO);
 		return (-1);
 	}
-	if (init_struct_variables(file, *format4, i, length) < 0)
+	if (init_struct_variables(file, ttf->format4, i, length) < 0)
 	{
-		free(*format4);
+		free(ttf->format4);
 		return (-1);
 	}
 	return (0);
@@ -67,13 +71,13 @@ static int	init_struct_variables(const t_string *file, t_format4 *format4,
 	format4->idDelta = format4->startCode + format4->segCountX2 / 2;
 	format4->idRangeOffset = format4->idDelta + format4->segCountX2 / 2;
 	format4->glyphIdArray = format4->idRangeOffset + format4->segCountX2 / 2;
-	if (read_arrays__and_reserved_pad_content(file, format4, i,
+	if (read_arrays_and_reserved_pad_content(file, format4, i,
 			i_starting_value) < 0)
 		return (-1);
 	return (0);
 }
 
-static int	read_arrays__and_reserved_pad_content(const t_string *file,
+static int	read_arrays_and_reserved_pad_content(const t_string *file,
 				t_format4 *format4, size_t i, const size_t i_starting_value)
 {
 	if (read_first_4_arrays(file, format4, i) < 0)
