@@ -21,6 +21,7 @@ static void	print_table_directory(const t_table_directory *tbl_dir, int tbl_size
 static void	print_cmap(const t_cmap *c);
 static void	print_format4(const t_format4 *f4);
 static void print_head(const t_head *head);
+static void print_maxp(t_maxp *maxp);
 
 int	ttf_parser(t_ttf *ttf, char *file_name)
 {
@@ -69,6 +70,12 @@ int	ttf_parser(t_ttf *ttf, char *file_name)
 	}
 	print_head(&ttf->head);
 
+	if (read_maxp(&file, ttf) < 0)
+	{
+		ft_print_error("Failed to read maxp\n");
+		return (-1); // TODO free stuff
+	}
+	print_maxp(&ttf->maxp);
 
 
 	(void)print_format4;
@@ -158,4 +165,25 @@ static void print_head(const t_head *head)
 	printf("\tfontDirectionHint: %d\n", head->fontDirectionHint);
 	printf("\tindexToLocFormat: %d\n", head->indexToLocFormat);
 	printf("\tglyphDataFormat: %d\n", head->glyphDataFormat);
+}
+
+static void print_maxp(t_maxp *maxp)
+{
+	printf("\nmaxp:\n");
+	printf("\tversion: ");
+	t_fixed_print(maxp->version);
+	printf("\tnumGlyphs: %u\n", maxp->numGlyphs);
+	printf("\tmaxPoints: %u\n", maxp->maxPoints);
+	printf("\tmaxContours: %u\n", maxp->maxContours);
+	printf("\tmaxCompositePoints: %u\n", maxp->maxComponentPoints);
+	printf("\tmaxCompositeContours: %u\n", maxp->maxComponentContours);
+	printf("\tmaxZones: %u\n", maxp->maxZones);
+	printf("\tmaxTwilightPoints: %u\n", maxp->maxTwilightPoints);
+	printf("\tmaxStorage: %u\n", maxp->maxStorage);
+	printf("\tmaxFunctionDefs: %u\n", maxp->maxFunctionDefs);
+	printf("\tmaxInstructionDefs: %u\n", maxp->maxInstructionDefs);
+	printf("\tmaxStackElements: %u\n", maxp->maxStackElements);
+	printf("\tmaxSizeOfInstructions: %u\n", maxp->maxSizeOfInstructions);
+	printf("\tmaxComponentElements: %u\n", maxp->maxComponentElements);
+	printf("\tmaxComponentDepth: %u\n", maxp->maxComponentDepth);
 }

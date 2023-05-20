@@ -32,6 +32,25 @@ typedef int16_t	t_ufword;
 /// January 1, 1904. It is represented as a signed 64-bit integer.
 typedef int64_t	t_long_date_time;
 
+typedef struct s_maxp
+{
+	t_fixed		version;
+	uint16_t	numGlyphs;
+	uint16_t	maxPoints;
+	uint16_t	maxContours;
+	uint16_t	maxComponentPoints;
+	uint16_t	maxComponentContours;
+	uint16_t	maxZones;
+	uint16_t	maxTwilightPoints;
+	uint16_t	maxStorage;
+	uint16_t	maxFunctionDefs;
+	uint16_t	maxInstructionDefs;
+	uint16_t	maxStackElements;
+	uint16_t	maxSizeOfInstructions;
+	uint16_t	maxComponentElements;
+	uint16_t	maxComponentDepth;
+}	t_maxp;
+
 typedef struct s_head
 {
 	t_fixed				version;
@@ -149,16 +168,19 @@ typedef struct s_ttf
 	uint32_t			format4_offset;
 	t_format4			*format4;
 	t_head				head;
+	t_maxp				maxp;
 }	t_ttf;
 
 int			ttf_parser(t_ttf *ttf, char *file_name);
+
+int			get_glyph_index(uint16_t code_point, t_format4 *format4);
 
 int			read_font_directory(const t_string *file,
 				t_font_directory *font_directory);
 int			read_cmap(const t_string *file, t_ttf *ttf);
 int			read_format4(const t_string *file, t_ttf *ttf);
 int			read_head(const t_string *file, t_ttf *ttf);
-int			get_glyph_index(uint16_t code_point, t_format4 *format4);
+int			read_maxp(const t_string *file, t_ttf *ttf);
 
 int64_t		ttf_get_table_offset(const t_ttf *ttf, const char *table_name);
 
