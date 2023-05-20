@@ -18,38 +18,34 @@
 
 /// @typedef t_fixed is an unsigned 32 bit integer, the first 16 bits are used
 /// for the whole part, the second part is used for the decimal part
-typedef int32_t		t_fixed;
+typedef int32_t	t_fixed;
 
 /// @typedef 16-bit signed integer that describes a quantity in FUnits, the
 /// smallest measurable distance in em space.
-typedef int16_t		t_fword;
+typedef int16_t	t_fword;
 
 /// @typedef 16-bit unsigned integer that describes a quantity in FUnits, the
 /// smallest measurable distance in em space.
-typedef int16_t		t_ufword;
+typedef int16_t	t_ufword;
 
 /// @typedef The long internal format of a date in seconds since 12:00 midnight,
 /// January 1, 1904. It is represented as a signed 64-bit integer.
-typedef int64_t		t_long_date_time;
+typedef int64_t	t_long_date_time;
 
 typedef struct s_head
 {
 	t_fixed				version;
 	t_fixed				fontRevision;
-
 	uint32_t			checkSumAdjustment;
 	uint32_t			magicNumber;
 	uint16_t			flags;
 	uint16_t			unitsPerEm;
-
 	t_long_date_time	created;
 	t_long_date_time	modified;
-
 	t_fword				xMin;
 	t_fword				yMin;
 	t_fword				xMax;
 	t_fword				yMax;
-
 	uint16_t			macStyle;
 	uint16_t			lowestRecPPEM;
 	int16_t				fontDirectionHint;
@@ -152,6 +148,7 @@ typedef struct s_ttf
 	t_cmap				cmap;
 	uint32_t			format4_offset;
 	t_format4			*format4;
+	t_head				head;
 }	t_ttf;
 
 int			ttf_parser(t_ttf *ttf, char *file_name);
@@ -160,14 +157,24 @@ int			read_font_directory(const t_string *file,
 				t_font_directory *font_directory);
 int			read_cmap(const t_string *file, t_ttf *ttf);
 int			read_format4(const t_string *file, t_ttf *ttf);
+int			read_head(const t_string *file, t_ttf *ttf);
 int			get_glyph_index(uint16_t code_point, t_format4 *format4);
 
 int64_t		ttf_get_table_offset(const t_ttf *ttf, const char *table_name);
+
 int			read_uint16(const t_string *file, size_t i, uint16_t *dest);
-uint16_t	read_uint16_unsafe(const char *str);
-int			read_uint32(const t_string *file, size_t i, uint32_t *dest);
-uint32_t	read_uint32_unsafe(const char *str);
 int			read_uint16_move(const t_string *file, size_t *i, uint16_t *dest);
+uint16_t	read_uint16_unsafe(const char *str);
+int			read_int16(const t_string *file, size_t i, int16_t *dest);
+int			read_int16_move(const t_string *file, size_t *i, int16_t *dest);
+
+int			read_uint32(const t_string *file, size_t i, uint32_t *dest);
 int			read_uint32_move(const t_string *file, size_t *i, uint32_t *dest);
+uint32_t	read_uint32_unsafe(const char *str);
+int			read_int32(const t_string *file, size_t i, int32_t *dest);
+int			read_int32_move(const t_string *file, size_t *i, int32_t *dest);
+
+int			read_int64(const t_string *file, size_t i, int64_t *dest);
+int			read_int64_move(const t_string *file, size_t *i, int64_t *dest);
 
 #endif

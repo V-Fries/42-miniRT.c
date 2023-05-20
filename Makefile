@@ -109,6 +109,7 @@ SRC				=\
 	ttf_parser/read_file.c				\
 	ttf_parser/read_font_directory.c	\
 	ttf_parser/read_format4.c			\
+	ttf_parser/read_head.c				\
 	ttf_parser/ttf_get_table_offset.c	\
 	ttf_parser/ttf_parser.c				\
 	\
