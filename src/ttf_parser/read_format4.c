@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "libft.h"
 
@@ -33,10 +34,11 @@ int	read_format4(const t_string *file, t_ttf *ttf)
 	i = ttf->cmap_offset + ttf->format4_offset;
 	if (read_uint16(file, i + 2, &length) < 0)
 		return (-1);
-	ttf->format4 = ft_calloc(1, length + sizeof(uint16_t *) * 5);
+	ttf->format4 = ft_calloc(1, length + sizeof(t_format4)
+			- sizeof(uint16_t) * 8);
 	if (ttf->format4 == NULL)
 	{
-		ft_putstr_fd("malloc() failed\n", STDERR_FILENO);
+		perror("ft_calloc() failed");
 		return (-1);
 	}
 	if (init_struct_variables(file, ttf->format4, i, length) < 0)
