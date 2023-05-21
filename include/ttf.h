@@ -32,6 +32,12 @@ typedef int16_t	t_ufword;
 /// January 1, 1904. It is represented as a signed 64-bit integer.
 typedef int64_t	t_long_date_time;
 
+typedef struct s_loca
+{
+	size_t				size;
+	uint32_t			*offsets;
+}	t_loca;
+
 typedef struct s_maxp
 {
 	t_fixed		version;
@@ -169,6 +175,7 @@ typedef struct s_ttf
 	t_format4			*format4;
 	t_head				head;
 	t_maxp				maxp;
+	t_loca				loca;
 }	t_ttf;
 
 int			ttf_parser(t_ttf *ttf, char *file_name);
@@ -181,6 +188,7 @@ int			read_cmap(const t_string *file, t_ttf *ttf);
 int			read_format4(const t_string *file, t_ttf *ttf);
 int			read_head(const t_string *file, t_ttf *ttf);
 int			read_maxp(const t_string *file, t_ttf *ttf);
+int			read_loca(const t_string *file, t_ttf *ttf);
 
 int64_t		ttf_get_table_offset(const t_ttf *ttf, const char *table_name);
 

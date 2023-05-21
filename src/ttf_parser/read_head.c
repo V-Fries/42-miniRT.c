@@ -55,7 +55,8 @@ int	read_head(const t_string *file, t_ttf *ttf)
 		return (-1);
 	if (read_int16_move(file, &i, &ttf->head.fontDirectionHint) < 0)
 		return (-1);
-	if (read_int16_move(file, &i, &ttf->head.indexToLocFormat) < 0)
+	if (read_int16_move(file, &i, &ttf->head.indexToLocFormat) < 0
+		|| (ttf->head.indexToLocFormat != 0 && ttf->head.indexToLocFormat != 1))
 		return (-1);
 	if (read_int16_move(file, &i, &ttf->head.glyphDataFormat) < 0)
 		return (-1);

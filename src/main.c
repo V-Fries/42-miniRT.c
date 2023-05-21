@@ -27,8 +27,8 @@ int	main(int argc, char **argv)
 //	printf("sizeof(t_format4) = %zu\n", sizeof(t_format4));
 //	exit(0);
 	t_ttf	ttf;
-	if (ttf_parser(&ttf, "data/fonts/inconsolata/Inconsolata-VariableFont_wdth,wght.ttf") < 0)
-//	if (ttf_parser(&ttf, "data/fonts/Envy Code R PR7/Envy Code R.ttf") < 0)
+//	if (ttf_parser(&ttf, "data/fonts/inconsolata/Inconsolata-VariableFont_wdth,wght.ttf") < 0)
+	if (ttf_parser(&ttf, "data/fonts/Envy Code R PR7/Envy Code R.ttf") < 0)
 		return (1);
 
 	(void)argc;(void)argv;

@@ -22,6 +22,7 @@ static void	print_cmap(const t_cmap *c);
 static void	print_format4(const t_format4 *f4);
 static void print_head(const t_head *head);
 static void print_maxp(t_maxp *maxp);
+static void	print_loca(t_loca *loca);
 
 int	ttf_parser(t_ttf *ttf, char *file_name)
 {
@@ -77,6 +78,12 @@ int	ttf_parser(t_ttf *ttf, char *file_name)
 	}
 	print_maxp(&ttf->maxp);
 
+	if (read_loca(&file, ttf) < 0)
+	{
+		ft_print_error("Failed to read loca\n");
+		return (-1); // TODO free stuff
+	}
+	print_loca(&ttf->loca);
 
 	(void)print_format4;
 	free(file.data); // TODO this was not freed in above error cases
@@ -186,4 +193,13 @@ static void print_maxp(t_maxp *maxp)
 	printf("\tmaxSizeOfInstructions: %u\n", maxp->maxSizeOfInstructions);
 	printf("\tmaxComponentElements: %u\n", maxp->maxComponentElements);
 	printf("\tmaxComponentDepth: %u\n", maxp->maxComponentDepth);
+}
+
+static void	print_loca(t_loca *loca)
+{
+	printf("\nloca:\n");
+	for (size_t i = 0; i < loca->size; i++)
+	{
+		printf("\t index %zu, offset %u\n", i, loca->offsets[i]);
+	}
 }
