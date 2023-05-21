@@ -34,6 +34,8 @@ int	read_format4(const t_string *file, t_ttf *ttf)
 	i = ttf->cmap_offset + ttf->format4_offset;
 	if (read_uint16(file, i + 2, &length) < 0)
 		return (-1);
+	if (length % 2 != 0)
+		return (-1);
 	ttf->format4 = ft_calloc(1, length + sizeof(t_format4)
 			- sizeof(uint16_t) * 8);
 	if (ttf->format4 == NULL)
@@ -60,7 +62,9 @@ static int	init_struct_variables(const t_string *file, t_format4 *format4,
 	i += sizeof(uint16_t);
 	if (read_uint16_move(file, &i, &format4->language) < 0)
 		return (-1);
-	if (read_uint16_move(file, &i, &format4->segCountX2) < 0)
+	if (read_uint16_move(file, &i, &format4->segCountX2) < 0
+		|| format4->segCountX2 % 2 != 0
+		|| length - sizeof(uint16_t) * 8 <= format4->segCountX2 * 4)
 		return (-1);
 	if (read_uint16_move(file, &i, &format4->searchRange) < 0)
 		return (-1);
@@ -129,6 +133,7 @@ static int	read_glyph_id_array(const t_string *file, t_format4 *format4,
 
 	remaining_bytes_divided_by_2 = (format4->length - (i - i_starting_value))
 		/ 2;
+	printf("test == %zu\n", remaining_bytes_divided_by_2);
 	j = -1;
 	while (++j < remaining_bytes_divided_by_2)
 		if (read_uint16_move(file, &i, format4->glyphIdArray + j) < 0)
