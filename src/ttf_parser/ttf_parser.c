@@ -57,12 +57,6 @@ int	ttf_parser(t_ttf *ttf, char *file_name)
 		return (-1); // TODO free stuff
 	}
 	print_format4(ttf->format4);
-	uint16_t c = 'A';
-	while (ft_isalpha(c))
-	{
-		ft_printf("%c == %i\n", c, get_glyph_index(c, ttf->format4));
-		c++;
-	}
 
 	if (read_head(&file, ttf) < 0)
 	{
@@ -86,6 +80,14 @@ int	ttf_parser(t_ttf *ttf, char *file_name)
 	print_loca(&ttf->loca);
 
 	(void)print_format4;
+
+	uint16_t c = 'A';
+	while (ft_isalpha(c))
+	{
+		ft_printf("%c == %i\n", c, get_glyph_offset(c, ttf));
+		c++;
+	}
+
 	free(file.data); // TODO this was not freed in above error cases
 	return (0);
 }

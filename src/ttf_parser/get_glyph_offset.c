@@ -14,9 +14,18 @@
 
 #include "ttf.h"
 
-static int	get_index(uint16_t code_point, t_format4 *format4);
+static uint32_t	get_glyph_index(uint16_t code_point, const t_format4 *format4);
+static int		get_index(uint16_t code_point, const t_format4 *format4);
 
-int get_glyph_index(uint16_t code_point, t_format4 *format4)
+uint32_t	get_glyph_offset(const uint16_t code_point, const t_ttf *ttf)
+{
+	const uint32_t	glyph_index = get_glyph_index(code_point, ttf->format4);
+
+	return (ttf->loca.offsets[(glyph_index < ttf->loca.size) * glyph_index]);
+}
+
+static uint32_t	get_glyph_index(const uint16_t code_point,
+					const t_format4 *format4)
 {
 	const int	index = get_index(code_point, format4);
 	uint16_t	*ptr;
@@ -38,7 +47,7 @@ int get_glyph_index(uint16_t code_point, t_format4 *format4)
 	return (0);
 }
 
-static int	get_index(uint16_t code_point, t_format4 *format4)
+static int	get_index(const uint16_t code_point, const t_format4 *format4)
 {
 	uint16_t		i;
 	const uint16_t	i_limit = format4->segCountX2 / 2;

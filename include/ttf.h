@@ -34,7 +34,7 @@ typedef int64_t	t_long_date_time;
 
 typedef struct s_loca
 {
-	size_t				size;
+	uint32_t			size;
 	uint32_t			*offsets;
 }	t_loca;
 
@@ -180,7 +180,7 @@ typedef struct s_ttf
 
 int			ttf_parser(t_ttf *ttf, char *file_name);
 
-int			get_glyph_index(uint16_t code_point, t_format4 *format4);
+uint32_t	get_glyph_offset(uint16_t code_point, const t_ttf *ttf);
 
 int			read_font_directory(const t_string *file,
 				t_font_directory *font_directory);

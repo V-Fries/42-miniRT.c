@@ -104,7 +104,7 @@ SRC				=\
 	scene/create.c	\
 	\
 	\
-	ttf_parser/get_glyph_index.c		\
+	ttf_parser/get_glyph_offset.c		\
 	ttf_parser/read_cmap.c				\
 	ttf_parser/read_file.c				\
 	ttf_parser/read_font_directory.c	\
