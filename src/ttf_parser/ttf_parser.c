@@ -23,6 +23,7 @@ static void	print_format4(const t_format4 *f4);
 static void print_head(const t_head *head);
 static void print_maxp(t_maxp *maxp);
 static void	print_loca(t_loca *loca);
+static void print_glyph_outline(t_glyph_outline *outline);
 
 int	ttf_parser(t_ttf *ttf, char *file_name)
 {
@@ -87,6 +88,14 @@ int	ttf_parser(t_ttf *ttf, char *file_name)
 		ft_printf("%c == %i\n", c, get_glyph_offset(c, ttf));
 		c++;
 	}
+
+	t_glyph_outline	a;
+	if (read_glyph_outline(&file, ttf, 'A', &a) < 0)
+	{
+		ft_print_error("Failed to read glyph outline\n");
+		return (-1); // TODO free stuff
+	}
+	print_glyph_outline(&a);
 
 	free(file.data); // TODO this was not freed in above error cases
 	return (0);
@@ -203,5 +212,20 @@ static void	print_loca(t_loca *loca)
 	for (size_t i = 0; i < loca->size; i++)
 	{
 		printf("\t index %zu, offset %u\n", i, loca->offsets[i]);
+	}
+}
+
+static void print_glyph_outline(t_glyph_outline *outline)
+{
+	printf("#contours\t(xMin,yMin)\t(xMax,yMax)\tinst_length\n");
+	printf("%9d\t(%d,%d)\t\t(%d,%d)\t%d\n", outline->numberOfContours,
+		   outline->xMin, outline->yMin,
+		   outline->xMax, outline->yMax,
+		   outline->instructionLength);
+
+	printf("#)\t(  x  ,  y  )\n");
+	int last_index = outline->endPtsOfContours[outline->numberOfContours-1];
+	for(int i = 0; i <= last_index; ++i) {
+		printf("%d)\t(%5d,%5d)\n", i, outline->xCoordinates[i], outline->yCoordinates[i]);
 	}
 }

@@ -32,6 +32,37 @@ typedef int16_t	t_ufword;
 /// January 1, 1904. It is represented as a signed 64-bit integer.
 typedef int64_t	t_long_date_time;
 
+typedef union u_glyph_outline_flag
+{
+	struct
+	{
+		uint8_t	on_curve: 1;
+		uint8_t	x_short: 1;
+		uint8_t	y_short: 1;
+		uint8_t	repeat: 1;
+		uint8_t	x_short_pos: 1;
+		uint8_t	y_short_pos: 1;
+		uint8_t	reserved1: 1;
+		uint8_t	reserved2: 1;
+	};
+	uint8_t	flag;
+}	t_glyph_outline_flag;
+
+typedef struct s_glyph_outline
+{
+	uint16_t				numberOfContours;
+	int16_t					xMin;
+	int16_t					yMin;
+	int16_t					xMax;
+	int16_t					yMax;
+	uint16_t				instructionLength;
+	uint8_t					*instructions;
+	t_glyph_outline_flag	*flags;
+	int16_t					*xCoordinates;
+	int16_t					*yCoordinates;
+	uint16_t				*endPtsOfContours;
+}	t_glyph_outline;
+
 typedef struct s_loca
 {
 	uint32_t			size;
@@ -189,8 +220,19 @@ int			read_format4(const t_string *file, t_ttf *ttf);
 int			read_head(const t_string *file, t_ttf *ttf);
 int			read_maxp(const t_string *file, t_ttf *ttf);
 int			read_loca(const t_string *file, t_ttf *ttf);
+int			read_glyph_outline(const t_string *file, const t_ttf *ttf,
+				uint16_t code_point, t_glyph_outline *outline);
+int			read_x_coordinates(const t_string *file, size_t *file_cursor,
+				t_glyph_outline *outline, uint16_t last_index);
+int			read_y_coordinates(const t_string *file, size_t *file_cursor,
+				t_glyph_outline *outline, uint16_t last_index);
 
 int64_t		ttf_get_table_offset(const t_ttf *ttf, const char *table_name);
+
+int			read_uint8(const t_string *file, size_t i, uint8_t *dest);
+int			read_uint8_move(const t_string *file, size_t *i, uint8_t *dest);
+int			read_int8(const t_string *file, size_t i, int8_t *dest);
+int			read_int8_move(const t_string *file, size_t *i, int8_t *dest);
 
 int			read_uint16(const t_string *file, size_t i, uint16_t *dest);
 int			read_uint16_move(const t_string *file, size_t *i, uint16_t *dest);
