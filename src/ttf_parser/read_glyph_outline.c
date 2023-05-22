@@ -31,6 +31,7 @@ int	read_glyph_outline(const t_string *file, const t_ttf *ttf,
 	if (glyph_table_offset < 0)
 		return (-1);
 	file_cursor = glyph_table_offset + get_glyph_offset(code_point, ttf);
+//	file_cursor = glyph_table_offset + 0;
 	*outline = (t_glyph_outline){0};
 	if (read_uint16_move(file, &file_cursor, &outline->numberOfContours) < 0)
 		return (-1);
@@ -79,15 +80,17 @@ static int	read_endPtsOfContours(const t_string *file, size_t *file_cursor,
 static int	read_instructions(const t_string *file, size_t *file_cursor,
 				t_glyph_outline *outline)
 {
+	uint16_t	i;
+
 	if (read_uint16_move(file, file_cursor, &outline->instructionLength) < 0)
 		return (-1);
 	outline->instructions = malloc(outline->instructionLength);
-	if (outline->instructions == NULL
-		|| file->len - *file_cursor < outline->instructionLength) // TODO check this if statement
+	if (outline->instructions == NULL)
 		return (-1);
-	ft_memcpy(outline->instructions, file->data + *file_cursor,
-		outline->instructionLength);
-	*file_cursor += outline->instructionLength;
+	i = -1;
+	while (++i < outline->instructionLength)
+		if (read_uint8_move(file, file_cursor, outline->instructions + i) < 0)
+			return (free(outline->instructions), -1);
 	return (0);
 }
 
