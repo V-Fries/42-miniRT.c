@@ -50,17 +50,17 @@ typedef union u_glyph_outline_flag
 
 typedef struct s_glyph_outline
 {
-	uint16_t				numberOfContours;
-	int16_t					xMin;
-	int16_t					yMin;
-	int16_t					xMax;
-	int16_t					yMax;
+	int16_t					numberOfContours;
+	t_fword					xMin;
+	t_fword					yMin;
+	t_fword					xMax;
+	t_fword					yMax;
+	uint16_t				*endPtsOfContours;
 	uint16_t				instructionLength;
 	uint8_t					*instructions;
 	t_glyph_outline_flag	*flags;
 	int16_t					*xCoordinates;
 	int16_t					*yCoordinates;
-	uint16_t				*endPtsOfContours;
 }	t_glyph_outline;
 
 typedef struct s_loca
@@ -209,44 +209,54 @@ typedef struct s_ttf
 	t_loca				loca;
 }	t_ttf;
 
-int			ttf_parser(t_ttf *ttf, char *file_name);
+typedef struct s_font
+{
+	t_ttf			ttf;
+	size_t			glyphs_count;
+	t_glyph_outline	*glyphs;
+}	t_font;
 
-uint32_t	get_glyph_offset(uint16_t code_point, const t_ttf *ttf);
+int				ttf_parser(t_font *font, char *file_name);
 
-int			read_font_directory(const t_string *file,
-				t_font_directory *font_directory);
-int			read_cmap(const t_string *file, t_ttf *ttf);
-int			read_format4(const t_string *file, t_ttf *ttf);
-int			read_head(const t_string *file, t_ttf *ttf);
-int			read_maxp(const t_string *file, t_ttf *ttf);
-int			read_loca(const t_string *file, t_ttf *ttf);
-int			read_glyph_outline(const t_string *file, const t_ttf *ttf,
-				uint16_t code_point, t_glyph_outline *outline);
-int			read_x_coordinates(const t_string *file, size_t *file_cursor,
-				t_glyph_outline *outline, uint16_t last_index);
-int			read_y_coordinates(const t_string *file, size_t *file_cursor,
-				t_glyph_outline *outline, uint16_t last_index);
+int				read_font_directory(const t_string *file,
+					t_font_directory *font_directory);
+int				read_cmap(const t_string *file, t_ttf *ttf);
+int				read_format4(const t_string *file, t_ttf *ttf);
+int				read_head(const t_string *file, t_ttf *ttf);
+int				read_maxp(const t_string *file, t_ttf *ttf);
+int				read_loca(const t_string *file, t_ttf *ttf);
+int				read_x_coordinates(const t_string *file, size_t *file_cursor,
+					t_glyph_outline *outline, uint16_t last_index);
+int				read_y_coordinates(const t_string *file, size_t *file_cursor,
+					t_glyph_outline *outline, uint16_t last_index);
 
-int64_t		ttf_get_table_offset(const t_ttf *ttf, const char *table_name);
+int64_t			ttf_get_table_offset(const t_ttf *ttf, const char *table_name);
+uint32_t		get_glyph_offset(uint32_t glyph_index, const t_ttf *ttf);
+uint32_t		get_glyph_index(uint16_t code_point, const t_ttf *ttf);
+int				read_glyph_outline(const t_string *file, size_t offset,
+					t_glyph_outline *outline);
+t_glyph_outline	*get_glyph_outlines(const t_string *file, t_ttf *ttf);
 
-int			read_uint8(const t_string *file, size_t i, uint8_t *dest);
-int			read_uint8_move(const t_string *file, size_t *i, uint8_t *dest);
-int			read_int8(const t_string *file, size_t i, int8_t *dest);
-int			read_int8_move(const t_string *file, size_t *i, int8_t *dest);
+int				read_uint8(const t_string *file, size_t i, uint8_t *dest);
+int				read_uint8_move(const t_string *file, size_t *i, uint8_t *dest);
+int				read_int8(const t_string *file, size_t i, int8_t *dest);
+int				read_int8_move(const t_string *file, size_t *i, int8_t *dest);
 
-int			read_uint16(const t_string *file, size_t i, uint16_t *dest);
-int			read_uint16_move(const t_string *file, size_t *i, uint16_t *dest);
-uint16_t	read_uint16_unsafe(const char *str);
-int			read_int16(const t_string *file, size_t i, int16_t *dest);
-int			read_int16_move(const t_string *file, size_t *i, int16_t *dest);
+int				read_uint16(const t_string *file, size_t i, uint16_t *dest);
+int				read_uint16_move(const t_string *file, size_t *i,
+					uint16_t *dest);
+uint16_t		read_uint16_unsafe(const char *str);
+int				read_int16(const t_string *file, size_t i, int16_t *dest);
+int				read_int16_move(const t_string *file, size_t *i, int16_t *dest);
 
-int			read_uint32(const t_string *file, size_t i, uint32_t *dest);
-int			read_uint32_move(const t_string *file, size_t *i, uint32_t *dest);
-uint32_t	read_uint32_unsafe(const char *str);
-int			read_int32(const t_string *file, size_t i, int32_t *dest);
-int			read_int32_move(const t_string *file, size_t *i, int32_t *dest);
+int				read_uint32(const t_string *file, size_t i, uint32_t *dest);
+int				read_uint32_move(const t_string *file, size_t *i,
+					uint32_t *dest);
+uint32_t		read_uint32_unsafe(const char *str);
+int				read_int32(const t_string *file, size_t i, int32_t *dest);
+int				read_int32_move(const t_string *file, size_t *i, int32_t *dest);
 
-int			read_int64(const t_string *file, size_t i, int64_t *dest);
-int			read_int64_move(const t_string *file, size_t *i, int64_t *dest);
+int				read_int64(const t_string *file, size_t i, int64_t *dest);
+int				read_int64_move(const t_string *file, size_t *i, int64_t *dest);
 
 #endif

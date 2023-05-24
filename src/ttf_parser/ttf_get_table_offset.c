@@ -20,8 +20,8 @@
 /// @return
 int64_t	ttf_get_table_offset(const t_ttf *ttf, const char table_name[5])
 {
-	size_t			i;
 	const uint32_t	table_tag = read_uint32_unsafe(table_name);
+	uint16_t		i;
 
 	i = ttf->font_directory.offset_subtable.num_tables;
 	while (i--)

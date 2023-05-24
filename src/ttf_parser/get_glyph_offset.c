@@ -14,23 +14,19 @@
 
 #include "ttf.h"
 
-static uint32_t	get_glyph_index(uint16_t code_point, const t_format4 *format4);
 static int		get_index(uint16_t code_point, const t_format4 *format4);
 
-uint32_t	get_glyph_offset(const uint16_t code_point, const t_ttf *ttf)
+uint32_t	get_glyph_offset(const uint32_t glyph_index, const t_ttf *ttf)
 {
-	const uint32_t	glyph_index = get_glyph_index(code_point, ttf->format4);
-
 	return (ttf->loca.offsets[(glyph_index < ttf->loca.size) * glyph_index]);
 }
 
-static uint32_t	get_glyph_index(const uint16_t code_point,
-					const t_format4 *format4)
+uint32_t	get_glyph_index(const uint16_t code_point, const t_ttf *ttf)
 {
-	const int	index = get_index(code_point, format4);
-	uint16_t	*ptr;
+	const t_format4	*format4 = ttf->format4;
+	const int		index = get_index(code_point, format4);
+	uint16_t		*ptr;
 
-	// TODO read documentation to check this function
 	if (index == -1)
 		return (0);
 	if (format4->startCode[index] < code_point)
