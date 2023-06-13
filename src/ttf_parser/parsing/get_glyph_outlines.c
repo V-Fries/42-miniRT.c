@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-#include "ttf.h"
+#include "font/ttf_parser.h"
 
 static void	destroy_glyph_outlines_on_read_failure(t_glyph_outline *outlines,
 				size_t size);

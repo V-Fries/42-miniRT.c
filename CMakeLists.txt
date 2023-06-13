@@ -37,7 +37,7 @@ add_executable(miniRT
         include/ray_tracer_gui_api.h
         include/render_frame.h
         include/scene.h
-        include/ttf.h
+        include/font/ttf_parser.h
         include/window.h
         lib/libft/include/ft_bitmask.h
         lib/libft/include/ft_bools.h
@@ -323,20 +323,20 @@ add_executable(miniRT
         src/render_frame/render_frame.c
         src/render_frame/render_user_interface.c
         src/scene/create.c
-        src/ttf_parser/get_glyph_offset.c
-        src/ttf_parser/get_glyph_outlines.c
-        src/ttf_parser/read_cmap.c
-        src/ttf_parser/read_file.c
-        src/ttf_parser/read_font_directory.c
-        src/ttf_parser/read_format4.c
-        src/ttf_parser/read_glyph_outline.c
-        src/ttf_parser/read_glyph_outline_coordinates.c
-        src/ttf_parser/read_head.c
-        src/ttf_parser/read_loca.c
-        src/ttf_parser/read_maxp.c
-        src/ttf_parser/ttf_get_table_offset.c
-        src/ttf_parser/ttf_parser.c
+        src/ttf_parser/parsing/get_glyph_offset.c
+        src/ttf_parser/parsing/get_glyph_outlines.c
+        src/ttf_parser/parsing/read_cmap.c
+        src/ttf_parser/parsing/read_file.c
+        src/ttf_parser/parsing/read_font_directory.c
+        src/ttf_parser/parsing/read_format4.c
+        src/ttf_parser/parsing/read_glyph_outline.c
+        src/ttf_parser/parsing/read_glyph_outline_coordinates.c
+        src/ttf_parser/parsing/read_head.c
+        src/ttf_parser/parsing/read_loca.c
+        src/ttf_parser/parsing/read_maxp.c
+        src/ttf_parser/parsing/ttf_get_table_offset.c
+        src/ttf_parser/parsing/ttf_parser.c
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c)
+        src/main.c src/ttf_parser/rendering/get_bezier_points.c include/font/render.h)

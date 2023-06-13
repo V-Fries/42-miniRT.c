@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-#include "ttf.h"
+#include "font/ttf_parser.h"
 
 #define HEAD_MAGIC_NUMBER_EXPECTED_VALUE 0x5F0F3CF5
 

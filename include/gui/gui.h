@@ -19,7 +19,7 @@
 # include "gui/boxes.h"
 # include "image.h"
 # include "engine.h"
-# include "ttf.h"
+# include "font/ttf_parser.h"
 
 typedef struct s_fps
 {

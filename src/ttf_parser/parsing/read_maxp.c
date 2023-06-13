@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ttf.h"
+#include "font/ttf_parser.h"
 
 int	read_maxp(const t_string *file, t_ttf *ttf)
 {

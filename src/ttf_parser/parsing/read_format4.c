@@ -15,7 +15,7 @@
 
 #include "libft.h"
 
-#include "ttf.h"
+#include "font/ttf_parser.h"
 
 static int	init_struct_variables(const t_string *file, t_format4 *format4,
 				size_t i, uint16_t length);

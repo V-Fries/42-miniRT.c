@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ttf.h"
+#include "font/ttf_parser.h"
 
 ///
 /// @param ttf font_directory needs to have been parsed successfully to call

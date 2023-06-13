@@ -14,7 +14,7 @@
 
 #include "libft.h"
 
-#include "ttf.h"
+#include "font/ttf_parser.h"
 
 static int	read_cmap_encoding_subtable(const t_string *file, t_ttf *ttf,
 				size_t i);

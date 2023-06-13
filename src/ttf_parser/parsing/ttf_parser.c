@@ -13,7 +13,7 @@
 #include <stdlib.h>
 
 #include "libft.h"
-#include "ttf.h"
+#include "font/ttf_parser.h"
 
 #include <stdio.h>
 

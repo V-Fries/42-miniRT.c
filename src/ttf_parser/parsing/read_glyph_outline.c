@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-#include "ttf.h"
+#include "font/ttf_parser.h"
 
 static int	read_endPtsOfContours(const t_string *file, size_t *file_cursor,
 				t_glyph_outline *outline);

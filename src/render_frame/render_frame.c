@@ -23,6 +23,8 @@
 #include "ray_tracer/render.h"
 #include "gui/utils.h"
 
+#include "font/render.h"
+
 static void	render_minirt(t_engine *minirt);
 static void	update_placed_object_position(t_engine *engine);
 static void	update_mouse_position(t_engine *engine, t_vector2i *mouse_position);
@@ -54,13 +56,42 @@ static void	render_minirt(t_engine *minirt)
 }
 #elif defined __APPLE__
 
+#include <stdio.h>
 static void	render_minirt(t_engine *engine)
 {
 	update_placed_object_position(engine);
-	render_raytracing(engine);
+//	render_raytracing(engine);
+	change_image_color(&engine->ray_traced_image, COLOR_BLACK);
+
+//	t_glyph_outline	letter_c = engine->gui.font.glyphs[get_glyph_index('t', &engine->gui.font.ttf)];
+//
+//	static bool print = true;
+//
+//	for (int16_t i = 0; i < letter_c.endPtsOfContours[letter_c.numberOfContours-1]; i++) {
+//		int y = engine->ray_traced_image.height / 2 - letter_c.yCoordinates[i] + (letter_c.yMax) / 2;
+//		int x = engine->ray_traced_image.width / 2 + letter_c.xCoordinates[i] - (letter_c.xMax) / 2;
+//		put_pixel_on_image(&engine->ray_traced_image, y, x, COLOR_WHITE);
+//		if (print) {
+//			printf("y = %i, x = %i\n", y, x);
+//		}
+//	}
+//	print = false;
+
+	t_vector2f	points[3] = {{0, 300}, {800, 4}, {15, 600}};
+	size_t		number_of_points = 100000;
+	t_vector2f	*bezier_points = get_bezier_points(points, number_of_points);
+
+	for (size_t i = 0; i < number_of_points; i++)
+		put_pixel_on_image(&engine->ray_traced_image, bezier_points[i].y, bezier_points[i].x, COLOR_WHITE);
+	free(bezier_points);
+
+	put_pixel_on_image(&engine->ray_traced_image, points[0].y, points[0].x, COLOR_RED);
+	put_pixel_on_image(&engine->ray_traced_image, points[1].y, points[1].x, COLOR_RED);
+	put_pixel_on_image(&engine->ray_traced_image, points[2].y, points[2].x, COLOR_RED);
+
 	mlx_put_image_to_window(engine->window.mlx, engine->window.window,
 		engine->ray_traced_image.data, 0, 0);
-	render_user_interface(engine);
+//	render_user_interface(engine);
 }
 #else
 # error "Unsuported OS"

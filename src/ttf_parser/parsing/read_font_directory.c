@@ -14,7 +14,7 @@
 
 #include "libft.h"
 
-#include "ttf.h"
+#include "font/ttf_parser.h"
 
 static int	read_offset_subtable(const t_string *file, size_t *i,
 				t_offset_subtable *offset_subtable);

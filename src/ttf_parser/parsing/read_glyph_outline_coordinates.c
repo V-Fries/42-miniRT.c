@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 
-#include "ttf.h"
+#include "font/ttf_parser.h"
 
 static int	read_current_coordinate(const t_string *file, size_t *file_cursor,
 				int16_t *current_coordinate, uint8_t flag_combined);

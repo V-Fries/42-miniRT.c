@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ttf.h"
+#include "font/ttf_parser.h"
 
 static int	read_loca_offsets(const t_string *file, t_loca *loca,
 				size_t offset, bool is_short);
