@@ -77,17 +77,16 @@ static void	render_minirt(t_engine *engine)
 //	}
 //	print = false;
 
-	t_vector2f	points[3] = {{0, 300}, {800, 4}, {15, 600}};
-	size_t		number_of_points = 100000;
-	t_vector2f	*bezier_points = get_bezier_points(points, number_of_points);
+	t_vector2f	points[] = {{100, 100}, {100, WINDOW_HEIGHT - 1 + 100}, {WINDOW_WIDTH - 1 + 100, 100}, {100, 300}};
+	size_t		number_of_points = WINDOW_WIDTH * WINDOW_HEIGHT;
+	t_vector2f	*bezier_points = get_cubic_bezier_points(points, number_of_points);
 
 	for (size_t i = 0; i < number_of_points; i++)
 		put_pixel_on_image(&engine->ray_traced_image, bezier_points[i].y, bezier_points[i].x, COLOR_WHITE);
 	free(bezier_points);
 
 	put_pixel_on_image(&engine->ray_traced_image, points[0].y, points[0].x, COLOR_RED);
-	put_pixel_on_image(&engine->ray_traced_image, points[1].y, points[1].x, COLOR_RED);
-	put_pixel_on_image(&engine->ray_traced_image, points[2].y, points[2].x, COLOR_RED);
+	put_pixel_on_image(&engine->ray_traced_image, points[3].y, points[3].x, COLOR_RED);
 
 	mlx_put_image_to_window(engine->window.mlx, engine->window.window,
 		engine->ray_traced_image.data, 0, 0);

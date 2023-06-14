@@ -339,4 +339,4 @@ add_executable(miniRT
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c src/ttf_parser/rendering/get_bezier_points.c include/font/render.h)
+        src/main.c src/ttf_parser/rendering/get_quadratic_bezier_points.c include/font/render.h src/ttf_parser/rendering/get_cubic_bezier_points.c)

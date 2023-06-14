@@ -17,7 +17,9 @@
 
 # include "math/vector.h"
 
-t_vector2f	*get_bezier_points(const t_vector2f *points,
+t_vector2f	*get_quadratic_bezier_points(const t_vector2f *points,
+				size_t number_of_points);
+t_vector2f	*get_cubic_bezier_points(const t_vector2f *points,
 				size_t number_of_points);
 
 #endif
