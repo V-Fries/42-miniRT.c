@@ -173,8 +173,17 @@ SRC =\
 	sort/msort_str_ignore_case.c	\
 \
 \
-	time/get_current_time.c	\
-	time/get_number_of_fps_in_string.c
+	time/get_current_time.c				\
+	time/get_number_of_fps_in_string.c	\
+\
+\
+	vector/vector_add_elem.c			\
+	vector/vector_change_size.c			\
+	vector/vector_convert_to_array.c	\
+	vector/vector_create.c				\
+	vector/vector_delete_elem.c			\
+	vector/vector_destroy.c				\
+	vector/vector_minimize_size.c
 
 
 TEST_DIR = test/

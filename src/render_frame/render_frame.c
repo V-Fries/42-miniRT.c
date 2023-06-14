@@ -63,7 +63,7 @@ static void	render_minirt(t_engine *engine)
 //	render_raytracing(engine);
 	change_image_color(&engine->ray_traced_image, COLOR_BLACK);
 
-//	t_glyph_outline	letter_c = engine->gui.font.glyphs[get_glyph_index('t', &engine->gui.font.ttf)];
+//	t_glyph_outline	letter_c = engine->gui.font.glyphs[get_glyph_index('c', &engine->gui.font.ttf)];
 //
 //	static bool print = true;
 //
@@ -78,7 +78,7 @@ static void	render_minirt(t_engine *engine)
 //	print = false;
 
 	t_vector2f	points[] = {{100, 100}, {100, WINDOW_HEIGHT - 1 + 100}, {WINDOW_WIDTH - 1 + 100, 100}, {100, 300}};
-	size_t		number_of_points = WINDOW_WIDTH * WINDOW_HEIGHT;
+	size_t		number_of_points = 100000;
 	t_vector2f	*bezier_points = get_cubic_bezier_points(points, number_of_points);
 
 	for (size_t i = 0; i < number_of_points; i++)
