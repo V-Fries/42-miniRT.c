@@ -63,6 +63,10 @@ static void	render_minirt(t_engine *engine)
 //	render_raytracing(engine);
 	change_image_color(&engine->ray_traced_image, COLOR_BLACK);
 
+	static bool test = false;
+	if (test)
+		return;
+
 	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('8', &engine->gui.font.ttf);
 	size_t	*contours_limits;
 	size_t		number_of_points;
@@ -93,6 +97,8 @@ static void	render_minirt(t_engine *engine)
 
 	free(points);
 	free(contours_limits);
+
+	test = true;
 
 	mlx_put_image_to_window(engine->window.mlx, engine->window.window,
 		engine->ray_traced_image.data, 0, 0);

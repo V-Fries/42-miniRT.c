@@ -62,8 +62,7 @@ static int	read_endPtsOfContours(const t_string *file, size_t *file_cursor,
 	size_t			i;
 	const size_t	number_of_contours = outline->numberOfContours;
 
-	outline->endPtsOfContours = malloc(number_of_contours
-			* sizeof(uint16_t));
+	outline->endPtsOfContours = malloc(sizeof(*outline->endPtsOfContours) * number_of_contours);
 	if (outline->endPtsOfContours == NULL)
 		return (-1);
 	i = -1;
@@ -81,7 +80,7 @@ static int	read_instructions(const t_string *file, size_t *file_cursor,
 
 	if (read_uint16_move(file, file_cursor, &outline->instructionLength) < 0)
 		return (-1);
-	outline->instructions = malloc(outline->instructionLength);
+	outline->instructions = malloc(sizeof(*outline->instructions) * outline->instructionLength);
 	if (outline->instructions == NULL)
 		return (-1);
 	i = -1;
@@ -98,7 +97,7 @@ static int	read_flags(const t_string *file, size_t *file_cursor,
 	size_t			i;
 	uint8_t			repeat_count;
 
-	outline->flags = malloc(size);
+	outline->flags = malloc(sizeof(*outline->flags) * size);
 	if (outline->flags == NULL)
 		return (-1);
 	i = -1;
