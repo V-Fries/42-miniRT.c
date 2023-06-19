@@ -157,6 +157,8 @@ SRC				=\
 	ttf_parser/parsing/ttf_get_table_offset.c			\
 	ttf_parser/parsing/ttf_parser.c						\
 	\
+	ttf_parser/rendering/clip_line.c					\
+	ttf_parser/rendering/draw_line.c					\
 	ttf_parser/rendering/get_quadratic_bezier_points.c	\
 	ttf_parser/rendering/get_glyph_points.c				\
 	ttf_parser/rendering/get_cubic_bezier_points.c		\

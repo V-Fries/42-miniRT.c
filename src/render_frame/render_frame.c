@@ -67,16 +67,24 @@ static void	render_minirt(t_engine *engine)
 	if (test)
 		return;
 
-	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('3', &engine->gui.font.ttf);
+	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('0', &engine->gui.font.ttf);
 	size_t	*contours_limits;
 	size_t		number_of_points;
 	t_vector2f	*points = get_glyph_points(&number_of_points, glyph, &contours_limits);
+	t_vector2i	*points_i = malloc(sizeof(*points_i) * number_of_points);
 
 	if (number_of_points == 0)
 		printf("number_of_points == %zu\n\n", number_of_points);
+	for (size_t j = 0; j < number_of_points; j++)
+	{
+		points_i[j].x = points[j].x + 400.f;
+		float tmp = (points[j].y + 100) / engine->ray_traced_image.height;
+		points_i[j].y = (1.f - tmp) * engine->ray_traced_image.height;
+	}
 	size_t	i = 0;
 	for (int16_t contour = 0; contour < glyph->numberOfContours; contour++)
 	{
+		int contour_start = i;
 		int color;
 		if (contour == 0)
 			color = COLOR_WHITE;
@@ -84,18 +92,19 @@ static void	render_minirt(t_engine *engine)
 			color = COLOR_BLUE;
 		else
 			color = COLOR_RED;
-		for (; i < contours_limits[contour]; i++)
+		for (; i < contours_limits[contour] - 1; i++)
 		{
-			points[i].x += 400;
-			points[i].y += 50;
-			if (points[i].x >= 0 && points[i].x < engine->ray_traced_image.width && points[i].y >= 0 && points[i].y < engine->ray_traced_image.height)
-				put_pixel_on_image(&engine->ray_traced_image, points[i].y, points[i].x, color);
-			else
-				printf("Point is out of range:\n\tx == %f\n\ty == %f\n", points[i].x, points[i].y);
+			draw_line(points_i[i], points_i[i + 1], &engine->ray_traced_image, color);
+//			if (points[i].x >= 0 && points[i].x < engine->ray_traced_image.width && points[i].y >= 0 && points[i].y < engine->ray_traced_image.height)
+//				put_pixel_on_image(&engine->ray_traced_image, points[i].y, points[i].x, color);
+//			else
+//				printf("Point is out of range:\n\tx == %f\n\ty == %f\n", points[i].x, points[i].y);
 		}
+		draw_line(points_i[i++], points_i[contour_start], &engine->ray_traced_image, color);
 	}
 
 	free(points);
+	free(points_i);
 	free(contours_limits);
 
 	test = true;
