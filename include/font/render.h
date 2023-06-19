@@ -17,9 +17,12 @@
 
 # include "math/vector.h"
 
-t_vector2f	*get_quadratic_bezier_points(const t_vector2f *points,
-				size_t number_of_points);
-t_vector2f	*get_cubic_bezier_points(const t_vector2f *points,
-				size_t number_of_points);
+t_vector2f	*get_glyph_points(size_t *result_size, const t_glyph_outline *glyph,
+				size_t **end_of_generated_contours);
+
+int	get_quadratic_bezier_points(t_vector *dest, const t_vector2f *points,
+		size_t number_of_points);
+int	get_cubic_bezier_points(t_vector *dest, const t_vector2f *points,
+		size_t number_of_points);
 
 #endif

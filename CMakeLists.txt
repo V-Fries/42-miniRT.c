@@ -339,4 +339,4 @@ add_executable(miniRT
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c src/ttf_parser/rendering/get_quadratic_bezier_points.c include/font/render.h src/ttf_parser/rendering/get_cubic_bezier_points.c src/ttf_parser/rendering/get_glyph_points.c lib/libft/include/ft_vector.h lib/libft/src/vector/vector_add_elem.c lib/libft/src/vector/vector_create.c lib/libft/src/vector/vector_delete_elem.c lib/libft/src/vector/vector_destroy.c lib/libft/src/vector/vector_change_size.c lib/libft/src/vector/vector_minimize_size.c lib/libft/src/vector/vector_convert_to_array.c)
+        src/main.c src/ttf_parser/rendering/get_quadratic_bezier_points.c include/font/render.h src/ttf_parser/rendering/get_cubic_bezier_points.c src/ttf_parser/rendering/get_glyph_points.c lib/libft/include/ft_vector.h lib/libft/src/vector/vector_add_elem.c lib/libft/src/vector/vector_create.c lib/libft/src/vector/vector_delete_elem.c lib/libft/src/vector/vector_destroy.c lib/libft/src/vector/vector_change_size.c lib/libft/src/vector/vector_minimize_size.c lib/libft/src/vector/vector_convert_to_array.c test.c lib/libft/src/vector/vector_append.c)

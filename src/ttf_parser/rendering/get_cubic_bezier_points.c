@@ -12,6 +12,8 @@
 
 #include <stdlib.h>
 
+#include "libft.h"
+
 #include "math/vector.h"
 
 static void			get_lines_direction(const t_vector2f *points,
@@ -23,29 +25,24 @@ static t_vector2f	get_point(const t_vector2f *points, float t,
 /// \param points assumed to be of size 4
 /// \param number_of_points
 /// \return
-t_vector2f	*get_cubic_bezier_points(const t_vector2f *points,
-				const size_t number_of_points)
+int	get_cubic_bezier_points(t_vector *dest, const t_vector2f *points,
+		size_t number_of_points)
 {
-	t_vector2f	*result;
 	const float	incrementer_t = 1.f / (float)number_of_points;
 	float		t;
-	size_t		i;
 	t_vector2f	lines_direction[3];
+	t_vector2f	tmp;
 
-	result = malloc(sizeof(*result) * number_of_points);
-	if (result == NULL)
-		return (NULL);
 	get_lines_direction(points, lines_direction);
 	t = 0.f;
-	i = -1;
-	while (++i < number_of_points)
+	while (number_of_points-- && t <= 1.f)
 	{
-		result[i] = get_point(points, t, lines_direction);
+		tmp = get_point(points, t, lines_direction);
+		if (ft_vector_add_elem(dest, &tmp) != VECTOR_SUCCESS)
+			return (-1);
 		t += incrementer_t;
-		if (t > 1.f)
-			t = 1.f;
 	}
-	return (result);
+	return (0);
 }
 
 static void	get_lines_direction(const t_vector2f *points,

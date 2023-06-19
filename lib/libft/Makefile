@@ -178,6 +178,7 @@ SRC =\
 \
 \
 	vector/vector_add_elem.c			\
+	vector/vector_append.c				\
 	vector/vector_change_size.c			\
 	vector/vector_convert_to_array.c	\
 	vector/vector_create.c				\
@@ -239,8 +240,8 @@ DEPS_TEST_DEBUG =	$(addprefix $(TEST_BUILD_DIR),$(SRCS_TEST:.c=.debug.d))
 DEPS_FLAGS =	-MMD -MP
 FLAGS_NO_O3 =	-Wall -Wextra -Werror $(DEPS_FLAGS)
 
-FLAGS =			$(FLAGS_NO_O3) -O3
-DEBUG_FLAGS	=	$(FLAGS_NO_O3) -g3 -fsanitize=address
+CFLAGS =		$(FLAGS_NO_O3) -O3
+DEBUG_CFLAGS	=	$(FLAGS_NO_O3) -g3 -fsanitize=address
 
 
 RM =	rm -f
@@ -259,7 +260,7 @@ $(NAME):	$(OBJS)
 -include $(DEPS)
 $(DIR_BUILD)%.o:	$(SRC_PATH)%.c
 			@$(MKDIR) $(shell dirname $@)
-			$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
+			$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 #---------------------------------- debug -------------------------------------#
 
@@ -272,7 +273,7 @@ $(NAME_DEBUG):	$(OBJS_DEBUG)
 -include $(DEPS_DEBUG)
 $(DIR_BUILD)%_debug.o:	$(SRC_PATH)%.c
 			@$(MKDIR) $(shell dirname $@)
-			$(CC) $(DEBUG_FLAGS) $(INCLUDES) -c $< -o $@
+			$(CC) $(DEBUG_CFLAGS) $(INCLUDES) -c $< -o $@
 
 #----------------------------------- test -------------------------------------#
 
@@ -284,23 +285,23 @@ test:		$(NAME_TEST) $(NAME_TEST_DEBUG)
 
 
 $(NAME_TEST):	$(OBJS_TEST) $(NAME)
-			$(CC) $(FLAGS) $(INCLUDES) $(OBJS_TEST) \
+			$(CC) $(CFLAGS) $(INCLUDES) $(OBJS_TEST) \
 				-L. -lft -o $(NAME_TEST)
 
 -include $(DEPS_TEST)
 $(TEST_BUILD_DIR)%.o:	$(TEST_DIR)%.c
 			@$(MKDIR) $(shell dirname $@)
-			$(CC) $(FLAGS) $(INCLUDES) -I test/header -c $< -o $@
+			$(CC) $(CFLAGS) $(INCLUDES) -I test/header -c $< -o $@
 
 
 $(NAME_TEST_DEBUG):	$(OBJS_TEST_DEBUG) $(NAME_DEBUG)
-			$(CC) $(DEBUG_FLAGS) $(INCLUDES) $(OBJS_TEST_DEBUG) \
+			$(CC) $(DEBUG_CFLAGS) $(INCLUDES) $(OBJS_TEST_DEBUG) \
 				-L. -lft -o $(NAME_TEST_DEBUG)
 
 -include $(DEPS_TEST_DEBUG)
 $(TEST_BUILD_DIR)%_debug.o:	$(TEST_DIR)%.c
 			@$(MKDIR) $(shell dirname $@)
-			$(CC) $(DEBUG_FLAGS) $(INCLUDES) -I test/header -c $< -o $@
+			$(CC) $(DEBUG_CFLAGS) $(INCLUDES) -I test/header -c $< -o $@
 
 #---------------------------------- other -------------------------------------#
 

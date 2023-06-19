@@ -15,27 +15,36 @@
 #include "ft_vector.h"
 #include "ft_mem.h"
 
-static void	*make_copy_of_vector(const t_vector *vector, size_t *size);
+static void	*make_copy_of_vector(const t_vector *vector);
 
-void	*ft_vector_convert_to_array(const t_vector *vector, size_t *size,
-			const bool make_copy)
+void	*ft_vector_convert_to_array(t_vector *vector, size_t *size,
+			const bool make_copy, const bool destroy_vector)
 {
+	void	*result;
+
 	if (make_copy)
-		return (make_copy_of_vector(vector, size));
+		result = make_copy_of_vector(vector);
+	else
+		result = vector->data;
 	if (size != NULL)
 		*size = vector->length;
-	return (vector->data);
+	if (make_copy && destroy_vector)
+		ft_vector_destroy(vector);
+	else if (destroy_vector)
+	{
+		vector->data = NULL;
+		ft_vector_destroy(vector);
+	}
+	return (result);
 }
 
-static void	*make_copy_of_vector(const t_vector *vector, size_t *size)
+static void	*make_copy_of_vector(const t_vector *vector)
 {
 	void	*copy;
 
-	if (size != NULL)
-		*size = vector->length;
 	copy = malloc(vector->length * vector->elem_size);
 	if (copy == NULL)
 		return (NULL);
-	ft_memcpy(copy, vector->data, vector->length);
+	ft_memcpy(copy, vector->data, vector->length * vector->elem_size);
 	return (copy);
 }

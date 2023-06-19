@@ -63,30 +63,36 @@ static void	render_minirt(t_engine *engine)
 //	render_raytracing(engine);
 	change_image_color(&engine->ray_traced_image, COLOR_BLACK);
 
-//	t_glyph_outline	letter_c = engine->gui.font.glyphs[get_glyph_index('c', &engine->gui.font.ttf)];
-//
-//	static bool print = true;
-//
-//	for (int16_t i = 0; i < letter_c.endPtsOfContours[letter_c.numberOfContours-1]; i++) {
-//		int y = engine->ray_traced_image.height / 2 - letter_c.yCoordinates[i] + (letter_c.yMax) / 2;
-//		int x = engine->ray_traced_image.width / 2 + letter_c.xCoordinates[i] - (letter_c.xMax) / 2;
-//		put_pixel_on_image(&engine->ray_traced_image, y, x, COLOR_WHITE);
-//		if (print) {
-//			printf("y = %i, x = %i\n", y, x);
-//		}
-//	}
-//	print = false;
+	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('8', &engine->gui.font.ttf);
+	size_t	*contours_limits;
+	size_t		number_of_points;
+	t_vector2f	*points = get_glyph_points(&number_of_points, glyph, &contours_limits);
 
-	t_vector2f	points[] = {{100, 100}, {100, WINDOW_HEIGHT - 1 + 100}, {WINDOW_WIDTH - 1 + 100, 100}, {100, 300}};
-	size_t		number_of_points = 100000;
-	t_vector2f	*bezier_points = get_cubic_bezier_points(points, number_of_points);
+	if (number_of_points == 0)
+		printf("number_of_points == %zu\n\n", number_of_points);
+	size_t	i = 0;
+	for (int16_t contour = 0; contour < glyph->numberOfContours; contour++)
+	{
+		int color;
+		if (contour == 0)
+			color = COLOR_WHITE;
+		else if (contour == 1)
+			color = COLOR_BLUE;
+		else
+			color = COLOR_RED;
+		for (; i < contours_limits[contour]; i++)
+		{
+			points[i].x += 400;
+			points[i].y += 50;
+			if (points[i].x >= 0 && points[i].x < engine->ray_traced_image.width && points[i].y >= 0 && points[i].y < engine->ray_traced_image.height)
+				put_pixel_on_image(&engine->ray_traced_image, points[i].y, points[i].x, color);
+			else
+				printf("Point is out of range:\n\tx == %f\n\ty == %f\n", points[i].x, points[i].y);
+		}
+	}
 
-	for (size_t i = 0; i < number_of_points; i++)
-		put_pixel_on_image(&engine->ray_traced_image, bezier_points[i].y, bezier_points[i].x, COLOR_WHITE);
-	free(bezier_points);
-
-	put_pixel_on_image(&engine->ray_traced_image, points[0].y, points[0].x, COLOR_RED);
-	put_pixel_on_image(&engine->ray_traced_image, points[3].y, points[3].x, COLOR_RED);
+	free(points);
+	free(contours_limits);
 
 	mlx_put_image_to_window(engine->window.mlx, engine->window.window,
 		engine->ray_traced_image.data, 0, 0);
