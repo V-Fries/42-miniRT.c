@@ -45,8 +45,8 @@ void	draw_line(t_vector2i start, t_vector2i end, t_image *img,
 		return ;
 	if (start.x == end.x || start.y == end.y)
 		return (draw_straight_line(start, end, img, color));
-	params.error_x = ft_abs(end.x - start.x);
-	params.error_y = ft_abs(end.y - start.y);
+	params.error_x = ft_absi(end.x - start.x);
+	params.error_y = ft_absi(end.y - start.y);
 	params.diff_x = 2 * params.error_x;
 	params.diff_y = 2 * params.error_y;
 	params.starting_error_x = params.error_x;

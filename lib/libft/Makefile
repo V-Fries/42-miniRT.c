@@ -105,7 +105,10 @@ SRC =\
 	linked_list/void_ptr/lst_remove_if.c				\
 \
 \
-	math/angle_to_theta.c	\
+	math/sum/sum_int_arr.c		\
+	math/sum/sum_uint8_arr.c	\
+\
+	math/angle_to_theta.c		\
 \
 \
 	mem/bzero.c		\
@@ -116,6 +119,9 @@ SRC =\
 	mem/memmove.c	\
 	mem/memset.c	\
 \
+\
+	numbers/abs/absf.c			\
+	numbers/abs/absi.c			\
 \
 	numbers/max/maxf.c			\
 \
@@ -128,7 +134,6 @@ SRC =\
 	numbers/swap/swap_ssize_t.c	\
 	numbers/swap/swap_uint.c	\
 \
-	numbers/abs.c				\
 	numbers/atof.c				\
 	numbers/atoi.c				\
 	numbers/atoll.c				\

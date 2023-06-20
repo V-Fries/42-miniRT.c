@@ -63,43 +63,29 @@ static void	render_minirt(t_engine *engine)
 //	render_raytracing(engine);
 	change_image_color(&engine->ray_traced_image, COLOR_BLACK);
 
-	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('&', &engine->gui.font.ttf);
-	size_t	*contours_limits;
-	size_t		number_of_points;
-	t_vector2f	*points = get_glyph_points(&number_of_points, glyph, &contours_limits);
-	t_vector2i	*points_i = malloc(sizeof(*points_i) * number_of_points);
+	static int test = false;
+	if (test)
+		return;
+	test = true;
+	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('8', &engine->gui.font.ttf);
+	size_t		*contours_limits;
+	t_vector	points;
+	get_glyph_points(&points, glyph, &contours_limits);
+	size_t		polygon_size;
+	t_vector2f	*polygon = get_polygon_from_contours(&polygon_size, points, glyph->numberOfContours, contours_limits);
+	t_vector2i	*points_i = malloc(sizeof(*points_i) * polygon_size);
 
-	if (number_of_points == 0)
-		printf("number_of_points == %zu\n\n", number_of_points);
-	for (size_t j = 0; j < number_of_points; j++)
+	for (size_t j = 0; j < polygon_size; j++)
 	{
-		points_i[j].x = points[j].x + 400.f;
-		float tmp = (points[j].y + 100) / engine->ray_traced_image.height;
+		points_i[j].x = polygon[j].x + 400.f;
+		float tmp = (polygon[j].y + 100) / engine->ray_traced_image.height;
 		points_i[j].y = (1.f - tmp) * engine->ray_traced_image.height;
 	}
-	size_t	i = 0;
-	for (int16_t contour = 0; contour < glyph->numberOfContours; contour++)
-	{
-		int contour_start = i;
-		int color;
-		if (contour == 0)
-			color = COLOR_WHITE;
-		else if (contour == 1)
-			color = COLOR_BLUE;
-		else
-			color = COLOR_RED;
-		for (; i < contours_limits[contour] - 1; i++)
-		{
-			draw_line(points_i[i], points_i[i + 1], &engine->ray_traced_image, color);
-//			if (points[i].x >= 0 && points[i].x < engine->ray_traced_image.width && points[i].y >= 0 && points[i].y < engine->ray_traced_image.height)
-//				put_pixel_on_image(&engine->ray_traced_image, points[i].y, points[i].x, color);
-//			else
-//				printf("Point is out of range:\n\tx == %f\n\ty == %f\n", points[i].x, points[i].y);
-		}
-		draw_line(points_i[i++], points_i[contour_start], &engine->ray_traced_image, color);
-	}
+	for (size_t i = 0; i < polygon_size - 1; i++)
+		draw_line(points_i[i], points_i[i + 1], &engine->ray_traced_image, COLOR_WHITE);
+	draw_line(points_i[0], points_i[polygon_size - 1], &engine->ray_traced_image, COLOR_WHITE);
 
-	free(points);
+	ft_vector_destroy(&points);
 	free(points_i);
 	free(contours_limits);
 

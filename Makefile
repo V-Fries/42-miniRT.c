@@ -161,6 +161,7 @@ SRC				=\
 	ttf_parser/rendering/draw_line.c					\
 	ttf_parser/rendering/get_quadratic_bezier_points.c	\
 	ttf_parser/rendering/get_glyph_points.c				\
+	ttf_parser/rendering/get_polygon_from_contours.c	\
 	ttf_parser/rendering/get_cubic_bezier_points.c		\
 	\
 	\

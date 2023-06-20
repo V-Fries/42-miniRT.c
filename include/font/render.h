@@ -23,8 +23,10 @@ bool		line_clipping(t_vector2i *start, t_vector2i *end, t_image *img);
 void		draw_line(t_vector2i start, t_vector2i end, t_image *img,
 				unsigned int color);
 
-t_vector2f	*get_glyph_points(size_t *result_size, const t_glyph_outline *glyph,
+int			get_glyph_points(t_vector *dest, const t_glyph_outline *glyph,
 				size_t **end_of_generated_contours);
+t_vector2f	*get_polygon_from_contours(size_t *result_size, t_vector points,
+				int16_t number_of_contours, const size_t *contours_limits);
 
 int			get_quadratic_bezier_points(t_vector *dest,
 				const t_vector2f *points, size_t number_of_points);

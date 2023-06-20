@@ -154,7 +154,7 @@ add_executable(miniRT
         lib/libft/src/numbers/swap/swap_size_t.c
         lib/libft/src/numbers/swap/swap_ssize_t.c
         lib/libft/src/numbers/swap/swap_uint.c
-        lib/libft/src/numbers/abs.c
+        lib/libft/src/numbers/abs/absi.c
         lib/libft/src/numbers/atof.c
         lib/libft/src/numbers/atoi.c
         lib/libft/src/numbers/atoll.c
@@ -339,4 +339,4 @@ add_executable(miniRT
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c src/ttf_parser/rendering/get_quadratic_bezier_points.c include/font/render.h src/ttf_parser/rendering/get_cubic_bezier_points.c src/ttf_parser/rendering/get_glyph_points.c lib/libft/include/ft_vector.h lib/libft/src/vector/vector_add_elem.c lib/libft/src/vector/vector_create.c lib/libft/src/vector/vector_delete_elem.c lib/libft/src/vector/vector_destroy.c lib/libft/src/vector/vector_change_size.c lib/libft/src/vector/vector_minimize_size.c lib/libft/src/vector/vector_convert_to_array.c lib/libft/src/vector/vector_append.c src/ttf_parser/rendering/draw_line.c src/ttf_parser/rendering/draw_line.c src/ttf_parser/rendering/clip_line.c)
+        src/main.c src/ttf_parser/rendering/get_quadratic_bezier_points.c include/font/render.h src/ttf_parser/rendering/get_cubic_bezier_points.c src/ttf_parser/rendering/get_glyph_points.c lib/libft/include/ft_vector.h lib/libft/src/vector/vector_add_elem.c lib/libft/src/vector/vector_create.c lib/libft/src/vector/vector_delete_elem.c lib/libft/src/vector/vector_destroy.c lib/libft/src/vector/vector_change_size.c lib/libft/src/vector/vector_minimize_size.c lib/libft/src/vector/vector_convert_to_array.c lib/libft/src/vector/vector_append.c src/ttf_parser/rendering/draw_line.c src/ttf_parser/rendering/draw_line.c src/ttf_parser/rendering/clip_line.c src/ttf_parser/rendering/get_polygon_from_contours.c src/ttf_parser/rendering/get_polygon_from_contours.c lib/libft/src/math/sum/sum_int_arr.c lib/libft/src/numbers/abs/absi.c lib/libft/src/numbers/abs/absi.c lib/libft/src/numbers/abs/absf.c lib/libft/src/math/sum/sum_int_arr.c lib/libft/src/math/sum/sum_uint8_arr.c lib/libft/src/math/sum/sum_uint8_arr.c)
