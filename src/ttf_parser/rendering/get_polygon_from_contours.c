@@ -31,27 +31,24 @@ static int		insert_contour(t_list *insert_position,
 					size_t index_of_closest_point);
 static float	get_distance_between_two_points(const t_vector2f *v1,
 					const t_vector2f *v2);
-
-t_vector2f	*get_polygon_from_contours(size_t *result_size, t_vector points,
-				int16_t number_of_contours, const size_t *contours_limits)
+#include "stdio.h"
+t_list	*get_polygon_from_contours(t_vector points,
+			const int16_t number_of_contours, const size_t *contours_limits)
 {
 	t_list		*polygon_points;
 	uint8_t		*contour_done;
-	t_vector2f	*result;
 
-	if (number_of_contours == 1)
-		return (ft_vector_convert_to_array(&points, result_size, false, false));
-	*result_size = 0;
 	polygon_points = add_main_contour_to_polygon_points(points.data,
 			contours_limits[0]);
-	if (polygon_points == NULL) // TODO need to check that contours have at least one elem in parsing
-		return (NULL);
+	if (number_of_contours == 1 || polygon_points == NULL) // TODO need to check that contours have at least one elem in parsing
+		return (polygon_points);
 	contour_done = ft_calloc(number_of_contours - 1, sizeof(*contour_done));
 	if (contour_done == NULL)
 		return (ft_lstclear(&polygon_points, &free), NULL);
-	while (ft_sum_uint8_arr(contour_done, number_of_contours - 1)
+	while ((uint16_t)ft_sum_uint8_arr(contour_done, number_of_contours - 1)
 			< number_of_contours - 1)
 	{
+		printf("ft_sum_uint8_arr\n");
 		if (insert_closest_contour_in_polygon_points(polygon_points,
 				points.data, contours_limits, number_of_contours,
 				contour_done) < 0)
@@ -62,16 +59,7 @@ t_vector2f	*get_polygon_from_contours(size_t *result_size, t_vector points,
 		}
 	}
 	free(contour_done);
-	result = malloc(sizeof(*result) * ft_lstsize(polygon_points));
-	if (result == NULL)
-		return (ft_lstclear(&polygon_points, &free), NULL);
-
-	size_t	i = 0;
-	for (t_list *cursor = polygon_points; cursor != NULL; cursor = cursor->next)
-		result[i++] = *((t_vector2f *)cursor->content);
-	*result_size = i;
-	ft_lstclear(&polygon_points, &free);
-	return (result);
+	return (polygon_points);
 }
 
 static	t_list	*add_main_contour_to_polygon_points(const t_vector2f *points,
@@ -176,9 +164,11 @@ static int	insert_contour(t_list *insert_position, const t_vector2f *points,
 	size_t			i;
 	t_vector2f		*node_content;
 	t_list			*node;
+	t_list			*cursor;
 
 	next_back_up = insert_position->next;
 	insert_position->next = NULL;
+	cursor = insert_position;
 	i = index_of_closest_point - 1;
 	while (++i < contours_limits[contour_of_closest_point])
 	{
@@ -191,11 +181,11 @@ static int	insert_contour(t_list *insert_position, const t_vector2f *points,
 			return (-1);
 		}
 		*node_content = points[i];
-		insert_position->next = node;
-		insert_position = node;
+		cursor->next = node;
+		cursor = node;
 	}
 	i = contours_limits[contour_of_closest_point - 1] - 1;
-	while (++i <= index_of_closest_point)
+	while (++i <= index_of_closest_point) // TODO could cause infinite loop if index_of_closest_point == SIZE_MAX
 	{
 		node_content = malloc(sizeof(t_vector2f));
 		node = ft_lstnew(node_content);
@@ -206,10 +196,20 @@ static int	insert_contour(t_list *insert_position, const t_vector2f *points,
 			return (-1);
 		}
 		*node_content = points[i];
-		insert_position->next = node;
-		insert_position = node;
+		cursor->next = node;
+		cursor = node;
 	}
-	insert_position->next = next_back_up;
+	node_content = malloc(sizeof(t_vector2f));
+	node = ft_lstnew(node_content);
+	if (node_content == NULL || node == NULL)
+	{
+		free(node_content);
+		free(node);
+		return (-1);
+	}
+	*node_content = *((t_vector2f *)insert_position->content);
+	cursor->next = node;
+	node->next = next_back_up;
 	return (0);
 }
 

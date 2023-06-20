@@ -18,7 +18,7 @@
 #include "font/render.h"
 #include "math/vector.h"
 
-#define NB_OF_POINT_ON_CURVE_TO_GENERATE 4
+#define NB_OF_POINT_ON_CURVE_TO_GENERATE 15
 
 int	get_glyph_points(t_vector *dest, const t_glyph_outline *glyph,
 		size_t **end_of_generated_contours)

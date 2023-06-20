@@ -19,13 +19,26 @@
 # include "font/ttf_parser.h"
 # include "image.h"
 
+typedef struct s_triangle
+{
+	t_vector2f	a;
+	t_vector2f	b;
+	t_vector2f	c;
+}	t_triangle;
+
+typedef struct s_triangles
+{
+	t_triangle	*data;
+	size_t		size;
+}	t_triangles;
+
 bool		line_clipping(t_vector2i *start, t_vector2i *end, t_image *img);
 void		draw_line(t_vector2i start, t_vector2i end, t_image *img,
 				unsigned int color);
 
 int			get_glyph_points(t_vector *dest, const t_glyph_outline *glyph,
 				size_t **end_of_generated_contours);
-t_vector2f	*get_polygon_from_contours(size_t *result_size, t_vector points,
+t_list		*get_polygon_from_contours(t_vector points,
 				int16_t number_of_contours, const size_t *contours_limits);
 
 int			get_quadratic_bezier_points(t_vector *dest,

@@ -67,24 +67,27 @@ static void	render_minirt(t_engine *engine)
 	if (test)
 		return;
 	test = true;
-	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('8', &engine->gui.font.ttf);
+	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('&', &engine->gui.font.ttf);
 	size_t		*contours_limits;
 	t_vector	points;
 	get_glyph_points(&points, glyph, &contours_limits);
-	size_t		polygon_size;
-	t_vector2f	*polygon = get_polygon_from_contours(&polygon_size, points, glyph->numberOfContours, contours_limits);
+	t_list	*polygon = get_polygon_from_contours(points, glyph->numberOfContours, contours_limits);
+	size_t polygon_size = ft_lstsize(polygon);
 	t_vector2i	*points_i = malloc(sizeof(*points_i) * polygon_size);
 
+	t_list	*cursor = polygon;
 	for (size_t j = 0; j < polygon_size; j++)
 	{
-		points_i[j].x = polygon[j].x + 400.f;
-		float tmp = (polygon[j].y + 100) / engine->ray_traced_image.height;
+		points_i[j].x = ((t_vector2f *)cursor->content)->x + 400.f;
+		float tmp = (((t_vector2f *)cursor->content)->y + 100) / engine->ray_traced_image.height;
 		points_i[j].y = (1.f - tmp) * engine->ray_traced_image.height;
+		cursor = cursor->next;
 	}
 	for (size_t i = 0; i < polygon_size - 1; i++)
 		draw_line(points_i[i], points_i[i + 1], &engine->ray_traced_image, COLOR_WHITE);
 	draw_line(points_i[0], points_i[polygon_size - 1], &engine->ray_traced_image, COLOR_WHITE);
 
+	ft_lstclear(&polygon, &free);
 	ft_vector_destroy(&points);
 	free(points_i);
 	free(contours_limits);
