@@ -57,11 +57,12 @@ static void	render_minirt(t_engine *minirt)
 #elif defined __APPLE__
 
 #include <stdio.h>
+#define SCALE_FACTOR 0.5f
 static void	render_minirt(t_engine *engine)
 {
 	update_placed_object_position(engine);
 //	render_raytracing(engine);
-//	change_image_color(&engine->ray_traced_image, COLOR_TRANSPARENT);
+	change_image_color(&engine->ray_traced_image, COLOR_TRANSPARENT);
 
 	static int test = false;
 	if (test == false)
@@ -70,28 +71,48 @@ static void	render_minirt(t_engine *engine)
 //		return;
 	test = true;
 
-	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('&', &engine->gui.font.ttf);
+	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('1', &engine->gui.font.ttf);
 	size_t		*contours_limits;
 	t_vector	points;
 	if (get_glyph_points(&points, glyph, &contours_limits) < 0)
 		return printf("Failed to get glyph points\n"), (void)exit(1);
+	for (size_t i = 0; i < points.length; i++)
+	{
+		((t_vector2f *)points.data)[i].x *= 0.5f;
+		((t_vector2f *)points.data)[i].y *= 0.5f;
+	}
 	t_glyph_generated_points gen_points = {points.data, points.length, contours_limits, glyph->numberOfContours};
 	t_dlist	*polygon = get_polygon_from_contours(points, glyph->numberOfContours, contours_limits);
 	if (polygon == NULL)
 		return printf("Failed to get polygon\n"), (void)exit(1);
-//	float gwgew = ft_dlstsize(polygon);
-//	float fewgew = 0.f;
-//	for (t_dlist *cursor = polygon; cursor != NULL; cursor = cursor->next)
-//	{
-//		t_color	color = {255.f, 255.f * (fewgew / gwgew), 255.f * (fewgew / gwgew)};
-//		fewgew++;
-//		t_vector2f *point_f = cursor->content;
-//		t_vector2i point = {point_f->x + 100, (1.f - (point_f->y + 100) / engine->ray_traced_image.height) * engine->ray_traced_image.height};
-//		if (point.x >= 0 && point.x < engine->ray_traced_image.width && point.y >= 0 && point.y < engine->ray_traced_image.height)
-//			put_pixel_on_image(&engine->ray_traced_image, point.y, point.x, vec_rgb_to_uint(color));
-//	}
+	float gwgew = ft_dlstsize(polygon);
+	float fewgew = 0.f;
+	for (t_dlist *cursor = polygon; cursor != NULL; cursor = cursor->next)
+	{
+		t_color	color = {255.f, 255.f * (fewgew / gwgew), 255.f * (fewgew / gwgew)};
+		fewgew++;
+		t_vector2f *point_f = cursor->content;
+		t_vector2i point = {point_f->x + 100, (1.f - (point_f->y + 100) / engine->ray_traced_image.height) * engine->ray_traced_image.height};
+		if (point.x >= 0 && point.x < engine->ray_traced_image.width && point.y >= 0 && point.y < engine->ray_traced_image.height)
+			put_pixel_on_image(&engine->ray_traced_image, point.y, point.x, vec_rgb_to_uint(color));
+	}
 
-	t_triangles	triangles = triangulate_polygon(engine, polygon, glyph->bounds, gen_points);
+//	size_t polygon_size = ft_dlstsize(polygon);
+//	t_vector2i	*points_i = malloc(sizeof(*points_i) * polygon_size);
+//
+//	t_dlist	*cursor = polygon;
+//	for (size_t j = 0; j < polygon_size; j++)
+//	{
+//		points_i[j].x = ((t_vector2f *)cursor->content)->x + 400.f;
+//		float tmp = (((t_vector2f *)cursor->content)->y + 100) / engine->ray_traced_image.height;
+//		points_i[j].y = (1.f - tmp) * engine->ray_traced_image.height;
+//		cursor = cursor->next;
+//	}
+//	for (size_t i = 0; i < polygon_size - 1; i++)
+//		draw_line(points_i[i], points_i[i + 1], &engine->ray_traced_image, COLOR_WHITE);
+//	draw_line(points_i[0], points_i[polygon_size - 1], &engine->ray_traced_image, COLOR_WHITE);
+
+	t_triangles	triangles = triangulate_polygon(engine, polygon, (t_glyph_outline_bounds){glyph->bounds.xMin * SCALE_FACTOR, glyph->bounds.yMin * SCALE_FACTOR, glyph->bounds.xMax * SCALE_FACTOR, glyph->bounds.yMax * SCALE_FACTOR}, gen_points);
 	if (triangles.size == 0)
 		return printf("triangulate_polygon failed\n"), (void)exit(1);
 
@@ -113,20 +134,6 @@ static void	render_minirt(t_engine *engine)
 		draw_line(points_i[2], points_i[0], &engine->ray_traced_image, COLOR_WHITE);
 	}
 	printf("Done\n");
-//	size_t polygon_size = ft_dlstsize(polygon);
-//	t_vector2i	*points_i = malloc(sizeof(*points_i) * polygon_size);
-//
-//	t_dlist	*cursor = polygon;
-//	for (size_t j = 0; j < polygon_size; j++)
-//	{
-//		points_i[j].x = ((t_vector2f *)cursor->content)->x + 400.f;
-//		float tmp = (((t_vector2f *)cursor->content)->y + 100) / engine->ray_traced_image.height;
-//		points_i[j].y = (1.f - tmp) * engine->ray_traced_image.height;
-//		cursor = cursor->next;
-//	}
-//	for (size_t i = 0; i < polygon_size - 1; i++)
-//		draw_line(points_i[i], points_i[i + 1], &engine->ray_traced_image, COLOR_WHITE);
-//	draw_line(points_i[0], points_i[polygon_size - 1], &engine->ray_traced_image, COLOR_WHITE);
 
 
 

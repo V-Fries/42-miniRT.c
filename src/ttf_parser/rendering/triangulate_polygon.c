@@ -45,7 +45,7 @@ t_triangles	triangulate_polygon(t_engine *engine, t_dlist *polygon,
 
 	if (get_drawn_outlines(&drawn_outlines, engine, bounds, points) < 0)
 		return ((t_triangles){NULL, 0});
-//	mlx_put_image_to_window(engine->window.mlx, engine->window.window, drawn_outlines.data, 0, 0);
+	mlx_put_image_to_window(engine->window.mlx, engine->window.window, drawn_outlines.data, 0, 0);
 	ft_vector_create(&triangles, sizeof(t_triangle), 0);
 	first_elem = polygon;
 	size = ft_dlstsize(polygon);
@@ -144,7 +144,8 @@ static bool	is_triangle_inside_glyph(const t_vector2f *current_point,
 
 	if (get_nb_of_intersected_segments(*current_point, *next_point, points)
 		|| get_nb_of_intersected_segments(*next_point, *next_next_point, points)
-		|| get_nb_of_intersected_segments(*next_next_point, *current_point, points))
+		|| get_nb_of_intersected_segments(*next_next_point, *current_point,
+				points))
 		return (false);
 	mid_point = vector2f_divide(vector2f_add(vector2f_add(
 			*current_point, *next_point), *next_next_point), 3.f);
@@ -245,16 +246,10 @@ static int	add_triangle(t_vector *triangles, t_dlist *cursor, t_dlist *next,
 	triangle.c = *(t_vector2f *)next_next->content;
 	if (ft_vector_add_elem(triangles, &triangle) != VECTOR_SUCCESS)
 		return (-1);
-	if (cursor->next != NULL && cursor->next->next != NULL)
-	{
-		cursor->next = next_next;
-		next_next->previous = cursor;
-	}
-	else
-	{
-		cursor->next = NULL;
-		next_next->previous = NULL;
-	}
+	if (next->previous != NULL)
+		next->previous->next = next->next;
+	if (next->next != NULL)
+		next->next->previous = next->previous;
 	free(next->content);
 	free(next);
 	return (0);
