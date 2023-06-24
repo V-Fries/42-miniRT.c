@@ -31,13 +31,13 @@ int	read_glyph_outline(const t_string *file, size_t offset,
 		return (-1);
 	if (outline->numberOfContours <= 0)
 		return (0);
-	if (read_int16_move(file, &offset, &outline->xMin) < 0)
+	if (read_int16_move(file, &offset, &outline->bounds.xMin) < 0)
 		return (-1);
-	if (read_int16_move(file, &offset, &outline->yMin) < 0)
+	if (read_int16_move(file, &offset, &outline->bounds.yMin) < 0)
 		return (-1);
-	if (read_int16_move(file, &offset, &outline->xMax) < 0)
+	if (read_int16_move(file, &offset, &outline->bounds.xMax) < 0)
 		return (-1);
-	if (read_int16_move(file, &offset, &outline->yMax) < 0)
+	if (read_int16_move(file, &offset, &outline->bounds.yMax) < 0)
 		return (-1);
 	if (read_endPtsOfContours(file, &offset, outline) < 0)
 		return (-1);

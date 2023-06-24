@@ -65,6 +65,7 @@ SRC =\
 	linked_list/doubly_linked_void_ptr/dlstadd_front.c				\
 	linked_list/doubly_linked_void_ptr/dlstclear.c					\
 	linked_list/doubly_linked_void_ptr/dlstdelone.c					\
+	linked_list/doubly_linked_void_ptr/dlstfirst.c					\
 	linked_list/doubly_linked_void_ptr/dlstiter.c					\
 	linked_list/doubly_linked_void_ptr/dlstlast.c					\
 	linked_list/doubly_linked_void_ptr/dlstmap.c					\

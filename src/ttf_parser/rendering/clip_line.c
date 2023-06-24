@@ -63,7 +63,7 @@ static uint8_t	get_region(t_vector2i point, t_image *img)
 }
 
 static t_vector2i	clip_line(t_vector2i p1, t_vector2i p2,
-			uint8_t tested_region, t_image *img)
+						uint8_t tested_region, t_image *img)
 {
 	if (tested_region & TOP)
 		return ((t_vector2i){

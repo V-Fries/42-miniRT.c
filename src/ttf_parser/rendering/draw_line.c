@@ -18,19 +18,6 @@
 #include "font/render.h"
 #include "image.h"
 
-typedef struct s_bresenham
-{
-	int				error_x;
-	int				error_y;
-	int				diff_x;
-	int				diff_y;
-	int				starting_error_x;
-	int				starting_error_y;
-	int				x_incr;
-	int				y_incr;
-	unsigned int	color;
-}	t_bresenham;
-
 static void	draw_low_slope(t_vector2i start, t_bresenham params, t_image *img);
 static void	draw_high_slope(t_vector2i start, t_bresenham params, t_image *img);
 static void	draw_straight_line(t_vector2i start, t_vector2i end, t_image *img,

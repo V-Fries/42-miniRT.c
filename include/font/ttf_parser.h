@@ -48,13 +48,18 @@ typedef union u_glyph_outline_flag
 	uint8_t	flag;
 }	t_glyph_outline_flag;
 
-typedef struct s_glyph_outline
+typedef struct s_glyph_outline_bounds
 {
-	int16_t					numberOfContours;
 	t_fword					xMin;
 	t_fword					yMin;
 	t_fword					xMax;
 	t_fword					yMax;
+}	t_glyph_outline_bounds;
+
+typedef struct s_glyph_outline
+{
+	int16_t					numberOfContours;
+	t_glyph_outline_bounds	bounds;
 	uint16_t				*endPtsOfContours;
 	uint16_t				instructionLength;
 	uint8_t					*instructions;

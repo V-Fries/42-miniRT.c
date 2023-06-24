@@ -240,8 +240,8 @@ void print_glyph_outline(t_glyph_outline *outline)
 	}
 	printf("#contours\t(xMin,yMin)\t(xMax,yMax)\tinst_length\n");
 	printf("%9d\t(%d,%d)\t\t(%d,%d)\t%d\n", outline->numberOfContours,
-		   outline->xMin, outline->yMin,
-		   outline->xMax, outline->yMax,
+		   outline->bounds.xMin, outline->bounds.yMin,
+		   outline->bounds.xMax, outline->bounds.yMax,
 		   outline->instructionLength);
 
 	printf("#)\t(  x  ,  y  )\n");
