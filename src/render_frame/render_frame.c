@@ -67,8 +67,8 @@ static void	render_minirt(t_engine *engine)
 	static int test = false;
 	if (test == false)
 		srand(time(NULL));
-//	if (test)
-//		return;
+	if (test)
+		return;
 	test = true;
 
 	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('1', &engine->gui.font.ttf);
@@ -112,7 +112,7 @@ static void	render_minirt(t_engine *engine)
 //		draw_line(points_i[i], points_i[i + 1], &engine->ray_traced_image, COLOR_WHITE);
 //	draw_line(points_i[0], points_i[polygon_size - 1], &engine->ray_traced_image, COLOR_WHITE);
 
-	t_triangles	triangles = triangulate_polygon(engine, polygon, (t_glyph_outline_bounds){glyph->bounds.xMin * SCALE_FACTOR, glyph->bounds.yMin * SCALE_FACTOR, glyph->bounds.xMax * SCALE_FACTOR, glyph->bounds.yMax * SCALE_FACTOR}, gen_points);
+	t_triangles	triangles = triangulate_polygon_and_free_polygon_list(polygon, glyph->bounds.xMax * SCALE_FACTOR, gen_points);
 	if (triangles.size == 0)
 		return printf("triangulate_polygon failed\n"), (void)exit(1);
 

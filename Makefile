@@ -160,11 +160,9 @@ SRC				=\
 	ttf_parser/rendering/clip_line.c					\
 	ttf_parser/rendering/do_segments_intersect.c		\
 	ttf_parser/rendering/draw_line.c					\
-	ttf_parser/rendering/get_quadratic_bezier_points.c	\
 	ttf_parser/rendering/get_glyph_points.c				\
 	ttf_parser/rendering/get_polygon_from_contours.c	\
-	ttf_parser/rendering/get_cubic_bezier_points.c		\
-	ttf_parser/rendering/does_intersect.c				\
+	ttf_parser/rendering/get_quadratic_bezier_points.c	\
 	ttf_parser/rendering/triangulate_polygon.c			\
 	\
 	\

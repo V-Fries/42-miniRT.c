@@ -11,31 +11,23 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <math.h>
+#include <stdio.h>
 
 #include "font/render.h"
 
-static int		get_drawn_outlines(t_image *drawn_outlines, t_engine *engine,
-					t_glyph_outline_bounds bounds,
-					t_glyph_generated_points points);
 static bool		is_triangle_inside_glyph(const t_vector2f *current_point,
 					const t_vector2f *next_point,
 					const t_vector2f *next_next_point,
 					t_glyph_generated_points points,
-					t_glyph_outline_bounds bounds);
+					float x_max);
 static size_t	get_nb_of_intersected_segments(t_vector2f p1, t_vector2f p2,
 					t_glyph_generated_points points);
-static bool		is_point_inside_glyph(const t_image *draw_outlines,
-					t_vector2f point, t_glyph_outline_bounds bounds);
 static int		add_triangle(t_vector *triangles, t_dlist *cursor,
 					t_dlist *next, t_dlist *next_next);
-#include <stdlib.h>
-#include <stdio.h>
-#include "mlx.h"
-t_triangles	triangulate_polygon(t_engine *engine, t_dlist *polygon,
-				const t_glyph_outline_bounds bounds, t_glyph_generated_points points)
+
+t_triangles	triangulate_polygon_and_free_polygon_list(t_dlist *polygon,
+				const float x_max, t_glyph_generated_points points)
 {
-	t_image		drawn_outlines;
 	t_dlist		*next;
 	t_dlist		*next_next;
 	t_dlist		*first_elem;
@@ -43,14 +35,11 @@ t_triangles	triangulate_polygon(t_engine *engine, t_dlist *polygon,
 	size_t		previous_size;
 	size_t		size;
 
-	if (get_drawn_outlines(&drawn_outlines, engine, bounds, points) < 0)
-		return ((t_triangles){NULL, 0});
-	mlx_put_image_to_window(engine->window.mlx, engine->window.window, drawn_outlines.data, 0, 0);
 	ft_vector_create(&triangles, sizeof(t_triangle), 0);
 	first_elem = polygon;
 	size = ft_dlstsize(polygon);
 	previous_size = size;
-	while (size > 3) // TODO check that size if at least 3 at the start
+	while (size > 3)
 	{
 		if (polygon->next == NULL)
 			next = first_elem;
@@ -60,12 +49,16 @@ t_triangles	triangulate_polygon(t_engine *engine, t_dlist *polygon,
 			next_next = first_elem;
 		else
 			next_next = next->next;
-		if (is_triangle_inside_glyph(polygon->content, next->content, next_next->content, points, bounds))
+		if (is_triangle_inside_glyph(polygon->content, next->content, next_next->content, points, x_max))
 		{
 			if (next == first_elem)
 				first_elem = next_next;
 			if (add_triangle(&triangles, polygon, next, next_next) < 0)
+			{
+				ft_dlstclear(&polygon, &free);
+				ft_vector_destroy(&triangles);
 				return ((t_triangles){NULL, 0}); // TODO free stuff
+			}
 			polygon = first_elem;
 			size--;
 		}
@@ -74,73 +67,31 @@ t_triangles	triangulate_polygon(t_engine *engine, t_dlist *polygon,
 		else
 		{
 			polygon = first_elem;
-			if (size == previous_size) {
+			if (size == previous_size)
+			{
 				printf("triangulate_polygon failed\n");
+				ft_dlstclear(&polygon, &free);
+//				ft_vector_destroy(&triangles);
+//				return ((t_triangles){NULL, 0});
+				ft_vector_minimize_size(&triangles);
 				return ((t_triangles){triangles.data, triangles.length});
-//				return ((t_triangles){NULL, 0}); // TODO free stuff
 			}
 			previous_size = size;
 		}
 	}
 	polygon = ft_dlstfirst(polygon);
-	add_triangle(&triangles, polygon, polygon->next, polygon->next->next);
+	add_triangle(&triangles, polygon, polygon->next, polygon->next->next); // TODO check that size if at least 3 at the start
 	ft_dlstclear(&polygon, &free);
-	destroy_t_image(&engine->window, &drawn_outlines);
 	ft_vector_minimize_size(&triangles);
 	return ((t_triangles){triangles.data, triangles.length});
-}
-
-static int	get_drawn_outlines(t_image *drawn_outlines, t_engine *engine,
-				const t_glyph_outline_bounds bounds, t_glyph_generated_points points)
-{
-	size_t		i;
-	size_t		contour_start;
-	int16_t		contour;
-	t_vector2i	points_int[2];
-
-	if (init_image(drawn_outlines, &engine->window,
-			bounds.xMax - bounds.xMin + 10, bounds.yMax - bounds.yMin) < 0)
-		return (-1);
-	change_image_color(drawn_outlines, COLOR_BLACK); // TODO is this necessary?
-	contour = -1;
-	while (++contour < points.nb_of_contours)
-	{
-		if (contour != 0)
-			contour_start = points.contours_limits[contour - 1];
-		else
-			contour_start = 0;
-		i = contour_start - 1;
-		while (++i < points.contours_limits[contour] - 1)
-		{
-			points_int[0] = (t_vector2i){points.points[i].x - bounds.xMin, points.points[i].y - bounds.yMin};
-			points_int[1] = (t_vector2i){points.points[i + 1].x - bounds.xMin, points.points[i + 1].y - bounds.yMin};
-			draw_line(points_int[0], points_int[1], drawn_outlines, COLOR_WHITE);
-		}
-		points_int[0] = (t_vector2i){points.points[i].x - bounds.xMin, points.points[i].y - bounds.yMin};
-		points_int[1] = (t_vector2i){points.points[contour_start].x - bounds.xMin, points.points[contour_start].y - bounds.yMin};
-		draw_line(points_int[0], points_int[1], drawn_outlines, COLOR_WHITE);
-	}
-	return (0);
-}
-
-bool	is_angle_concave(t_vector2f p1, t_vector2f p2, t_vector2f p3)
-{
-	const float crossProduct = (p2.x - p1.x) * (p3.y - p2.y)
-		- (p3.x - p2.x) * (p2.y - p1.y);
-
-	if (crossProduct < 0)
-		return (true);
-	return (false);
 }
 
 static bool	is_triangle_inside_glyph(const t_vector2f *current_point,
 				const t_vector2f *next_point, const t_vector2f *next_next_point,
 				const t_glyph_generated_points points,
-				const t_glyph_outline_bounds bounds)
+				const float x_max)
 {
 	t_vector2f			mid_point;
-//	const t_vector2f	triangle[3] = {*current_point, *next_point,
-//			*next_next_point};
 
 	if (get_nb_of_intersected_segments(*current_point, *next_point, points)
 		|| get_nb_of_intersected_segments(*next_point, *next_next_point, points)
@@ -149,8 +100,8 @@ static bool	is_triangle_inside_glyph(const t_vector2f *current_point,
 		return (false);
 	mid_point = vector2f_divide(vector2f_add(vector2f_add(
 			*current_point, *next_point), *next_next_point), 3.f);
-	return (get_nb_of_intersected_segments(mid_point, (t_vector2f){bounds.xMax + 100, mid_point.y}, points) % 2);
-	(void)is_point_inside_glyph;
+	return (get_nb_of_intersected_segments(mid_point,
+			(t_vector2f){x_max + 100, mid_point.y}, points) % 2);
 }
 
 static size_t	get_nb_of_intersected_segments(const t_vector2f p1,
@@ -202,38 +153,6 @@ static size_t	get_nb_of_intersected_segments(const t_vector2f p1,
 			nb_of_intersected_segments++;
 	}
 	return (nb_of_intersected_segments);
-}
-
-static bool	is_point_inside_glyph(const t_image *draw_outlines,
-				t_vector2f point, const t_glyph_outline_bounds bounds)
-{
-	size_t	collision;
-	ssize_t	row;
-	int 	i;
-	bool	is_at_edge;
-
-	point.y -= bounds.yMin;
-	point.x -= bounds.xMin;
-	row = (int)point.y * draw_outlines->width;
-	collision = 0;
-	is_at_edge = false;
-	i = point.x;
-	while (i < draw_outlines->width
-		   && draw_outlines->address[row + i] == COLOR_WHITE)
-	{
-		is_at_edge = true;
-		i++;
-	}
-	while (i < draw_outlines->width)
-	{
-		if (draw_outlines->address[row + i] == COLOR_WHITE)
-			collision++;
-		i++;
-		while (i < draw_outlines->width
-			   && draw_outlines->address[row + i] == COLOR_WHITE)
-			i++;
-	}
-	return ((collision % 2) || (is_at_edge && collision == 0));
 }
 
 static int	add_triangle(t_vector *triangles, t_dlist *cursor, t_dlist *next,

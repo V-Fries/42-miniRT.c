@@ -62,8 +62,8 @@ int			get_glyph_points(t_vector *dest, const t_glyph_outline *glyph,
 				size_t **end_of_generated_contours);
 t_dlist		*get_polygon_from_contours(t_vector points,
 				int16_t number_of_contours, const size_t *contours_limits);
-t_triangles	triangulate_polygon(t_engine *engine, t_dlist *polygon,
-				t_glyph_outline_bounds bounds, t_glyph_generated_points points);
+t_triangles	triangulate_polygon_and_free_polygon_list(t_dlist *polygon,
+				float x_max, t_glyph_generated_points points);
 
 int			get_quadratic_bezier_points(t_vector *dest,
 				const t_vector2f *points, size_t number_of_points);
