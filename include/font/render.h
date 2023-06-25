@@ -61,7 +61,11 @@ typedef struct s_bresenham
 }	t_bresenham;
 
 bool		line_clipping(t_vector2i *start, t_vector2i *end, t_image *img);
+void		draw_glyph(t_triangles glyph_triangles, float scale,
+				t_image *image, unsigned int color);
 void		draw_line(t_vector2i start, t_vector2i end, t_image *img,
+				unsigned int color);
+void		draw_triangle(t_triangle triangle, t_image *image,
 				unsigned int color);
 
 int			get_glyph_points(t_vector *dest, const t_glyph_outline *glyph,
@@ -73,8 +77,6 @@ t_triangles	triangulate_polygon_and_free_polygon_list(t_dlist *polygon,
 
 int			get_quadratic_bezier_points(t_vector *dest,
 				const t_vector2f *points, size_t number_of_points);
-int			get_cubic_bezier_points(t_vector *dest, const t_vector2f *points,
-				size_t number_of_points);
 
 bool		do_segments_intersect(t_vector2f a, t_vector2f b, t_vector2f c,
 				t_vector2f d);

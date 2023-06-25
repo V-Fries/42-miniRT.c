@@ -57,45 +57,88 @@ static void	render_minirt(t_engine *minirt)
 #elif defined __APPLE__
 
 #include <stdio.h>
-#define SCALE_FACTOR 0.5f
+#define SCALE_FACTOR 0.25f
 static void	render_minirt(t_engine *engine)
 {
 	update_placed_object_position(engine);
 //	render_raytracing(engine);
-	change_image_color(&engine->ray_traced_image, COLOR_TRANSPARENT);
+	change_image_color(&engine->ray_traced_image, COLOR_BLACK);
 
-	static int test = false;
-	if (test == false)
-		srand(time(NULL));
+	static int test = true;
+//	if (test == false)
+//		return;
+	static t_triangles	triangles;
+
+
 	if (test)
-		return;
-	test = true;
-
-	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('&', &engine->gui.font.ttf);
-	size_t		*contours_limits;
-	t_vector	points;
-	if (get_glyph_points(&points, glyph, &contours_limits) < 0)
-		return printf("Failed to get glyph points\n"), (void)exit(1);
-	for (size_t i = 0; i < points.length; i++)
 	{
-		((t_vector2f *)points.data)[i].x *= 0.5f;
-		((t_vector2f *)points.data)[i].y *= 0.5f;
+		t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('8', &engine->gui.font.ttf);
+		size_t		*contours_limits;
+		t_vector	points;
+		if (get_glyph_points(&points, glyph, &contours_limits) < 0)
+			return printf("Failed to get glyph points\n"), (void)exit(1);
+		for (size_t i = 0; i < points.length; i++)
+		{
+			float y = ((t_vector2f *)points.data)[i].y;
+			float tmp = y / glyph->bounds.yMax;
+			((t_vector2f *)points.data)[i].y = (1.f - tmp) * glyph->bounds.yMax;
+		}
+		t_glyph_generated_points gen_points = {points.data, points.length, contours_limits, glyph->numberOfContours};
+		t_dlist	*polygon = get_polygon_from_contours(points, glyph->numberOfContours, contours_limits);
+		if (polygon == NULL)
+			return printf("Failed to get polygon\n"), (void)exit(1);
+//		float gwgew = ft_dlstsize(polygon);
+//		float fewgew = 0.f;
+//		for (t_dlist *cursor = polygon; cursor != NULL; cursor = cursor->next)
+//		{
+//			t_color	color = {255.f, 255.f * (fewgew / gwgew), 255.f * (fewgew / gwgew)};
+//			fewgew++;
+//			t_vector2f *point_f = cursor->content;
+//			t_vector2i point = {point_f->x + 100, (1.f - (point_f->y + 100) / engine->ray_traced_image.height) * engine->ray_traced_image.height};
+//			if (point.x >= 0 && point.x < engine->ray_traced_image.width && point.y >= 0 && point.y < engine->ray_traced_image.height)
+//				put_pixel_on_image(&engine->ray_traced_image, point.y, point.x, vec_rgb_to_uint(color));
+//		}
+//		for (t_dlist *cursor = polygon; cursor != NULL; cursor = cursor->next)
+//		{
+//			t_vector2i tmp[2];
+//			if (cursor->next == NULL)
+//			{
+//				tmp[0] = (t_vector2i){((t_vector2f *)cursor->content)->x * SCALE_FACTOR, ((t_vector2f *)cursor->content)->y * SCALE_FACTOR};
+//				tmp[1] = (t_vector2i){((t_vector2f *)polygon->content)->x * SCALE_FACTOR, ((t_vector2f *)polygon->content)->y * SCALE_FACTOR};
+//			}
+//			else
+//			{
+//				tmp[0] = (t_vector2i){((t_vector2f *)cursor->content)->x * SCALE_FACTOR, ((t_vector2f *)cursor->content)->y * SCALE_FACTOR};
+//				tmp[1] = (t_vector2i){((t_vector2f *)cursor->next->content)->x * SCALE_FACTOR, ((t_vector2f *)cursor->next->content)->y * SCALE_FACTOR};
+//			}
+//			draw_line(tmp[0], tmp[1], &engine->ray_traced_image, COLOR_WHITE);
+//		}
+		triangles = triangulate_polygon_and_free_polygon_list(polygon, glyph->bounds.xMax, gen_points);
+//		for (size_t i = 0; i < triangles.size; i++)
+//		{
+////		t_vector2i	points_i[3] = {
+////			{triangles.data[i].a.x + 700.f, triangles.data[i].a.y + 100},
+////			{triangles.data[i].b.x + 700.f, triangles.data[i].b.y + 100},
+////			{triangles.data[i].c.x + 700.f, triangles.data[i].c.y + 100}
+////		};
+//			t_vector2i	points_i[3] = {
+//					{triangles.data[i].a.x * SCALE_FACTOR + 400.f, triangles.data[i].a.y * SCALE_FACTOR + 100.f},
+//					{triangles.data[i].b.x * SCALE_FACTOR + 400.f, triangles.data[i].b.y * SCALE_FACTOR + 100.f},
+//					{triangles.data[i].c.x * SCALE_FACTOR + 400.f, triangles.data[i].c.y * SCALE_FACTOR + 100.f}
+//			};
+//			draw_line(points_i[0], points_i[1], &engine->ray_traced_image, COLOR_WHITE);
+//			draw_line(points_i[1], points_i[2], &engine->ray_traced_image, COLOR_WHITE);
+//			draw_line(points_i[2], points_i[0], &engine->ray_traced_image, COLOR_WHITE);
+//		}
+		if (triangles.size == 0)
+			return printf("triangulate_polygon failed\n"), (void)exit(1);
+		ft_vector_destroy(&points);
+		free(contours_limits);
+		printf("Done\n");
+		test = false;
+//		sleep(1);
 	}
-	t_glyph_generated_points gen_points = {points.data, points.length, contours_limits, glyph->numberOfContours};
-	t_dlist	*polygon = get_polygon_from_contours(points, glyph->numberOfContours, contours_limits);
-	if (polygon == NULL)
-		return printf("Failed to get polygon\n"), (void)exit(1);
-	float gwgew = ft_dlstsize(polygon);
-	float fewgew = 0.f;
-	for (t_dlist *cursor = polygon; cursor != NULL; cursor = cursor->next)
-	{
-		t_color	color = {255.f, 255.f * (fewgew / gwgew), 255.f * (fewgew / gwgew)};
-		fewgew++;
-		t_vector2f *point_f = cursor->content;
-		t_vector2i point = {point_f->x + 100, (1.f - (point_f->y + 100) / engine->ray_traced_image.height) * engine->ray_traced_image.height};
-		if (point.x >= 0 && point.x < engine->ray_traced_image.width && point.y >= 0 && point.y < engine->ray_traced_image.height)
-			put_pixel_on_image(&engine->ray_traced_image, point.y, point.x, vec_rgb_to_uint(color));
-	}
+	draw_glyph(triangles, SCALE_FACTOR, &engine->ray_traced_image, COLOR_WHITE);
 
 //	size_t polygon_size = ft_dlstsize(polygon);
 //	t_vector2i	*points_i = malloc(sizeof(*points_i) * polygon_size);
@@ -112,36 +155,13 @@ static void	render_minirt(t_engine *engine)
 //		draw_line(points_i[i], points_i[i + 1], &engine->ray_traced_image, COLOR_WHITE);
 //	draw_line(points_i[0], points_i[polygon_size - 1], &engine->ray_traced_image, COLOR_WHITE);
 
-	t_triangles	triangles = triangulate_polygon_and_free_polygon_list(polygon, glyph->bounds.xMax * SCALE_FACTOR, gen_points);
-	if (triangles.size == 0)
-		return printf("triangulate_polygon failed\n"), (void)exit(1);
 
 
-	for (size_t i = 0; i < triangles.size; i++)
-	{
-//		t_vector2i	points_i[3] = {
-//			{triangles.data[i].a.x + 700.f, triangles.data[i].a.y + 100},
-//			{triangles.data[i].b.x + 700.f, triangles.data[i].b.y + 100},
-//			{triangles.data[i].c.x + 700.f, triangles.data[i].c.y + 100}
-//		};
-		t_vector2i	points_i[3] = {
-			{triangles.data[i].a.x + 700.f, (1.f - (triangles.data[i].a.y + 100) / engine->ray_traced_image.height) * engine->ray_traced_image.height},
-			{triangles.data[i].b.x + 700.f, (1.f - (triangles.data[i].b.y + 100) / engine->ray_traced_image.height) * engine->ray_traced_image.height},
-			{triangles.data[i].c.x + 700.f, (1.f - (triangles.data[i].c.y + 100) / engine->ray_traced_image.height) * engine->ray_traced_image.height}
-		};
-		draw_line(points_i[0], points_i[1], &engine->ray_traced_image, COLOR_WHITE);
-		draw_line(points_i[1], points_i[2], &engine->ray_traced_image, COLOR_WHITE);
-		draw_line(points_i[2], points_i[0], &engine->ray_traced_image, COLOR_WHITE);
-	}
-	printf("Done\n");
 
 
 
 //	draw_glyph(engine, points, contours_limits, glyph->numberOfContours);
 
-	ft_vector_destroy(&points);
-	free(contours_limits);
-	free(triangles.data);
 
 	mlx_put_image_to_window(engine->window.mlx, engine->window.window,
 		engine->ray_traced_image.data, 0, 0);
