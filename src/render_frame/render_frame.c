@@ -71,7 +71,7 @@ static void	render_minirt(t_engine *engine)
 		return;
 	test = true;
 
-	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('1', &engine->gui.font.ttf);
+	t_glyph_outline	*glyph = engine->gui.font.glyphs + get_glyph_index('&', &engine->gui.font.ttf);
 	size_t		*contours_limits;
 	t_vector	points;
 	if (get_glyph_points(&points, glyph, &contours_limits) < 0)

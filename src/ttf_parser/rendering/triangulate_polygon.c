@@ -22,6 +22,7 @@ static bool		is_triangle_inside_glyph(const t_vector2f *current_point,
 					float x_max);
 static size_t	get_nb_of_intersected_segments(t_vector2f p1, t_vector2f p2,
 					t_glyph_generated_points points);
+static int		add_intersection(t_segment segment_1, t_segment segment_2);
 static int		add_triangle(t_vector *triangles, t_dlist *cursor,
 					t_dlist *next, t_dlist *next_next);
 
@@ -107,11 +108,11 @@ static bool	is_triangle_inside_glyph(const t_vector2f *current_point,
 static size_t	get_nb_of_intersected_segments(const t_vector2f p1,
 					const t_vector2f p2, const t_glyph_generated_points points)
 {
-	int16_t		contour;
-	size_t		contour_start;
-	size_t		i;
-	t_vector2f	current_points[2];
-	size_t		nb_of_intersected_segments;
+	int16_t			contour;
+	size_t			contour_start;
+	size_t			i;
+	const t_segment	segment_1 = {p1, p2};
+	size_t			nb_of_intersected_segments;
 
 	nb_of_intersected_segments = 0;
 	contour = -1;
@@ -124,35 +125,40 @@ static size_t	get_nb_of_intersected_segments(const t_vector2f p1,
 		i = contour_start - 1;
 		while (++i < points.contours_limits[contour] - 1)
 		{
-			if ((vector2f_are_equal(p1, points.points[i]) || vector2f_are_equal(p1, points.points[i + 1]))
-				&& (vector2f_are_equal(p2, points.points[i]) || vector2f_are_equal(p2, points.points[i + 1])))
-				continue ;
-			if (vector2f_are_equal(p1, points.points[i]) || vector2f_are_equal(p1, points.points[i + 1]))
-				current_points[0] = vector2f_add(vector2f_multiply(vector2f_subtract(p2, p1), 0.05f), p1);
-			else
-				current_points[0] = p1;
-			if (vector2f_are_equal(p2, points.points[i]) || vector2f_are_equal(p2, points.points[i + 1]))
-				current_points[1] = vector2f_add(vector2f_multiply(vector2f_subtract(p1, p2), 0.05f), p2);
-			else
-				current_points[1] = p2;
-			if (do_segments_intersect(current_points[0], current_points[1], points.points[i], points.points[i + 1]))
-				nb_of_intersected_segments++;
+			nb_of_intersected_segments += add_intersection(segment_1,
+					(t_segment){points.points[i], points.points[i + 1]});
 		}
-		if ((vector2f_are_equal(p1, points.points[i]) || vector2f_are_equal(p1, points.points[contour_start]))
-			&& (vector2f_are_equal(p2, points.points[i]) || vector2f_are_equal(p2, points.points[contour_start])))
-			continue ;
-		if (vector2f_are_equal(p1, points.points[i]) || vector2f_are_equal(p1, points.points[contour_start]))
-			current_points[0] = vector2f_add(vector2f_multiply(vector2f_subtract(p2, p1), 0.05f), p1);
-		else
-			current_points[0] = p1;
-		if (vector2f_are_equal(p2, points.points[i]) || vector2f_are_equal(p2, points.points[contour_start]))
-			current_points[1] = vector2f_add(vector2f_multiply(vector2f_subtract(p1, p2), 0.05f), p2);
-		else
-			current_points[1] = p2;
-		if (do_segments_intersect(current_points[0], current_points[1], points.points[i], points.points[contour_start]))
-			nb_of_intersected_segments++;
+		nb_of_intersected_segments += add_intersection(segment_1,
+				(t_segment){points.points[i], points.points[contour_start]});
 	}
 	return (nb_of_intersected_segments);
+}
+
+static int	add_intersection(t_segment segment_1, t_segment segment_2)
+{
+	t_segment	corrected_segment_1;
+
+	if ((vector2f_are_equal(segment_1.a, segment_2.a)
+			|| vector2f_are_equal(segment_1.a, segment_2.b))
+		&& (vector2f_are_equal(segment_1.b, segment_2.a)
+			|| vector2f_are_equal(segment_1.b, segment_2.b)))
+		return (0);
+	if (vector2f_are_equal(segment_1.a, segment_2.a)
+		|| vector2f_are_equal(segment_1.a, segment_2.b))
+		corrected_segment_1.a = vector2f_add(vector2f_multiply(
+				vector2f_subtract(segment_1.b, segment_1.a), 0.05f),
+					segment_1.a);
+	else
+		corrected_segment_1.a = segment_1.a;
+	if (vector2f_are_equal(segment_1.b, segment_2.a)
+		|| vector2f_are_equal(segment_1.b, segment_2.b))
+		corrected_segment_1.b = vector2f_add(vector2f_multiply(
+				vector2f_subtract(segment_1.a, segment_1.b), 0.05f),
+					segment_1.b);
+	else
+		corrected_segment_1.b = segment_1.b;
+	return (do_segments_intersect(corrected_segment_1.a, corrected_segment_1.b,
+			segment_2.a, segment_2.b));
 }
 
 static int	add_triangle(t_vector *triangles, t_dlist *cursor, t_dlist *next,

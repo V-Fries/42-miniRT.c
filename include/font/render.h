@@ -33,6 +33,12 @@ typedef struct s_triangles
 	size_t		size;
 }	t_triangles;
 
+typedef struct s_segment
+{
+	t_vector2f	a;
+	t_vector2f	b;
+}	t_segment;
+
 typedef struct s_glyph_generated_points
 {
 	t_vector2f	*points;
