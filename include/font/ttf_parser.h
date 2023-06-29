@@ -212,16 +212,11 @@ typedef struct s_ttf
 	t_head				head;
 	t_maxp				maxp;
 	t_loca				loca;
+	size_t				glyphs_count;
+	t_glyph_outline		*glyphs;
 }	t_ttf;
 
-typedef struct s_font
-{
-	t_ttf			ttf;
-	size_t			glyphs_count;
-	t_glyph_outline	*glyphs;
-}	t_font;
-
-int				ttf_parser(t_font *font, char *file_name);
+int				ttf_parser(t_ttf *font, char *file_name);
 
 int				read_font_directory(const t_string *file,
 					t_font_directory *font_directory);

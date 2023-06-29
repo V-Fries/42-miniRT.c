@@ -28,7 +28,7 @@ void 	print_maxp(t_maxp *maxp);
 void	print_loca(t_loca *loca);
 void 	print_glyph_outline(t_glyph_outline *outline);
 
-int	ttf_parser(t_font *font, char *file_name)
+int	ttf_parser(t_ttf *ttf, char *file_name)
 {
 	t_string	file;
 	// TODO improve error messages
@@ -39,58 +39,58 @@ int	ttf_parser(t_font *font, char *file_name)
 		perror("ttf_parser failed");
 		return (-1);
 	}
-	font->ttf = (t_ttf){0};
-	if (read_font_directory(&file, &font->ttf.font_directory) < 0)
+	*ttf = (t_ttf){0};
+	if (read_font_directory(&file, &ttf->font_directory) < 0)
 	{
 		ft_print_error("Failed to parse font directory\n");
-		return (error_in_ttf_parser(&file, &font->ttf));
+		return (error_in_ttf_parser(&file, ttf));
 	}
-	print_table_directory(font->ttf.font_directory.table_directory,
-		font->ttf.font_directory.offset_subtable.num_tables); // Testing
-	if (read_cmap(&file, &font->ttf) < 0)
+	print_table_directory(ttf->font_directory.table_directory,
+		ttf->font_directory.offset_subtable.num_tables); // Testing
+	if (read_cmap(&file, ttf) < 0)
 	{
 		ft_print_error("Bad read_cmap()\n");
-		return (error_in_ttf_parser(&file, &font->ttf));
+		return (error_in_ttf_parser(&file, ttf));
 	}
-	print_cmap(&font->ttf.cmap); // Testing
-	if (read_format4(&file, &font->ttf) < 0)
+	print_cmap(&ttf->cmap); // Testing
+	if (read_format4(&file, ttf) < 0)
 	{
 		ft_print_error("Failed to read format4\n");
-		return (error_in_ttf_parser(&file, &font->ttf));
+		return (error_in_ttf_parser(&file, ttf));
 	}
-	print_format4(font->ttf.format4); // Testing
-	if (read_head(&file, &font->ttf) < 0)
+	print_format4(ttf->format4); // Testing
+	if (read_head(&file, ttf) < 0)
 	{
 		ft_print_error("Failed to read head\n");
-		return (error_in_ttf_parser(&file, &font->ttf));
+		return (error_in_ttf_parser(&file, ttf));
 	}
-	print_head(&font->ttf.head); // Testing
-	if (read_maxp(&file, &font->ttf) < 0)
+	print_head(&ttf->head); // Testing
+	if (read_maxp(&file, ttf) < 0)
 	{
 		ft_print_error("Failed to read maxp\n");
-		return (error_in_ttf_parser(&file, &font->ttf));
+		return (error_in_ttf_parser(&file, ttf));
 	}
-	print_maxp(&font->ttf.maxp); // Testing
-	if (read_loca(&file, &font->ttf) < 0)
+	print_maxp(&ttf->maxp); // Testing
+	if (read_loca(&file, ttf) < 0)
 	{
 		ft_print_error("Failed to read loca\n");
-		return (error_in_ttf_parser(&file, &font->ttf));
+		return (error_in_ttf_parser(&file, ttf));
 	}
-	print_loca(&font->ttf.loca); // Testing
+	print_loca(&ttf->loca); // Testing
 
-	font->glyphs = get_glyph_outlines(&file, &font->ttf);
-	if (font->glyphs == NULL)
-		return (error_in_ttf_parser(&file, &font->ttf));
-	font->glyphs_count = font->ttf.maxp.numGlyphs;
+	ttf->glyphs = get_glyph_outlines(&file, ttf);
+	if (ttf->glyphs == NULL)
+		return (error_in_ttf_parser(&file, ttf));
+	ttf->glyphs_count = ttf->maxp.numGlyphs;
 	free(file.data);
 
 	// Testing
 	char c = 0;
 	while (c >= 0)
 	{
-		uint32_t index = get_glyph_index(c, &font->ttf);
+		uint32_t index = get_glyph_index(c, ttf);
 		printf("%c / %u index == %i\n", c, c, index);
-		print_glyph_outline(font->glyphs + index);
+		print_glyph_outline(ttf->glyphs + index);
 		c++;
 	}
 	//!Testing

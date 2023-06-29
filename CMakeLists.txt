@@ -1,23 +1,26 @@
 cmake_minimum_required(VERSION 3.25)
-project(miniRT)
+project(minirt C)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_C_STANDARD 11)
 
 include_directories(include)
 include_directories(lib/libft/include)
 include_directories(lib/minilibx_opengl_20191021)
 
-add_executable(miniRT
+add_executable(minirt
         include/deprecated/t_ambient_light.h
         include/deprecated/t_light.h
         include/deprecated/t_raytracing_data.h
+        include/font/render.h
+        include/font/rendering_structs.h
+        include/font/ttf_parser.h
         include/gui/box.h
         include/gui/boxes.h
-        include/gui/UI.h
         include/gui/gui.h
         include/gui/init.h
         include/gui/main_gui_box.h
         include/gui/object_modification_box.h
+        include/gui/UI.h
         include/gui/utils.h
         include/math/conversion.h
         include/math/equation.h
@@ -37,7 +40,6 @@ add_executable(miniRT
         include/ray_tracer_gui_api.h
         include/render_frame.h
         include/scene.h
-        include/font/ttf_parser.h
         include/window.h
         lib/libft/include/ft_bitmask.h
         lib/libft/include/ft_bools.h
@@ -52,6 +54,7 @@ add_executable(miniRT
         lib/libft/include/ft_sort.h
         lib/libft/include/ft_string.h
         lib/libft/include/ft_time.h
+        lib/libft/include/ft_vector.h
         lib/libft/include/libft.h
         lib/libft/src/bitmask/bitmask_free.c
         lib/libft/src/bitmask/bitmask_get.c
@@ -102,6 +105,7 @@ add_executable(miniRT
         lib/libft/src/linked_list/doubly_linked_void_ptr/dlstadd_front.c
         lib/libft/src/linked_list/doubly_linked_void_ptr/dlstclear.c
         lib/libft/src/linked_list/doubly_linked_void_ptr/dlstdelone.c
+        lib/libft/src/linked_list/doubly_linked_void_ptr/dlstfirst.c
         lib/libft/src/linked_list/doubly_linked_void_ptr/dlstiter.c
         lib/libft/src/linked_list/doubly_linked_void_ptr/dlstlast.c
         lib/libft/src/linked_list/doubly_linked_void_ptr/dlstmap.c
@@ -138,6 +142,8 @@ add_executable(miniRT
         lib/libft/src/linked_list/void_ptr/lstmap.c
         lib/libft/src/linked_list/void_ptr/lstnew.c
         lib/libft/src/linked_list/void_ptr/lstsize.c
+        lib/libft/src/math/sum/sum_int_arr.c
+        lib/libft/src/math/sum/sum_uint8_arr.c
         lib/libft/src/math/angle_to_theta.c
         lib/libft/src/mem/bzero.c
         lib/libft/src/mem/calloc.c
@@ -146,6 +152,8 @@ add_executable(miniRT
         lib/libft/src/mem/memcpy.c
         lib/libft/src/mem/memmove.c
         lib/libft/src/mem/memset.c
+        lib/libft/src/numbers/abs/absf.c
+        lib/libft/src/numbers/abs/absi.c
         lib/libft/src/numbers/max/maxf.c
         lib/libft/src/numbers/min/minf.c
         lib/libft/src/numbers/swap/swap_float.c
@@ -154,7 +162,6 @@ add_executable(miniRT
         lib/libft/src/numbers/swap/swap_size_t.c
         lib/libft/src/numbers/swap/swap_ssize_t.c
         lib/libft/src/numbers/swap/swap_uint.c
-        lib/libft/src/numbers/abs/absi.c
         lib/libft/src/numbers/atof.c
         lib/libft/src/numbers/atoi.c
         lib/libft/src/numbers/atoll.c
@@ -193,33 +200,30 @@ add_executable(miniRT
         lib/libft/src/string/t_string_free.c
         lib/libft/src/time/get_current_time.c
         lib/libft/src/time/get_number_of_fps_in_string.c
+        lib/libft/src/vector/vector_add_elem.c
+        lib/libft/src/vector/vector_append.c
+        lib/libft/src/vector/vector_change_size.c
+        lib/libft/src/vector/vector_convert_to_array.c
+        lib/libft/src/vector/vector_create.c
+        lib/libft/src/vector/vector_delete_elem.c
+        lib/libft/src/vector/vector_destroy.c
+        lib/libft/src/vector/vector_minimize_size.c
         lib/minilibx_opengl_20191021/font.c
-        lib/minilibx_opengl_20191021/font.xcf
-        lib/minilibx_opengl_20191021/libmlx.a
-        lib/minilibx_opengl_20191021/Makefile
         lib/minilibx_opengl_20191021/mlx.h
         lib/minilibx_opengl_20191021/mlx_init_loop.m
-        lib/minilibx_opengl_20191021/mlx_init_loop.o
         lib/minilibx_opengl_20191021/mlx_int.h
         lib/minilibx_opengl_20191021/mlx_int_str_to_wordtab.c
-        lib/minilibx_opengl_20191021/mlx_int_str_to_wordtab.o
         lib/minilibx_opengl_20191021/mlx_mouse.m
-        lib/minilibx_opengl_20191021/mlx_mouse.o
         lib/minilibx_opengl_20191021/mlx_new_image.m
-        lib/minilibx_opengl_20191021/mlx_new_image.o
         lib/minilibx_opengl_20191021/mlx_new_window.h
         lib/minilibx_opengl_20191021/mlx_new_window.m
-        lib/minilibx_opengl_20191021/mlx_new_window.o
         lib/minilibx_opengl_20191021/mlx_opengl.h
         lib/minilibx_opengl_20191021/mlx_opengl.m
         lib/minilibx_opengl_20191021/mlx_png.c
         lib/minilibx_opengl_20191021/mlx_png.h
-        lib/minilibx_opengl_20191021/mlx_png.o
         lib/minilibx_opengl_20191021/mlx_rgb.c
         lib/minilibx_opengl_20191021/mlx_shaders.c
-        lib/minilibx_opengl_20191021/mlx_shaders.o
         lib/minilibx_opengl_20191021/mlx_xpm.c
-        lib/minilibx_opengl_20191021/mlx_xpm.o
         src/gui/box/create_gui_box.c
         src/gui/box/default_gui_box_methods.c
         src/gui/box/destroy_t_gui_box.c
@@ -336,7 +340,16 @@ add_executable(miniRT
         src/ttf_parser/parsing/read_maxp.c
         src/ttf_parser/parsing/ttf_get_table_offset.c
         src/ttf_parser/parsing/ttf_parser.c
+        src/ttf_parser/rendering/do_segments_intersect.c
+        src/ttf_parser/rendering/draw_glyph.c
+        src/ttf_parser/rendering/draw_triangle.c
+        src/ttf_parser/rendering/get_glyph_points.c
+        src/ttf_parser/rendering/get_polygon_from_contours.c
+        src/ttf_parser/rendering/get_quadratic_bezier_points.c
+        src/ttf_parser/rendering/triangulate_polygon.c
+        src/ttf_parser/rendering/write_centered_string_to_image.c
+        src/ttf_parser/get_font.c
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c src/ttf_parser/rendering/get_quadratic_bezier_points.c include/font/render.h src/ttf_parser/rendering/get_glyph_points.c lib/libft/include/ft_vector.h lib/libft/src/vector/vector_add_elem.c lib/libft/src/vector/vector_create.c lib/libft/src/vector/vector_delete_elem.c lib/libft/src/vector/vector_destroy.c lib/libft/src/vector/vector_change_size.c lib/libft/src/vector/vector_minimize_size.c lib/libft/src/vector/vector_convert_to_array.c lib/libft/src/vector/vector_append.c src/ttf_parser/rendering/draw_line.c src/ttf_parser/rendering/draw_line.c src/ttf_parser/rendering/clip_line.c src/ttf_parser/rendering/get_polygon_from_contours.c src/ttf_parser/rendering/get_polygon_from_contours.c lib/libft/src/math/sum/sum_int_arr.c lib/libft/src/numbers/abs/absi.c lib/libft/src/numbers/abs/absi.c lib/libft/src/numbers/abs/absf.c lib/libft/src/math/sum/sum_int_arr.c lib/libft/src/math/sum/sum_uint8_arr.c lib/libft/src/math/sum/sum_uint8_arr.c src/ttf_parser/rendering/triangulate_polygon.c lib/libft/src/linked_list/doubly_linked_void_ptr/dlstfirst.c src/ttf_parser/rendering/do_segments_intersect.c src/ttf_parser/rendering/do_segments_intersect.c src/ttf_parser/rendering/draw_glyph.c src/ttf_parser/rendering/draw_glyph.c src/ttf_parser/rendering/draw_triangle.c src/ttf_parser/rendering/init_bresenham.c)
+        src/main.c)

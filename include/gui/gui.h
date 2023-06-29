@@ -29,7 +29,7 @@ typedef struct s_fps
 
 typedef struct s_gui
 {
-	t_font				font;
+	t_ttf				ttf;
 	bool				is_hidden;
 	float				hidden_ratio;
 	t_gui_boxes			gui_boxes;
