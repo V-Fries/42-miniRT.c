@@ -64,7 +64,10 @@ static void	render_minirt(t_engine *engine)
 //	render_raytracing(engine);
 
 	change_image_color(&engine->ray_traced_image, COLOR_BLACK);
-	draw_glyph(engine->gui.font.glyphs['}'], SCALE_FACTOR, &engine->ray_traced_image, COLOR_WHITE);
+
+//	draw_glyph(engine->gui.font.glyphs['8'], 0.25f, &engine->ray_traced_image, COLOR_WHITE, 0);
+
+	write_centered_string_to_image(&engine->gui.font, &engine->ray_traced_image, "Salut Tom :)", 65);
 
 	mlx_put_image_to_window(engine->window.mlx, engine->window.window,
 		engine->ray_traced_image.data, 0, 0);

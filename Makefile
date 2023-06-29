@@ -157,13 +157,14 @@ SRC				=\
 	ttf_parser/parsing/ttf_get_table_offset.c			\
 	ttf_parser/parsing/ttf_parser.c						\
 	\
-	ttf_parser/rendering/do_segments_intersect.c		\
-	ttf_parser/rendering/draw_glyph.c					\
-	ttf_parser/rendering/draw_triangle.c				\
-	ttf_parser/rendering/get_glyph_points.c				\
-	ttf_parser/rendering/get_polygon_from_contours.c	\
-	ttf_parser/rendering/get_quadratic_bezier_points.c	\
-	ttf_parser/rendering/triangulate_polygon.c			\
+	ttf_parser/rendering/do_segments_intersect.c			\
+	ttf_parser/rendering/draw_glyph.c						\
+	ttf_parser/rendering/draw_triangle.c					\
+	ttf_parser/rendering/get_glyph_points.c					\
+	ttf_parser/rendering/get_polygon_from_contours.c		\
+	ttf_parser/rendering/get_quadratic_bezier_points.c		\
+	ttf_parser/rendering/triangulate_polygon.c				\
+	ttf_parser/rendering/write_centered_string_to_image.c	\
 	\
 	ttf_parser/get_font.c	\
 	\

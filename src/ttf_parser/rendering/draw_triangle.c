@@ -35,7 +35,7 @@ void	draw_triangle(const t_triangle triangle, t_image *image,
 		x = x_start - 1;
 		while (++x <= x_limit)
 		{
-			unsigned int *dst = image->address + (y + 100) * image->width + (x + 400);
+			unsigned int *dst = image->address + y * image->width + x;
 			if (dst < image->address)
 				continue ;
 			if (dst >= image_limit)

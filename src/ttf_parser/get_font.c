@@ -41,11 +41,14 @@ int	get_font(t_font *font, char *font_file)
 			return (-1);
 		}
 	}
-	font->y_size = ttf.head.yMax;
-	font->x_size = ttf.head.xMax;
+	font->bounds.yMax = ttf.head.yMax;
+	font->bounds.xMax = ttf.head.xMax;
+	font->bounds.yMin = ttf.head.yMin;
+	font->bounds.xMin = ttf.head.xMin;
+	font->baseline = font->bounds.yMax - (font->bounds.yMax - font->bounds.yMin) / 2.f;
 	return (0);
 }
-#include "stdio.h"
+
 static int	get_glyph_triangles(t_triangles *triangles, const uint8_t i,
 				const t_ttf *ttf)
 {
