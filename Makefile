@@ -165,6 +165,8 @@ SRC				=\
 	ttf_parser/rendering/get_quadratic_bezier_points.c	\
 	ttf_parser/rendering/triangulate_polygon.c			\
 	\
+	ttf_parser/get_font.c	\
+	\
 	\
 	close_miniRT.c	\
 	color.c			\
@@ -179,8 +181,8 @@ BASE_CFLAGS		=	-Wall -Wextra -Werror
 DEBUG_CLFAGS	=	-g3 -fsanitize=address
 #-ffast-math reduces calculation precision, need to check behaviour before using
 OPTI_CFLAGS		=	-O3 -march=native #-ffast-math
-#CFLAGS			=	$(BASE_CFLAGS) $(OPTI_CFLAGS)
-CFLAGS			=	$(BASE_CFLAGS) $(DEBUG_CLFAGS)
+CFLAGS			=	$(BASE_CFLAGS) $(OPTI_CFLAGS)
+#CFLAGS			=	$(BASE_CFLAGS) $(DEBUG_CLFAGS)
 #CFLAGS			=	$(BASE_CFLAGS) $(OPTI_CFLAGS) $(DEBUG_CLFAGS)
 RM				=	rm -rf
 AR				=	ar rcs

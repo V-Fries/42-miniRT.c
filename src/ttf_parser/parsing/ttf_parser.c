@@ -18,7 +18,6 @@
 #include <stdio.h>
 
 static int	error_in_ttf_parser(t_string *file, t_ttf *ttf);
-static void	destroy_t_ttf(t_ttf *ttf);
 
 void	print_table_directory(const t_table_directory *tbl_dir, int tbl_size);
 void	print_cmap(const t_cmap *c);
@@ -105,12 +104,21 @@ static int	error_in_ttf_parser(t_string *file, t_ttf *ttf)
 	return (-1);
 }
 
-static void	destroy_t_ttf(t_ttf *ttf)
+void	destroy_t_ttf(t_ttf *ttf)
 {
 	free(ttf->font_directory.table_directory);
 	free(ttf->cmap.subtables);
 	free(ttf->format4);
 	free(ttf->loca.offsets);
+	while (ttf->glyphs_count--)
+	{
+		free(ttf->glyphs[ttf->glyphs_count].endPtsOfContours);
+		free(ttf->glyphs[ttf->glyphs_count].instructions);
+		free(ttf->glyphs[ttf->glyphs_count].flags);
+		free(ttf->glyphs[ttf->glyphs_count].xCoordinates);
+		free(ttf->glyphs[ttf->glyphs_count].yCoordinates);
+	}
+	free(ttf->glyphs);
 }
 
 void print_table_directory(const t_table_directory* tbl_dir, int tbl_size)

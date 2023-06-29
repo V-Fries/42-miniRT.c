@@ -217,6 +217,7 @@ typedef struct s_ttf
 }	t_ttf;
 
 int				ttf_parser(t_ttf *font, char *file_name);
+void			destroy_t_ttf(t_ttf *ttf);
 
 int				read_font_directory(const t_string *file,
 					t_font_directory *font_directory);

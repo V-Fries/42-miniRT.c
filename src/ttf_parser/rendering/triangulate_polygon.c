@@ -70,7 +70,7 @@ t_triangles	triangulate_polygon_and_free_polygon_list(t_dlist *polygon,
 			polygon = first_elem;
 			if (size == previous_size)
 			{
-				printf("triangulate_polygon failed\n");
+//				printf("triangulate_polygon failed\n");
 				ft_dlstclear(&polygon, &free);
 //				ft_vector_destroy(&triangles);
 //				return ((t_triangles){NULL, 0});

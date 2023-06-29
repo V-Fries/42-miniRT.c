@@ -12,6 +12,7 @@
 #include "window.h"
 #include "engine.h"
 #include "colors.h"
+#include "font/render.h"
 
 static void	init_hooks(t_engine *minirt);
 
@@ -48,7 +49,7 @@ int	init_engine(t_engine *minirt, const char *start_up_scene)
 //	if (ttf_parser(&minirt->gui.font,
 //				   "data/fonts/inconsolata/Inconsolata-VariableFont_wdth,wght.ttf")
 //		< 0)
-	if (ttf_parser(&minirt->gui.ttf,
+	if (get_font(&minirt->gui.font,
 			"data/fonts/Envy Code R PR7/Envy Code R.ttf") < 0)
 		return (-1); // TODO free everything
 	return (0);

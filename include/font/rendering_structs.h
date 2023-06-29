@@ -10,10 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_STRUCTS_H
-# define MINIRT_STRUCTS_H
+#ifndef RENDERING_STRUCTS_H
+# define RENDERING_STRUCTS_H
 
 # include "font/ttf_parser.h"
+# include "math/vector.h"
 
 typedef struct s_triangle
 {
@@ -36,16 +37,14 @@ typedef struct s_segment
 
 typedef struct s_glyph_generated_points
 {
-	t_vector2f				*points;
-	size_t					*contours_limits;
-	int16_t					nb_of_contours;
-	t_glyph_outline_bounds	bounds;
+	t_vector2f	*points;
+	size_t		size;
+	size_t		*contours_limits;
+	int16_t		nb_of_contours;
 }	t_glyph_generated_points;
 
 typedef struct s_font
 {
-	t_glyph_outline	*glyphs_outlines;
-	size_t			glyphs_count;
 	t_triangles		*glyphs;
 	t_fword			y_size;
 	t_fword			x_size;

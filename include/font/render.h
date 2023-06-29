@@ -18,47 +18,10 @@
 # include "engine.h"
 # include "math/vector.h"
 # include "font/ttf_parser.h"
+# include "font/rendering_structs.h"
 # include "image.h"
 
-typedef struct s_triangle
-{
-	t_vector2f	a;
-	t_vector2f	b;
-	t_vector2f	c;
-}	t_triangle;
-
-typedef struct s_triangles
-{
-	t_triangle	*data;
-	size_t		size;
-}	t_triangles;
-
-typedef struct s_segment
-{
-	t_vector2f	a;
-	t_vector2f	b;
-}	t_segment;
-
-typedef struct s_glyph_generated_points
-{
-	t_vector2f	*points;
-	size_t		size;
-	size_t		*contours_limits;
-	int16_t		nb_of_contours;
-}	t_glyph_generated_points;
-
-typedef struct s_bresenham
-{
-	int				error_x;
-	int				error_y;
-	int				diff_x;
-	int				diff_y;
-	int				starting_error_x;
-	int				starting_error_y;
-	int				x_incr;
-	int				y_incr;
-	unsigned int	color;
-}	t_bresenham;
+int			get_font(t_font *font, char *font_file);
 
 bool		line_clipping(t_vector2i *start, t_vector2i *end, t_image *img);
 void		draw_glyph(t_triangles glyph_triangles, float scale,
