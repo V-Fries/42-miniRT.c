@@ -24,7 +24,7 @@
 int			get_font(t_font *font, char *font_file);
 
 void		write_centered_string_to_image(const t_font *font, t_image *image,
-				const char *string, float size);
+				const char *string);
 
 bool		line_clipping(t_vector2i *start, t_vector2i *end, t_image *img);
 void		draw_glyph(t_triangles glyph_triangles, float scale, t_image *image,

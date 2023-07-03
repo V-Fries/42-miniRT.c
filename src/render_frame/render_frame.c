@@ -61,17 +61,17 @@ static void	render_minirt(t_engine *minirt)
 static void	render_minirt(t_engine *engine)
 {
 	update_placed_object_position(engine);
-//	render_raytracing(engine);
+	render_raytracing(engine);
 
-	change_image_color(&engine->ray_traced_image, COLOR_BLACK);
+//	change_image_color(&engine->ray_traced_image, COLOR_BLACK);
 
 //	draw_glyph(engine->gui.font.glyphs['8'], 0.25f, &engine->ray_traced_image, COLOR_WHITE, 0);
 
-	write_centered_string_to_image(&engine->gui.font, &engine->ray_traced_image, "Salut Tom :)", 65);
+//	write_centered_string_to_image(&engine->gui.font, &engine->ray_traced_image, "4");
 
 	mlx_put_image_to_window(engine->window.mlx, engine->window.window,
 		engine->ray_traced_image.data, 0, 0);
-//	render_user_interface(engine);
+	render_user_interface(engine);
 }
 #else
 # error "Unsuported OS"

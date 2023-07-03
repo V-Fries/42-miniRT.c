@@ -46,8 +46,8 @@ typedef struct s_glyph_generated_points
 typedef struct s_font
 {
 	t_triangles				*glyphs;
+	t_glyph_outline_bounds	*glyphs_size;
 	t_glyph_outline_bounds	bounds;
-	float					baseline;
 }	t_font;
 
 #endif
