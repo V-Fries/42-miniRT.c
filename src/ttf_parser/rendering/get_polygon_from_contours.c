@@ -212,7 +212,8 @@ static int	insert_contour(t_dlist *insert_position, const t_vector2f *points,
 	cursor->next = node;
 	node->previous = cursor;
 	node->next = next_back_up;
-	next_back_up->previous = node;
+	if (next_back_up != NULL)
+		next_back_up->previous = node;
 	return (0);
 }
 
