@@ -14,7 +14,7 @@
 #include "ray_tracer/rays.h"
 #include "scene.h"
 #include "object.h"
-#include "ray_tracer/lights.h"
+#include "ray_tracer/shade.h"
 #include "engine.h"
 
 static t_color		render_pixel(t_engine *engine, size_t ray_index);
@@ -30,6 +30,22 @@ typedef struct s_tmp
 static void	*render_raytracing_part(void *tmp_void);
 
 #define NB_OF_THREADS 16
+
+
+float random_value(unsigned int index)
+{
+	index *= 9694;
+	index *= index;
+	return ((float)index / 4294967295.0f);
+}
+#include <stdlib.h>
+#include <stdio.h>
+//static float	generate_randomf(float min, float max)
+//{
+//	return ((rand() % (int)(max - min + 1)) + min);
+//}
+
+
 
 void	render_raytracing(t_engine *minirt)
 {
@@ -83,26 +99,30 @@ static t_color	render_pixel(t_engine *engine, size_t ray_index)
 static t_vector3f	render_ray(t_ray ray, const t_scene *scene)
 {
 	t_hit			ray_hit;
-	t_vector3f		result;
+	t_vector3f		ray_color;
 	t_vector3f		color;
-	float			multiplier = 1.0f;
-	int				bounces_per_pixel = 2;
+	const int		bounces_per_pixel = 5;
+	float			multiplier;
 
-	result = vector3f_create(0, 0, 0);
+	multiplier = 1.0f;
+	ray_color = vector3f_create(0, 0, 0);
 	for (int i = 0; i < bounces_per_pixel; i++)
 	{
 		ray_hit = calculate_ray_intersection(&ray, scene);
 		if (!ray_hit.hit)
-			return (vector3f_add(result, vector3f_multiply(scene->sky_color, multiplier)));
+		{
+			color = vector3f_multiply(scene->sky_color, multiplier);
+			ray_color = vector3f_add(ray_color, color);
+			return (ray_color);
+		}
 
 		// Lights
-
-		// Color
-		color = calculate_color(scene, ray_hit, multiplier);
-		result = vector3f_add(result, color);
-		multiplier *= 0.1f;
+//		color = calculate_color(scene, ray_hit, multiplier);
+		color = calculate_shade(scene, ray_hit, multiplier);
+		ray_color = vector3f_add(ray_color, color);
+		multiplier *= ray_hit.object->material.reflect;
 		ray.origin = vector3f_add(ray_hit.position, vector3f_multiply(ray_hit.normal, 0.0001f));
 		ray.direction = reflect(ray.direction, ray_hit.normal);
 	}
-	return (result);
+	return (ray_color);
 }

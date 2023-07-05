@@ -9,7 +9,6 @@ include_directories(lib/minilibx_opengl_20191021)
 
 add_executable(minirt
         include/deprecated/t_ambient_light.h
-        include/deprecated/t_light.h
         include/deprecated/t_raytracing_data.h
         include/font/render.h
         include/font/rendering_structs.h
@@ -25,16 +24,19 @@ add_executable(minirt
         include/math/conversion.h
         include/math/equation.h
         include/math/matrix.h
+        include/math/quaternion.h
         include/math/vector.h
         include/ray_tracer/camera.h
-        include/ray_tracer/lights.h
+        include/ray_tracer/mapping.h
         include/ray_tracer/rays.h
         include/ray_tracer/render.h
+        include/ray_tracer/shade.h
         include/colors.h
         include/engine.h
         include/events.h
         include/hooks.h
         include/image.h
+        include/light.h
         include/object.h
         include/parsing.h
         include/ray_tracer_gui_api.h
@@ -265,18 +267,25 @@ add_executable(minirt
         src/hooks/update_object_attributes_modification_box/init_sphere_attributes_modification_box.c
         src/hooks/update_object_attributes_modification_box/update_object_attributes_modification_box.c
         src/hooks/button_press.c
+        src/hooks/button_release.c
         src/hooks/key_press.c
         src/image/destroy_t_image.c
         src/image/draw.c
         src/image/image.c
         src/image/put_image_to_image.c
         src/image/round_image_corners.c
+        src/light/lights.c
         src/math/matrix/matrix3.c
         src/math/matrix/matrix3_math.c
         src/math/matrix/matrix3_rotation.c
         src/math/matrix/matrix4.c
         src/math/matrix/matrix4_inverse.c
         src/math/matrix/matrix4_math.c
+        src/math/matrix/matrix4_round.c
+        src/math/quaternion/quaternion.c
+        src/math/quaternion/quaternion_math.c
+        src/math/quaternion/quaternion_operations.c
+        src/math/quaternion/quaternion_rotation.c
         src/math/vector/vector2.c
         src/math/vector/vector2_math.c
         src/math/vector/vector2_operations.c
@@ -284,6 +293,7 @@ add_executable(minirt
         src/math/vector/vector3_angle.c
         src/math/vector/vector3_math.c
         src/math/vector/vector3_operations.c
+        src/math/vector/vector3_random.c
         src/math/vector/vector3_rotation.c
         src/math/vector/vector4.c
         src/math/vector/vector4_math.c
@@ -292,6 +302,7 @@ add_executable(minirt
         src/math/equation.c
         src/object/cylinder.c
         src/object/cylinder_infinite.c
+        src/object/material.c
         src/object/objects.c
         src/object/plane.c
         src/object/sphere.c
@@ -318,9 +329,16 @@ add_executable(minirt
         src/ray_tracer/camera/projection.c
         src/ray_tracer/camera/ray.c
         src/ray_tracer/camera/view.c
+        src/ray_tracer/rays/intersections/cylinder.c
+        src/ray_tracer/rays/intersections/cylinder_infinite.c
+        src/ray_tracer/rays/intersections/plane.c
+        src/ray_tracer/rays/intersections/sphere.c
         src/ray_tracer/rays/collision.c
         src/ray_tracer/rays/rays.c
-        src/ray_tracer/lights.c
+        src/ray_tracer/shade/light.c
+        src/ray_tracer/shade/shade.c
+        src/ray_tracer/shade/shadow.c
+        src/ray_tracer/mapping.c
         src/ray_tracer/render.c
         src/ray_tracer_gui_api/get_clicked_object.c
         src/render_frame/print_fps_counter.c
@@ -329,6 +347,7 @@ add_executable(minirt
         src/scene/create.c
         src/ttf_parser/parsing/get_glyph_offset.c
         src/ttf_parser/parsing/get_glyph_outlines.c
+        src/ttf_parser/parsing/get_long_hor_metric.c
         src/ttf_parser/parsing/read_cmap.c
         src/ttf_parser/parsing/read_file.c
         src/ttf_parser/parsing/read_font_directory.c
@@ -336,20 +355,19 @@ add_executable(minirt
         src/ttf_parser/parsing/read_glyph_outline.c
         src/ttf_parser/parsing/read_glyph_outline_coordinates.c
         src/ttf_parser/parsing/read_head.c
+        src/ttf_parser/parsing/read_hhea.c
+        src/ttf_parser/parsing/read_hmtx.c
         src/ttf_parser/parsing/read_loca.c
         src/ttf_parser/parsing/read_maxp.c
         src/ttf_parser/parsing/ttf_get_table_offset.c
         src/ttf_parser/parsing/ttf_parser.c
         src/ttf_parser/rendering/do_segments_intersect.c
         src/ttf_parser/rendering/draw_glyph.c
-        src/ttf_parser/rendering/draw_triangle.c
         src/ttf_parser/rendering/get_glyph_points.c
-        src/ttf_parser/rendering/get_polygon_from_contours.c
         src/ttf_parser/rendering/get_quadratic_bezier_points.c
-        src/ttf_parser/rendering/triangulate_polygon.c
         src/ttf_parser/rendering/write_centered_string_to_image.c
         src/ttf_parser/get_font.c
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c src/ttf_parser/parsing/read_hhea.c src/ttf_parser/parsing/read_hmtx.c src/ttf_parser/parsing/get_long_hor_metric.c)
+        src/main.c)

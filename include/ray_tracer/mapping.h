@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lights.h                                           :+:      :+:    :+:   */
+/*   mapping.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdameros <tdameros@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/19 23:34:00 by tdameros          #+#    #+#             */
-/*   Updated: 2023/05/19 23:34:00 by tdameros         ###   ########lyon.fr   */
+/*   Created: 2023/06/19 15:15:00 by tdameros          #+#    #+#             */
+/*   Updated: 2023/06/19 15:15:00 by tdameros         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIGHTS_H
-# define LIGHTS_H
+#ifndef MAPPING_H
+# define MAPPING_H
 
-t_vector3f	calculate_color(const t_scene *scene, t_hit ray_hit, float multiplier);
+# include "math/vector.h"
+# include "ray_tracer/mapping.h"
+
+t_vector3f	get_checked_pattern(t_hit hit, const t_object *object);
 
 #endif

@@ -22,12 +22,14 @@
 #include "render_frame.h"
 #include "ray_tracer/render.h"
 #include "gui/utils.h"
-
 #include "font/render.h"
 
-static void	render_minirt(t_engine *minirt);
-static void	update_placed_object_position(t_engine *engine);
-static void	update_mouse_position(t_engine *engine, t_vector2i *mouse_position);
+static void			render_minirt(t_engine *minirt);
+static void			update_camera(t_engine *engine);
+static t_vector2i	clamp_mouse(t_engine *engine, t_vector2i mouse_position);
+static void			update_placed_object_position(t_engine *engine);
+static void			update_mouse_position(t_engine *engine,
+						t_vector2i *mouse_position);
 
 int	render_frame(t_engine *minirt)
 {
@@ -60,6 +62,7 @@ static void	render_minirt(t_engine *minirt)
 #define SCALE_FACTOR 0.25f
 static void	render_minirt(t_engine *engine)
 {
+	update_camera(engine);
 	update_placed_object_position(engine);
 	render_raytracing(engine);
 
@@ -76,6 +79,48 @@ static void	render_minirt(t_engine *engine)
 #else
 # error "Unsuported OS"
 #endif
+
+static void	update_camera(t_engine *engine)
+{
+	t_vector2i	mouse_position;
+	float		yaw_delta;
+	float		pitch_delta;
+
+	if (!engine->camera.lock)
+	{
+		mouse_position = get_mouse_position(engine);
+
+		yaw_delta = (engine->previous_mouse_position.x - mouse_position.x)
+			* engine->camera.rotation_speed;
+		pitch_delta = (engine->previous_mouse_position.y - mouse_position.y)
+			* engine->camera.rotation_speed;
+		if (yaw_delta != 0 || pitch_delta != 0)
+		{
+			camera_rotate_up(&engine->camera, pitch_delta);
+			camera_rotate_left(&engine->camera, yaw_delta);
+			camera_recalculate_view(&engine->camera);
+			camera_recalculate_rays(&engine->camera);
+		}
+		mouse_position = clamp_mouse(engine, mouse_position);
+		engine->previous_mouse_position = mouse_position;
+	}
+}
+
+static t_vector2i	clamp_mouse(t_engine *engine, t_vector2i mouse_position)
+{
+	if (mouse_position.x < 0)
+		mouse_position.x = engine->camera.viewport.size.x - 1;
+	else if (mouse_position.x >= engine->camera.viewport.size.x - 1)
+		mouse_position.x = 0;
+	if (mouse_position.y < 0)
+		mouse_position.y = engine->camera.viewport.size.y - 1;
+	else if (mouse_position.y >= engine->camera.viewport.size.y - 1)
+		mouse_position.y = 0;
+	mlx_mouse_move(engine->window.window,
+		mouse_position.x,
+		mouse_position.y);
+	return (mouse_position);
+}
 
 static void	update_placed_object_position(t_engine *engine)
 {

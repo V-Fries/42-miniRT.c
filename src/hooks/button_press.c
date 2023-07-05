@@ -12,8 +12,11 @@
 
 #include "libft.h"
 
+#include "mlx.h"
+
 #include "engine.h"
 #include "gui/box.h"
+#include "gui/utils.h"
 #include "events.h"
 #include "ray_tracer_gui_api.h"
 #include "hooks.h"
@@ -25,7 +28,13 @@ int	button_press_handler(int button, int x, int y, t_engine *engine)
 {
 	t_gui_box	*clicked_gui_box;
 
-	ft_printf("button_code == %d\n\n", button);
+//	ft_printf("button_code == %d\n\n", button);
+	if (button == BUTTON_RIGHT)
+	{
+		engine->previous_mouse_position = get_mouse_position(engine);
+		engine->camera.lock = false;
+		mlx_mouse_hide();
+	}
 	if (button != BUTTON_LEFT && button != SCROLL_DOWN &&  button != SCROLL_UP)
 		return (0);
 
@@ -88,7 +97,7 @@ static void	update_color_picker_color(t_gui *gui)
 		return ;
 	gui->color_picker_base_color_was_changed = true;
 	gui->color_picker_base_color = (t_color){
-		.x = gui->selected_object->albedo.x * 255.f,
-		.y = gui->selected_object->albedo.y * 255.f,
-		.z = gui->selected_object->albedo.z * 255.f};
+		.x = gui->selected_object->material.albedo.x * 255.f,
+		.y = gui->selected_object->material.albedo.y * 255.f,
+		.z = gui->selected_object->material.albedo.z * 255.f};
 }

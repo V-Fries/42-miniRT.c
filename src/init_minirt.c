@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stddef.h>
+#include <stdlib.h>
 
 #include "libft.h"
 #include "mlx.h"
 
 #include "gui/init.h"
+#include "gui/utils.h"
 #include "events.h"
 #include "parsing.h"
 #include "hooks.h"
@@ -65,6 +67,8 @@ static void	init_hooks(t_engine *minirt)
 //		&key_release_handler, minirt);
 	mlx_hook(minirt->window.window, BUTTON_PRESS, BUTTON_PRESS_MASK,
 		&button_press_handler, minirt);
+	mlx_hook(minirt->window.window, BUTTON_RELEASE, BUTTON_RELEASE_MASK,
+		&button_release_handler, minirt);
 	mlx_hook(minirt->window.window, DESTROY_NOTIFY, STRUCTURE_NOTIFY_MASK,
 			 &close_engine, minirt);
 	mlx_loop_hook(minirt->window.mlx, &render_frame, minirt);
@@ -122,7 +126,7 @@ static void	print_object(t_object *object)
 	printf("\tPosition\n");
 	print_vector(&object->position);
 	printf("\tColor\n");
-	print_color(&object->albedo);
+	print_color(&object->material.albedo);
 	if (object->type == SPHERE || object->type == CYLINDER)
 		printf("\tDiameter == %f\n", object->radius);
 	if (object->type == CYLINDER)

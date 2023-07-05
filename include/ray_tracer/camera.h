@@ -38,6 +38,11 @@ typedef struct s_camera {
 	float		near_clip;
 	float		far_clip;
 
+	float		pitch;
+	float		rotation_speed;
+
+	bool		lock;
+
 	t_ray		*rays;
 }	t_camera;
 

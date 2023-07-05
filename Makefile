@@ -57,6 +57,7 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/update_object_attributes_modification_box.c	\
 	\
 	hooks/button_press.c	\
+	hooks/button_release.c	\
 	hooks/key_press.c		\
 	\
 	\
@@ -67,12 +68,21 @@ SRC				=\
 	image/round_image_corners.c	\
 	\
 	\
+	light/lights.c	\
+	\
+	\
 	math/matrix/matrix3.c			\
 	math/matrix/matrix3_math.c		\
 	math/matrix/matrix3_rotation.c	\
 	math/matrix/matrix4.c			\
 	math/matrix/matrix4_inverse.c	\
 	math/matrix/matrix4_math.c		\
+	math/matrix/matrix4_round.c		\
+	\
+	math/quaternion/quaternion.c				\
+	math/quaternion/quaternion_math.c			\
+	math/quaternion/quaternion_operations.c		\
+	math/quaternion/quaternion_rotation.c		\
 	\
 	math/vector/vector2.c				\
 	math/vector/vector2_math.c			\
@@ -81,6 +91,7 @@ SRC				=\
 	math/vector/vector3_angle.c			\
 	math/vector/vector3_math.c			\
 	math/vector/vector3_operations.c	\
+	math/vector/vector3_random.c		\
 	math/vector/vector3_rotation.c		\
 	math/vector/vector4.c				\
 	math/vector/vector4_math.c			\
@@ -92,6 +103,7 @@ SRC				=\
 	\
 	object/cylinder.c			\
 	object/cylinder_infinite.c	\
+	object/material.c			\
 	object/objects.c			\
 	object/plane.c				\
 	object/sphere.c				\
@@ -125,11 +137,20 @@ SRC				=\
 	ray_tracer/camera/ray.c			\
 	ray_tracer/camera/view.c		\
 	\
+	ray_tracer/rays/intersections/cylinder.c			\
+	ray_tracer/rays/intersections/cylinder_infinite.c	\
+	ray_tracer/rays/intersections/plane.c				\
+	ray_tracer/rays/intersections/sphere.c				\
+	\
 	ray_tracer/rays/rays.c			\
 	ray_tracer/rays/collision.c		\
 	\
-	ray_tracer/lights.c	\
-	ray_tracer/render.c	\
+	ray_tracer/shade/light.c	\
+	ray_tracer/shade/shade.c	\
+	ray_tracer/shade/shadow.c	\
+	\
+	ray_tracer/mapping.c	\
+	ray_tracer/render.c		\
 	\
 	\
 	ray_tracer_gui_api/get_clicked_object.c	\

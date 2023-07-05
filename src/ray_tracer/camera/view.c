@@ -11,23 +11,27 @@
 /* ************************************************************************** */
 
 #include "ray_tracer/camera.h"
+#include "math/matrix.h"
 
 static t_matrix4	camera_look_at(t_vector3f eye,
-								   t_vector3f center,
-								   t_vector3f up);
+						t_vector3f center,
+						t_vector3f up);
 
 void	camera_recalculate_view(t_camera *camera)
 {
-	camera->view = camera_look_at(camera->position,
-								  vector3f_add(camera->position,
-											   camera->direction),
-								  vector3f_create(0, 1, 0));
+	const t_vector3f	center = vector3f_add(camera->position,
+			camera->direction);
+
+	camera->view = camera_look_at(camera->position, center,
+			vector3f_create(0, 1, 0));
+	camera->view = matrix4_round_diagonal(camera->view);
 	camera->inverse_view = matrix4_inverse(camera->view);
 }
 
+#include <math.h>
 static t_matrix4	camera_look_at(t_vector3f eye,
-								   t_vector3f center,
-								   t_vector3f up)
+								t_vector3f center,
+								t_vector3f up)
 {
 	t_vector3f	f;
 	t_vector3f	s;
@@ -37,7 +41,7 @@ static t_matrix4	camera_look_at(t_vector3f eye,
 	f = vector3f_unit(vector3f_subtract(center, eye));
 	s = vector3f_unit(vector3f_cross(f, up));
 	u = vector3f_cross(s, f);
-	result = matrix4_create(0);
+	result = matrix4_create_identity();
 	result.matrix[0][0] = s.x;
 	result.matrix[1][0] = s.y;
 	result.matrix[2][0] = s.z;
