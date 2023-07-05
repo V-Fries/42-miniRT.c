@@ -9,8 +9,8 @@
 /*   Updated: 2023/05/12 03:28:00 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef TTF_H
-# define TTF_H
+#ifndef TTF_PARSER_H
+# define TTF_PARSER_H
 
 # include <stdint.h>
 
@@ -18,19 +18,48 @@
 
 /// @typedef t_fixed is an unsigned 32 bit integer, the first 16 bits are used
 /// for the whole part, the second part is used for the decimal part
-typedef int32_t	t_fixed;
+typedef uint32_t	t_fixed;
 
 /// @typedef 16-bit signed integer that describes a quantity in FUnits, the
 /// smallest measurable distance in em space.
-typedef int16_t	t_fword;
+typedef int16_t		t_fword;
 
 /// @typedef 16-bit unsigned integer that describes a quantity in FUnits, the
 /// smallest measurable distance in em space.
-typedef int16_t	t_ufword;
+typedef uint16_t	t_ufword;
 
 /// @typedef The long internal format of a date in seconds since 12:00 midnight,
 /// January 1, 1904. It is represented as a signed 64-bit integer.
-typedef int64_t	t_long_date_time;
+typedef int64_t		t_long_date_time;
+
+typedef struct s_long_hor_metric
+{
+	uint16_t	advanceWidth;
+	int16_t		leftSideBearing;
+}	t_long_hor_metric;
+
+typedef struct s_hmtx
+{
+	t_long_hor_metric	*h_metrics;
+	t_fword				*left_side_bearing;
+}	t_hmtx;
+
+typedef struct s_hhea
+{
+	t_fixed		version;
+	t_fword		ascent;
+	t_fword		descent;
+	t_fword		lineGap;
+	t_ufword	advanceWidthMax;
+	t_fword		minLeftSideBearing;
+	t_fword		minRightSideBearing;
+	t_fword		xMaxExtent;
+	int16_t		caretSlopeRise;
+	int16_t		caretSlopeRun;
+	t_fword		caretOffset;
+	int16_t		metricDataFormat;
+	uint16_t	numOfLongHorMetrics;
+}	t_hhea;
 
 typedef union u_glyph_outline_flag
 {
@@ -212,52 +241,65 @@ typedef struct s_ttf
 	t_head				head;
 	t_maxp				maxp;
 	t_loca				loca;
+	t_hhea				hhea;
+	t_hmtx				hmtx;
 	size_t				glyphs_count;
 	t_glyph_outline		*glyphs;
 }	t_ttf;
 
-int				ttf_parser(t_ttf *font, char *file_name);
-void			destroy_t_ttf(t_ttf *ttf);
+int					ttf_parser(t_ttf *font, char *file_name);
+void				destroy_t_ttf(t_ttf *ttf);
 
-int				read_font_directory(const t_string *file,
-					t_font_directory *font_directory);
-int				read_cmap(const t_string *file, t_ttf *ttf);
-int				read_format4(const t_string *file, t_ttf *ttf);
-int				read_head(const t_string *file, t_ttf *ttf);
-int				read_maxp(const t_string *file, t_ttf *ttf);
-int				read_loca(const t_string *file, t_ttf *ttf);
-int				read_x_coordinates(const t_string *file, size_t *file_cursor,
-					t_glyph_outline *outline, uint16_t last_index);
-int				read_y_coordinates(const t_string *file, size_t *file_cursor,
-					t_glyph_outline *outline, uint16_t last_index);
+int					read_font_directory(const t_string *file,
+						t_font_directory *font_directory);
+int					read_cmap(const t_string *file, t_ttf *ttf);
+int					read_format4(const t_string *file, t_ttf *ttf);
+int					read_head(const t_string *file, t_ttf *ttf);
+int					read_maxp(const t_string *file, t_ttf *ttf);
+int					read_hhea(const t_string *file, t_ttf *ttf);
+int					read_hmtx(const t_string *file, t_ttf *ttf);
+int					read_loca(const t_string *file, t_ttf *ttf);
+int					read_x_coordinates(const t_string *file,
+						size_t *file_cursor, t_glyph_outline *outline,
+						uint16_t last_index);
+int					read_y_coordinates(const t_string *file,
+						size_t *file_cursor, t_glyph_outline *outline,
+						uint16_t last_index);
+int					read_glyph_outline(const t_string *file, size_t offset,
+						t_glyph_outline *outline);
 
-int64_t			ttf_get_table_offset(const t_ttf *ttf, const char *table_name);
-uint32_t		get_glyph_offset(uint32_t glyph_index, const t_ttf *ttf);
-uint32_t		get_glyph_index(uint16_t code_point, const t_ttf *ttf);
-int				read_glyph_outline(const t_string *file, size_t offset,
-					t_glyph_outline *outline);
-t_glyph_outline	*get_glyph_outlines(const t_string *file, t_ttf *ttf);
+int64_t				ttf_get_table_offset(const t_ttf *ttf,
+						const char *table_name);
+uint32_t			get_glyph_offset(uint32_t glyph_index, const t_ttf *ttf);
+uint32_t			get_glyph_index(uint16_t code_point, const t_ttf *ttf);
+t_glyph_outline		*get_glyph_outlines(const t_string *file, t_ttf *ttf);
+t_long_hor_metric	get_long_hor_metric(uint16_t glyph_index, const t_ttf *ttf);
 
-int				read_uint8(const t_string *file, size_t i, uint8_t *dest);
-int				read_uint8_move(const t_string *file, size_t *i, uint8_t *dest);
-int				read_int8(const t_string *file, size_t i, int8_t *dest);
-int				read_int8_move(const t_string *file, size_t *i, int8_t *dest);
+int					read_uint8(const t_string *file, size_t i, uint8_t *dest);
+int					read_uint8_move(const t_string *file, size_t *i,
+						uint8_t *dest);
+int					read_int8(const t_string *file, size_t i, int8_t *dest);
+int					read_int8_move(const t_string *file, size_t *i,
+						int8_t *dest);
 
-int				read_uint16(const t_string *file, size_t i, uint16_t *dest);
-int				read_uint16_move(const t_string *file, size_t *i,
-					uint16_t *dest);
-uint16_t		read_uint16_unsafe(const char *str);
-int				read_int16(const t_string *file, size_t i, int16_t *dest);
-int				read_int16_move(const t_string *file, size_t *i, int16_t *dest);
+int					read_uint16(const t_string *file, size_t i, uint16_t *dest);
+int					read_uint16_move(const t_string *file, size_t *i,
+						uint16_t *dest);
+uint16_t			read_uint16_unsafe(const char *str);
+int					read_int16(const t_string *file, size_t i, int16_t *dest);
+int					read_int16_move(const t_string *file, size_t *i,
+						int16_t *dest);
 
-int				read_uint32(const t_string *file, size_t i, uint32_t *dest);
-int				read_uint32_move(const t_string *file, size_t *i,
-					uint32_t *dest);
-uint32_t		read_uint32_unsafe(const char *str);
-int				read_int32(const t_string *file, size_t i, int32_t *dest);
-int				read_int32_move(const t_string *file, size_t *i, int32_t *dest);
+int					read_uint32(const t_string *file, size_t i, uint32_t *dest);
+int					read_uint32_move(const t_string *file, size_t *i,
+						uint32_t *dest);
+uint32_t			read_uint32_unsafe(const char *str);
+int					read_int32(const t_string *file, size_t i, int32_t *dest);
+int					read_int32_move(const t_string *file, size_t *i,
+						int32_t *dest);
 
-int				read_int64(const t_string *file, size_t i, int64_t *dest);
-int				read_int64_move(const t_string *file, size_t *i, int64_t *dest);
+int					read_int64(const t_string *file, size_t i, int64_t *dest);
+int					read_int64_move(const t_string *file, size_t *i,
+						int64_t *dest);
 
 #endif

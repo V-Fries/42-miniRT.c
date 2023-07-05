@@ -24,9 +24,9 @@ int	read_head(const t_string *file, t_ttf *ttf)
 	if (head_offset < 0)
 		return (-1);
 	i = head_offset;
-	if (read_int32_move(file, &i, &ttf->head.version) < 0)
+	if (read_uint32_move(file, &i, &ttf->head.version) < 0)
 		return (-1);
-	if (read_int32_move(file, &i, &ttf->head.fontRevision) < 0)
+	if (read_uint32_move(file, &i, &ttf->head.fontRevision) < 0)
 		return (-1);
 	if (read_uint32_move(file, &i, &ttf->head.checkSumAdjustment) < 0)
 		return (-1);

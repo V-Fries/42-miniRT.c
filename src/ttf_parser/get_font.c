@@ -31,16 +31,20 @@ int	get_font(t_font *font, char *font_file)
 
 	font->glyphs = ft_calloc(127, sizeof(*font->glyphs));
 	font->glyphs_size = ft_calloc(127, sizeof(*font->glyphs_size));
-	if (font->glyphs == NULL || font->glyphs_size == NULL)
+	font->long_hor_metric = ft_calloc(127, sizeof(*font->long_hor_metric));
+	if (font->glyphs == NULL || font->glyphs_size == NULL
+		|| font->long_hor_metric == NULL)
 	{
 		free(font->glyphs);
 		free(font->glyphs_size);
+		free(font->long_hor_metric);
 		return (-1);
 	}
 	if (ttf_parser(&ttf, font_file) < 0)
 	{
 		free(font->glyphs);
 		free(font->glyphs_size);
+		free(font->long_hor_metric);
 		return (-1);
 	}
 	i = -1;
@@ -48,17 +52,20 @@ int	get_font(t_font *font, char *font_file)
 	{
 		if (get_glyph_triangles(font->glyphs + i, i, &ttf) < 0)
 		{
-			free(font->glyphs);
+			free(font->glyphs); // TODO free triangles data
 			free(font->glyphs_size);
+			free(font->long_hor_metric);
 			destroy_t_ttf(&ttf);
 			return (-1);
 		}
 		font->glyphs_size[i] = get_glyph_bounds(font->glyphs + i);
+		font->long_hor_metric[i] = get_long_hor_metric(i, &ttf);
 	}
 	font->bounds.yMax = ttf.head.yMax;
 	font->bounds.xMax = ttf.head.xMax;
 	font->bounds.yMin = ttf.head.yMin;
 	font->bounds.xMin = ttf.head.xMin;
+	destroy_t_ttf(&ttf);
 	return (0);
 }
 
@@ -91,7 +98,6 @@ static int	get_glyph_triangles(t_triangles *triangles, const uint8_t i,
 	reverse_y(triangles, ttf->head.yMax);
 	return (0);
 }
-
 
 static void	reverse_y(t_triangles *triangles, float y_max)
 {

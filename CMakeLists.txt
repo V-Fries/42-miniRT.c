@@ -352,4 +352,4 @@ add_executable(minirt
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c)
+        src/main.c src/ttf_parser/parsing/read_hhea.c src/ttf_parser/parsing/read_hmtx.c src/ttf_parser/parsing/get_long_hor_metric.c)

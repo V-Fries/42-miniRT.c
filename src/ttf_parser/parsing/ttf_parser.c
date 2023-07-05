@@ -26,6 +26,7 @@ void 	print_head(const t_head *head);
 void 	print_maxp(t_maxp *maxp);
 void	print_loca(t_loca *loca);
 void 	print_glyph_outline(t_glyph_outline *outline);
+void	print_hhea(t_hhea *hhea);
 
 int	ttf_parser(t_ttf *ttf, char *file_name)
 {
@@ -76,6 +77,17 @@ int	ttf_parser(t_ttf *ttf, char *file_name)
 		return (error_in_ttf_parser(&file, ttf));
 	}
 	print_loca(&ttf->loca); // Testing
+	if (read_hhea(&file, ttf) < 0)
+	{
+		ft_print_error("Failed to read hhea\n");
+		return (error_in_ttf_parser(&file, ttf));
+	}
+	print_hhea(&ttf->hhea); // Testing
+	if (read_hmtx(&file, ttf) < 0)
+	{
+		ft_print_error("Failed to read hmtx\n");
+		return (error_in_ttf_parser(&file, ttf));
+	}
 
 	ttf->glyphs = get_glyph_outlines(&file, ttf);
 	if (ttf->glyphs == NULL)
@@ -84,14 +96,14 @@ int	ttf_parser(t_ttf *ttf, char *file_name)
 	free(file.data);
 
 	// Testing
-	char c = 0;
-	while (c >= 0)
-	{
-		uint32_t index = get_glyph_index(c, ttf);
-		printf("%c / %u index == %i\n", c, c, index);
-		print_glyph_outline(ttf->glyphs + index);
-		c++;
-	}
+//	char c = 0;
+//	while (c >= 0)
+//	{
+//		uint32_t index = get_glyph_index(c, ttf);
+//		printf("%c / %u index == %i\n", c, c, index);
+//		print_glyph_outline(ttf->glyphs + index);
+//		c++;
+//	}
 	//!Testing
 
 	return (0);
@@ -110,6 +122,8 @@ void	destroy_t_ttf(t_ttf *ttf)
 	free(ttf->cmap.subtables);
 	free(ttf->format4);
 	free(ttf->loca.offsets);
+	free(ttf->hmtx.h_metrics);
+	free(ttf->hmtx.left_side_bearing);
 	while (ttf->glyphs_count--)
 	{
 		free(ttf->glyphs[ttf->glyphs_count].endPtsOfContours);
@@ -257,4 +271,23 @@ void print_glyph_outline(t_glyph_outline *outline)
 	for(int i = 0; i <= last_index; ++i) {
 		printf("%d)\t(%5d,%5d)\n", i, outline->xCoordinates[i], outline->yCoordinates[i]);
 	}
+}
+
+void	print_hhea(t_hhea *hhea)
+{
+	printf("\nhhea:\n");
+	printf("\tversion: ");
+	t_fixed_print(hhea->version);
+	printf("\tascent: %d\n", hhea->ascent);
+	printf("\tdescent: %d\n", hhea->descent);
+	printf("\tlineGap: %d\n", hhea->lineGap);
+	printf("\tadvanceWidthMax: %u\n", hhea->advanceWidthMax);
+	printf("\tminLeftSideBearing: %d\n", hhea->minLeftSideBearing);
+	printf("\tminRightSideBearing: %d\n", hhea->minRightSideBearing);
+	printf("\txMaxExtent: %d\n", hhea->xMaxExtent);
+	printf("\tcaretSlopeRise: %d\n", hhea->caretSlopeRise);
+	printf("\tcaretSlopeRun: %d\n", hhea->caretSlopeRun);
+	printf("\tcaretOffset: %d\n", hhea->caretOffset);
+	printf("\tmetricDataFormat: %d\n", hhea->metricDataFormat);
+	printf("\tnumOfLongHorMetrics: %u\n", hhea->numOfLongHorMetrics);
 }

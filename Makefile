@@ -145,6 +145,7 @@ SRC				=\
 	\
 	ttf_parser/parsing/get_glyph_offset.c				\
 	ttf_parser/parsing/get_glyph_outlines.c				\
+	ttf_parser/parsing/get_long_hor_metric.c			\
 	ttf_parser/parsing/read_cmap.c						\
 	ttf_parser/parsing/read_file.c						\
 	ttf_parser/parsing/read_font_directory.c			\
@@ -152,6 +153,8 @@ SRC				=\
 	ttf_parser/parsing/read_glyph_outline.c				\
 	ttf_parser/parsing/read_glyph_outline_coordinates.c	\
 	ttf_parser/parsing/read_head.c						\
+	ttf_parser/parsing/read_hhea.c						\
+	ttf_parser/parsing/read_hmtx.c						\
 	ttf_parser/parsing/read_loca.c						\
 	ttf_parser/parsing/read_maxp.c						\
 	ttf_parser/parsing/ttf_get_table_offset.c			\

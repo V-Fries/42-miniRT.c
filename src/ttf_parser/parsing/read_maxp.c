@@ -20,7 +20,7 @@ int	read_maxp(const t_string *file, t_ttf *ttf)
 	if (maxp_offset < 0)
 		return (-1);
 	i = maxp_offset;
-	if (read_int32_move(file, &i, &ttf->maxp.version) < 0)
+	if (read_uint32_move(file, &i, &ttf->maxp.version) < 0)
 		return (-1);
 	if (read_uint16_move(file, &i, &ttf->maxp.numGlyphs) < 0)
 		return (-1);
