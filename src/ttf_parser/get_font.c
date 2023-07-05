@@ -27,7 +27,7 @@ int	get_font(t_font *font, char *font_file)
 	uint8_t	i;
 
 	font->glyphs = ft_calloc(127, sizeof(*font->glyphs));
-	font->long_hor_metric = ft_calloc(127, sizeof(*font->long_hor_metric));
+	font->long_hor_metric = malloc(sizeof(*font->long_hor_metric) * 127);
 	if (font->glyphs == NULL || font->long_hor_metric == NULL)
 	{
 		free(font->glyphs);
