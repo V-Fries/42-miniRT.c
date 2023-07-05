@@ -40,7 +40,7 @@ void	write_centered_string_to_image(const t_font *font, t_image *image,
 	while (string[i]
 		&& x_offset + font->long_hor_metric[(int8_t)string[i]].advanceWidth * scale <= image->width - BORDER)
 	{
-		draw_glyph(font->glyphs[(int8_t)string[i]], scale, image, COLOR_WHITE,
+		draw_glyph(font->glyphs + string[i], scale, image, COLOR_WHITE,
 			x_offset + font->long_hor_metric[(int8_t)string[i]].leftSideBearing * scale,
 			y_offset);
 		x_offset += font->long_hor_metric[(int8_t)string[i]].advanceWidth * scale;
@@ -58,8 +58,8 @@ static t_vector2f	get_glyphs_size(const t_font *font, const char *string)
 	while (string[++i] != '\0')
 	{
 		result.x += font->long_hor_metric[(int8_t)string[i]].advanceWidth;
-		result.y = fmaxf(result.y, font->glyphs_size[(int8_t)string[i]].yMax
-				- font->glyphs_size[(int8_t)string[i]].yMin);
+		result.y = fmaxf(result.y, font->glyphs[(int8_t)string[i]].bounds.yMax
+				- font->glyphs[(int8_t)string[i]].bounds.yMin);
 	}
 	return (result);
 }
@@ -72,6 +72,6 @@ static float	get_glyphs_y_min(const t_font *font, const char *string)
 	result = FLT_MAX;
 	i = -1;
 	while (string[++i] != '\0')
-		result = fminf(result, font->glyphs_size[(int8_t)string[i]].yMin);
+		result = fminf(result, font->glyphs[(int8_t)string[i]].bounds.yMin);
 	return (result);
 }

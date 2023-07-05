@@ -37,18 +37,18 @@ typedef struct s_segment
 
 typedef struct s_glyph_generated_points
 {
-	t_vector2f	*points;
-	size_t		size;
-	size_t		*contours_limits;
-	int16_t		nb_of_contours;
+	t_vector2f				*points;
+	size_t					nb_of_points;
+	size_t					*contours_limits;
+	int16_t					nb_of_contours;
+	t_glyph_outline_bounds	bounds;
 }	t_glyph_generated_points;
 
 typedef struct s_font
 {
-	t_triangles				*glyphs;
-	t_glyph_outline_bounds	*glyphs_size;
-	t_long_hor_metric		*long_hor_metric;
-	t_glyph_outline_bounds	bounds;
+	t_glyph_generated_points	*glyphs;
+	t_long_hor_metric			*long_hor_metric;
+	t_glyph_outline_bounds		bounds;
 }	t_font;
 
 #endif
