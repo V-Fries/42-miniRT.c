@@ -57,6 +57,7 @@ SRC				=\
 	gui/create_boxes_utils.c		\
 	gui/create_float_input_box.c	\
 	gui/create_horizontal_boxes.c	\
+	gui/create_icon.c				\
 	gui/create_n_horizontal_boxes.c	\
 	gui/create_vertical_boxes.c		\
 	gui/init_boxes.c				\

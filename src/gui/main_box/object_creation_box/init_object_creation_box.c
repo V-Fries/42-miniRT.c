@@ -69,13 +69,15 @@ static void	init_sphere_creation_box(t_gui_box *gui_box)
 	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
 	change_image_color(&gui_box->on_hover_image, HOVER_GUI_COLOR);
 
-	draw_circle_with_shadow(&gui_box->image,
-		(t_vector2i){gui_box->size.x / 2, gui_box->size.y / 2},
-		gui_box->size.y / 2 - gui_box->size.y / 10, get_t_color_from_uint(COLOR_BLUE));
-
-	draw_circle_with_shadow(&gui_box->on_hover_image,
-		(t_vector2i){gui_box->size.x / 2, gui_box->size.y / 2},
-		gui_box->size.y / 2 - gui_box->size.y / 10, get_t_color_from_uint(COLOR_BLUE));
+	draw_icon(&gui_box->image, SPHERE, COLOR_TRANSPARENT);
+	draw_icon(&gui_box->on_hover_image, SPHERE, HOVER_GUI_COLOR);
+//	draw_circle_with_shadow(&gui_box->image,
+//		(t_vector2i){gui_box->size.x / 2, gui_box->size.y / 2},
+//		gui_box->size.y / 2 - gui_box->size.y / 10, get_t_color_from_uint(COLOR_BLUE));
+//
+//	draw_circle_with_shadow(&gui_box->on_hover_image,
+//		(t_vector2i){gui_box->size.x / 2, gui_box->size.y / 2},
+//		gui_box->size.y / 2 - gui_box->size.y / 10, get_t_color_from_uint(COLOR_BLUE));
 
 	round_image_corners(&gui_box->on_hover_image, BOX_ROUNDING_RADIUS);
 	round_image_corners(&gui_box->image, BOX_ROUNDING_RADIUS);
