@@ -26,6 +26,8 @@ void		toggle_gui(t_gui *gui);
 void		redraw_icons(t_engine *engine, t_material material);
 
 int			update_object_attributes_modification_box(t_engine *engine);
+int			init_cone_attributes_modification_box(t_engine *engine,
+				t_gui_box *gui_box);
 int			init_cylinder_attributes_modification_box(t_engine *engine,
 				t_gui_box *gui_box);
 int			init_plane_attributes_modification_box(t_engine *engine,

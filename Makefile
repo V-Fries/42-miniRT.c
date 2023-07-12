@@ -78,6 +78,7 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/add_boxes/add_x_y_z_box.c		\
 	hooks/update_object_attributes_modification_box/add_boxes/get_x_y_z_input_box.c	\
 	\
+	hooks/update_object_attributes_modification_box/init_cone_attributes_modification_box.c		\
 	hooks/update_object_attributes_modification_box/init_cylinder_attributes_modification_box.c	\
 	hooks/update_object_attributes_modification_box/init_plane_attributes_modification_box.c	\
 	hooks/update_object_attributes_modification_box/init_sphere_attributes_modification_box.c	\

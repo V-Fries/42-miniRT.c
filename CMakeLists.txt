@@ -388,4 +388,4 @@ add_executable(minirt
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c)
+        src/main.c src/hooks/update_object_attributes_modification_box/init_cone_attributes_modification_box.c)
