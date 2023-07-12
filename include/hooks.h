@@ -21,6 +21,8 @@ int			button_press_handler(int button, int x, int y, t_engine *engine);
 int			key_press_handler(int key_code, t_engine *engine);
 int			key_release_handler(int key_code, t_engine *engine);
 
+void		toggle_gui(t_gui *gui);
+
 int			update_object_attributes_modification_box(t_engine *engine);
 int			init_cylinder_attributes_modification_box(t_engine *engine,
 				t_gui_box *gui_box);

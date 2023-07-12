@@ -18,7 +18,8 @@
 
 # include "gui/boxes.h"
 # include "image.h"
-# include "engine.h"
+# include "colors.h"
+# include "object.h"
 # include "font/rendering_structs.h"
 
 typedef struct s_fps
@@ -33,9 +34,12 @@ typedef struct s_gui
 	t_font				font;
 	bool				is_hidden;
 	uint64_t			start_animation_time;
+	bool				hide_animation_finished;
+	bool				should_show_gui_on_camera_lock;
 	t_gui_boxes			gui_boxes;
 	bool				color_picker_base_color_was_changed;
 	t_color				color_picker_base_color;
+	t_color				icons_albedo;
 	void				(*draw_gui_image)(t_image *destination, \
 							const t_image *source, t_vector2i position);
 	t_fps				fps;

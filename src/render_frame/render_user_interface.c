@@ -26,7 +26,10 @@ static float	get_gui_hidden_ration(t_gui *gui, const uint64_t start_time)
 	const float	time_passed_squared = time_passed * time_passed;
 
 	if (time_passed_squared > TIME_TO_HIDE_GUI)
+	{
+		gui->hide_animation_finished = true;
 		return (gui->is_hidden);
+	}
 	if (gui->is_hidden)
 	{
 		return (time_passed_squared / TIME_TO_HIDE_GUI);

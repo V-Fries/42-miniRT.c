@@ -64,7 +64,8 @@ int	init_base_color_box(t_engine *engine, t_gui_box *gui_box,
 		return (-1); // TODO free above
 	gui_box->draw = &base_color_box_draw;
 	gui_box->on_click = &base_color_picker_on_click;
-	engine->gui.color_picker_base_color = get_t_color_from_uint(COLOR_BLUE);
+	engine->gui.color_picker_base_color = vector3f_multiply(
+			engine->gui.icons_albedo, 255.f);
 	engine->gui.color_picker_base_color_was_changed = true;
 	y = -1;
 	while (++y < gui_box->size.y)
@@ -199,11 +200,11 @@ static void	base_color_picker_on_click(t_gui_box *self, t_engine *engine, int y,
 		return ;
 	engine->gui.color_picker_base_color = get_t_color_from_uint(color);
 	engine->gui.color_picker_base_color_was_changed = true;
+	engine->gui.icons_albedo = vector3f_divide(
+			engine->gui.color_picker_base_color, 255.f);
+	// redraw_icons();
 	if (engine->gui.selected_object == NULL)
 		return ;
-	engine->gui.selected_object->material.albedo = engine->gui.color_picker_base_color;
-	engine->gui.selected_object->material.albedo.x /= 255.f;
-	engine->gui.selected_object->material.albedo.y /= 255.f;
-	engine->gui.selected_object->material.albedo.z /= 255.f;
+	engine->gui.selected_object->material.albedo = engine->gui.icons_albedo;
 	engine->scene_changed = true;
 }

@@ -12,9 +12,11 @@
 #define NUMBER_OF_OBJECT_TYPES 3
 
 static int	init_object_creation_children(t_engine *engine, t_gui_box *gui_box);
-static void	init_sphere_creation_box(t_gui_box *gui_box);
-static void	init_plane_creation_box(t_gui_box *gui_box);
-static void	init_cylinder_creation_box(t_gui_box *gui_box);
+static void	init_sphere_creation_box(const t_engine *engine,
+				t_gui_box *gui_box);
+static void	init_plane_creation_box(const t_engine *engine, t_gui_box *gui_box);
+static void	init_cylinder_creation_box(const t_engine *engine,
+				t_gui_box *gui_box);
 
 int	init_object_creation_gui_box(t_engine *minirt, t_gui_box *gui_box,
 		t_gui_box *parent)
@@ -58,19 +60,19 @@ static int	init_object_creation_children(t_engine *engine, t_gui_box *gui_box)
 		round_image_corners(&gui_box->children.data[i].on_hover_image, BOX_ROUNDING_RADIUS);
 		gui_box->children.data[i].draw = &icon_box_draw_method;
 	}
-	init_sphere_creation_box(gui_box->children.data + 0);
-	init_plane_creation_box(gui_box->children.data + 1);
-	init_cylinder_creation_box(gui_box->children.data + 2);
+	init_sphere_creation_box(engine, gui_box->children.data + 0);
+	init_plane_creation_box(engine, gui_box->children.data + 1);
+	init_cylinder_creation_box(engine, gui_box->children.data + 2);
 	return (0);
 }
 
-static void	init_sphere_creation_box(t_gui_box *gui_box)
+static void	init_sphere_creation_box(const t_engine *engine, t_gui_box *gui_box)
 {
 	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
 	change_image_color(&gui_box->on_hover_image, HOVER_GUI_COLOR);
 
-	draw_icon(&gui_box->image, SPHERE, COLOR_TRANSPARENT);
-	draw_icon(&gui_box->on_hover_image, SPHERE, HOVER_GUI_COLOR);
+	draw_icon(engine, &gui_box->image, SPHERE, COLOR_TRANSPARENT);
+	draw_icon(engine, &gui_box->on_hover_image, SPHERE, HOVER_GUI_COLOR);
 //	draw_circle_with_shadow(&gui_box->image,
 //		(t_vector2i){gui_box->size.x / 2, gui_box->size.y / 2},
 //		gui_box->size.y / 2 - gui_box->size.y / 10, get_t_color_from_uint(COLOR_BLUE));
@@ -85,8 +87,9 @@ static void	init_sphere_creation_box(t_gui_box *gui_box)
 	gui_box->on_click = &sphere_create_on_click;
 }
 
-static void	init_plane_creation_box(t_gui_box *gui_box)
+static void	init_plane_creation_box(const t_engine *engine, t_gui_box *gui_box)
 {
+	(void)engine;
 	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
 	change_image_color(&gui_box->on_hover_image, HOVER_GUI_COLOR);
 
@@ -96,8 +99,10 @@ static void	init_plane_creation_box(t_gui_box *gui_box)
 	gui_box->on_click = &plane_create_on_click;
 }
 
-static void	init_cylinder_creation_box(t_gui_box *gui_box)
+static void	init_cylinder_creation_box(const t_engine *engine,
+				t_gui_box *gui_box)
 {
+	(void)engine;
 	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
 	change_image_color(&gui_box->on_hover_image, HOVER_GUI_COLOR);
 

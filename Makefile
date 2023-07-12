@@ -57,9 +57,9 @@ SRC				=\
 	gui/create_boxes_utils.c		\
 	gui/create_float_input_box.c	\
 	gui/create_horizontal_boxes.c	\
-	gui/create_icon.c				\
 	gui/create_n_horizontal_boxes.c	\
 	gui/create_vertical_boxes.c		\
+	gui/draw_icon.c					\
 	gui/init_boxes.c				\
 	\
 	\
@@ -87,6 +87,7 @@ SRC				=\
 	hooks/button_release.c	\
 	hooks/key_press.c		\
 	hooks/key_release.c		\
+	hooks/toggle_gui.c		\
 	\
 	\
 	image/destroy_t_image.c		\
@@ -184,6 +185,7 @@ SRC				=\
 	ray_tracer/interpolate_ray_tracing.c	\
 	ray_tracer/mapping.c					\
 	ray_tracer/render.c						\
+	ray_tracer/render_icon.c				\
 	ray_tracer/render_ray.c					\
 	ray_tracer/render_with_anti_aliasing.c	\
 	\

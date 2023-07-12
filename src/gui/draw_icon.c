@@ -31,7 +31,7 @@ int	draw_icon(const t_engine *engine, t_image *image,
 		return (-1);
 	if (init_tmp_scene(engine, &tmp_engine, type, sky_color) < 0)
 		return (-1);
-	render_anti_aliased_raytracing(&tmp_engine);
+	render_icon(&tmp_engine, sky_color_int);
 	free(tmp_engine.camera.rays);
 	free_objects(&tmp_engine.scene.objects);
 	free_lights(&tmp_engine.scene.lights);
@@ -41,10 +41,10 @@ int	draw_icon(const t_engine *engine, t_image *image,
 static int	tmp_camera_create(t_camera *camera, t_vector2f viewport)
 {
 	camera->viewport.number_of_pixels = viewport.x * viewport.y;
-	camera->rays = malloc(sizeof(*camera->rays)
-			* camera->viewport.number_of_pixels);
-	if (camera->rays == NULL)
-		return (-1);
+//	camera->rays = malloc(sizeof(*camera->rays)
+//			* camera->viewport.number_of_pixels);
+//	if (camera->rays == NULL)
+//		return (-1);
 	camera->viewport.size = viewport;
 	camera->position = vector3f_create(0, 0, 0);
 	camera->direction = vector3f_create(0, 0, -1);
@@ -61,10 +61,10 @@ static int	tmp_camera_create(t_camera *camera, t_vector2f viewport)
 	camera->lock = true;
 	camera_recalculate_view(camera);
 	camera_recalculate_projection(camera);
-	camera_recalculate_rays(camera);
+//	camera_recalculate_rays(camera);
 	return (0);
 }
-#include "stdio.h"
+
 static int	init_tmp_scene(const t_engine *engine, t_engine *tmp_engine,
 				const enum e_object_type type, const t_vector3f sky_color)
 {
@@ -77,13 +77,14 @@ static int	init_tmp_scene(const t_engine *engine, t_engine *tmp_engine,
 	initialize_objects_array(&tmp_engine->scene.objects, 1);
 	initialize_lights_array(&tmp_engine->scene.lights, 1);
 
-//	material = material_create(vector3f_create(1, 0, 0), 0, 0);
 	material = material_create(engine->gui.icons_albedo, 0, 0);
 	material.is_checked_pattern = false;
 	if (type == SPHERE)
 	{
-		t_vector3f	top = tmp_engine->camera.rays[((int)tmp_engine->camera.viewport.size.y / 15) * (int)tmp_engine->camera.viewport.size.x + (int)tmp_engine->camera.viewport.size.x / 2].direction;
-		t_vector3f	bottom = tmp_engine->camera.rays[((int)tmp_engine->camera.viewport.size.y - (int)tmp_engine->camera.viewport.size.y / 15) * (int)tmp_engine->camera.viewport.size.x + (int)tmp_engine->camera.viewport.size.x / 2].direction;
+//		t_vector3f	top = tmp_engine->camera.rays[((int)tmp_engine->camera.viewport.size.y / 15) * (int)tmp_engine->camera.viewport.size.x + (int)tmp_engine->camera.viewport.size.x / 2].direction;
+//		t_vector3f	bottom = tmp_engine->camera.rays[((int)tmp_engine->camera.viewport.size.y - (int)tmp_engine->camera.viewport.size.y / 15) * (int)tmp_engine->camera.viewport.size.x + (int)tmp_engine->camera.viewport.size.x / 2].direction;
+		t_vector3f	top = get_ray_direction(&tmp_engine->camera, tmp_engine->camera.viewport.size.y / 15.f, tmp_engine->camera.viewport.size.x / 2.f);
+		t_vector3f	bottom = get_ray_direction(&tmp_engine->camera, tmp_engine->camera.viewport.size.y - tmp_engine->camera.viewport.size.y / 15.f, tmp_engine->camera.viewport.size.x / 2.f);
 		top = vector3f_multiply(top, 2.f / top.z);
 		bottom = vector3f_multiply(bottom, 2.f / bottom.z);
 		float	radius = vector3f_length(vector3f_subtract(top, bottom)) / 2.f;

@@ -23,6 +23,7 @@
 
 static void	update_color_picker_color(t_gui *gui);
 static int	placing_object(int button, t_engine *engine);
+static void	toggle_camera_lock(t_engine *engine);
 
 int	button_press_handler(int button, int x, int y, t_engine *engine)
 {
@@ -30,20 +31,7 @@ int	button_press_handler(int button, int x, int y, t_engine *engine)
 
 //	ft_printf("button_code == %d\n\n", button);
 	if (button == BUTTON_RIGHT)
-	{
-		if (engine->camera.lock == true)
-		{
-			engine->previous_mouse_position = get_mouse_position(engine);
-			engine->camera.lock = false;
-			mlx_mouse_hide();
-			return (0);
-		}
-		engine->camera.lock = true;
-		mlx_mouse_move(engine->window.window,
-			engine->ray_traced_image.width / 2,
-			engine->ray_traced_image.height / 2);
-		mlx_mouse_show();
-	}
+		return (toggle_camera_lock(engine), 0);
 	if (button != BUTTON_LEFT && button != SCROLL_DOWN &&  button != SCROLL_UP)
 		return (0);
 
@@ -111,4 +99,32 @@ static void	update_color_picker_color(t_gui *gui)
 		.x = gui->selected_object->material.albedo.x * 255.f,
 		.y = gui->selected_object->material.albedo.y * 255.f,
 		.z = gui->selected_object->material.albedo.z * 255.f};
+}
+
+static void	toggle_camera_lock(t_engine *engine)
+{
+	const t_vector2i	screen_center = {
+		.x = engine->ray_traced_image.width / 2,
+		.y = engine->ray_traced_image.height / 2
+	};
+
+	mlx_mouse_move(engine->window.window, screen_center.x, screen_center.y);
+	if (engine->camera.lock == true)
+	{
+		if (engine->gui.is_hidden == false)
+		{
+			toggle_gui(&engine->gui);
+			engine->gui.should_show_gui_on_camera_lock = true;
+		}
+		else
+			engine->gui.should_show_gui_on_camera_lock = false;
+		engine->previous_mouse_position = screen_center;
+		engine->camera.lock = false;
+		mlx_mouse_hide();
+		return ;
+	}
+	if (engine->gui.should_show_gui_on_camera_lock && engine->gui.is_hidden)
+		toggle_gui(&engine->gui);
+	engine->camera.lock = true;
+	mlx_mouse_show();
 }

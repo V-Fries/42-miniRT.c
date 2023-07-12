@@ -8,18 +8,19 @@
 #include "libft.h"
 #include "gui/object_modification_box.h"
 
-int init_gui_boxes(t_engine *minirt)
+int init_gui(t_engine *minirt)
 {
 	minirt->gui.draw_gui_image = &put_image_to_image_unsafe;
 	minirt->gui.gui_boxes.size = 2;
 	minirt->gui.gui_boxes.data = malloc(sizeof(*minirt->gui.gui_boxes.data)
 			* minirt->gui.gui_boxes.size);
+	if (minirt->gui.gui_boxes.data == NULL)
+		return (-1);
 	minirt->gui.object_modification_amount = 0.1f;
 	minirt->gui.object_rotation_degrees = 10.0f;
 	minirt->gui.fps.fps_count = ft_itoa(0); // TODO secure me
 	minirt->gui.fps.last_update = ft_get_current_time();
-	if (minirt->gui.gui_boxes.data == NULL)
-		return (-1);
+	minirt->gui.icons_albedo = (t_vector3f){0.f, 0.f, 1.f};
 	if (init_main_gui_box(minirt,
 			minirt->gui.gui_boxes.data) < 0)
 	{

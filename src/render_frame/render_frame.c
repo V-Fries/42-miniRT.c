@@ -139,8 +139,8 @@ static void	update_scene(t_engine *engine)
 	{
 		camera_recalculate_view(&engine->camera);
 		camera_recalculate_rays(&engine->camera);
-		engine->should_render_at_full_resolution = false;
 		engine->should_render_ray_tracing = true;
+		engine->should_render_at_full_resolution = false;
 		was_rendered_at_full_resolution = false;
 		next_update_time = current_time_in_ms + NB_OF_MS_BEFORE_FULL_RESOLUTION;
 		engine->scene_changed = true;
@@ -150,8 +150,8 @@ static void	update_scene(t_engine *engine)
 	update_placed_object_position(engine);
 	if (engine->scene_changed)
 	{
-		engine->should_render_at_full_resolution = false;
 		engine->should_render_ray_tracing = true;
+		engine->should_render_at_full_resolution = false;
 		was_rendered_at_full_resolution = false;
 		next_update_time = current_time_in_ms + NB_OF_MS_BEFORE_FULL_RESOLUTION;
 	}
@@ -159,7 +159,7 @@ static void	update_scene(t_engine *engine)
 	{
 		if (was_rendered_at_full_resolution)
 			engine->should_render_ray_tracing = false;
-		else
+		else if (engine->gui.hide_animation_finished)
 		{
 			engine->should_render_at_full_resolution = true;
 			was_rendered_at_full_resolution = true;

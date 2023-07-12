@@ -54,7 +54,7 @@ int	init_engine(t_engine *engine, const char *start_up_scene)
 
 	init_hooks(engine);
 
-	if (init_gui_boxes(engine))
+	if (init_gui(engine))
 	{
 		// TODO: free everything
 		return (-1);
