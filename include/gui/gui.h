@@ -39,7 +39,7 @@ typedef struct s_gui
 	t_gui_boxes			gui_boxes;
 	bool				color_picker_base_color_was_changed;
 	t_color				color_picker_base_color;
-	t_color				icons_albedo;
+	t_material			material_to_assign_to_new_objects;
 	void				(*draw_gui_image)(t_image *destination, \
 							const t_image *source, t_vector2i position);
 	t_fps				fps;
@@ -47,6 +47,7 @@ typedef struct s_gui
 	float				object_modification_amount;
 	float				object_rotation_degrees;
 	struct s_gui_box	*object_attributes_modification_box;
+	struct s_gui_boxes	*object_creation_boxes;
 }	t_gui;
 
 #endif

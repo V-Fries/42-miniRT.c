@@ -125,7 +125,7 @@ static int	get_incrementer(t_engine *engine)
 	return (incrementer);
 }
 
-#define NB_OF_MS_BEFORE_FULL_RESOLUTION 400
+#define NB_OF_MS_BEFORE_FULL_RESOLUTION 600
 
 static void	update_scene(t_engine *engine)
 {

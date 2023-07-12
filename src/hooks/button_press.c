@@ -61,6 +61,7 @@ int	button_press_handler(int button, int x, int y, t_engine *engine)
 		ft_printf("selected object %s\n\n", tmp);
 		//!Testing
 		update_color_picker_color(&engine->gui);
+		redraw_icons(engine, engine->gui.selected_object->material);
 		return (update_object_attributes_modification_box(engine));
 	}
 	if (clicked_gui_box->on_click != NULL)

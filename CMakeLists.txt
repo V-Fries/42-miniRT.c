@@ -272,7 +272,7 @@ add_executable(minirt
         src/gui/create_horizontal_boxes.c
         src/gui/create_n_horizontal_boxes.c
         src/gui/create_vertical_boxes.c
-        src/gui/init_boxes.c
+        src/gui/init_gui.c
         src/hooks/update_object_attributes_modification_box/add_boxes/normal_input_box_on_clicks/x.c
         src/hooks/update_object_attributes_modification_box/add_boxes/normal_input_box_on_clicks/y.c
         src/hooks/update_object_attributes_modification_box/add_boxes/normal_input_box_on_clicks/z.c
@@ -379,4 +379,4 @@ add_executable(minirt
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c src/gui/draw_icon.c src/ray_tracer/render_icon.c src/hooks/toggle_gui.c)
+        src/main.c src/gui/draw_icon.c src/ray_tracer/render_icon.c src/hooks/toggle_gui.c src/hooks/redraw_icons.c)

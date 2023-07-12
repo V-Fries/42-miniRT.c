@@ -19,6 +19,7 @@
 #include "colors.h"
 #include "gui/object_modification_box.h"
 #include "gui/utils.h"
+#include "hooks.h"
 
 typedef struct s_color_getter
 {
@@ -65,7 +66,7 @@ int	init_base_color_box(t_engine *engine, t_gui_box *gui_box,
 	gui_box->draw = &base_color_box_draw;
 	gui_box->on_click = &base_color_picker_on_click;
 	engine->gui.color_picker_base_color = vector3f_multiply(
-			engine->gui.icons_albedo, 255.f);
+			engine->gui.material_to_assign_to_new_objects.albedo, 255.f);
 	engine->gui.color_picker_base_color_was_changed = true;
 	y = -1;
 	while (++y < gui_box->size.y)
@@ -195,16 +196,16 @@ static void	base_color_picker_on_click(t_gui_box *self, t_engine *engine, int y,
 				int x)
 {
 	const unsigned int	color = get_image_pixel_color(&self->image, y, x);
+	t_color				albedo;
 
 	if (color == COLOR_TRANSPARENT)
 		return ;
 	engine->gui.color_picker_base_color = get_t_color_from_uint(color);
 	engine->gui.color_picker_base_color_was_changed = true;
-	engine->gui.icons_albedo = vector3f_divide(
-			engine->gui.color_picker_base_color, 255.f);
-	// redraw_icons();
+	albedo = vector3f_divide(engine->gui.color_picker_base_color, 255.f);
 	if (engine->gui.selected_object == NULL)
-		return ;
-	engine->gui.selected_object->material.albedo = engine->gui.icons_albedo;
+		return (redraw_icons(engine, material_create(albedo, 0, 0)));
+	engine->gui.selected_object->material.albedo = albedo;
+	redraw_icons(engine, engine->gui.selected_object->material);
 	engine->scene_changed = true;
 }

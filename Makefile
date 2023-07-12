@@ -60,7 +60,7 @@ SRC				=\
 	gui/create_n_horizontal_boxes.c	\
 	gui/create_vertical_boxes.c		\
 	gui/draw_icon.c					\
-	gui/init_boxes.c				\
+	gui/init_gui.c					\
 	\
 	\
 	hooks/update_object_attributes_modification_box/add_boxes/normal_input_box_on_clicks/x.c	\
@@ -87,6 +87,7 @@ SRC				=\
 	hooks/button_release.c	\
 	hooks/key_press.c		\
 	hooks/key_release.c		\
+	hooks/redraw_icons.c	\
 	hooks/toggle_gui.c		\
 	\
 	\

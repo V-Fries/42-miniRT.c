@@ -6,6 +6,7 @@
 #include "gui/box.h"
 #include "gui/utils.h"
 #include "gui/object_modification_box.h"
+#include "hooks.h"
 
 static void			color_picker_draw(t_gui_box *self, t_engine *minirt,
 						int x_offset, int y_offset);
@@ -139,14 +140,14 @@ static void	color_picker_on_click(t_gui_box *self, t_engine *engine, int y,
 				int x)
 {
 	const unsigned int	color = get_image_pixel_color(&self->image, y, x);
+	const t_color		albedo = vector3f_divide(get_t_color_from_uint(color),
+			255.f);
 
 	if (color == COLOR_TRANSPARENT)
 		return ;
-	engine->gui.icons_albedo = vector3f_divide(get_t_color_from_uint(color),
-			255.f);
-	// redraw_icons();
 	if (engine->gui.selected_object == NULL)
-		return ;
-	engine->gui.selected_object->material.albedo = engine->gui.icons_albedo;
+		return (redraw_icons(engine, material_create(albedo, 0, 0)));
+	engine->gui.selected_object->material.albedo = albedo;
+	redraw_icons(engine, engine->gui.selected_object->material);
 	engine->scene_changed = true;
 }

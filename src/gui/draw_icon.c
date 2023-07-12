@@ -12,27 +12,28 @@
 
 #include "engine.h"
 #include "ray_tracer/render.h"
+#include "gui/utils.h"
 
 static int	tmp_camera_create(t_camera *camera, t_vector2f viewport);
-static int	init_tmp_scene(const t_engine *engine, t_engine *tmp_engine,
-				enum e_object_type type, t_vector3f sky_color);
+static int	init_tmp_scene(t_engine *tmp_engine, enum e_object_type type,
+				t_material material, t_vector3f sky_color);
 
-int	draw_icon(const t_engine *engine, t_image *image,
-			const enum e_object_type type, const unsigned int sky_color_int)
+int	draw_icon(t_image *image, const enum e_object_type type,
+		const unsigned int background_color, const t_material material)
 {
-	t_engine	tmp_engine;
-	t_color		sky_color;
+	t_engine		tmp_engine;
+	const t_color	sky_color = vector3f_divide(
+			get_t_color_from_uint(background_color), 255.f);
 
 	ft_bzero(&tmp_engine, sizeof(tmp_engine));
 	tmp_engine.ray_traced_image = *image;
-	sky_color = vector3f_divide(get_t_color_from_uint(sky_color_int), 255.f);
 	if (tmp_camera_create(&tmp_engine.camera,
 			(t_vector2f){image->width, image->height}) < 0)
 		return (-1);
-	if (init_tmp_scene(engine, &tmp_engine, type, sky_color) < 0)
+	if (init_tmp_scene(&tmp_engine, type, material, sky_color) < 0)
 		return (-1);
-	render_icon(&tmp_engine, sky_color_int);
-	free(tmp_engine.camera.rays);
+	render_icon(&tmp_engine, background_color);
+//	free(tmp_engine.camera.rays);
 	free_objects(&tmp_engine.scene.objects);
 	free_lights(&tmp_engine.scene.lights);
 	return (0);
@@ -65,20 +66,17 @@ static int	tmp_camera_create(t_camera *camera, t_vector2f viewport)
 	return (0);
 }
 
-static int	init_tmp_scene(const t_engine *engine, t_engine *tmp_engine,
-				const enum e_object_type type, const t_vector3f sky_color)
+static int	init_tmp_scene(t_engine *tmp_engine, const enum e_object_type type,
+				const t_material material, const t_vector3f sky_color)
 {
 	t_object		object;
 	t_light			light;
-	t_material		material;
 
 	// TODO secure all the things
 
 	initialize_objects_array(&tmp_engine->scene.objects, 1);
 	initialize_lights_array(&tmp_engine->scene.lights, 1);
 
-	material = material_create(engine->gui.icons_albedo, 0, 0);
-	material.is_checked_pattern = false;
 	if (type == SPHERE)
 	{
 //		t_vector3f	top = tmp_engine->camera.rays[((int)tmp_engine->camera.viewport.size.y / 15) * (int)tmp_engine->camera.viewport.size.x + (int)tmp_engine->camera.viewport.size.x / 2].direction;
