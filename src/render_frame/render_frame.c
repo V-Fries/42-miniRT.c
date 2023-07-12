@@ -31,7 +31,7 @@
 
 static void			render_minirt(t_engine *engine, uint64_t start_time);
 static int			get_incrementer(t_engine *engine);
-static void			update_camera(t_engine *engine);
+static void			update_scene(t_engine *engine);
 static int			deal_mouse(t_engine *engine);
 static void			deal_keys(t_engine *engine);
 static void			update_placed_object_position(t_engine *engine);
@@ -70,8 +70,7 @@ static void	render_minirt(t_engine *engine, const uint64_t start_time)
 {
 	int	incrementer;
 
-	update_camera(engine);
-	update_placed_object_position(engine);
+	update_scene(engine);
 	if (engine->should_render_ray_tracing
 		&& engine->should_render_at_full_resolution == false)
 	{
@@ -128,13 +127,12 @@ static int	get_incrementer(t_engine *engine)
 
 #define NB_OF_MS_BEFORE_FULL_RESOLUTION 400
 
-static void	update_camera(t_engine *engine)
+static void	update_scene(t_engine *engine)
 {
 	static uint64_t			next_update_time = 0;
 	static bool				was_rendered_at_full_resolution = false;
-	const struct timeval	current_time = ft_get_current_time();
-	const uint64_t			current_time_in_ms
-		= ft_timeval_to_ms(current_time);
+	const uint64_t			current_time_in_ms = ft_timeval_to_ms(
+			ft_get_current_time());
 
 	deal_keys(engine);
 	if (deal_mouse(engine) || engine->pressed_keys_index > 0)
@@ -146,8 +144,10 @@ static void	update_camera(t_engine *engine)
 		was_rendered_at_full_resolution = false;
 		next_update_time = current_time_in_ms + NB_OF_MS_BEFORE_FULL_RESOLUTION;
 		engine->scene_changed = true;
+		return ;
 	}
-	else if (engine->scene_changed)
+	update_placed_object_position(engine);
+	if (engine->scene_changed)
 	{
 		engine->should_render_at_full_resolution = false;
 		engine->should_render_ray_tracing = true;
@@ -257,38 +257,29 @@ static void	update_placed_object_position(t_engine *engine)
 	if (yaw_delta == 0 && pitch_delta == 0 && engine->scene_changed == false)
 		return ;
 	engine->scene_changed = true;
-	engine->previous_mouse_position = mouse_position;
 	update_mouse_position(engine, &mouse_position);
+	engine->previous_mouse_position = mouse_position;
 	ray_index = mouse_position.x + mouse_position.y \
 			* (int)engine->camera.viewport.size.x;
 	direction = engine->camera.rays[ray_index].direction;
-	engine->object_being_placed->position = (t_vector3f){
-		.x = engine->camera.position.x + engine->object_being_placed_distance \
-			* direction.x,
-		.y = engine->camera.position.y + engine->object_being_placed_distance \
-			* direction.y,
-		.z = engine->camera.position.z + engine->object_being_placed_distance \
-			* direction.z
-	};
+	engine->object_being_placed->position = vector3f_add(
+			engine->camera.position,
+			vector3f_multiply(direction, engine->object_being_placed_distance));
 }
 
 static void	update_mouse_position(t_engine *engine, t_vector2i *mouse_position)
 {
-	bool	should_update_mouse_position;
-
-	should_update_mouse_position = (
-			mouse_position->x >= engine->camera.viewport.size.x
-			|| mouse_position->y >= engine->camera.viewport.size.y
-			|| mouse_position->x < 0 || mouse_position->y < 0);
-	if (should_update_mouse_position == false)
+	if (mouse_position->x < engine->ray_traced_image.width
+		&& mouse_position->y < engine->ray_traced_image.height
+		&& mouse_position->x >= 0 && mouse_position->y >= 0)
 		return ;
-	while (mouse_position->x >= engine->camera.viewport.size.x)
-		mouse_position->x -= engine->camera.viewport.size.x;
+	if (mouse_position->x >= engine->ray_traced_image.width)
+		mouse_position->x %= engine->ray_traced_image.width;
 	while (mouse_position->x < 0)
-		mouse_position->x += engine->camera.viewport.size.x;
-	while (mouse_position->y >= engine->camera.viewport.size.y)
-		mouse_position->y -= engine->camera.viewport.size.y;
+		mouse_position->x += engine->ray_traced_image.width;
+	if (mouse_position->y >= engine->ray_traced_image.height)
+		mouse_position->y %= engine->ray_traced_image.height;
 	while (mouse_position->y < 0)
-		mouse_position->y += engine->camera.viewport.size.y;
+		mouse_position->y += engine->ray_traced_image.height;
 	mlx_mouse_move(engine->window.window, mouse_position->x, mouse_position->y);
 }
