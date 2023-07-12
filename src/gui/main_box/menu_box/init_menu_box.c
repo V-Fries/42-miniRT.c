@@ -31,7 +31,7 @@ int	init_menu_gui_box(t_engine *minirt, t_gui_box *gui_box,
 	if (errno == EINVAL)
 		return (-1);
 	change_image_color(&gui_box->image, SUB_GUI_COLOR);
-	round_image_corners(&gui_box->image, 20);
+	round_image_corners(&gui_box->image, BOX_ROUNDING_RADIUS);
 	gui_box->draw = &default_gui_box_draw;
 	gui_box->on_click = &default_gui_box_on_click;
 	if (init_menu_gui_box_children(minirt, gui_box) < 0)

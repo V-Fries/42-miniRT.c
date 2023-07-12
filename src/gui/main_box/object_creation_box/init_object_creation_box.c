@@ -31,7 +31,7 @@ int	init_object_creation_gui_box(t_engine *minirt, t_gui_box *gui_box,
 	gui_box->draw = &default_gui_box_draw;
 	gui_box->on_click = &default_gui_box_on_click;
 	change_image_color(&gui_box->image, SUB_GUI_COLOR);
-	round_image_corners(&gui_box->image, 20);
+	round_image_corners(&gui_box->image, BOX_ROUNDING_RADIUS);
 	if (init_object_creation_children(minirt, gui_box) < 0)
 	{
 		destroy_t_image(&minirt->window, &gui_box->image);
