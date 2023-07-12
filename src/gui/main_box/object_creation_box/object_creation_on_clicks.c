@@ -13,6 +13,7 @@
 #include "engine.h"
 #include "gui/box.h"
 #include "object.h"
+#include "hooks.h"
 
 #define DEFAULT_DISTANCE 10.f
 
@@ -33,6 +34,7 @@ void	sphere_create_on_click(t_gui_box *self, t_engine *engine, int y, int x)
 	engine->object_being_placed_distance = DEFAULT_DISTANCE;
 	engine->object_being_placed.object = engine->scene.objects.data
 		+ engine->scene.objects.length - 1;
+	update_object_attributes_modification_box(engine);
 	(void)self;
 	(void)y;
 	(void)x;
@@ -56,6 +58,7 @@ void	plane_create_on_click(t_gui_box *self, t_engine *engine, int y, int x)
 	engine->object_being_placed_distance = DEFAULT_DISTANCE;
 	engine->object_being_placed.object = engine->scene.objects.data
 		+ engine->scene.objects.length - 1;
+	update_object_attributes_modification_box(engine);
 	(void)self;
 	(void)y;
 	(void)x;
@@ -81,6 +84,7 @@ void	cylinder_create_on_click(t_gui_box *self, t_engine *engine, int y,
 	engine->object_being_placed_distance = DEFAULT_DISTANCE;
 	engine->object_being_placed.object = engine->scene.objects.data
 		+ engine->scene.objects.length - 1;
+	update_object_attributes_modification_box(engine);
 	(void)self;
 	(void)y;
 	(void)x;
@@ -106,6 +110,7 @@ void	cone_create_on_click(t_gui_box *self, t_engine *engine, int y,
 	engine->object_being_placed_distance = DEFAULT_DISTANCE;
 	engine->object_being_placed.object = engine->scene.objects.data
 		+ engine->scene.objects.length - 1;
+	update_object_attributes_modification_box(engine);
 	(void)self;
 	(void)y;
 	(void)x;
@@ -118,7 +123,8 @@ void	light_create_on_click(t_gui_box *self, t_engine *engine, int y,
 
 	if (engine->object_being_placed.object || engine->object_being_placed.light)
 		return ;
-	light = light_create(vector3f_create(0, 0, 0), vector3f_create(1, 1, 1), 1);
+	light = light_create(vector3f_create(0, 0, 0), vector3f_create(1, 1, 1),
+			0.5f);
 	if (add_light_in_lights(&engine->scene.lights, light) < 0)
 	{
 		ft_print_error("Failed to create new light\n");
@@ -127,6 +133,7 @@ void	light_create_on_click(t_gui_box *self, t_engine *engine, int y,
 	engine->object_being_placed_distance = DEFAULT_DISTANCE;
 	engine->object_being_placed.light = engine->scene.lights.data
 		+ engine->scene.lights.length - 1;
+	update_object_attributes_modification_box(engine);
 	(void)self;
 	(void)y;
 	(void)x;

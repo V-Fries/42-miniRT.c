@@ -19,6 +19,8 @@
 # include "math/vector.h"
 # include "colors.h"
 
+# define LIGHT (-1)
+
 enum e_object_type
 {
 	SPHERE,

@@ -57,7 +57,7 @@ int					create_vertical_boxes(t_engine *engine, t_gui_box *gui_box,
 int					create_float_input_box(t_engine *engine, t_gui_box *gui_box,
 						t_float_input_box_on_click on_click);
 
-int					draw_icon(t_image *image, enum e_object_type type,
+int					draw_icon(t_image *image, int type,
 						unsigned int background_color, t_material material);
 
 #endif

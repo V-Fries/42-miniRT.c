@@ -10,10 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include "engine.h"
 #include "ray_tracer/render.h"
 #include "gui/utils.h"
 
+static void		draw_light_icon(t_image *image, unsigned int background_color,
+					t_color color);
 static int		tmp_camera_create(t_camera *camera, t_vector2f viewport);
 static int		init_tmp_scene(t_engine *tmp_engine, enum e_object_type type,
 					t_material material, t_vector3f sky_color);
@@ -22,13 +25,19 @@ static t_object	get_plane(t_material material);
 static t_object	get_cylinder(const t_camera *camera, t_material material);
 static t_object	get_cone(const t_camera *camera, const t_material material);
 
-int	draw_icon(t_image *image, const enum e_object_type type,
+int	draw_icon(t_image *image, const int type,
 		const unsigned int background_color, const t_material material)
 {
 	t_engine		tmp_engine;
 	const t_color	sky_color = vector3f_divide(
 			get_t_color_from_uint(background_color), 255.f);
 
+	if (type == LIGHT)
+	{
+		draw_light_icon(image, background_color,
+			vector3f_multiply(material.albedo, 255.f));
+		return (0);
+	}
 	ft_bzero(&tmp_engine, sizeof(tmp_engine));
 	tmp_engine.ray_traced_image = *image;
 	if (tmp_camera_create(&tmp_engine.camera,
@@ -41,6 +50,17 @@ int	draw_icon(t_image *image, const enum e_object_type type,
 	free_objects(&tmp_engine.scene.objects);
 	free_lights(&tmp_engine.scene.lights);
 	return (0);
+}
+
+static void		draw_light_icon(t_image *image,
+					const unsigned int background_color, const t_color color)
+{
+	const float			radius = fminf(image->width, image->height) / 3.f;
+	const t_vector2i	center = {image->width / 2, image->height / 2};
+
+	// TODO make a better icon
+	(void)background_color;
+	draw_circle(image, center, radius, vec_rgb_to_uint(color));
 }
 
 static int	tmp_camera_create(t_camera *camera, t_vector2f viewport)
@@ -87,7 +107,7 @@ static int	init_tmp_scene(t_engine *tmp_engine, const enum e_object_type type,
 		object = get_plane(material);
 	else if (type == CYLINDER)
 		object = get_cylinder(&tmp_engine->camera, material);
-	else// if (type == CONE)
+	else
 		object = get_cone(&tmp_engine->camera, material);
 	add_object_in_objects(&tmp_engine->scene.objects, object);
 

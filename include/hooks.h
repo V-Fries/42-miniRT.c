@@ -30,6 +30,8 @@ int			init_cone_attributes_modification_box(t_engine *engine,
 				t_gui_box *gui_box);
 int			init_cylinder_attributes_modification_box(t_engine *engine,
 				t_gui_box *gui_box);
+int			init_light_attributes_modification_box(t_engine *engine,
+				t_gui_box *gui_box);
 int			init_plane_attributes_modification_box(t_engine *engine,
 				t_gui_box *gui_box);
 int			init_sphere_attributes_modification_box(t_engine *engine,
@@ -38,13 +40,15 @@ int			init_sphere_attributes_modification_box(t_engine *engine,
 int			add_x_y_z_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
 
+int			add_brightness_box(t_engine *engine, t_gui_box *gui_box, int *i,
+				t_gui_box *parent);
+int			add_height_box(t_engine *engine, t_gui_box *gui_box, int *i,
+				t_gui_box *parent);
 int			add_normal_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
 int			add_position_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
 int			add_radius_box(t_engine *engine, t_gui_box *gui_box, int *i,
-				t_gui_box *parent);
-int			add_height_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
 
 t_gui_box	*get_x_y_z_input_box(t_gui_box *gui_box, char type,

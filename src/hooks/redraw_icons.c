@@ -15,8 +15,8 @@
 #include "gui/UI.h"
 #include "gui/utils.h"
 
-static void	redraw_object_creation_box(t_gui_box *gui_box,
-				enum e_object_type type, t_material material);
+static void	redraw_object_creation_box(t_gui_box *gui_box, int type,
+				t_material material);
 
 void	redraw_icons(t_engine *engine, t_material material)
 {
@@ -29,10 +29,12 @@ void	redraw_icons(t_engine *engine, t_material material)
 		CYLINDER, material);
 	redraw_object_creation_box(engine->gui.object_creation_boxes->data + 3,
 		CONE, material);
+	redraw_object_creation_box(engine->gui.object_creation_boxes->data + 4,
+		LIGHT, material);
 }
 
 static void	redraw_object_creation_box(t_gui_box *gui_box,
-				const enum e_object_type type, const t_material material)
+				const int type, const t_material material)
 {
 	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
 	change_image_color(&gui_box->on_hover_image, HOVER_GUI_COLOR);

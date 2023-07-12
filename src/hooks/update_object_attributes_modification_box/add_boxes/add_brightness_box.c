@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add_radius_box.c                                   :+:      :+:    :+:   */
+/*   add_brightness_box.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,19 +11,20 @@
 /* ************************************************************************** */
 
 #include <errno.h>
+#include <math.h>
 
 #include "gui/box.h"
 #include "gui/UI.h"
 #include "gui/utils.h"
 #include "font/render.h"
 
-static int	init_radius_box_children(t_engine *engine, t_gui_box *gui_box);
-static void	radius_input_box_on_click_plus(struct s_gui_box *self,
+static int	init_brightness_box_children(t_engine *engine, t_gui_box *gui_box);
+static void	brightness_input_box_on_click_plus(struct s_gui_box *self,
 				t_engine *engine, int y, int x);
-static void	radius_input_box_on_click_minus(struct s_gui_box *self,
+static void	brightness_input_box_on_click_minus(struct s_gui_box *self,
 				t_engine *engine, int y, int x);
 
-int	add_radius_box(t_engine *engine, t_gui_box *gui_box, int *i,
+int	add_brightness_box(t_engine *engine, t_gui_box *gui_box, int *i,
 		t_gui_box *parent)
 {
 	*gui_box = create_t_gui_box(engine, parent, \
@@ -36,7 +37,7 @@ int	add_radius_box(t_engine *engine, t_gui_box *gui_box, int *i,
 	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);
 	*i += gui_box->size.y + 8;
-	if (init_radius_box_children(engine, gui_box) < 0)
+	if (init_brightness_box_children(engine, gui_box) < 0)
 	{
 		destroy_t_image(&engine->window, &gui_box->image);
 		ft_bzero(gui_box, sizeof(*gui_box));
@@ -49,11 +50,11 @@ int	add_radius_box(t_engine *engine, t_gui_box *gui_box, int *i,
 	return (0);
 }
 
-static int	init_radius_box_children(t_engine *engine, t_gui_box *gui_box)
+static int	init_brightness_box_children(t_engine *engine, t_gui_box *gui_box)
 {
 	const t_float_input_box_on_click	on_click = {
-		.plus = &radius_input_box_on_click_plus,
-		.minus = &radius_input_box_on_click_minus};
+		.plus = &brightness_input_box_on_click_plus,
+		.minus = &brightness_input_box_on_click_minus};
 
 	if (create_horizontal_boxes(engine, gui_box, "65 35", 0) < 0)
 		return (-1);
@@ -64,41 +65,39 @@ static int	init_radius_box_children(t_engine *engine, t_gui_box *gui_box)
 		return (-1);
 	}
 	change_image_color(&gui_box->children.data[0].image, COLOR_TRANSPARENT);
-	write_centered_string_to_image(&engine->gui.font, &gui_box->children.data[0].image,
-		"Radius");
+	write_centered_string_to_image(&engine->gui.font,
+		&gui_box->children.data[0].image, "Brightness");
 	return (0);
 }
 
-static void	radius_input_box_on_click_plus(struct s_gui_box *self,
+static void	brightness_input_box_on_click_plus(struct s_gui_box *self,
 				t_engine *engine, int y, int x)
 {
-	t_object	*object;
+	t_light	*light;
 
-	object = engine->gui.selected_object.object;
+	light = engine->gui.selected_object.light;
 	(void)self;
 	(void)y;
 	(void)x;
-	if (object == NULL)
+	if (light == NULL)
 		return ;
-	object_set_radius(object,
-		object->radius + engine->gui.object_modification_amount);
+	light_set_brightness(light,
+		fminf(light->brightness + 0.01, 1.f));
 	engine->scene_changed = true;
 }
 
-static void	radius_input_box_on_click_minus(struct s_gui_box *self,
+static void	brightness_input_box_on_click_minus(struct s_gui_box *self,
 				t_engine *engine, int y, int x)
 {
-	t_object	*object;
+	t_light	*light;
 
-	object = engine->gui.selected_object.object;
+	light = engine->gui.selected_object.light;
 	(void)self;
 	(void)y;
 	(void)x;
-	if (object == NULL
-		|| object->radius \
-			- engine->gui.object_modification_amount <= 0.01)
+	if (light == NULL)
 		return ;
-	object_set_radius(object,
-		object->radius - engine->gui.object_modification_amount);
+	light_set_brightness(light,
+		fmaxf(light->brightness - 0.01, 0.f));
 	engine->scene_changed = true;
 }

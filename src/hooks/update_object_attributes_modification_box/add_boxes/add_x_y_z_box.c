@@ -45,7 +45,7 @@ int	add_x_y_z_box(t_engine *engine, t_gui_box *gui_box, int *i,
 		return (-1);
 	}
 	change_image_color(&gui_box->image, SUB_GUI_COLOR);
-	round_image_corners(&gui_box->image, 10);
+	round_image_corners(&gui_box->image, BOX_ROUNDING_RADIUS);
 	return (0);
 }
 

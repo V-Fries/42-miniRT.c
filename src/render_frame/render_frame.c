@@ -269,8 +269,11 @@ static void	update_placed_object_position(t_engine *engine)
 				engine->camera.position,
 				vector3f_multiply(direction,
 					engine->object_being_placed_distance)));
-//	else
-//		// TODO move light
+	else
+		light_set_position(engine->object_being_placed.light, vector3f_add(
+				engine->camera.position,
+				vector3f_multiply(direction,
+					engine->object_being_placed_distance)));
 }
 
 static void	update_mouse_position(t_engine *engine, t_vector2i *mouse_position)

@@ -89,16 +89,6 @@ static int	placing_object(int button, t_engine *engine)
 	}
 	else if (button != BUTTON_LEFT)
 		return (0);
-	if (engine->object_being_placed.object != NULL)
-	{
-		engine->gui.selected_object.object = engine->object_being_placed.object;
-		engine->gui.selected_object.light = NULL;
-	}
-	else if (engine->object_being_placed.light != NULL)
-	{
-		engine->gui.selected_object.light = engine->object_being_placed.light;
-		engine->gui.selected_object.object = NULL;
-	}
 	ft_bzero(&engine->object_being_placed, sizeof(engine->object_being_placed));
 //	return (update_object_attributes_modification_box(engine));
 	return (0);

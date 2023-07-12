@@ -71,6 +71,7 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/add_boxes/position_input_box_on_clicks/y.c	\
 	hooks/update_object_attributes_modification_box/add_boxes/position_input_box_on_clicks/z.c	\
 	\
+	hooks/update_object_attributes_modification_box/add_boxes/add_brightness_box.c	\
 	hooks/update_object_attributes_modification_box/add_boxes/add_height_box.c		\
 	hooks/update_object_attributes_modification_box/add_boxes/add_normal_box.c		\
 	hooks/update_object_attributes_modification_box/add_boxes/add_position_box.c	\
@@ -80,6 +81,7 @@ SRC				=\
 	\
 	hooks/update_object_attributes_modification_box/init_cone_attributes_modification_box.c		\
 	hooks/update_object_attributes_modification_box/init_cylinder_attributes_modification_box.c	\
+	hooks/update_object_attributes_modification_box/init_light_attributes_modification_box.c	\
 	hooks/update_object_attributes_modification_box/init_plane_attributes_modification_box.c	\
 	hooks/update_object_attributes_modification_box/init_sphere_attributes_modification_box.c	\
 	hooks/update_object_attributes_modification_box/update_object_attributes_modification_box.c	\

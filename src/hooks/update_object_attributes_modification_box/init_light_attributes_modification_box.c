@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_cone_attributes_modification_box.c            :+:      :+:    :+:   */
+/*   init_light_attributes_modification_box.c           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -15,11 +15,11 @@
 #include "gui/box.h"
 #include "hooks.h"
 
-int	init_cone_attributes_modification_box(t_engine *engine, t_gui_box *gui_box)
+int	init_light_attributes_modification_box(t_engine *engine, t_gui_box *gui_box)
 {
 	int	i;
 
-	gui_box->children.size = 4;
+	gui_box->children.size = 2;
 	gui_box->children.data = malloc(sizeof(*gui_box->children.data)
 			* gui_box->children.size);
 	if (gui_box->children.data == NULL)
@@ -35,21 +35,9 @@ int	init_cone_attributes_modification_box(t_engine *engine, t_gui_box *gui_box)
 		gui_box->children.data = NULL;
 		return (-1);
 	}
-	if (add_radius_box(engine, gui_box->children.data + 1, &i, gui_box) < 0)
+	if (add_brightness_box(engine, gui_box->children.data + 1, &i, gui_box) < 0)
 	{
 		gui_box->children.size = 1;
-		destroy_t_gui_box(&engine->window, gui_box);
-		return (-1);
-	}
-	if (add_height_box(engine, gui_box->children.data + 2, &i, gui_box) < 0)
-	{
-		gui_box->children.size = 2;
-		destroy_t_gui_box(&engine->window, gui_box);
-		return (-1);
-	}
-	if (add_normal_box(engine, gui_box->children.data + 3, &i, gui_box) < 0)
-	{
-		gui_box->children.size = 3;
 		destroy_t_gui_box(&engine->window, gui_box);
 		return (-1);
 	}

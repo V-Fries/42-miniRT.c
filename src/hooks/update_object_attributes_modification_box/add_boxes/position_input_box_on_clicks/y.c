@@ -27,7 +27,8 @@ void	position_input_box_y_on_click_plus(t_gui_box *self, t_engine *engine,
 	if (light != NULL)
 	{
 		engine->scene_changed = true;
-		// TODO light move
+		light->position.y += engine->gui.object_modification_amount;
+		light_calculate_cache(light);
 	}
 	else if (object != NULL)
 	{
@@ -51,7 +52,8 @@ void	position_input_box_y_on_click_minus(t_gui_box *self, t_engine *engine,
 	if (light != NULL)
 	{
 		engine->scene_changed = true;
-		// TODO light move
+		light->position.y -= engine->gui.object_modification_amount;
+		light_calculate_cache(light);
 	}
 	else if (object != NULL)
 	{

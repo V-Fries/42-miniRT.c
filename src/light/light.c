@@ -31,6 +31,12 @@ void	light_calculate_cache(t_light *light)
 				light->brightness), 0, 1);
 }
 
+void	light_set_position(t_light *light, const t_vector3f position)
+{
+	light->position = position;
+	light_calculate_cache(light);
+}
+
 void	light_set_color(t_light *light, const t_vector3f color)
 {
 	light->color = color;

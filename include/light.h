@@ -25,6 +25,7 @@ typedef struct s_lights
 t_light	light_create(const t_vector3f position, const t_vector3f color,
 			const float brightness);
 void	light_calculate_cache(t_light *light);
+void	light_set_position(t_light *light, const t_vector3f position);
 void	light_set_color(t_light *light, const t_vector3f color);
 void	light_set_brightness(t_light *light, const float brightness);
 
