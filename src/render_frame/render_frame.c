@@ -144,6 +144,7 @@ static void	update_scene(t_engine *engine)
 		was_rendered_at_full_resolution = false;
 		next_update_time = current_time_in_ms + NB_OF_MS_BEFORE_FULL_RESOLUTION;
 		engine->scene_changed = true;
+		update_placed_object_position(engine);
 		return ;
 	}
 	update_placed_object_position(engine);
