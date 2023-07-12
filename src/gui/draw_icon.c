@@ -20,6 +20,7 @@ static int		init_tmp_scene(t_engine *tmp_engine, enum e_object_type type,
 static t_object	get_sphere(const t_camera *camera, t_material material);
 static t_object	get_plane(t_material material);
 static t_object	get_cylinder(const t_camera *camera, t_material material);
+static t_object	get_cone(const t_camera *camera, const t_material material);
 
 int	draw_icon(t_image *image, const enum e_object_type type,
 		const unsigned int background_color, const t_material material)
@@ -87,13 +88,11 @@ static int	init_tmp_scene(t_engine *tmp_engine, const enum e_object_type type,
 	else if (type == CYLINDER)
 		object = get_cylinder(&tmp_engine->camera, material);
 	else// if (type == CONE)
-		object = cone_create(vector3f_create(0, 0, -2),
-				vector3f_create(0, 1, 0), 2, 5, material);
+		object = get_cone(&tmp_engine->camera, material);
 	add_object_in_objects(&tmp_engine->scene.objects, object);
 
-	light.color = vector3f_create(1, 1, 1);
-	light.brightness = 0.5f;
-	light.position = vector3f_create(5, 5, 5);
+	light = light_create(vector3f_create(5, 5, 5), vector3f_create(1, 1, 1),
+			1.f);
 	add_light_in_lights(&tmp_engine->scene.lights, light);
 
 	tmp_engine->scene.sky_color = sky_color;
@@ -158,5 +157,13 @@ static t_object	get_cylinder(const t_camera *camera, const t_material material)
 	right = vector3f_multiply(right, 2.f / right.z);
 	height = vector3f_length(vector3f_subtract(left, right));
 	return (cylinder_create(vector3f_create(0, 0, -2.f),
-			vector3f_create(1, 0, 0), radius, height, material));
+			vector3f_create(1, 0, 0), (t_object_size){radius, height},
+		material));
+}
+
+static t_object	get_cone(const t_camera *camera, const t_material material)
+{
+	(void)camera;
+	return (cone_create(vector3f_create(0, 0, -2),
+			vector3f_create(0, 1, 0), (t_object_size){2, 5}, material));
 }

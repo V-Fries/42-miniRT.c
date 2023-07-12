@@ -62,8 +62,9 @@ void	cylinder_create_on_click(t_gui_box *self, t_engine *engine, int y,
 {
 	const t_material	material
 		= engine->gui.material_to_assign_to_new_objects;
+	const t_object_size	size = (t_object_size){0.5f, 3.f};
 	const t_object		object = cylinder_create(vector3f_create(0, 0, 0),
-			vector3f_rotate_y(engine->camera.direction, 90), 0.5f, 3.f,
+			vector3f_rotate_y(engine->camera.direction, 90), size,
 			material);
 
 	if (add_object_in_objects(&engine->scene.objects, object) < 0)

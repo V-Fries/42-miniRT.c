@@ -263,9 +263,10 @@ static void	update_placed_object_position(t_engine *engine)
 	ray_index = mouse_position.x + mouse_position.y \
 			* (int)engine->camera.viewport.size.x;
 	direction = engine->camera.rays[ray_index].direction;
-	engine->object_being_placed->position = vector3f_add(
+	object_set_position(engine->object_being_placed, vector3f_add(
 			engine->camera.position,
-			vector3f_multiply(direction, engine->object_being_placed_distance));
+			vector3f_multiply(direction,
+				engine->object_being_placed_distance)));
 }
 
 static void	update_mouse_position(t_engine *engine, t_vector2i *mouse_position)
