@@ -14,9 +14,12 @@
 #include "ray_tracer/render.h"
 #include "gui/utils.h"
 
-static int	tmp_camera_create(t_camera *camera, t_vector2f viewport);
-static int	init_tmp_scene(t_engine *tmp_engine, enum e_object_type type,
-				t_material material, t_vector3f sky_color);
+static int		tmp_camera_create(t_camera *camera, t_vector2f viewport);
+static int		init_tmp_scene(t_engine *tmp_engine, enum e_object_type type,
+					t_material material, t_vector3f sky_color);
+static t_object	get_sphere(const t_camera *camera, t_material material);
+static t_object	get_plane(t_material material);
+static t_object	get_cylinder(const t_camera *camera, t_material material);
 
 int	draw_icon(t_image *image, const enum e_object_type type,
 		const unsigned int background_color, const t_material material)
@@ -78,23 +81,11 @@ static int	init_tmp_scene(t_engine *tmp_engine, const enum e_object_type type,
 	initialize_lights_array(&tmp_engine->scene.lights, 1);
 
 	if (type == SPHERE)
-	{
-//		t_vector3f	top = tmp_engine->camera.rays[((int)tmp_engine->camera.viewport.size.y / 15) * (int)tmp_engine->camera.viewport.size.x + (int)tmp_engine->camera.viewport.size.x / 2].direction;
-//		t_vector3f	bottom = tmp_engine->camera.rays[((int)tmp_engine->camera.viewport.size.y - (int)tmp_engine->camera.viewport.size.y / 15) * (int)tmp_engine->camera.viewport.size.x + (int)tmp_engine->camera.viewport.size.x / 2].direction;
-		t_vector3f	top = get_ray_direction(&tmp_engine->camera, tmp_engine->camera.viewport.size.y / 15.f, tmp_engine->camera.viewport.size.x / 2.f);
-		t_vector3f	bottom = get_ray_direction(&tmp_engine->camera, tmp_engine->camera.viewport.size.y - tmp_engine->camera.viewport.size.y / 15.f, tmp_engine->camera.viewport.size.x / 2.f);
-		top = vector3f_multiply(top, 2.f / top.z);
-		bottom = vector3f_multiply(bottom, 2.f / bottom.z);
-		float	radius = vector3f_length(vector3f_subtract(top, bottom)) / 2.f;
-		object = sphere_create(vector3f_create(0, 0, -2.f),
-				radius, material);
-	}
+		object = get_sphere(&tmp_engine->camera, material);
 	else if (type == PLANE)
-		object = plane_create(vector3f_create(0, 0, -2),
-				vector3f_create(0, 0, -1), material);
+		object = get_plane(material);
 	else if (type == CYLINDER)
-		object = cylinder_create(vector3f_create(0, 0, -2),
-				vector3f_create(0, 1, 0), 1, 2.0f, material);
+		object = get_cylinder(&tmp_engine->camera, material);
 	else// if (type == CONE)
 		object = cone_create(vector3f_create(0, 0, -2),
 				vector3f_create(0, 1, 0), 2, 5, material);
@@ -109,4 +100,63 @@ static int	init_tmp_scene(t_engine *tmp_engine, const enum e_object_type type,
 	tmp_engine->scene.ambient_light.color = vector3f_create(1, 1, 1);
 	tmp_engine->scene.ambient_light.brightness = 0.2f;
 	return (0);
+}
+
+static t_object	get_sphere(const t_camera *camera, const t_material material)
+{
+	t_vector3f	top;
+	t_vector3f	bottom;
+	float		radius;
+
+	if (camera->viewport.size.x >= camera->viewport.size.y)
+	{
+		top = get_ray_direction(camera, camera->viewport.size.y / 15.f, \
+			camera->viewport.size.x / 2.f);
+		bottom = get_ray_direction(camera, camera->viewport.size.y \
+			- camera->viewport.size.y / 15.f, camera->viewport.size.x / 2.f);
+	}
+	else
+	{
+		top = get_ray_direction(camera, camera->viewport.size.x / 15.f, \
+			camera->viewport.size.y / 2.f);
+		bottom = get_ray_direction(camera, camera->viewport.size.x \
+			- camera->viewport.size.x / 15.f, camera->viewport.size.y / 2.f);
+	}
+	top = vector3f_multiply(top, 2.f / top.z);
+	bottom = vector3f_multiply(bottom, 2.f / bottom.z);
+	radius = vector3f_length(vector3f_subtract(top, bottom)) / 2.f;
+	return (sphere_create(vector3f_create(0, 0, -2.f), radius, material));
+}
+
+static t_object	get_plane(const t_material material)
+{
+	return (plane_create(vector3f_create(0, -1, 0), vector3f_create(0, 1, 0),
+			material));
+}
+
+static t_object	get_cylinder(const t_camera *camera, const t_material material)
+{
+	t_vector3f	top;
+	t_vector3f	bottom;
+	float		radius;
+	t_vector3f	left;
+	t_vector3f	right;
+	float		height;
+
+	top = get_ray_direction(camera, camera->viewport.size.y / 10.f, \
+			camera->viewport.size.x / 2.f);
+	bottom = get_ray_direction(camera, camera->viewport.size.y \
+			- camera->viewport.size.y / 10.f, camera->viewport.size.x / 2.f);
+	top = vector3f_multiply(top, 2.f / top.z);
+	bottom = vector3f_multiply(bottom, 2.f / bottom.z);
+	radius = vector3f_length(vector3f_subtract(top, bottom)) / 2.f;
+	left = get_ray_direction(camera, camera->viewport.size.x / 4.f, \
+		camera->viewport.size.y / 2.f);
+	right = get_ray_direction(camera, camera->viewport.size.x \
+		- camera->viewport.size.x / 4.f, camera->viewport.size.y / 2.f);
+	left = vector3f_multiply(left, 2.f / left.z);
+	right = vector3f_multiply(right, 2.f / right.z);
+	height = vector3f_length(vector3f_subtract(left, right));
+	return (cylinder_create(vector3f_create(0, 0, -2.f),
+			vector3f_create(1, 0, 0), radius, height, material));
 }
