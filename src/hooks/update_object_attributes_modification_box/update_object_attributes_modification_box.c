@@ -14,7 +14,7 @@
 #include "hooks.h"
 
 static int	init_object_attributes_modification_box_content(t_engine *engine,
-				t_gui_box *gui_box, t_object *selected_object);
+				t_gui_box *gui_box, t_selected_object selected_object);
 
 int	update_object_attributes_modification_box(t_engine *engine)
 {
@@ -26,16 +26,19 @@ int	update_object_attributes_modification_box(t_engine *engine)
 }
 
 static int	init_object_attributes_modification_box_content(t_engine *engine,
-				t_gui_box *gui_box, t_object *selected_object)
+				t_gui_box *gui_box, const t_selected_object selected_object)
 {
-	if (selected_object == NULL)
-		return (0);
-	if (selected_object->type == SPHERE)
-		return (init_sphere_attributes_modification_box(engine, gui_box));
-	else if (selected_object->type == PLANE)
-		return (init_plane_attributes_modification_box(engine, gui_box));
-	else if (selected_object->type == CYLINDER)
-		return (init_cylinder_attributes_modification_box(engine, gui_box));
+	if (selected_object.object != NULL)
+	{
+		if (selected_object.object->type == SPHERE)
+			return (init_sphere_attributes_modification_box(engine, gui_box));
+		else if (selected_object.object->type == PLANE)
+			return (init_plane_attributes_modification_box(engine, gui_box));
+		else if (selected_object.object->type == CYLINDER)
+			return (init_cylinder_attributes_modification_box(engine, gui_box));
+	}
+//	else if (selected_object.light != NULL)
+//		// TODO light box
 	ft_print_error("Object type not supported\n\n");
 	return (0);
 }

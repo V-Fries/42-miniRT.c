@@ -139,15 +139,21 @@ static unsigned int	get_lighter_color(float x, float limit, float start,
 static void	color_picker_on_click(t_gui_box *self, t_engine *engine, int y,
 				int x)
 {
-	const unsigned int	color = get_image_pixel_color(&self->image, y, x);
-	const t_color		albedo = vector3f_divide(get_t_color_from_uint(color),
-			255.f);
+	const unsigned int	uint_color = get_image_pixel_color(&self->image, y, x);
+	const t_color		color = get_t_color_from_uint(uint_color);
+	const t_color		albedo = vector3f_divide(color, 255.f);
 
-	if (color == COLOR_TRANSPARENT)
+	if (uint_color == COLOR_TRANSPARENT)
 		return ;
-	if (engine->gui.selected_object == NULL)
+	if (engine->gui.selected_object.object == NULL
+		&& engine->gui.selected_object.light == NULL)
 		return (redraw_icons(engine, material_create(albedo, 0, 0)));
-	engine->gui.selected_object->material.albedo = albedo;
-	redraw_icons(engine, engine->gui.selected_object->material);
 	engine->scene_changed = true;
+	if (engine->gui.selected_object.object == NULL)
+	{
+		engine->gui.selected_object.light->color = color;
+		return (redraw_icons(engine, material_create(albedo, 0, 0)));
+	}
+	engine->gui.selected_object.object->material.albedo = albedo;
+	redraw_icons(engine, engine->gui.selected_object.object->material);
 }

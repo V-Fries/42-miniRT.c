@@ -21,7 +21,7 @@ void	normal_input_box_z_on_click_plus(t_gui_box *self, t_engine *engine,
 	(void)self;
 	(void)y;
 	(void)x;
-	object = engine->gui.selected_object;
+	object = engine->gui.selected_object.object;
 	if (object == NULL)
 		return ;
 	object_rotate(object, (t_vector3f){0.f, 0.f, 1.f},
@@ -37,7 +37,7 @@ void	normal_input_box_z_on_click_minus(t_gui_box *self, t_engine *engine,
 	(void)self;
 	(void)y;
 	(void)x;
-	object = engine->gui.selected_object;
+	object = engine->gui.selected_object.object;
 	if (object == NULL)
 		return ;
 	object_rotate(object, (t_vector3f){0.f, 0.f, 1.f},

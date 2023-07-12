@@ -16,30 +16,46 @@ void	position_input_box_z_on_click_plus(t_gui_box *self, t_engine *engine,
 											int y, int x)
 {
 	t_object	*object;
+	t_light		*light;
 
 	(void)self;
 	(void)y;
 	(void)x;
-	object = engine->gui.selected_object;
-	if (object == NULL)
-		return ;
-	object_move(object, (t_vector3f){0.f, 0.f, 1.f},
-		engine->gui.object_modification_amount);
-	engine->scene_changed = true;
+	object = engine->gui.selected_object.object;
+	light = engine->gui.selected_object.light;
+	if (light != NULL)
+	{
+		engine->scene_changed = true;
+		// TODO light move
+	}
+	else if (object != NULL)
+	{
+		engine->scene_changed = true;
+		object_move(object, (t_vector3f){0.f, 0.f, 1.f},
+			engine->gui.object_modification_amount);
+	}
 }
 
 void	position_input_box_z_on_click_minus(t_gui_box *self, t_engine *engine,
 											int y, int x)
 {
 	t_object	*object;
+	t_light		*light;
 
 	(void)self;
 	(void)y;
 	(void)x;
-	object = engine->gui.selected_object;
-	if (object == NULL)
-		return ;
-	object_move(object, (t_vector3f){0.f, 0.f, 1.f},
-		-engine->gui.object_modification_amount);
-	engine->scene_changed = true;
+	object = engine->gui.selected_object.object;
+	light = engine->gui.selected_object.light;
+	if (light != NULL)
+	{
+		engine->scene_changed = true;
+		// TODO light move
+	}
+	else if (object != NULL)
+	{
+		engine->scene_changed = true;
+		object_move(object, (t_vector3f){0.f, 0.f, 1.f},
+			-engine->gui.object_modification_amount);
+	}
 }

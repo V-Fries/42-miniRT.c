@@ -92,16 +92,20 @@ static void	delete_box_on_click(t_gui_box *self, t_engine *engine, int y,
 	(void)y;
 	(void)x;
 	(void)self;
-	if (engine->gui.selected_object == NULL)
+	if (engine->gui.selected_object.object == NULL
+		&& engine->gui.selected_object.light == NULL)
 		return ;
-	index = engine->gui.selected_object - engine->scene.objects.data;
-	if (remove_object_in_objects(&engine->scene.objects, index) < 0)
-	{
-		ft_print_error("Failed to remove object at index ");
-		ft_putnbr_fd(index, STDERR_FILENO);
-		ft_print_error("\n");
-	}
-	engine->gui.selected_object = NULL;
-	update_object_attributes_modification_box(engine);
 	engine->scene_changed = true;
+	if (engine->gui.selected_object.object == NULL)
+	{
+		index = engine->gui.selected_object.light - engine->scene.lights.data;
+		remove_light_in_lights(&engine->scene.lights, index);
+		engine->gui.selected_object.light = NULL;
+		update_object_attributes_modification_box(engine);
+		return ;
+	}
+	index = engine->gui.selected_object.object - engine->scene.objects.data;
+	remove_object_in_objects(&engine->scene.objects, index);
+	engine->gui.selected_object.object = NULL;
+	update_object_attributes_modification_box(engine);
 }

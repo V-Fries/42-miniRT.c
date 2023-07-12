@@ -195,17 +195,24 @@ static void	put_color_segment(t_image *image, t_vector2i *position,
 static void	base_color_picker_on_click(t_gui_box *self, t_engine *engine, int y,
 				int x)
 {
-	const unsigned int	color = get_image_pixel_color(&self->image, y, x);
+	const unsigned int	uint_color = get_image_pixel_color(&self->image, y, x);
 	t_color				albedo;
 
-	if (color == COLOR_TRANSPARENT)
+	if (uint_color == COLOR_TRANSPARENT)
 		return ;
-	engine->gui.color_picker_base_color = get_t_color_from_uint(color);
+	engine->gui.color_picker_base_color = get_t_color_from_uint(uint_color);
 	engine->gui.color_picker_base_color_was_changed = true;
 	albedo = vector3f_divide(engine->gui.color_picker_base_color, 255.f);
-	if (engine->gui.selected_object == NULL)
+	if (engine->gui.selected_object.object == NULL
+		&& engine->gui.selected_object.light == NULL)
 		return (redraw_icons(engine, material_create(albedo, 0, 0)));
-	engine->gui.selected_object->material.albedo = albedo;
-	redraw_icons(engine, engine->gui.selected_object->material);
 	engine->scene_changed = true;
+	if (engine->gui.selected_object.object == NULL)
+	{
+		engine->gui.selected_object.light->color
+			= engine->gui.color_picker_base_color;
+		return (redraw_icons(engine, material_create(albedo, 0, 0)));
+	}
+	engine->gui.selected_object.object->material.albedo = albedo;
+	redraw_icons(engine, engine->gui.selected_object.object->material);
 }

@@ -60,6 +60,7 @@ static int	init_object_creation_children(t_engine *engine, t_gui_box *gui_box)
 	init_object_creation_box(engine, gui_box->children.data + 0, SPHERE);
 	init_object_creation_box(engine, gui_box->children.data + 1, PLANE);
 	init_object_creation_box(engine, gui_box->children.data + 2, CYLINDER);
+	init_object_creation_box(engine, gui_box->children.data + 3, CONE);
 	engine->gui.object_creation_boxes = &gui_box->children;
 	return (0);
 }
@@ -79,6 +80,8 @@ static void	init_object_creation_box(const t_engine *engine, t_gui_box *gui_box,
 		gui_box->on_click = &sphere_create_on_click;
 	else if (type == PLANE)
 		gui_box->on_click = &plane_create_on_click;
-	else
+	else if (type == CYLINDER)
 		gui_box->on_click = &cylinder_create_on_click;
+	else
+		gui_box->on_click = &cone_create_on_click;
 }

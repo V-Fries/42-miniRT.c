@@ -248,7 +248,8 @@ static void	update_placed_object_position(t_engine *engine)
 	float		yaw_delta;
 	float		pitch_delta;
 
-	if (engine->object_being_placed == NULL)
+	if (engine->object_being_placed.object == NULL
+		&& engine->object_being_placed.light == NULL)
 		return ;
 	mouse_position = get_mouse_position(engine);
 	yaw_delta = (engine->previous_mouse_position.x - mouse_position.x)
@@ -263,10 +264,13 @@ static void	update_placed_object_position(t_engine *engine)
 	ray_index = mouse_position.x + mouse_position.y \
 			* (int)engine->camera.viewport.size.x;
 	direction = engine->camera.rays[ray_index].direction;
-	object_set_position(engine->object_being_placed, vector3f_add(
-			engine->camera.position,
-			vector3f_multiply(direction,
-				engine->object_being_placed_distance)));
+	if (engine->object_being_placed.object != NULL)
+		object_set_position(engine->object_being_placed.object, vector3f_add(
+				engine->camera.position,
+				vector3f_multiply(direction,
+					engine->object_being_placed_distance)));
+//	else
+//		// TODO move light
 }
 
 static void	update_mouse_position(t_engine *engine, t_vector2i *mouse_position)

@@ -20,16 +20,18 @@ void	sphere_create_on_click(t_gui_box *self, t_engine *engine, int y, int x)
 {
 	const t_material	material
 		= engine->gui.material_to_assign_to_new_objects;
-	const t_object		object = sphere_create(vector3f_create(0, 0, 0), 0.5f,
-			material);
+	t_object			object;
 
+	if (engine->object_being_placed.object || engine->object_being_placed.light)
+		return ;
+	object = sphere_create(vector3f_create(0, 0, 0), 0.5f, material);
 	if (add_object_in_objects(&engine->scene.objects, object) < 0)
 	{
 		ft_print_error("Failed to create new sphere\n");
 		return ;
 	}
-	engine->object_being_placed_distance = 10;
-	engine->object_being_placed = engine->scene.objects.data
+	engine->object_being_placed_distance = DEFAULT_DISTANCE;
+	engine->object_being_placed.object = engine->scene.objects.data
 		+ engine->scene.objects.length - 1;
 	(void)self;
 	(void)y;
@@ -40,17 +42,19 @@ void	plane_create_on_click(t_gui_box *self, t_engine *engine, int y, int x)
 {
 	const t_material	material
 		= engine->gui.material_to_assign_to_new_objects;
-	const t_object		object = plane_create(vector3f_create(0, 0, 0),
-			vector3f_multiply(engine->camera.direction, -1.f),
-			material);
+	t_object			object;
 
+	if (engine->object_being_placed.object || engine->object_being_placed.light)
+		return ;
+	object = plane_create(vector3f_create(0, 0, 0),
+			vector3f_multiply(engine->camera.direction, -1.f), material);
 	if (add_object_in_objects(&engine->scene.objects, object) < 0)
 	{
 		ft_print_error("Failed to create new plane\n");
 		return ;
 	}
-	engine->object_being_placed_distance = 10;
-	engine->object_being_placed = engine->scene.objects.data
+	engine->object_being_placed_distance = DEFAULT_DISTANCE;
+	engine->object_being_placed.object = engine->scene.objects.data
 		+ engine->scene.objects.length - 1;
 	(void)self;
 	(void)y;
@@ -63,18 +67,66 @@ void	cylinder_create_on_click(t_gui_box *self, t_engine *engine, int y,
 	const t_material	material
 		= engine->gui.material_to_assign_to_new_objects;
 	const t_object_size	size = (t_object_size){0.5f, 3.f};
-	const t_object		object = cylinder_create(vector3f_create(0, 0, 0),
-			vector3f_rotate_y(engine->camera.direction, 90), size,
-			material);
+	t_object			object;
 
+	if (engine->object_being_placed.object || engine->object_being_placed.light)
+		return ;
+	object = cylinder_create(vector3f_create(0, 0, 0),
+			vector3f_rotate_y(engine->camera.direction, 90), size, material);
 	if (add_object_in_objects(&engine->scene.objects, object) < 0)
 	{
 		ft_print_error("Failed to create new cylinder\n");
 		return ;
 	}
-	engine->object_being_placed_distance = 10;
-	engine->object_being_placed = engine->scene.objects.data
+	engine->object_being_placed_distance = DEFAULT_DISTANCE;
+	engine->object_being_placed.object = engine->scene.objects.data
 		+ engine->scene.objects.length - 1;
+	(void)self;
+	(void)y;
+	(void)x;
+}
+
+void	cone_create_on_click(t_gui_box *self, t_engine *engine, int y,
+			int x)
+{
+	const t_material	material
+		= engine->gui.material_to_assign_to_new_objects;
+	const t_object_size	size = (t_object_size){1.f, 3.f};
+	t_object			object;
+
+	if (engine->object_being_placed.object || engine->object_being_placed.light)
+		return ;
+	object = cone_create(vector3f_create(0, 0, 0),
+			vector3f_rotate_x(engine->camera.direction, 90), size, material);
+	if (add_object_in_objects(&engine->scene.objects, object) < 0)
+	{
+		ft_print_error("Failed to create new cone\n");
+		return ;
+	}
+	engine->object_being_placed_distance = DEFAULT_DISTANCE;
+	engine->object_being_placed.object = engine->scene.objects.data
+		+ engine->scene.objects.length - 1;
+	(void)self;
+	(void)y;
+	(void)x;
+}
+
+void	light_create_on_click(t_gui_box *self, t_engine *engine, int y,
+			int x)
+{
+	t_light	light;
+
+	if (engine->object_being_placed.object || engine->object_being_placed.light)
+		return ;
+	light = light_create(vector3f_create(0, 0, 0), vector3f_create(1, 1, 1), 1);
+	if (add_light_in_lights(&engine->scene.lights, light) < 0)
+	{
+		ft_print_error("Failed to create new light\n");
+		return ;
+	}
+	engine->object_being_placed_distance = DEFAULT_DISTANCE;
+	engine->object_being_placed.light = engine->scene.lights.data
+		+ engine->scene.lights.length - 1;
 	(void)self;
 	(void)y;
 	(void)x;

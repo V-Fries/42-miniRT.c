@@ -74,11 +74,11 @@ static void	radius_input_box_on_click_plus(struct s_gui_box *self,
 {
 	t_object	*object;
 
-	object = engine->gui.selected_object;
+	object = engine->gui.selected_object.object;
 	(void)self;
 	(void)y;
 	(void)x;
-	if (engine->gui.selected_object == NULL)
+	if (object == NULL)
 		return ;
 	object_set_radius(object,
 		object->radius + engine->gui.object_modification_amount);
@@ -90,12 +90,12 @@ static void	radius_input_box_on_click_minus(struct s_gui_box *self,
 {
 	t_object	*object;
 
-	object = engine->gui.selected_object;
+	object = engine->gui.selected_object.object;
 	(void)self;
 	(void)y;
 	(void)x;
-	if (engine->gui.selected_object == NULL
-		|| engine->gui.selected_object->radius \
+	if (object == NULL
+		|| object->radius \
 			- engine->gui.object_modification_amount <= 0.01)
 		return ;
 	object_set_radius(object,

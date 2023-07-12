@@ -27,6 +27,8 @@ void	redraw_icons(t_engine *engine, t_material material)
 		PLANE, material);
 	redraw_object_creation_box(engine->gui.object_creation_boxes->data + 2,
 		CYLINDER, material);
+	redraw_object_creation_box(engine->gui.object_creation_boxes->data + 3,
+		CONE, material);
 }
 
 static void	redraw_object_creation_box(t_gui_box *gui_box,

@@ -20,6 +20,7 @@
 # include "image.h"
 # include "colors.h"
 # include "object.h"
+# include "light.h"
 # include "font/rendering_structs.h"
 
 typedef struct s_fps
@@ -28,6 +29,12 @@ typedef struct s_fps
 	char			*fps_count;
 	int				fps_nb;
 }	t_fps;
+
+typedef struct s_selected_object
+{
+	t_object	*object;
+	t_light		*light;
+}	t_selected_object;
 
 typedef struct s_gui
 {
@@ -43,7 +50,7 @@ typedef struct s_gui
 	void				(*draw_gui_image)(t_image *destination, \
 							const t_image *source, t_vector2i position);
 	t_fps				fps;
-	t_object			*selected_object;
+	t_selected_object	selected_object;
 	float				object_modification_amount;
 	float				object_rotation_degrees;
 	struct s_gui_box	*object_attributes_modification_box;

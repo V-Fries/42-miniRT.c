@@ -35,23 +35,26 @@ int	button_press_handler(int button, int x, int y, t_engine *engine)
 	if (button != BUTTON_LEFT && button != SCROLL_DOWN &&  button != SCROLL_UP)
 		return (0);
 
-	if (engine->object_being_placed != NULL)
+	if (engine->object_being_placed.object != NULL
+		|| engine->object_being_placed.light != NULL)
 		return (placing_object(button, engine));
 	clicked_gui_box = get_clicked_gui_box(engine->gui.gui_boxes, &x, &y);
 	if (clicked_gui_box == NULL)
 	{
-		if (x < 0 || y < 0 || x >= engine->ray_traced_image.width || y >= engine->ray_traced_image.height)
+		if (x < 0 || y < 0 || x >= engine->ray_traced_image.width
+			|| y >= engine->ray_traced_image.height
+			|| engine->object_being_placed.light != NULL)
 			return (0);
-		engine->gui.selected_object = get_clicked_object(engine, x, y);
+		engine->gui.selected_object.object = get_clicked_object(engine, x, y);
 
 		// Testing
 		char *tmp;
-		if (engine->gui.selected_object == NULL)
+		if (engine->gui.selected_object.object == NULL)
 		{
 			ft_printf("Clicked no objects\n\n");
 			return (update_object_attributes_modification_box(engine));
 		}
-		switch (engine->gui.selected_object->type)
+		switch (engine->gui.selected_object.object->type)
 		{
 			case SPHERE: tmp = "SPHERE"; break;
 			case PLANE: tmp = "PLANE"; break;
@@ -61,7 +64,7 @@ int	button_press_handler(int button, int x, int y, t_engine *engine)
 		ft_printf("selected object %s\n\n", tmp);
 		//!Testing
 		update_color_picker_color(&engine->gui);
-		redraw_icons(engine, engine->gui.selected_object->material);
+		redraw_icons(engine, engine->gui.selected_object.object->material);
 		return (update_object_attributes_modification_box(engine));
 	}
 	if (clicked_gui_box->on_click != NULL)
@@ -86,20 +89,34 @@ static int	placing_object(int button, t_engine *engine)
 	}
 	else if (button != BUTTON_LEFT)
 		return (0);
-	engine->gui.selected_object = engine->object_being_placed;
-	engine->object_being_placed = NULL;
-	return (update_object_attributes_modification_box(engine));
+	if (engine->object_being_placed.object != NULL)
+	{
+		engine->gui.selected_object.object = engine->object_being_placed.object;
+		engine->gui.selected_object.light = NULL;
+	}
+	else if (engine->object_being_placed.light != NULL)
+	{
+		engine->gui.selected_object.light = engine->object_being_placed.light;
+		engine->gui.selected_object.object = NULL;
+	}
+	ft_bzero(&engine->object_being_placed, sizeof(engine->object_being_placed));
+//	return (update_object_attributes_modification_box(engine));
+	return (0);
 }
 
 static void	update_color_picker_color(t_gui *gui)
 {
-	if (gui->selected_object == NULL)
-		return ;
-	gui->color_picker_base_color_was_changed = true;
-	gui->color_picker_base_color = (t_color){
-		.x = gui->selected_object->material.albedo.x * 255.f,
-		.y = gui->selected_object->material.albedo.y * 255.f,
-		.z = gui->selected_object->material.albedo.z * 255.f};
+	if (gui->selected_object.object != NULL)
+	{
+		gui->color_picker_base_color_was_changed = true;
+		gui->color_picker_base_color = vector3f_multiply(
+				gui->selected_object.object->material.albedo, 255.f);
+	}
+	else if (gui->selected_object.light != NULL)
+	{
+		gui->color_picker_base_color_was_changed = true;
+		gui->color_picker_base_color = gui->selected_object.light->color;
+	}
 }
 
 static void	toggle_camera_lock(t_engine *engine)
