@@ -64,8 +64,9 @@ static int	init_height_box_children(t_engine *engine, t_gui_box *gui_box)
 		return (-1);
 	}
 	change_image_color(&gui_box->children.data[0].image, COLOR_TRANSPARENT);
-		write_centered_string_to_image(&engine->gui.font, &gui_box->children.data[0].image,
+	write_centered_string_to_image(&engine->gui.font, &gui_box->children.data[0].image,
 		"Height");
+	change_image_color(&gui_box->children.data[1].image, COLOR_TRANSPARENT);
 	return (0);
 }
 

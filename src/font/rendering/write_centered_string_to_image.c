@@ -16,7 +16,7 @@
 #include "engine.h"
 #include "font/render.h"
 
-// BORDER should not be <= 0
+// BORDER should not be < 0
 #define BORDER 4
 
 static t_vector2f	get_glyphs_size(const t_font *font, const char *string);

@@ -69,6 +69,7 @@ static int	init_specular_reflection_box_children(t_engine *engine,
 	change_image_color(&gui_box->children.data[0].image, COLOR_TRANSPARENT);
 	write_centered_string_to_image(&engine->gui.font,
 		&gui_box->children.data[0].image, "Specular reflection");
+	change_image_color(&gui_box->children.data[1].image, COLOR_TRANSPARENT);
 	return (0);
 }
 

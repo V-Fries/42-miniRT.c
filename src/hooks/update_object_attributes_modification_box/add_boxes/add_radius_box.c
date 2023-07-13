@@ -66,6 +66,7 @@ static int	init_radius_box_children(t_engine *engine, t_gui_box *gui_box)
 	change_image_color(&gui_box->children.data[0].image, COLOR_TRANSPARENT);
 	write_centered_string_to_image(&engine->gui.font, &gui_box->children.data[0].image,
 		"Radius");
+	change_image_color(&gui_box->children.data[1].image, COLOR_TRANSPARENT);
 	return (0);
 }
 

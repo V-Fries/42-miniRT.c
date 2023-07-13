@@ -24,6 +24,8 @@ static int	init_x_y_z_buttons_children(t_engine *engine,
 				t_gui_box *gui_box);
 static int	create_x_y_z_input_box(t_engine *engine, t_gui_box *gui_box,
 				const char *type);
+static void	init_description_box(const t_engine *engine, t_image *image,
+				const char *description);
 
 int	add_x_y_z_box(t_engine *engine, t_gui_box *gui_box, int *i,
 		t_gui_box *parent)
@@ -69,7 +71,6 @@ static int	add_x_y_z_buttons(t_engine *engine, t_gui_box *gui_box)
 		return (-1);
 	}
 	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
-	round_image_corners(&gui_box->image, 10);
 	return (0);
 }
 
@@ -85,6 +86,7 @@ static int	init_x_y_z_buttons_children(t_engine *engine, t_gui_box *gui_box)
 		return (-1);
 	if (create_x_y_z_input_box(engine, gui_box->children.data + 2, "z") < 0)
 		return (-1);
+	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
 	return (0);
 }
 
@@ -98,10 +100,41 @@ static int	create_x_y_z_input_box(t_engine *engine, t_gui_box *gui_box,
 			gui_box->children.data + 1, (t_float_input_box_on_click){0}) < 0)
 		return (-1);
 	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
-	change_image_color(&gui_box->children.data[0].image, COLOR_SAND);
+//	change_image_color(&gui_box->children.data[0].image, COLOR_SAND);
+	init_description_box(engine, &gui_box->children.data[0].image, type);
+	change_image_color(&gui_box->children.data[1].image, COLOR_TRANSPARENT);
 	change_image_color(&gui_box->children.data[2].image, COLOR_TRANSPARENT);
+//	write_centered_string_to_image(&engine->gui.font, &gui_box->children.data[0].image,
+//								   type);
 	(void)type;
-	write_centered_string_to_image(&engine->gui.font, &gui_box->children.data[0].image,
-		type);
 	return (0);
+}
+
+static void	init_description_box(const t_engine *engine, t_image *image,
+				const char *description)
+{
+	int				x;
+	size_t			y;
+	const size_t	last_line_index = (image->height - 1) * image->width;
+	const int		last_x = image->width - 1;
+
+	change_image_color(image, COLOR_TRANSPARENT);
+	write_centered_string_to_image(&engine->gui.font, image, description);
+	x = -1;
+	while (++x < image->width)
+	{
+		image->address[x] = COLOR_BLACK;
+		image->address[image->width + x] = COLOR_BLACK;
+		image->address[last_line_index + x] = COLOR_BLACK;
+		image->address[last_line_index - image->width + x] = COLOR_BLACK;
+	}
+	y = 0;
+	while (y < image->size)
+	{
+		image->address[y] = COLOR_BLACK;
+		image->address[y + 1] = COLOR_BLACK;
+		image->address[y + last_x] = COLOR_BLACK;
+		image->address[y + last_x - 1] = COLOR_BLACK;
+		y += image->width;
+	}
 }
