@@ -38,8 +38,14 @@ void	write_centered_string_to_image(const t_font *font, t_image *image,
 		- glyphs_max_size.x * scale / 2.f;
 	i = 0;
 	while (string[i]
-		&& x_offset + font->long_hor_metric[(int8_t)string[i]].advanceWidth * scale <= image->width - BORDER)
+		&& x_offset + font->long_hor_metric[(int8_t)string[i]].advanceWidth * scale < image->width)
 	{
+		if (string[i] == ' ')
+		{
+			x_offset += font->long_hor_metric[(int8_t)string[i]].advanceWidth * scale;
+			i++;
+			continue ;
+		}
 		draw_glyph(font->glyphs + string[i], scale, image, COLOR_WHITE,
 			x_offset + font->long_hor_metric[(int8_t)string[i]].leftSideBearing * scale,
 			y_offset);
