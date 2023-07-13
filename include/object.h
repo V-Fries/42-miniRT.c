@@ -171,6 +171,9 @@ int			remove_object_in_objects(t_objects *objects, size_t index);
 int			free_objects(t_objects *objects);
 void		print_object2(t_object object);
 
+// recalculate_cache.c
+void		object_calculate_cache(t_object *object);
+
 //	transformations.c
 void		object_move(t_object *object, const t_vector3f movement_axis,
 				const float distance);

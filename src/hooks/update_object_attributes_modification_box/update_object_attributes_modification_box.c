@@ -38,6 +38,7 @@ int	update_object_attributes_modification_box(t_engine *engine)
 static int	init_object_attributes_modification_box_content(t_engine *engine,
 				t_gui_box *gui_box, const t_selected_object selected_object)
 {
+	// TODO need to able to scroll in these boxes as screen size may vary
 	if (selected_object.object != NULL)
 	{
 		if (selected_object.object->type == SPHERE)

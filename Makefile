@@ -71,13 +71,15 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/add_boxes/position_input_box_on_clicks/y.c	\
 	hooks/update_object_attributes_modification_box/add_boxes/position_input_box_on_clicks/z.c	\
 	\
-	hooks/update_object_attributes_modification_box/add_boxes/add_brightness_box.c	\
-	hooks/update_object_attributes_modification_box/add_boxes/add_height_box.c		\
-	hooks/update_object_attributes_modification_box/add_boxes/add_normal_box.c		\
-	hooks/update_object_attributes_modification_box/add_boxes/add_position_box.c	\
-	hooks/update_object_attributes_modification_box/add_boxes/add_radius_box.c		\
-	hooks/update_object_attributes_modification_box/add_boxes/add_x_y_z_box.c		\
-	hooks/update_object_attributes_modification_box/add_boxes/get_x_y_z_input_box.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/add_brightness_box.c			\
+	hooks/update_object_attributes_modification_box/add_boxes/add_height_box.c				\
+	hooks/update_object_attributes_modification_box/add_boxes/add_normal_box.c				\
+	hooks/update_object_attributes_modification_box/add_boxes/add_position_box.c			\
+	hooks/update_object_attributes_modification_box/add_boxes/add_radius_box.c				\
+	hooks/update_object_attributes_modification_box/add_boxes/add_reflection_box.c			\
+	hooks/update_object_attributes_modification_box/add_boxes/add_specular_reflection_box.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/add_x_y_z_box.c				\
+	hooks/update_object_attributes_modification_box/add_boxes/get_x_y_z_input_box.c			\
 	\
 	hooks/update_object_attributes_modification_box/init_cone_attributes_modification_box.c		\
 	hooks/update_object_attributes_modification_box/init_cylinder_attributes_modification_box.c	\
@@ -147,9 +149,10 @@ SRC				=\
 	object/sphere/create.c				\
 	object/sphere/transformations.c		\
 	\
-	object/material.c			\
-	object/objects.c			\
-	object/transformations.c	\
+	object/material.c				\
+	object/object_calculate_cache.c	\
+	object/objects.c				\
+	object/transformations.c		\
 	\
 	\
 	parsing/line_parsing/utils/add_object_to_object_list.c	\

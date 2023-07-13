@@ -20,7 +20,7 @@ int	init_cylinder_attributes_modification_box(t_engine *engine,
 {
 	int	i;
 
-	gui_box->children.size = 4;
+	gui_box->children.size = 6;
 	gui_box->children.data = malloc(sizeof(*gui_box->children.data)
 			* gui_box->children.size);
 	if (gui_box->children.data == NULL)
@@ -51,6 +51,19 @@ int	init_cylinder_attributes_modification_box(t_engine *engine,
 	if (add_normal_box(engine, gui_box->children.data + 3, &i, gui_box) < 0)
 	{
 		gui_box->children.size = 3;
+		destroy_t_gui_box(&engine->window, gui_box);
+		return (-1);
+	}
+	if (add_reflection_box(engine, gui_box->children.data + 4, &i, gui_box) < 0)
+	{
+		gui_box->children.size = 4;
+		destroy_t_gui_box(&engine->window, gui_box);
+		return (-1);
+	}
+	if (add_specular_reflection_box(engine, gui_box->children.data + 5, &i,
+			gui_box) < 0)
+	{
+		gui_box->children.size = 5;
 		destroy_t_gui_box(&engine->window, gui_box);
 		return (-1);
 	}
