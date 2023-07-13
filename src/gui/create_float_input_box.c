@@ -46,8 +46,8 @@ static void	init_left_box_image(t_image *image)
 	x = -1;
 	while (++x < image->width)
 	{
-//		image->address[x] = COLOR_BLACK;
-//		image->address[image->width + x] = COLOR_BLACK;
+		image->address[x] = COLOR_BLACK;
+		image->address[image->width + x] = COLOR_BLACK;
 		image->address[last_line_index + x] = COLOR_BLACK;
 		image->address[last_line_index - image->width + x] = COLOR_BLACK;
 	}
@@ -73,8 +73,8 @@ static void	init_center_box_image(t_image *image)
 	x = -1;
 	while (++x < image->width)
 	{
-//		image->address[x] = COLOR_BLACK;
-//		image->address[image->width + x] = COLOR_BLACK;
+		image->address[x] = COLOR_BLACK;
+		image->address[image->width + x] = COLOR_BLACK;
 		image->address[last_line_index + x] = COLOR_BLACK;
 		image->address[last_line_index - image->width + x] = COLOR_BLACK;
 	}
@@ -100,8 +100,8 @@ static void	init_right_box_image(t_image *image)
 	x = -1;
 	while (++x < image->width)
 	{
-//		image->address[x] = COLOR_BLACK;
-//		image->address[image->width + x] = COLOR_BLACK;
+		image->address[x] = COLOR_BLACK;
+		image->address[image->width + x] = COLOR_BLACK;
 		image->address[last_line_index + x] = COLOR_BLACK;
 		image->address[last_line_index - image->width + x] = COLOR_BLACK;
 	}
