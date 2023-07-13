@@ -60,7 +60,7 @@ static void		draw_light_icon(t_image *image,
 
 	// TODO make a better icon
 	(void)background_color;
-	draw_circle(image, center, radius, vec_rgb_to_uint(color));
+	image_draw_circle(image, center, radius, vec_rgb_to_uint(color));
 }
 
 static int	tmp_camera_create(t_camera *camera, t_vector2f viewport)

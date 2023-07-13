@@ -42,12 +42,16 @@ unsigned int	get_image_pixel_color(const t_image *image, int y, int x);
 void			change_image_color(t_image *image, unsigned int color);
 void			round_image_corners(t_image *image, int radius);
 void			put_image_to_image(t_image *destination, const t_image *source,
-								   t_vector2i position);
+					t_vector2i position);
 void			put_image_to_image_unsafe(register t_image *destination,
-										  const t_image *source, t_vector2i position);
+					const t_image *source, t_vector2i position);
 void			put_background(t_image *destination, const t_image *source);
 
-void			draw_circle(t_image *image, t_vector2i circle_center,
+void			image_draw_circle(t_image *image, t_vector2i circle_center,
 					float radius, unsigned int color);
+void			image_draw_plus(t_image *image, float thickness,
+					float border, unsigned int color);
+void			image_draw_minus(t_image *image, int thickness,
+					int border, unsigned int color);
 
 #endif //IMAGE_H

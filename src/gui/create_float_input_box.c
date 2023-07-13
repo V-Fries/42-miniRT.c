@@ -10,9 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <math.h>
 #include "gui/box.h"
 #include "gui/utils.h"
 #include "gui/UI.h"
+#include "font/render.h"
+
+#define BORDER 4
+#define LINE_THICKNESS_DIVIDER 11
 
 static void	init_left_box_image(t_image *image);
 static void	init_center_box_image(t_image *image);
@@ -41,6 +46,7 @@ static void	init_left_box_image(t_image *image)
 	size_t			y;
 	const size_t	last_line_index = (image->height - 1) * image->width;
 	const int		last_x = image->width - 1;
+	float			plus_line_thickness;
 
 	change_image_color(image, COLOR_TRANSPARENT);
 	x = -1;
@@ -57,17 +63,18 @@ static void	init_left_box_image(t_image *image)
 		image->address[y] = COLOR_BLACK;
 		image->address[y + 1] = COLOR_BLACK;
 		image->address[y + last_x] = COLOR_BLACK;
-//		image->address[y + last_x - 1] = COLOR_BLACK;
+		image->address[y + last_x - 1] = COLOR_BLACK;
 		y += image->width;
 	}
+	plus_line_thickness = fminf(image->width, image->height);
+	plus_line_thickness /= LINE_THICKNESS_DIVIDER;
+	image_draw_minus(image, plus_line_thickness, BORDER, COLOR_WHITE);
 }
 
 static void	init_center_box_image(t_image *image)
 {
 	int				x;
-	size_t			y;
 	const size_t	last_line_index = (image->height - 1) * image->width;
-	const int		last_x = image->width - 1;
 
 	change_image_color(image, COLOR_TRANSPARENT);
 	x = -1;
@@ -77,15 +84,6 @@ static void	init_center_box_image(t_image *image)
 		image->address[image->width + x] = COLOR_BLACK;
 		image->address[last_line_index + x] = COLOR_BLACK;
 		image->address[last_line_index - image->width + x] = COLOR_BLACK;
-	}
-	y = 0;
-	while (y < image->size)
-	{
-		image->address[y] = COLOR_BLACK;
-//		image->address[y + 1] = COLOR_BLACK;
-		image->address[y + last_x] = COLOR_BLACK;
-//		image->address[y + last_x - 1] = COLOR_BLACK;
-		y += image->width;
 	}
 }
 
@@ -95,6 +93,7 @@ static void	init_right_box_image(t_image *image)
 	size_t			y;
 	const size_t	last_line_index = (image->height - 1) * image->width;
 	const int		last_x = image->width - 1;
+	float			plus_line_thickness;
 
 	change_image_color(image, COLOR_TRANSPARENT);
 	x = -1;
@@ -109,9 +108,12 @@ static void	init_right_box_image(t_image *image)
 	while (y < image->size)
 	{
 		image->address[y] = COLOR_BLACK;
-//		image->address[y + 1] = COLOR_BLACK;
+		image->address[y + 1] = COLOR_BLACK;
 		image->address[y + last_x] = COLOR_BLACK;
 		image->address[y + last_x - 1] = COLOR_BLACK;
 		y += image->width;
 	}
+	plus_line_thickness = fminf(image->width, image->height);
+	plus_line_thickness /= LINE_THICKNESS_DIVIDER;
+	image_draw_plus(image, plus_line_thickness, BORDER, COLOR_WHITE);
 }
