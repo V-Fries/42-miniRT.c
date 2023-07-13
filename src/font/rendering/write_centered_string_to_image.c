@@ -64,6 +64,8 @@ static t_vector2f	get_glyphs_size(const t_font *font, const char *string)
 	while (string[++i] != '\0')
 	{
 		result.x += font->long_hor_metric[(int8_t)string[i]].advanceWidth;
+		if (string[i] == ' ')
+			continue ;
 		result.y = fmaxf(result.y, font->glyphs[(int8_t)string[i]].bounds.yMax
 				- font->glyphs[(int8_t)string[i]].bounds.yMin);
 	}
@@ -78,6 +80,10 @@ static float	get_glyphs_y_min(const t_font *font, const char *string)
 	result = FLT_MAX;
 	i = -1;
 	while (string[++i] != '\0')
+	{
+		if (string[i] == ' ')
+			continue ;
 		result = fminf(result, font->glyphs[(int8_t)string[i]].bounds.yMin);
+	}
 	return (result);
 }

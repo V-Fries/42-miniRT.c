@@ -268,7 +268,7 @@ add_executable(minirt
         src/gui/object_modification_box/init_object_attributes_modification_box.c
         src/gui/object_modification_box/init_object_modification_box.c
         src/gui/create_boxes_utils.c
-        src/gui/create_float_input_box.c
+        src/gui/float_input_box.c
         src/gui/create_horizontal_boxes.c
         src/gui/create_n_horizontal_boxes.c
         src/gui/create_vertical_boxes.c
@@ -388,4 +388,10 @@ add_executable(minirt
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c src/hooks/update_object_attributes_modification_box/init_cone_attributes_modification_box.c src/hooks/update_object_attributes_modification_box/init_light_attributes_modification_box.c src/hooks/update_object_attributes_modification_box/add_boxes/add_brightness_box.c src/hooks/update_object_attributes_modification_box/add_boxes/add_reflection_box.c src/object/object_calculate_cache.c src/hooks/update_object_attributes_modification_box/add_boxes/add_specular_reflection_box.c src/image/draw_vertical_and_horizontal_line.c)
+        src/main.c
+        src/hooks/update_object_attributes_modification_box/init_cone_attributes_modification_box.c
+        src/hooks/update_object_attributes_modification_box/init_light_attributes_modification_box.c
+        src/hooks/update_object_attributes_modification_box/add_boxes/add_brightness_box.c
+        src/hooks/update_object_attributes_modification_box/add_boxes/add_reflection_box.c
+        src/object/object_calculate_cache.c
+        src/hooks/update_object_attributes_modification_box/add_boxes/add_specular_reflection_box.c src/hooks/update_object_attributes_modification_box/update_float_input_boxes.c)

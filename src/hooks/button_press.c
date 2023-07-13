@@ -89,8 +89,8 @@ static int	placing_object(int button, t_engine *engine)
 	}
 	else if (button != BUTTON_LEFT)
 		return (0);
+	update_float_input_boxes(engine);
 	ft_bzero(&engine->object_being_placed, sizeof(engine->object_being_placed));
-//	return (update_object_attributes_modification_box(engine));
 	return (0);
 }
 

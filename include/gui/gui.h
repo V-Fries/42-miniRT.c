@@ -36,25 +36,44 @@ typedef struct s_selected_object
 	t_light		*light;
 }	t_selected_object;
 
+typedef struct s_xyz_input_boxes_images
+{
+	struct s_gui_box	*x;
+	struct s_gui_box	*y;
+	struct s_gui_box	*z;
+}	t_xyz_input_boxes_images;
+
+typedef struct s_float_input_boxes_images
+{
+	struct s_gui_box			*brightness;
+	struct s_gui_box			*height;
+	t_xyz_input_boxes_images	normal;
+	t_xyz_input_boxes_images	position;
+	struct s_gui_box			*radius;
+	struct s_gui_box			*reflection;
+	struct s_gui_box			*specular_reflection;
+}	t_float_input_boxes_images;
+
 typedef struct s_gui
 {
-	t_font				font;
-	bool				is_hidden;
-	uint64_t			start_animation_time;
-	bool				hide_animation_finished;
-	bool				should_show_gui_on_camera_lock;
-	t_gui_boxes			gui_boxes;
-	bool				color_picker_base_color_was_changed;
-	t_color				color_picker_base_color;
-	t_material			material_to_assign_to_new_objects;
-	void				(*draw_gui_image)(t_image *destination, \
-							const t_image *source, t_vector2i position);
-	t_fps				fps;
-	t_selected_object	selected_object;
-	float				object_modification_amount;
-	float				object_rotation_degrees;
-	struct s_gui_box	*object_attributes_modification_box;
-	struct s_gui_boxes	*object_creation_boxes;
+	t_font						font;
+	bool						is_hidden;
+	uint64_t					start_animation_time;
+	bool						hide_animation_finished;
+	bool						should_show_gui_on_camera_lock;
+	t_gui_boxes					gui_boxes;
+	bool						color_picker_base_color_was_changed;
+	t_color						color_picker_base_color;
+	t_material					material_to_assign_to_new_objects;
+	void						(*draw_gui_image)(t_image *destination, \
+									const t_image *source, t_vector2i position);
+	t_fps						fps;
+	t_selected_object			selected_object;
+	float						object_modification_amount;
+	float						object_rotation_degrees;
+	struct s_gui_box			*object_attributes_modification_box;
+	struct s_gui_boxes			*object_creation_boxes;
+	t_float_input_boxes_images	float_input_boxes;
 }	t_gui;
 
 #endif

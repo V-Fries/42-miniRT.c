@@ -55,11 +55,11 @@ SRC				=\
 	gui/object_modification_box/init_object_modification_box.c				\
 	\
 	gui/create_boxes_utils.c		\
-	gui/create_float_input_box.c	\
 	gui/create_horizontal_boxes.c	\
 	gui/create_n_horizontal_boxes.c	\
 	gui/create_vertical_boxes.c		\
 	gui/draw_icon.c					\
+	gui/float_input_box.c			\
 	gui/init_gui.c					\
 	\
 	\
@@ -87,6 +87,7 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/init_plane_attributes_modification_box.c	\
 	hooks/update_object_attributes_modification_box/init_sphere_attributes_modification_box.c	\
 	hooks/update_object_attributes_modification_box/update_object_attributes_modification_box.c	\
+	hooks/update_object_attributes_modification_box/update_float_input_boxes.c					\
 	\
 	hooks/button_press.c	\
 	hooks/button_release.c	\

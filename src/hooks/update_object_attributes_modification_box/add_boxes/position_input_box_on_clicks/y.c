@@ -12,6 +12,7 @@
 
 
 #include "gui/box.h"
+#include "hooks.h"
 
 void	position_input_box_y_on_click_plus(t_gui_box *self, t_engine *engine,
 											int y, int x)
@@ -29,12 +30,16 @@ void	position_input_box_y_on_click_plus(t_gui_box *self, t_engine *engine,
 		engine->scene_changed = true;
 		light->position.y += engine->gui.object_modification_amount;
 		light_calculate_cache(light);
+		update_xyz_float_input_boxes(engine, light->position,
+			&engine->gui.float_input_boxes.position);
 	}
 	else if (object != NULL)
 	{
 		engine->scene_changed = true;
 		object_move(object, (t_vector3f){0.f, 1.f, 0.f},
 			engine->gui.object_modification_amount);
+		update_xyz_float_input_boxes(engine, object->position,
+			&engine->gui.float_input_boxes.position);
 	}
 }
 
@@ -54,11 +59,15 @@ void	position_input_box_y_on_click_minus(t_gui_box *self, t_engine *engine,
 		engine->scene_changed = true;
 		light->position.y -= engine->gui.object_modification_amount;
 		light_calculate_cache(light);
+		update_xyz_float_input_boxes(engine, light->position,
+			&engine->gui.float_input_boxes.position);
 	}
 	else if (object != NULL)
 	{
 		engine->scene_changed = true;
 		object_move(object, (t_vector3f){0.f, 1.f, 0.f},
 			-engine->gui.object_modification_amount);
+		update_xyz_float_input_boxes(engine, object->position,
+			&engine->gui.float_input_boxes.position);
 	}
 }

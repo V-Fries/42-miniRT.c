@@ -63,6 +63,7 @@ static int	init_radius_box_children(t_engine *engine, t_gui_box *gui_box)
 		destroy_t_gui_box(&engine->window, gui_box);
 		return (-1);
 	}
+	engine->gui.float_input_boxes.radius = gui_box->children.data + 1;
 	change_image_color(&gui_box->children.data[0].image, COLOR_TRANSPARENT);
 	write_centered_string_to_image(&engine->gui.font, &gui_box->children.data[0].image,
 		"Radius");
@@ -84,6 +85,8 @@ static void	radius_input_box_on_click_plus(struct s_gui_box *self,
 	object_set_radius(object,
 		object->radius + engine->gui.object_modification_amount);
 	engine->scene_changed = true;
+	update_float_input_box(engine, object->radius,
+		engine->gui.float_input_boxes.radius);
 }
 
 static void	radius_input_box_on_click_minus(struct s_gui_box *self,
@@ -102,4 +105,6 @@ static void	radius_input_box_on_click_minus(struct s_gui_box *self,
 	object_set_radius(object,
 		object->radius - engine->gui.object_modification_amount);
 	engine->scene_changed = true;
+	update_float_input_box(engine, object->radius,
+		engine->gui.float_input_boxes.radius);
 }

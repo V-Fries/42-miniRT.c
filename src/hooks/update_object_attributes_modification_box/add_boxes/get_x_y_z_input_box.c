@@ -22,8 +22,11 @@ t_gui_box	*get_x_y_z_input_box(t_gui_box *gui_box, char type, char click_type)
 	const int8_t	input_box_index = get_input_box_index(type);
 	const int8_t	specific_index = get_specific_index(click_type);
 
-	if (input_box_index < 0 || specific_index < 0)
+	if (input_box_index < 0 || (specific_index < 0 && click_type != 'b'))
 		return (NULL);
+	if (click_type == 'b')
+		return (gui_box->children.data[1].children.data[input_box_index] \
+			.children.data + 1);
 	return (gui_box->children.data[1].children.data[input_box_index] \
 			.children.data[1].children.data + specific_index);
 }

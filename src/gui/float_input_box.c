@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include <math.h>
+#include <stdio.h>
+
 #include "gui/box.h"
 #include "gui/utils.h"
 #include "gui/UI.h"
@@ -22,6 +24,26 @@
 static void	init_left_box_image(t_image *image);
 static void	init_center_box_image(t_image *image);
 static void	init_right_box_image(t_image *image);
+
+void	update_float_input_box(const t_engine *engine, const float f,
+			t_gui_box *input_box)
+{
+	size_t	size;
+	char	*buffer;
+
+	if (input_box == NULL)
+		return ;
+	init_center_box_image(&input_box->children.data[1].image);
+	size = snprintf(NULL, 0, "%f", f) + 1;
+	buffer = malloc(size);
+	if (buffer == NULL)
+		return (write_centered_string_to_image(&engine->gui.font,
+				&input_box->children.data[1].image, "ENOMEM"));
+	sprintf(buffer, "%f", f);
+	write_centered_string_to_image(&engine->gui.font,
+		&input_box->children.data[1].image, buffer);
+	free(buffer);
+}
 
 int	create_float_input_box(t_engine *engine, t_gui_box *gui_box,
 		t_float_input_box_on_click on_click)

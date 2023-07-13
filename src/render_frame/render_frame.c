@@ -25,6 +25,7 @@
 #include "gui/utils.h"
 #include "font/render.h"
 #include "events.h"
+#include "hooks.h"
 
 #define FPS_GOAL 45
 #define FRAME_BEFORE_ADAPTION 20
@@ -265,15 +266,25 @@ static void	update_placed_object_position(t_engine *engine)
 			* (int)engine->camera.viewport.size.x;
 	direction = engine->camera.rays[ray_index].direction;
 	if (engine->object_being_placed.object != NULL)
+	{
 		object_set_position(engine->object_being_placed.object, vector3f_add(
 				engine->camera.position,
 				vector3f_multiply(direction,
 					engine->object_being_placed_distance)));
+		update_xyz_float_input_boxes(engine,
+			engine->object_being_placed.object->position,
+			&engine->gui.float_input_boxes.position);
+	}
 	else
+	{
 		light_set_position(engine->object_being_placed.light, vector3f_add(
 				engine->camera.position,
 				vector3f_multiply(direction,
 					engine->object_being_placed_distance)));
+		update_xyz_float_input_boxes(engine,
+			engine->object_being_placed.light->position,
+			&engine->gui.float_input_boxes.position);
+	}
 }
 
 static void	update_mouse_position(t_engine *engine, t_vector2i *mouse_position)

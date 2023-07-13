@@ -66,6 +66,8 @@ static int	init_specular_reflection_box_children(t_engine *engine,
 		destroy_t_gui_box(&engine->window, gui_box);
 		return (-1);
 	}
+	engine->gui.float_input_boxes.specular_reflection
+		= gui_box->children.data + 1;
 	change_image_color(&gui_box->children.data[0].image, COLOR_TRANSPARENT);
 	write_centered_string_to_image(&engine->gui.font,
 		&gui_box->children.data[0].image, "Specular reflection");
@@ -87,6 +89,8 @@ static void	specular_reflection_input_box_on_click_plus(struct s_gui_box *self,
 	object->material.specular = fminf(object->material.specular + 0.01, 1.f);
 	object_calculate_cache(object);
 	engine->scene_changed = true;
+	update_float_input_box(engine, object->material.specular,
+		engine->gui.float_input_boxes.specular_reflection);
 }
 
 static void	specular_reflection_input_box_on_click_minus(struct s_gui_box *self,
@@ -103,4 +107,6 @@ static void	specular_reflection_input_box_on_click_minus(struct s_gui_box *self,
 	object->material.specular = fmaxf(object->material.specular - 0.01, 0.f);
 	object_calculate_cache(object);
 	engine->scene_changed = true;
+	update_float_input_box(engine, object->material.specular,
+		engine->gui.float_input_boxes.specular_reflection);
 }

@@ -64,6 +64,8 @@ static int	init_reflection_box_children(t_engine *engine, t_gui_box *gui_box)
 		destroy_t_gui_box(&engine->window, gui_box);
 		return (-1);
 	}
+	engine->gui.float_input_boxes.reflection = gui_box->children.data
+											   + 1;
 	change_image_color(&gui_box->children.data[0].image, COLOR_TRANSPARENT);
 	write_centered_string_to_image(&engine->gui.font,
 		&gui_box->children.data[0].image, "Reflection");
@@ -85,6 +87,8 @@ static void	reflection_input_box_on_click_plus(struct s_gui_box *self,
 	object->material.reflect = fminf(object->material.reflect + 0.01, 1.f);
 	object_calculate_cache(object);
 	engine->scene_changed = true;
+	update_float_input_box(engine, object->material.reflect,
+		engine->gui.float_input_boxes.reflection);
 }
 
 static void	reflection_input_box_on_click_minus(struct s_gui_box *self,
@@ -101,4 +105,6 @@ static void	reflection_input_box_on_click_minus(struct s_gui_box *self,
 	object->material.reflect = fmaxf(object->material.reflect - 0.01, 0.f);
 	object_calculate_cache(object);
 	engine->scene_changed = true;
+	update_float_input_box(engine, object->material.reflect,
+		engine->gui.float_input_boxes.reflection);
 }
