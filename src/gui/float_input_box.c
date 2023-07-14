@@ -66,7 +66,7 @@ int	create_float_input_box(t_engine *engine, t_gui_box *gui_box,
 
 static int	init_left_box_image(t_engine *engine, t_gui_box *gui_box)
 {
-	float			minus_line_thickness;
+	float	minus_line_thickness;
 
 	if (init_image(&gui_box->image, &engine->window, gui_box->size.x,
 			gui_box->size.y) < 0)
@@ -74,7 +74,7 @@ static int	init_left_box_image(t_engine *engine, t_gui_box *gui_box)
 	if (init_image(&gui_box->on_hover_image, &engine->window, gui_box->size.x,
 			gui_box->size.y) < 0)
 		return (destroy_t_image(&engine->window, &gui_box->image), -1);
-	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
+	change_image_color(&gui_box->image, SUB_GUI_COLOR);
 	image_draw_outline(&gui_box->image, 2, COLOR_BLACK);
 	minus_line_thickness = fminf(gui_box->image.width, gui_box->image.height);
 	minus_line_thickness /= LINE_THICKNESS_DIVIDER;
@@ -101,14 +101,14 @@ static int	init_center_box_image(t_engine *engine, t_gui_box *gui_box)
 
 static void	draw_center_box_image(t_image *image)
 {
-	change_image_color(image, COLOR_TRANSPARENT);
+	change_image_color(image, SUB_GUI_COLOR);
 	image_draw_top_outline(image, 2, COLOR_BLACK);
 	image_draw_bottom_outline(image, 2, COLOR_BLACK);
 }
 
 static int	init_right_box_image(t_engine *engine, t_gui_box *gui_box)
 {
-	float			plus_line_thickness;
+	float	plus_line_thickness;
 
 	if (init_image(&gui_box->image, &engine->window, gui_box->size.x,
 			gui_box->size.y) < 0)
@@ -116,7 +116,7 @@ static int	init_right_box_image(t_engine *engine, t_gui_box *gui_box)
 	if (init_image(&gui_box->on_hover_image, &engine->window, gui_box->size.x,
 			gui_box->size.y) < 0)
 		return (destroy_t_image(&engine->window, &gui_box->image), -1);
-	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
+	change_image_color(&gui_box->image, SUB_GUI_COLOR);
 	image_draw_outline(&gui_box->image, 2, COLOR_BLACK);
 	plus_line_thickness = fminf(gui_box->image.width, gui_box->image.height);
 	plus_line_thickness /= LINE_THICKNESS_DIVIDER;

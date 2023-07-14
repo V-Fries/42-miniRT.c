@@ -21,7 +21,7 @@ int	init_object_creation_gui_box(t_engine *minirt, t_gui_box *gui_box,
 	*gui_box = create_t_gui_box(minirt, (t_gui_box_create){parent,
 			(t_vector2i){8, 8},
 			(t_vector2i){.y = parent->size.y - 16, \
-							.x = parent->size.x / 4 * 3 - 16}, false});
+							.x = parent->size.x / 4 * 3 - 16}, true});
 	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);
 	gui_box->draw = &default_gui_box_draw;

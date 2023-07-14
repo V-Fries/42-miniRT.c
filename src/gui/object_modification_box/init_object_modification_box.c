@@ -28,8 +28,8 @@ int	init_object_modification_gui_box(t_engine *engine, t_gui_box *gui_box,
 			.x = engine->window.size.x / 4, \
 			.y = engine->window.size.y \
 				- (object_creation_gui_box->size.y \
-				+ object_creation_gui_box->position.y * 3)}, false});
-	if (errno == EINVAL)
+				+ object_creation_gui_box->position.y * 3)}, true});
+	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);
 	change_image_color(&gui_box->image, BASE_GUI_COLOR);
 	round_image_corners(&gui_box->image, BOX_ROUNDING_RADIUS);
@@ -71,6 +71,10 @@ static int	init_box_deleter(t_engine *engine, t_gui_box *gui_box)
 		< 0)
 		return (-1);
 
+	if (init_image(&gui_box->image, &engine->window, gui_box->size.x, gui_box->size.y) < 0)
+		return (-1); // TODO free
+	if (init_image(&gui_box->children.data[2].image, &engine->window, gui_box->children.data[2].size.x, gui_box->children.data[2].size.y) < 0)
+		return (-1); // TODO free
 	change_image_color(&gui_box->image, SUB_GUI_COLOR);
 	round_image_corners(&gui_box->image, 10);
 	gui_box->children.data[0].on_click = NULL;

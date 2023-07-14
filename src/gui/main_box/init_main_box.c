@@ -14,7 +14,7 @@ int	init_main_gui_box(t_engine *engine, t_gui_box *gui_box)
 			(t_vector2i){.x = 12, \
 						.y = 12},
 			(t_vector2i){.x = engine->window.size.x - 24, \
-						.y = engine->window.size.y / 8}, false});
+						.y = engine->window.size.y / 8}, true});
 	if (errno == EINVAL)
 		return (-1);
 	change_image_color(&gui_box->image, BASE_GUI_COLOR);

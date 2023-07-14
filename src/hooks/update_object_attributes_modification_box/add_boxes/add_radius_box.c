@@ -32,7 +32,7 @@ int	add_radius_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				.y = *i}, \
 		(t_vector2i){\
 				.x = parent->size.x, \
-				.y = 25}, false});
+				.y = 25}, true});
 	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);
 	*i += gui_box->size.y + 8;
@@ -64,8 +64,16 @@ static int	init_radius_box_children(t_engine *engine, t_gui_box *gui_box)
 		return (-1);
 	}
 	engine->gui.float_input_boxes.radius = gui_box->children.data + 1;
+	if (init_image(&gui_box->children.data[0].image, &engine->window,
+			gui_box->children.data[0].size.x, gui_box->children.data[0].size.y)
+		< 0)
+	{
+		destroy_t_gui_box(&engine->window, gui_box);
+		return (-1);
+	}
 	change_image_color(&gui_box->children.data[0].image, COLOR_TRANSPARENT);
-	write_centered_string_to_image(&engine->gui.font, &gui_box->children.data[0].image,
+	write_centered_string_to_image(&engine->gui.font,
+		&gui_box->children.data[0].image,
 		"Radius");
 	change_image_color(&gui_box->children.data[1].image, COLOR_TRANSPARENT);
 	return (0);
