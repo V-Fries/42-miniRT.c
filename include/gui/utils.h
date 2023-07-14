@@ -19,9 +19,9 @@
 
 typedef struct s_float_input_box_on_click
 {
-	void	(*minus)(struct s_gui_box *, t_engine *, int, int);
-	void	(*text_box)(struct s_gui_box *, t_engine *, int, int);
-	void	(*plus)(struct s_gui_box *, t_engine *, int, int);
+	void	(*minus)(struct s_gui_box *, t_engine *, t_click_data);
+	void	(*text_box)(struct s_gui_box *, t_engine *, t_click_data);
+	void	(*plus)(struct s_gui_box *, t_engine *, t_click_data);
 }	t_float_input_box_on_click;
 
 typedef struct s_boxes_to_create

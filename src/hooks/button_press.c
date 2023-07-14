@@ -22,6 +22,7 @@
 #include "hooks.h"
 
 static void	update_color_picker_color(t_gui *gui);
+static int	select_new_object(int button, t_engine *engine, int x, int y);
 static int	placing_object(int button, t_engine *engine);
 static void	toggle_camera_lock(t_engine *engine);
 
@@ -40,36 +41,10 @@ int	button_press_handler(int button, int x, int y, t_engine *engine)
 		return (placing_object(button, engine));
 	clicked_gui_box = get_clicked_gui_box(engine->gui.gui_boxes, &x, &y);
 	if (clicked_gui_box == NULL)
-	{
-		if (x < 0 || y < 0 || x >= engine->ray_traced_image.width
-			|| y >= engine->ray_traced_image.height
-			|| engine->object_being_placed.light != NULL)
-			return (0);
-		engine->gui.selected_object.object = get_clicked_object(engine, x, y);
-
-		// Testing
-		char *tmp;
-		if (engine->gui.selected_object.object == NULL)
-		{
-			ft_printf("Clicked no objects\n\n");
-			return (update_object_attributes_modification_box(engine));
-		}
-		switch (engine->gui.selected_object.object->type)
-		{
-			case SPHERE: tmp = "SPHERE"; break;
-			case PLANE: tmp = "PLANE"; break;
-			case CYLINDER: tmp = "CYLINDER"; break;
-			default: tmp = "UNKNOWN: ERROR"; break;
-		}
-		ft_printf("selected object %s\n\n", tmp);
-		//!Testing
-		update_color_picker_color(&engine->gui);
-		redraw_icons(engine, engine->gui.selected_object.object->material);
-		return (update_object_attributes_modification_box(engine));
-	}
+		return (select_new_object(button, engine, x, y));
 	if (clicked_gui_box->on_click != NULL)
-		clicked_gui_box->on_click(clicked_gui_box, engine, y, x);
-	ft_printf("Clicked gui box\n\n");
+		clicked_gui_box->on_click(clicked_gui_box, engine,
+			(t_click_data){(t_vector2i){x, y}, button});
 	return (0);
 }
 
@@ -92,6 +67,35 @@ static int	placing_object(int button, t_engine *engine)
 	update_float_input_boxes(engine);
 	ft_bzero(&engine->object_being_placed, sizeof(engine->object_being_placed));
 	return (0);
+}
+
+static int	select_new_object(int button, t_engine *engine, int x, int y)
+{
+	if (button != BUTTON_LEFT || x < 0 || y < 0
+		|| x >= engine->ray_traced_image.width
+		|| y >= engine->ray_traced_image.height)
+		return (0);
+	engine->gui.selected_object.object = get_clicked_object(engine, x, y);
+
+	// Testing
+	char *tmp;
+	if (engine->gui.selected_object.object == NULL)
+	{
+		ft_printf("Clicked no objects\n\n");
+		return (update_object_attributes_modification_box(engine));
+	}
+	switch (engine->gui.selected_object.object->type)
+	{
+		case SPHERE: tmp = "SPHERE"; break;
+		case PLANE: tmp = "PLANE"; break;
+		case CYLINDER: tmp = "CYLINDER"; break;
+		default: tmp = "UNKNOWN: ERROR"; break;
+	}
+	ft_printf("selected object %s\n\n", tmp);
+	//!Testing
+	update_color_picker_color(&engine->gui);
+	redraw_icons(engine, engine->gui.selected_object.object->material);
+	return (update_object_attributes_modification_box(engine));
 }
 
 static void	update_color_picker_color(t_gui *gui)

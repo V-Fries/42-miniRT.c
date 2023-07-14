@@ -17,12 +17,15 @@
 #include "gui/UI.h"
 #include "gui/utils.h"
 #include "font/render.h"
+#include "events.h"
 
 static int	init_reflection_box_children(t_engine *engine, t_gui_box *gui_box);
 static void	reflection_input_box_on_click_plus(struct s_gui_box *self,
-				t_engine *engine, int y, int x);
+				t_engine *engine, t_click_data click_data);
 static void	reflection_input_box_on_click_minus(struct s_gui_box *self,
-				t_engine *engine, int y, int x);
+				t_engine *engine, t_click_data click_data);
+static void	reflection_input_box_on_click_text(struct s_gui_box *self,
+				t_engine *engine, t_click_data click_data);
 
 int	add_reflection_box(t_engine *engine, t_gui_box *gui_box, int *i,
 		t_gui_box *parent)
@@ -54,6 +57,7 @@ static int	init_reflection_box_children(t_engine *engine, t_gui_box *gui_box)
 {
 	const t_float_input_box_on_click	on_click = {
 		.plus = &reflection_input_box_on_click_plus,
+		.text_box = &reflection_input_box_on_click_text,
 		.minus = &reflection_input_box_on_click_minus};
 
 	if (create_horizontal_boxes(engine, gui_box, "65 35", 0) < 0)
@@ -80,14 +84,14 @@ static int	init_reflection_box_children(t_engine *engine, t_gui_box *gui_box)
 }
 
 static void	reflection_input_box_on_click_plus(struct s_gui_box *self,
-				t_engine *engine, int y, int x)
+				t_engine *engine, t_click_data click_data)
 {
 	t_object	*object;
 
 	object = engine->gui.selected_object.object;
 	(void)self;
-	(void)y;
-	(void)x;
+	if (click_data.button != BUTTON_LEFT)
+		return (reflection_input_box_on_click_text(self, engine, click_data));
 	if (object == NULL)
 		return ;
 	object->material.reflect = fminf(object->material.reflect + 0.01, 1.f);
@@ -98,14 +102,14 @@ static void	reflection_input_box_on_click_plus(struct s_gui_box *self,
 }
 
 static void	reflection_input_box_on_click_minus(struct s_gui_box *self,
-				t_engine *engine, int y, int x)
+				t_engine *engine, t_click_data click_data)
 {
 	t_object	*object;
 
 	object = engine->gui.selected_object.object;
 	(void)self;
-	(void)y;
-	(void)x;
+	if (click_data.button != BUTTON_LEFT)
+		return (reflection_input_box_on_click_text(self, engine, click_data));
 	if (object == NULL)
 		return ;
 	object->material.reflect = fmaxf(object->material.reflect - 0.01, 0.f);
@@ -113,4 +117,19 @@ static void	reflection_input_box_on_click_minus(struct s_gui_box *self,
 	engine->scene_changed = true;
 	update_float_input_box(engine, object->material.reflect,
 		engine->gui.float_input_boxes.reflection);
+}
+
+static void	reflection_input_box_on_click_text(struct s_gui_box *self,
+				t_engine *engine, t_click_data click_data)
+{
+	if (click_data.button == SCROLL_UP)
+	{
+		click_data.button = BUTTON_LEFT;
+		return (reflection_input_box_on_click_plus(self, engine, click_data));
+	}
+	if (click_data.button == SCROLL_DOWN)
+	{
+		click_data.button = BUTTON_LEFT;
+		return (reflection_input_box_on_click_minus(self, engine, click_data));
+	}
 }

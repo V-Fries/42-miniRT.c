@@ -13,16 +13,17 @@
 
 #include "gui/box.h"
 #include "hooks.h"
+#include "events.h"
 
 void	position_input_box_y_on_click_plus(t_gui_box *self, t_engine *engine,
-											int y, int x)
+			t_click_data click_data)
 {
 	t_object	*object;
 	t_light		*light;
 
 	(void)self;
-	(void)y;
-	(void)x;
+	if (click_data.button != BUTTON_LEFT)
+		return (position_input_box_y_on_click_text(self, engine, click_data));
 	object = engine->gui.selected_object.object;
 	light = engine->gui.selected_object.light;
 	if (light != NULL)
@@ -44,14 +45,14 @@ void	position_input_box_y_on_click_plus(t_gui_box *self, t_engine *engine,
 }
 
 void	position_input_box_y_on_click_minus(t_gui_box *self, t_engine *engine,
-											int y, int x)
+			t_click_data click_data)
 {
 	t_object	*object;
 	t_light		*light;
 
 	(void)self;
-	(void)y;
-	(void)x;
+	if (click_data.button != BUTTON_LEFT)
+		return (position_input_box_y_on_click_text(self, engine, click_data));
 	object = engine->gui.selected_object.object;
 	light = engine->gui.selected_object.light;
 	if (light != NULL)
@@ -69,5 +70,20 @@ void	position_input_box_y_on_click_minus(t_gui_box *self, t_engine *engine,
 			-engine->gui.object_modification_amount);
 		update_xyz_float_input_boxes(engine, object->position,
 			&engine->gui.float_input_boxes.position);
+	}
+}
+
+void	position_input_box_y_on_click_text(t_gui_box *self, t_engine *engine,
+			t_click_data click_data)
+{
+	if (click_data.button == SCROLL_UP)
+	{
+		click_data.button = BUTTON_LEFT;
+		return (position_input_box_y_on_click_plus(self, engine, click_data));
+	}
+	if (click_data.button == SCROLL_DOWN)
+	{
+		click_data.button = BUTTON_LEFT;
+		return (position_input_box_y_on_click_minus(self, engine, click_data));
 	}
 }

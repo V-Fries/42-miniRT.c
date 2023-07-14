@@ -8,12 +8,13 @@
 #include "gui/utils.h"
 #include "hooks.h"
 #include "gui/UI.h"
+#include "events.h"
 
 static int	init_object_modification_gui_box_children(t_engine *engine,
 				t_gui_box *parent);
 static int	init_box_deleter(t_engine *engine, t_gui_box *gui_box);
-static void	delete_box_on_click(t_gui_box *self, t_engine *engine, int y,
-				int x);
+static void	delete_box_on_click(t_gui_box *self, t_engine *engine,
+				t_click_data click_data);
 
 int	init_object_modification_gui_box(t_engine *engine, t_gui_box *gui_box,
 		const t_gui_box *object_creation_gui_box)
@@ -88,16 +89,14 @@ static int	init_box_deleter(t_engine *engine, t_gui_box *gui_box)
 	return (0);
 }
 
-static void	delete_box_on_click(t_gui_box *self, t_engine *engine, int y,
-				int x)
+static void	delete_box_on_click(t_gui_box *self, t_engine *engine,
+				t_click_data click_data)
 {
 	size_t	index;
 
-	(void)y;
-	(void)x;
 	(void)self;
-	if (engine->gui.selected_object.object == NULL
-		&& engine->gui.selected_object.light == NULL)
+	if (click_data.button != BUTTON_LEFT || (engine->gui.selected_object.object == NULL
+		&& engine->gui.selected_object.light == NULL))
 		return ;
 	engine->scene_changed = true;
 	if (engine->gui.selected_object.object == NULL)

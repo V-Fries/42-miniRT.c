@@ -20,6 +20,7 @@
 #include "gui/object_modification_box.h"
 #include "gui/utils.h"
 #include "hooks.h"
+#include "events.h"
 
 typedef struct s_color_getter
 {
@@ -45,8 +46,8 @@ static void	put_color_segment(t_image *image, t_vector2i *position,
 				t_color_getter color_getter);
 static void	init_color_getters(t_color_getter *color_getters);
 static void	write_color_row(t_image *image, int y);
-static void	base_color_picker_on_click(t_gui_box *self, t_engine *engine, int y,
-				int x);
+static void	base_color_picker_on_click(t_gui_box *self, t_engine *engine,
+				t_click_data click_data);
 
 int	init_base_color_box(t_engine *engine, t_gui_box *gui_box,
 		t_gui_box *parent)
@@ -192,13 +193,14 @@ static void	put_color_segment(t_image *image, t_vector2i *position,
 	color_separator->max += color_separator->color_segment_width;
 }
 
-static void	base_color_picker_on_click(t_gui_box *self, t_engine *engine, int y,
-				int x)
+static void	base_color_picker_on_click(t_gui_box *self, t_engine *engine,
+				t_click_data click_data)
 {
-	const unsigned int	uint_color = get_image_pixel_color(&self->image, y, x);
+	const unsigned int	uint_color = get_image_pixel_color(&self->image,
+			click_data.click_position.y, click_data.click_position.x);
 	t_color				albedo;
 
-	if (uint_color == COLOR_TRANSPARENT)
+	if (click_data.button != BUTTON_LEFT || uint_color == COLOR_TRANSPARENT)
 		return ;
 	engine->gui.color_picker_base_color = get_t_color_from_uint(uint_color);
 	engine->gui.color_picker_base_color_was_changed = true;

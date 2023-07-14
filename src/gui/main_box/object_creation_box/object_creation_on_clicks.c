@@ -13,16 +13,20 @@
 #include "engine.h"
 #include "gui/box.h"
 #include "object.h"
+#include "events.h"
 #include "hooks.h"
 
 #define DEFAULT_DISTANCE 10.f
 
-void	sphere_create_on_click(t_gui_box *self, t_engine *engine, int y, int x)
+void	sphere_create_on_click(t_gui_box *self, t_engine *engine,
+			t_click_data click_data)
 {
 	const t_material	material
 		= engine->gui.material_to_assign_to_new_objects;
 	t_object			object;
 
+	if (click_data.button != BUTTON_LEFT)
+		return ;
 	if (engine->object_being_placed.object || engine->object_being_placed.light)
 		return ;
 	object = sphere_create(vector3f_create(0, 0, 0), 0.5f, material);
@@ -36,16 +40,17 @@ void	sphere_create_on_click(t_gui_box *self, t_engine *engine, int y, int x)
 		+ engine->scene.objects.length - 1;
 	update_object_attributes_modification_box(engine);
 	(void)self;
-	(void)y;
-	(void)x;
 }
 
-void	plane_create_on_click(t_gui_box *self, t_engine *engine, int y, int x)
+void	plane_create_on_click(t_gui_box *self, t_engine *engine,
+			t_click_data click_data)
 {
 	const t_material	material
 		= engine->gui.material_to_assign_to_new_objects;
 	t_object			object;
 
+	if (click_data.button != BUTTON_LEFT)
+		return ;
 	if (engine->object_being_placed.object || engine->object_being_placed.light)
 		return ;
 	object = plane_create(vector3f_create(0, 0, 0),
@@ -60,18 +65,18 @@ void	plane_create_on_click(t_gui_box *self, t_engine *engine, int y, int x)
 		+ engine->scene.objects.length - 1;
 	update_object_attributes_modification_box(engine);
 	(void)self;
-	(void)y;
-	(void)x;
 }
 
-void	cylinder_create_on_click(t_gui_box *self, t_engine *engine, int y,
-			int x)
+void	cylinder_create_on_click(t_gui_box *self, t_engine *engine,
+			t_click_data click_data)
 {
 	const t_material	material
 		= engine->gui.material_to_assign_to_new_objects;
 	const t_object_size	size = (t_object_size){0.5f, 3.f};
 	t_object			object;
 
+	if (click_data.button != BUTTON_LEFT)
+		return ;
 	if (engine->object_being_placed.object || engine->object_being_placed.light)
 		return ;
 	object = cylinder_create(vector3f_create(0, 0, 0),
@@ -86,18 +91,18 @@ void	cylinder_create_on_click(t_gui_box *self, t_engine *engine, int y,
 		+ engine->scene.objects.length - 1;
 	update_object_attributes_modification_box(engine);
 	(void)self;
-	(void)y;
-	(void)x;
 }
 
-void	cone_create_on_click(t_gui_box *self, t_engine *engine, int y,
-			int x)
+void	cone_create_on_click(t_gui_box *self, t_engine *engine,
+			t_click_data click_data)
 {
 	const t_material	material
 		= engine->gui.material_to_assign_to_new_objects;
 	const t_object_size	size = (t_object_size){1.f, 3.f};
 	t_object			object;
 
+	if (click_data.button != BUTTON_LEFT)
+		return ;
 	if (engine->object_being_placed.object || engine->object_being_placed.light)
 		return ;
 	object = cone_create(vector3f_create(0, 0, 0),
@@ -112,15 +117,15 @@ void	cone_create_on_click(t_gui_box *self, t_engine *engine, int y,
 		+ engine->scene.objects.length - 1;
 	update_object_attributes_modification_box(engine);
 	(void)self;
-	(void)y;
-	(void)x;
 }
 
-void	light_create_on_click(t_gui_box *self, t_engine *engine, int y,
-			int x)
+void	light_create_on_click(t_gui_box *self, t_engine *engine,
+			t_click_data click_data)
 {
 	t_light	light;
 
+	if (click_data.button != BUTTON_LEFT)
+		return ;
 	if (engine->object_being_placed.object || engine->object_being_placed.light)
 		return ;
 	light = light_create(vector3f_create(0, 0, 0), vector3f_create(1, 1, 1),
@@ -135,6 +140,4 @@ void	light_create_on_click(t_gui_box *self, t_engine *engine, int y,
 		+ engine->scene.lights.length - 1;
 	update_object_attributes_modification_box(engine);
 	(void)self;
-	(void)y;
-	(void)x;
 }

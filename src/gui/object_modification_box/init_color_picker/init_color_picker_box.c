@@ -7,6 +7,7 @@
 #include "gui/utils.h"
 #include "gui/object_modification_box.h"
 #include "hooks.h"
+#include "events.h"
 
 static void			color_picker_draw(t_gui_box *self, t_engine *engine,
 						t_draw_data draw_data);
@@ -16,7 +17,7 @@ static unsigned int	get_darker_color(float x, float limit,
 static unsigned int	get_lighter_color(float x, float limit, float start,
 						t_color base_color);
 static void			color_picker_on_click(t_gui_box *self, t_engine *engine,
-						int y, int x);
+						t_click_data click_data);
 
 int	init_color_picker_box(t_engine *engine, t_gui_box *gui_box,
 		t_gui_box *parent)
@@ -136,14 +137,15 @@ static unsigned int	get_lighter_color(float x, float limit, float start,
 	return (rgb_to_uint(color));
 }
 
-static void	color_picker_on_click(t_gui_box *self, t_engine *engine, int y,
-				int x)
+static void	color_picker_on_click(t_gui_box *self, t_engine *engine,
+				t_click_data click_data)
 {
-	const unsigned int	uint_color = get_image_pixel_color(&self->image, y, x);
+	const unsigned int	uint_color = get_image_pixel_color(&self->image,
+			click_data.click_position.y, click_data.click_position.x);
 	const t_color		color = get_t_color_from_uint(uint_color);
 	const t_color		albedo = vector3f_divide(color, 255.f);
 
-	if (uint_color == COLOR_TRANSPARENT)
+	if (click_data.button != BUTTON_LEFT || uint_color == COLOR_TRANSPARENT)
 		return ;
 	if (engine->gui.selected_object.object == NULL
 		&& engine->gui.selected_object.light == NULL)
