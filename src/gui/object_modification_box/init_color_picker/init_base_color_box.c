@@ -211,8 +211,7 @@ static void	base_color_picker_on_click(t_gui_box *self, t_engine *engine,
 	engine->scene_changed = true;
 	if (engine->gui.selected_object.object == NULL)
 	{
-		light_set_color(engine->gui.selected_object.light,
-			engine->gui.color_picker_base_color);
+		light_set_color(engine->gui.selected_object.light, albedo);
 		return (redraw_icons(engine, material_create(albedo, 0, 0)));
 	}
 	engine->gui.selected_object.object->material.albedo = albedo;

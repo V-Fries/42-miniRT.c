@@ -142,8 +142,8 @@ static void	color_picker_on_click(t_gui_box *self, t_engine *engine,
 {
 	const unsigned int	uint_color = get_image_pixel_color(&self->image,
 			click_data.click_position.y, click_data.click_position.x);
-	const t_color		color = get_t_color_from_uint(uint_color);
-	const t_color		albedo = vector3f_divide(color, 255.f);
+	const t_color		albedo = vector3f_divide(
+			get_t_color_from_uint(uint_color), 255.f);
 
 	if (click_data.button != BUTTON_LEFT || uint_color == COLOR_TRANSPARENT)
 		return ;
@@ -153,7 +153,7 @@ static void	color_picker_on_click(t_gui_box *self, t_engine *engine,
 	engine->scene_changed = true;
 	if (engine->gui.selected_object.object == NULL)
 	{
-		light_set_color(engine->gui.selected_object.light, color);
+		light_set_color(engine->gui.selected_object.light, albedo);
 		return (redraw_icons(engine, material_create(albedo, 0, 0)));
 	}
 	engine->gui.selected_object.object->material.albedo = albedo;

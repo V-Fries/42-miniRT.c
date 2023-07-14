@@ -128,7 +128,8 @@ void	light_create_on_click(t_gui_box *self, t_engine *engine,
 		return ;
 	if (engine->object_being_placed.object || engine->object_being_placed.light)
 		return ;
-	light = light_create(vector3f_create(0, 0, 0), vector3f_create(1, 1, 1),
+	light = light_create(vector3f_create(0, 0, 0),
+			engine->gui.material_to_assign_to_new_objects.albedo,
 			0.5f);
 	if (add_light_in_lights(&engine->scene.lights, light) < 0)
 	{
