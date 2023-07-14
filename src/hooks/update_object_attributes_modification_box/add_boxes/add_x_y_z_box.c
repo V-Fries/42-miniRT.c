@@ -30,13 +30,13 @@ static void	init_description_box(const t_engine *engine, t_image *image,
 int	add_x_y_z_box(t_engine *engine, t_gui_box *gui_box, int *i,
 		t_gui_box *parent)
 {
-	*gui_box = create_t_gui_box(engine, parent, \
+	*gui_box = create_t_gui_box(engine, (t_gui_box_create){parent, \
 		(t_vector2i){
 			.x = 0,
 			.y = *i}, \
 		(t_vector2i){
 			.x = parent->size.x,
-			.y = 75});
+			.y = 75}, false});
 	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);
 	*i += gui_box->size.y + 8;

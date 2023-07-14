@@ -26,13 +26,13 @@ static void	height_input_box_on_click_minus(struct s_gui_box *self,
 int	add_height_box(t_engine *engine, t_gui_box *gui_box, int *i,
 		t_gui_box *parent)
 {
-	*gui_box = create_t_gui_box(engine, parent, \
-	(t_vector2i){
-			.x = 0,
-			.y = *i}, \
-	(t_vector2i){
-			.x = parent->size.x,
-			.y = 25});
+	*gui_box = create_t_gui_box(engine, (t_gui_box_create){parent, \
+		(t_vector2i){\
+				.x = 0, \
+				.y = *i}, \
+		(t_vector2i){\
+				.x = parent->size.x, \
+				.y = 25}, false});
 	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);
 	*i += gui_box->size.y + 8;

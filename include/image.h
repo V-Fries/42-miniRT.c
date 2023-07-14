@@ -54,4 +54,15 @@ void			image_draw_plus(t_image *image, float thickness,
 void			image_draw_minus(t_image *image, int thickness,
 					int border, unsigned int color);
 
+void			image_draw_outline(t_image *image, int width,
+					unsigned int color);
+void			image_draw_top_outline(t_image *image, int width,
+					unsigned int color);
+void			image_draw_bottom_outline(t_image *image, int width,
+					unsigned int color);
+void			image_draw_left_outline(t_image *image, int width,
+					unsigned int color);
+void			image_draw_right_outline(t_image *image, int width,
+					unsigned int color);
+
 #endif //IMAGE_H

@@ -28,8 +28,8 @@ SRC				=\
 	font/rendering/write_centered_string_to_image.c	\
 	\
 	font/get_font.c	\
-\
-\
+	\
+	\
 	gui/box/create_gui_box.c			\
 	gui/box/default_gui_box_methods.c	\
 	gui/box/destroy_t_gui_box.c			\
@@ -42,7 +42,6 @@ SRC				=\
 	gui/main_box/object_creation_box/init_object_creation_box.c		\
 	gui/main_box/object_creation_box/object_creation_on_clicks.c	\
 	\
-	gui/main_box/icon_box_draw_method.c \
 	gui/main_box/init_main_box.c		\
 	\
 	gui/object_modification_box/init_color_picker/add_hover_color_circle.c	\
@@ -51,7 +50,6 @@ SRC				=\
 	gui/object_modification_box/init_color_picker/init_color_picker_box.c	\
 	gui/object_modification_box/init_color_picker/init_rgb_picker.c			\
 	\
-	gui/object_modification_box/init_object_attributes_modification_box.c	\
 	gui/object_modification_box/init_object_modification_box.c				\
 	\
 	gui/create_boxes_utils.c		\
@@ -99,6 +97,7 @@ SRC				=\
 	\
 	image/destroy_t_image.c		\
 	image/draw.c				\
+	image/draw_outline.c		\
 	image/image.c				\
 	image/put_image_to_image.c	\
 	image/round_image_corners.c	\

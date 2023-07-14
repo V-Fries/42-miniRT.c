@@ -29,10 +29,7 @@ int		get_decreasing_color(float color, float x, float decal,
 int		get_base_color(float color, float x, float decal, float ratio);
 int		init_color_picker_box(t_engine *minirt, t_gui_box *gui_box,
 			t_gui_box *parent);
-void	add_hover_color_circle(t_gui_box *self, t_engine *minirt,
-			int x_offset, int y_offset);
-
-void	init_object_attributes_modification_box(t_engine *engine,
-			t_gui_box *gui_box);
+void	add_hover_color_circle(t_gui_box *self, t_vector2i offset,
+			t_vector2i mouse_position);
 
 #endif

@@ -394,4 +394,4 @@ add_executable(minirt
         src/hooks/update_object_attributes_modification_box/add_boxes/add_brightness_box.c
         src/hooks/update_object_attributes_modification_box/add_boxes/add_reflection_box.c
         src/object/object_calculate_cache.c
-        src/hooks/update_object_attributes_modification_box/add_boxes/add_specular_reflection_box.c src/hooks/update_object_attributes_modification_box/update_float_input_boxes.c)
+        src/hooks/update_object_attributes_modification_box/add_boxes/add_specular_reflection_box.c src/hooks/update_object_attributes_modification_box/update_float_input_boxes.c src/image/draw_outline.c)

@@ -18,12 +18,11 @@ static void	init_object_creation_box(const t_engine *engine, t_gui_box *gui_box,
 int	init_object_creation_gui_box(t_engine *minirt, t_gui_box *gui_box,
 		t_gui_box *parent)
 {
-	*gui_box = create_t_gui_box(minirt, parent, (t_vector2i){8, 8},
+	*gui_box = create_t_gui_box(minirt, (t_gui_box_create){parent,
+			(t_vector2i){8, 8},
 			(t_vector2i){.y = parent->size.y - 16, \
-							.x = parent->size.x / 4 * 3 - 16});
+							.x = parent->size.x / 4 * 3 - 16}, false});
 	if (errno == EINVAL || errno == ENOMEM)
-		return (-1);
-	if (gui_box->image.data == NULL)
 		return (-1);
 	gui_box->draw = &default_gui_box_draw;
 	gui_box->on_click = &default_gui_box_on_click;
@@ -48,14 +47,12 @@ static int	init_object_creation_children(t_engine *engine, t_gui_box *gui_box)
 	i = -1;
 	while (++i < NUMBER_OF_OBJECT_TYPES)
 	{
+		if (init_image(&gui_box->children.data[i].image, &engine->window,
+				gui_box->children.data[i].size.x, gui_box->children.data[i].size.y) < 0)
+			return (-1); // TODO free stuff
 		if (init_image(&gui_box->children.data[i].on_hover_image, &engine->window,
 				gui_box->children.data[i].size.x, gui_box->children.data[i].size.y) < 0)
 			return (-1); // TODO free stuff
-//		change_image_color(&gui_box->children.data[i].image, COLOR_TRANSPARENT);
-//		round_image_corners(&gui_box->children.data[i].image, BOX_ROUNDING_RADIUS);
-//		change_image_color(&gui_box->children.data[i].on_hover_image, HOVER_GUI_COLOR);
-//		round_image_corners(&gui_box->children.data[i].on_hover_image, BOX_ROUNDING_RADIUS);
-		gui_box->children.data[i].draw = &icon_box_draw_method;
 	}
 	init_object_creation_box(engine, gui_box->children.data + 0, SPHERE);
 	init_object_creation_box(engine, gui_box->children.data + 1, PLANE);

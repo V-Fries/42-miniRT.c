@@ -67,17 +67,18 @@ static int	create_boxes(t_engine *engine, t_gui_box *gui_box,
 	i = -1;
 	while (++i < boxes_size.nb_of_boxes)
 	{
-		gui_box->children.data[i] = create_t_gui_box(engine, gui_box,
-				(t_vector2i){\
-					.x = position, \
-					.y = side_offset}, \
-				(t_vector2i){\
-					.x = (i + 1 == boxes_size.nb_of_boxes) \
-							* (gui_box->size.x - position) \
-						+ (i + 1 != boxes_size.nb_of_boxes) \
-							* (gui_box->size.x \
-							* (boxes_size.box_size[i] / 100.f)), \
-					.y = gui_box->size.y - side_offset * 2});
+		gui_box->children.data[i] = create_t_gui_box(engine, \
+			(t_gui_box_create){
+				gui_box,
+				(t_vector2i){.x = position, \
+							.y = side_offset}, \
+				(t_vector2i){.x = (i + 1 == boxes_size.nb_of_boxes) \
+									* (gui_box->size.x - position) \
+								+ (i + 1 != boxes_size.nb_of_boxes) \
+									* (gui_box->size.x \
+									* (boxes_size.box_size[i] / 100.f)), \
+							.y = gui_box->size.y - side_offset * 2},
+				false});
 		if (errno == EINVAL || errno == ENOMEM)
 			return (failed_to_create_all_boxes(engine, &gui_box->children, i));
 		position += gui_box->children.data[i].size.x;

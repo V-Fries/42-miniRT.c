@@ -39,7 +39,7 @@ typedef struct s_color_separator
 }	t_color_separator;
 
 static void	base_color_box_draw(t_gui_box *self, t_engine *engine,
-				int x_offset, int y_offset);
+				t_draw_data draw_data);
 static void	put_color_segment(t_image *image, t_vector2i *position,
 				t_color_separator *color_separator,
 				t_color_getter color_getter);
@@ -53,11 +53,11 @@ int	init_base_color_box(t_engine *engine, t_gui_box *gui_box,
 {
 	int	y;
 
-	*gui_box = create_t_gui_box(engine, parent, \
+	*gui_box = create_t_gui_box(engine, (t_gui_box_create){parent, \
 		(t_vector2i){.x = 0,
 			.y = parent->size.y - parent->size.y / 2 + 4}, \
 		(t_vector2i){.y = parent->size.y / 2 - 4, \
-			.x = parent->size.x});
+			.x = parent->size.x}, true});
 	if (errno == EINVAL)
 		return (-1);
 	if (init_image(&gui_box->on_hover_image, &engine->window,
@@ -97,18 +97,18 @@ static void	base_color_box_draw(t_gui_box *self, t_engine *engine,
 #elif defined __APPLE__
 
 static void	base_color_box_draw(t_gui_box *self, t_engine *engine,
-				int x_offset, int y_offset)
+				t_draw_data draw_data)
 {
 	mlx_put_image_to_window(engine->window.mlx, engine->window.window,
-		self->image.data, self->position.x + x_offset,
-		self->position.y + y_offset);
-	if (mouse_is_hovering_box(&self->image, get_mouse_position_in_box(self, engine,
-																	  x_offset, y_offset)) == false)
+		self->image.data, self->position.x + draw_data.offset.x,
+		self->position.y + draw_data.offset.y);
+	if (is_mouse_hovering_box(self, draw_data.offset, &self->image,
+			draw_data.mouse_position) == false)
 		return ;
-	add_hover_color_circle(self, engine, x_offset, y_offset);
+	add_hover_color_circle(self, draw_data.offset, draw_data.mouse_position);
 	mlx_put_image_to_window(engine->window.mlx, engine->window.window,
-		self->on_hover_image.data, self->position.x + x_offset,
-		self->position.y + y_offset);
+		self->on_hover_image.data, self->position.x + draw_data.offset.x,
+		self->position.y + draw_data.offset.y);
 }
 #else
 # error "Unsuported OS"

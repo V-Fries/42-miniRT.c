@@ -36,11 +36,12 @@ typedef struct s_boxes_offsets
 	int	y;
 }	t_boxes_offsets;
 
-bool				mouse_is_hovering_box(
+bool				is_mouse_hovering_box(const t_gui_box *gui_box,
+						t_vector2i box_offset,
 						const t_image *image_to_check_for_hover,
 						t_vector2i mouse_position);
-t_vector2i			get_mouse_position_in_box(t_gui_box *self, t_engine *engine,
-						int x_offset, int y_offset);
+t_vector2i			get_mouse_position_in_box(const t_gui_box *self,
+						t_vector2i box_offset, t_vector2i mouse_position);
 t_vector2i			get_mouse_position(t_engine *engine);
 
 t_boxes_to_create	get_boxes_size(const char *boxes_setup);

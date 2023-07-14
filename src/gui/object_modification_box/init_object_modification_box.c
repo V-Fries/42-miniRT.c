@@ -18,17 +18,17 @@ static void	delete_box_on_click(t_gui_box *self, t_engine *engine, int y,
 int	init_object_modification_gui_box(t_engine *engine, t_gui_box *gui_box,
 		const t_gui_box *object_creation_gui_box)
 {
-	*gui_box = create_t_gui_box(engine, NULL, \
+	*gui_box = create_t_gui_box(engine, (t_gui_box_create){NULL, \
 		(t_vector2i){
 			.x = engine->window.size.x - engine->window.size.x / 4 \
- - object_creation_gui_box->position.x,
+				- object_creation_gui_box->position.x,
 			.y = object_creation_gui_box->size.y \
 				+ object_creation_gui_box->position.y * 2}, \
 		(t_vector2i){
 			.x = engine->window.size.x / 4, \
 			.y = engine->window.size.y \
- - (object_creation_gui_box->size.y \
-				+ object_creation_gui_box->position.y * 3)});
+				- (object_creation_gui_box->size.y \
+				+ object_creation_gui_box->position.y * 3)}, false});
 	if (errno == EINVAL)
 		return (-1);
 	change_image_color(&gui_box->image, BASE_GUI_COLOR);
@@ -46,7 +46,7 @@ static int	init_object_modification_gui_box_children(t_engine *engine,
 	if (create_vertical_boxes(engine, parent, "1 12 1 69 1 15 1",
 			roundf(parent->size.y / 100.f)) < 0)
 		return (-1);
-	init_object_attributes_modification_box(engine, parent->children.data + 3);
+	engine->gui.object_attributes_modification_box = parent->children.data + 3;
 	if (init_box_deleter(engine, parent->children.data + 1) < 0)
 		return (-1); // TODO free stuff
 	if (init_rgb_picker(engine, parent->children.data + 5) < 0)
