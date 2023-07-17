@@ -17,7 +17,7 @@
 # include "box.h"
 
 int		init_object_modification_gui_box(t_engine *minirt,
-			t_gui_box *gui_box, const t_gui_box *object_creation_gui_box);
+			t_gui_box *gui_box, const t_gui_box *main_gui_box);
 
 int		init_rgb_picker(t_engine *minirt, t_gui_box *gui_box);
 int		init_base_color_box(t_engine *minirt, t_gui_box *gui_box,

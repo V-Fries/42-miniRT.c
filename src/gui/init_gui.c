@@ -7,11 +7,12 @@
 #include "window.h"
 #include "libft.h"
 #include "gui/object_modification_box.h"
+#include "gui/object_list_box.h"
 
 int init_gui(t_engine *engine)
 {
 	engine->gui.draw_gui_image = &put_image_to_image_unsafe;
-	engine->gui.gui_boxes.size = 2;
+	engine->gui.gui_boxes.size = 3;
 	engine->gui.gui_boxes.data = malloc(sizeof(*engine->gui.gui_boxes.data)
 			* engine->gui.gui_boxes.size);
 	if (engine->gui.gui_boxes.data == NULL)
@@ -32,6 +33,13 @@ int init_gui(t_engine *engine)
 			engine->gui.gui_boxes.data + 1, engine->gui.gui_boxes.data) < 0)
 	{
 		// TODO free first gui box
+		free(engine->gui.gui_boxes.data);
+		return (-1);
+	}
+	if (init_object_list_box(engine, engine->gui.gui_boxes.data + 2,
+			engine->gui.gui_boxes.data, engine->gui.gui_boxes.data + 1) < 0)
+	{
+		// TODO free first and second gui box
 		free(engine->gui.gui_boxes.data);
 		return (-1);
 	}

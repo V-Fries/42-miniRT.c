@@ -32,7 +32,10 @@ int	create_n_horizontal_boxes(t_engine *engine, t_gui_box *gui_box, const int n,
 	}
 	gui_box->children.data = malloc(sizeof(*gui_box->children.data) * n);
 	if (gui_box->children.data == NULL)
+	{
+		ft_bzero(&gui_box->children, sizeof(gui_box->children));
 		return (-1);
+	}
 	gui_box->children.size = n;
 	if (create_boxes(engine, gui_box, n, offset) >= 0)
 		return (0);

@@ -17,25 +17,23 @@ static void	delete_box_on_click(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
 
 int	init_object_modification_gui_box(t_engine *engine, t_gui_box *gui_box,
-		const t_gui_box *object_creation_gui_box)
+		const t_gui_box *main_gui_box)
 {
 	*gui_box = create_t_gui_box(engine, (t_gui_box_create){NULL, \
-		(t_vector2i){
-			.x = engine->window.size.x - engine->window.size.x / 4 \
-				- object_creation_gui_box->position.x,
-			.y = object_creation_gui_box->size.y \
-				+ object_creation_gui_box->position.y * 2}, \
-		(t_vector2i){
-			.x = engine->window.size.x / 4, \
-			.y = engine->window.size.y \
-				- (object_creation_gui_box->size.y \
-				+ object_creation_gui_box->position.y * 3)}, true});
+			(t_vector2i){\
+				.x = engine->window.size.x - engine->window.size.x / 4 \
+					- main_gui_box->position.x, \
+				.y = main_gui_box->size.y \
+					+ main_gui_box->position.y * 2}, \
+			(t_vector2i){\
+				.x = engine->window.size.x / 4, \
+				.y = engine->window.size.y \
+					- (main_gui_box->size.y + main_gui_box->position.y * 3)}, \
+			true});
 	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);
 	change_image_color(&gui_box->image, BASE_GUI_COLOR);
 	round_image_corners(&gui_box->image, BOX_ROUNDING_RADIUS);
-	gui_box->draw = &default_gui_box_draw;
-	gui_box->on_click = &default_gui_box_on_click;
 	if (init_object_modification_gui_box_children(engine, gui_box))
 		return (-1); // TODO free image
 	return (0);

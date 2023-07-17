@@ -44,6 +44,8 @@ SRC				=\
 	\
 	gui/main_box/init_main_box.c		\
 	\
+	gui/object_list_box/init_object_list_box.c	\
+	\
 	gui/object_modification_box/init_color_picker/add_hover_color_circle.c	\
 	gui/object_modification_box/init_color_picker/color_getter_functions.c	\
 	gui/object_modification_box/init_color_picker/init_base_color_box.c		\

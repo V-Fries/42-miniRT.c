@@ -73,6 +73,8 @@ typedef struct s_gui
 	float						object_rotation_degrees;
 	struct s_gui_box			*object_attributes_modification_box;
 	struct s_gui_boxes			*object_creation_boxes;
+	struct s_gui_box			*object_list_box;
+	t_vector					object_boxes;
 	t_float_input_boxes_images	float_input_boxes;
 }	t_gui;
 

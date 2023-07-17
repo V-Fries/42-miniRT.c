@@ -30,11 +30,7 @@ typedef struct s_boxes_to_create
 	size_t	nb_of_boxes;
 }	t_boxes_to_create;
 
-typedef struct s_boxes_offsets
-{
-	int	x;
-	int	y;
-}	t_boxes_offsets;
+typedef t_vector2i	t_boxes_offsets;
 
 bool				is_mouse_hovering_box(const t_gui_box *gui_box,
 						t_vector2i box_offset,

@@ -77,22 +77,8 @@ static int	select_new_object(int button, t_engine *engine, int x, int y)
 		return (0);
 	engine->gui.selected_object.object = get_clicked_object(engine, x, y);
 
-	// Testing
-	char *tmp;
 	if (engine->gui.selected_object.object == NULL)
-	{
-		ft_printf("Clicked no objects\n\n");
 		return (update_object_attributes_modification_box(engine));
-	}
-	switch (engine->gui.selected_object.object->type)
-	{
-		case SPHERE: tmp = "SPHERE"; break;
-		case PLANE: tmp = "PLANE"; break;
-		case CYLINDER: tmp = "CYLINDER"; break;
-		default: tmp = "UNKNOWN: ERROR"; break;
-	}
-	ft_printf("selected object %s\n\n", tmp);
-	//!Testing
 	update_color_picker_color(&engine->gui);
 	redraw_icons(engine, engine->gui.selected_object.object->material);
 	return (update_object_attributes_modification_box(engine));

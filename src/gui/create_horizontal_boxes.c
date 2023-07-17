@@ -25,7 +25,7 @@ static int	create_boxes(t_engine *engine, t_gui_box *gui_box,
 /// \param boxes_setup "20 60 20" would mean having 3 boxes, 2 at the edges that
 /// take 20 percent of available place, one in the center that takes 60 percent
 /// of the available place. The sum of all numbers numbers needs to be > 0
-///  && <= 100
+///  && \<= 100
 /// \return
 int	create_horizontal_boxes(t_engine *engine, t_gui_box *gui_box,
 		const char *boxes_setup, int side_offset)

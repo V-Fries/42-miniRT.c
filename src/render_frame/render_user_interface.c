@@ -7,6 +7,8 @@ static t_vector2i	get_top_box_decal(const t_gui_box *gui_box,
 						float hidden_ratio);
 static t_vector2i	get_right_box_decal(const t_engine *engine,
 						const t_gui_box *gui_box, float hidden_ratio);
+static t_vector2i	get_left_box_decal(const t_engine *engine,
+						const t_gui_box *gui_box, float hidden_ratio);
 
 void	render_user_interface(t_engine *engine, const uint64_t start_time)
 {
@@ -24,6 +26,11 @@ void	render_user_interface(t_engine *engine, const uint64_t start_time)
 	engine->gui.gui_boxes.data[1].draw(engine->gui.gui_boxes.data + 1, engine,
 		(t_draw_data){\
 			get_right_box_decal(engine, engine->gui.gui_boxes.data + 1, \
+				hidden_ratio), \
+			mouse_position});
+	engine->gui.gui_boxes.data[2].draw(engine->gui.gui_boxes.data + 2, engine,
+		(t_draw_data){\
+			get_left_box_decal(engine, engine->gui.gui_boxes.data + 1, \
 				hidden_ratio), \
 			mouse_position});
 }
@@ -60,5 +67,13 @@ static t_vector2i	get_right_box_decal(const t_engine *engine,
 {
 	return ((t_vector2i){
 		(engine->window.size.x - gui_box->position.x) * hidden_ratio,
+		0});
+}
+
+static t_vector2i	get_left_box_decal(const t_engine *engine,
+						const t_gui_box *gui_box, const float hidden_ratio)
+{
+	return ((t_vector2i){
+		-((engine->window.size.x - gui_box->position.x) * hidden_ratio),
 		0});
 }
