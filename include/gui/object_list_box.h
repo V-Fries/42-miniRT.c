@@ -37,4 +37,7 @@ int		create_object_gui_box(t_engine *engine, t_gui_box *gui_box,
 int		create_light_gui_box(t_engine *engine, t_gui_box *gui_box,
 			const t_light *light);
 
+t_image	*object_box_get_icon_image(const t_gui_box *object_box);
+t_image	*object_box_get_name_image(const t_gui_box *object_box);
+
 #endif

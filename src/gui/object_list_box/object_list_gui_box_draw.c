@@ -52,6 +52,7 @@ void	object_list_gui_box_draw(t_gui_box *self, t_engine *engine,
 	mlx_put_image_to_window(engine->window.mlx, engine->window.window,
 		self->image.data, self->position.x + draw_data.offset.x,
 		self->position.y + draw_data.offset.y);
+	// TODO make a linux version of the function
 }
 
 void	object_and_light_gui_box_draw(t_gui_box *self, t_engine *engine,

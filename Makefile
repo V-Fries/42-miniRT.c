@@ -47,6 +47,7 @@ SRC				=\
 	gui/object_list_box/create_light_gui_box.c			\
 	gui/object_list_box/create_object_gui_box.c			\
 	gui/object_list_box/init_object_list_box.c			\
+	gui/object_list_box/object_box_getters.c			\
 	gui/object_list_box/object_list_gui_box_draw.c		\
 	gui/object_list_box/object_list_gui_box_on_click.c	\
 	\

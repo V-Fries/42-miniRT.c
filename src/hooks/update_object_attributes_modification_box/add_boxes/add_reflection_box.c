@@ -18,6 +18,7 @@
 #include "gui/utils.h"
 #include "font/render.h"
 #include "events.h"
+#include "hooks.h"
 
 static int	init_reflection_box_children(t_engine *engine, t_gui_box *gui_box);
 static void	reflection_input_box_on_click_plus(struct s_gui_box *self,
@@ -99,6 +100,7 @@ static void	reflection_input_box_on_click_plus(struct s_gui_box *self,
 	engine->scene_changed = true;
 	update_float_input_box(engine, object->material.reflect,
 		engine->gui.float_input_boxes.reflection);
+	redraw_icons(engine, engine->gui.selected_object.object->material);
 }
 
 static void	reflection_input_box_on_click_minus(struct s_gui_box *self,
@@ -117,6 +119,7 @@ static void	reflection_input_box_on_click_minus(struct s_gui_box *self,
 	engine->scene_changed = true;
 	update_float_input_box(engine, object->material.reflect,
 		engine->gui.float_input_boxes.reflection);
+	redraw_icons(engine, engine->gui.selected_object.object->material);
 }
 
 static void	reflection_input_box_on_click_text(struct s_gui_box *self,
