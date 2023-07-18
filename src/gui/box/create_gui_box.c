@@ -39,8 +39,8 @@ t_gui_box	create_t_gui_box(t_engine *engine, t_gui_box_create args)
 	}
 	if (args.should_create_an_image)
 	{
-		init_image(&gui_box.image, &engine->window, args.size.x, args.size.y);
-		if (gui_box.image.data == NULL)
+		if (init_image(&gui_box.image, &engine->window, args.size.x,
+				args.size.y) < 0)
 		{
 			errno = ENOMEM;
 			return (gui_box);

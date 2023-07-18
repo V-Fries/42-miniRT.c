@@ -96,6 +96,7 @@ typedef struct s_object
 	t_vector3f				axe;
 	t_material				material;
 	union u_object_cache	cache;
+	char					*name;
 }	t_object;
 
 typedef struct s_objects

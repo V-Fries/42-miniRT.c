@@ -12,6 +12,7 @@ typedef struct s_light
 	t_vector3f	color;
 	float		brightness;
 	t_vector3f	emitted_color;
+	char		*name;
 }	t_light;
 
 typedef struct s_lights

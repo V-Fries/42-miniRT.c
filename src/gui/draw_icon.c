@@ -23,7 +23,7 @@ static int		init_tmp_scene(t_engine *tmp_engine, enum e_object_type type,
 static t_object	get_sphere(const t_camera *camera, t_material material);
 static t_object	get_plane(t_material material);
 static t_object	get_cylinder(const t_camera *camera, t_material material);
-static t_object	get_cone(const t_camera *camera, const t_material material);
+static t_object	get_cone(const t_camera *camera, t_material material);
 
 int	draw_icon(t_image *image, const int type,
 		const unsigned int background_color, const t_material material)

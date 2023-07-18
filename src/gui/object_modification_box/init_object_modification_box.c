@@ -9,6 +9,7 @@
 #include "hooks.h"
 #include "gui/UI.h"
 #include "events.h"
+#include "ray_tracer_gui_api.h"
 
 static int	init_object_modification_gui_box_children(t_engine *engine,
 				t_gui_box *parent);
@@ -100,13 +101,13 @@ static void	delete_box_on_click(t_gui_box *self, t_engine *engine,
 	if (engine->gui.selected_object.object == NULL)
 	{
 		index = engine->gui.selected_object.light - engine->scene.lights.data;
-		remove_light_in_lights(&engine->scene.lights, index);
+		remove_light(engine, index);
 		engine->gui.selected_object.light = NULL;
 		update_object_attributes_modification_box(engine);
 		return ;
 	}
 	index = engine->gui.selected_object.object - engine->scene.objects.data;
-	remove_object_in_objects(&engine->scene.objects, index);
+	remove_object(engine, index);
 	engine->gui.selected_object.object = NULL;
 	update_object_attributes_modification_box(engine);
 }

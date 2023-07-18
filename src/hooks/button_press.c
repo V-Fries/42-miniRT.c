@@ -21,7 +21,6 @@
 #include "ray_tracer_gui_api.h"
 #include "hooks.h"
 
-static void	update_color_picker_color(t_gui *gui);
 static int	select_new_object(int button, t_engine *engine, int x, int y);
 static int	placing_object(int button, t_engine *engine);
 static void	toggle_camera_lock(t_engine *engine);
@@ -76,27 +75,13 @@ static int	select_new_object(int button, t_engine *engine, int x, int y)
 		|| y >= engine->ray_traced_image.height)
 		return (0);
 	engine->gui.selected_object.object = get_clicked_object(engine, x, y);
+	engine->gui.selected_object.light = NULL;
 
 	if (engine->gui.selected_object.object == NULL)
 		return (update_object_attributes_modification_box(engine));
 	update_color_picker_color(&engine->gui);
 	redraw_icons(engine, engine->gui.selected_object.object->material);
 	return (update_object_attributes_modification_box(engine));
-}
-
-static void	update_color_picker_color(t_gui *gui)
-{
-	if (gui->selected_object.object != NULL)
-	{
-		gui->color_picker_base_color_was_changed = true;
-		gui->color_picker_base_color = vector3f_multiply(
-				gui->selected_object.object->material.albedo, 255.f);
-	}
-	else if (gui->selected_object.light != NULL)
-	{
-		gui->color_picker_base_color_was_changed = true;
-		gui->color_picker_base_color = gui->selected_object.light->color;
-	}
 }
 
 static void	toggle_camera_lock(t_engine *engine)

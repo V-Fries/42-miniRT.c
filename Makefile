@@ -44,7 +44,11 @@ SRC				=\
 	\
 	gui/main_box/init_main_box.c		\
 	\
-	gui/object_list_box/init_object_list_box.c	\
+	gui/object_list_box/create_light_gui_box.c			\
+	gui/object_list_box/create_object_gui_box.c			\
+	gui/object_list_box/init_object_list_box.c			\
+	gui/object_list_box/object_list_gui_box_draw.c		\
+	gui/object_list_box/object_list_gui_box_on_click.c	\
 	\
 	gui/object_modification_box/init_color_picker/add_hover_color_circle.c	\
 	gui/object_modification_box/init_color_picker/color_getter_functions.c	\
@@ -89,12 +93,13 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/update_object_attributes_modification_box.c	\
 	hooks/update_object_attributes_modification_box/update_float_input_boxes.c					\
 	\
-	hooks/button_press.c	\
-	hooks/button_release.c	\
-	hooks/key_press.c		\
-	hooks/key_release.c		\
-	hooks/redraw_icons.c	\
-	hooks/toggle_gui.c		\
+	hooks/button_press.c				\
+	hooks/button_release.c				\
+	hooks/key_press.c					\
+	hooks/key_release.c					\
+	hooks/redraw_icons.c				\
+	hooks/toggle_gui.c					\
+	hooks/update_color_picker_color.c	\
 	\
 	\
 	image/destroy_t_image.c		\
@@ -208,7 +213,8 @@ SRC				=\
 	ray_tracer/render_with_anti_aliasing.c	\
 	\
 	\
-	ray_tracer_gui_api/get_clicked_object.c	\
+	ray_tracer_gui_api/add_and_remove_object_and_light.c	\
+	ray_tracer_gui_api/get_clicked_object.c					\
 	\
 	\
 	render_frame/print_fps_counter.c		\

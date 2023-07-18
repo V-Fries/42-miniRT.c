@@ -21,9 +21,9 @@ int			button_press_handler(int button, int x, int y, t_engine *engine);
 int			key_press_handler(int key_code, t_engine *engine);
 int			key_release_handler(int key_code, t_engine *engine);
 
-void		toggle_gui(t_gui *gui);
-
 void		redraw_icons(t_engine *engine, t_material material);
+void		toggle_gui(t_gui *gui);
+void		update_color_picker_color(t_gui *gui);
 
 int			update_object_attributes_modification_box(t_engine *engine);
 void		update_xyz_float_input_boxes(t_engine *engine,

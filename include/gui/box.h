@@ -42,6 +42,7 @@ typedef struct s_gui_box
 	void				(*on_click)(struct s_gui_box *self, t_engine *engine, \
 							t_click_data click_data);
 	t_gui_boxes			children;
+	int					scroll;
 }	t_gui_box;
 
 typedef struct s_gui_box_create

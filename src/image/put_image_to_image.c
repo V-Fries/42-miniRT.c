@@ -4,8 +4,8 @@
 static unsigned int	mix_colors(unsigned int added_color,
 						unsigned int base_color);
 
-void	put_image_to_image(register t_image *destination,
-						   const t_image *source, t_vector2i position)
+void	put_image_to_image(register t_image *destination, const t_image *source,
+			t_vector2i position)
 {
 	const int		y_max = source->height * source->line_length;
 	const int		position_y_max = destination->height

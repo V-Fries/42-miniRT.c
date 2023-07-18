@@ -16,9 +16,7 @@
 #include "gui/box.h"
 #include "gui/UI.h"
 #include "gui/utils.h"
-
-static int	init_object_gui_box_children(t_engine *engine, t_gui_box *parent,
-				const t_object *object);
+#include "gui/object_list_box.h"
 
 int	init_object_list_box(t_engine *engine, t_gui_box *gui_box,
 		const t_gui_box *main_gui_box,
@@ -32,44 +30,13 @@ int	init_object_list_box(t_engine *engine, t_gui_box *gui_box,
 			true});
 	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);
+	engine->gui.object_list_box = gui_box;
+	engine->gui.object_list_box->draw = &object_list_gui_box_draw;
+	engine->gui.object_list_box->on_click = &object_list_gui_box_on_click;
+	engine->gui.object_list_box->scroll = OBJECT_LIST_OFFSET;
 	change_image_color(&gui_box->image, BASE_GUI_COLOR);
 	round_image_corners(&gui_box->image, BOX_ROUNDING_RADIUS);
-	engine->gui.object_list_box = gui_box;
-	ft_vector_create(&engine->gui.object_boxes, sizeof(t_gui_box *), 0);
-	return (0);
-}
-
-t_gui_box	*create_object_gui_box(t_engine *engine, const t_object *object)
-{
-	t_gui_box	*result;
-
-	result = malloc(sizeof(*result));
-	if (result == NULL)
-		return (NULL);
-	*result = create_t_gui_box(engine, (t_gui_box_create){
-			engine->gui.object_list_box,
-			(t_vector2i){4, 4},
-			(t_vector2i){engine->gui.object_list_box->size.x - 8, \
-						100},
-			true});
-	if (errno == EINVAL || errno == ENOMEM)
-		return (NULL);
-	change_image_color(&result->image, SUB_GUI_COLOR);
-	round_image_corners(&result->image, BOX_ROUNDING_RADIUS);
-	if (init_object_gui_box_children(engine, result, object) < 0)
-		return (NULL); // TODO free
-	return (result);
-}
-
-static int	init_object_gui_box_children(t_engine *engine, t_gui_box *parent,
-				const t_object *object)
-{
-	if (create_n_horizontal_boxes(engine, parent, 1, (t_boxes_offsets){4, 4})
-		< 0)
-		return (-1);
-	if (init_image(&parent->children.data->image, &engine->window,
-			parent->children.data->size.x, parent->children.data->size.y) < 0)
-		return (-1);
-	(void)object;
+	ft_vector_create(&engine->gui.light_boxes, sizeof(t_gui_box), 0);
+	ft_vector_create(&engine->gui.object_boxes, sizeof(t_gui_box), 0);
 	return (0);
 }
