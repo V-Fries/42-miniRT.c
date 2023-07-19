@@ -61,8 +61,6 @@ static void	update_object_list_icon(t_engine *engine, t_material material)
 static void	redraw_object_creation_box(t_gui_box *gui_box,
 				const int type, const t_material material)
 {
-	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
-	change_image_color(&gui_box->on_hover_image, HOVER_GUI_COLOR);
 	draw_icon(&gui_box->image, type, COLOR_TRANSPARENT, material);
 	draw_icon(&gui_box->on_hover_image, type, HOVER_GUI_COLOR, material);
 	round_image_corners(&gui_box->on_hover_image, BOX_ROUNDING_RADIUS);

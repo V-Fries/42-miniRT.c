@@ -59,7 +59,7 @@ static void		draw_light_icon(t_image *image,
 	const t_vector2i	center = {image->width / 2, image->height / 2};
 
 	// TODO make a better icon
-	(void)background_color;
+	change_image_color(image, background_color);
 	image_draw_circle(image, center, radius, vec_rgb_to_uint(color));
 }
 

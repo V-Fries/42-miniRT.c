@@ -60,6 +60,9 @@ void	object_and_light_gui_box_draw(t_gui_box *self, t_engine *engine,
 {
 	size_t	i;
 
+	put_image_to_image(&engine->gui.object_list_box->image, &self->image,
+		(t_vector2i){self->position.x + draw_data.offset.x, \
+					self->position.y + draw_data.offset.y});
 	i = self->children.size;
 	while (i--)
 		if (self->children.data[i].draw != NULL)
@@ -68,9 +71,6 @@ void	object_and_light_gui_box_draw(t_gui_box *self, t_engine *engine,
 					(t_vector2i){draw_data.offset.x + self->position.x, \
 								draw_data.offset.y + self->position.y},
 					draw_data.mouse_position});
-	put_image_to_image(&engine->gui.object_list_box->image, &self->image,
-		(t_vector2i){self->position.x + draw_data.offset.x, \
-					self->position.y + draw_data.offset.y});
 	// TODO Make a custom version of put_image_to_image() to not change the
 	// color if == COLOR_TRANSPARENT since it currently writes over the rounded
 	// edges
