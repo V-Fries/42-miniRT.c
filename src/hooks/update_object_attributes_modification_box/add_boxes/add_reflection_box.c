@@ -19,6 +19,7 @@
 #include "font/render.h"
 #include "events.h"
 #include "hooks.h"
+#include "gui/object_modification_box.h"
 
 static int	init_reflection_box_children(t_engine *engine, t_gui_box *gui_box);
 static void	reflection_input_box_on_click_plus(struct s_gui_box *self,
@@ -37,10 +38,13 @@ int	add_reflection_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				.y = *i}, \
 		(t_vector2i){\
 				.x = parent->size.x, \
-				.y = 25}, true});
+				.y = parent->size.y * (OBJECT_ATTRIBUTE_BOX_NORMAL_BOX_SIZE \
+						/ OBJECT_ATTRIBUTE_BOX_TOTAL_SIZE) \
+					- OBJECT_ATTRIBUTE_BOX_OFFSET}, \
+		true});
 	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);
-	*i += gui_box->size.y + 8;
+	*i += gui_box->size.y + OBJECT_ATTRIBUTE_BOX_OFFSET;
 	if (init_reflection_box_children(engine, gui_box) < 0)
 	{
 		destroy_t_image(&engine->window, &gui_box->image);

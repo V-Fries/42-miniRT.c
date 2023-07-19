@@ -31,6 +31,13 @@ void		update_xyz_float_input_boxes(t_engine *engine,
 				t_xyz_input_boxes_images *xyz_input_boxes_images);
 void		update_float_input_boxes(t_engine *engine);
 
+int			get_transformations_boxes_index(
+				t_gui_box *object_attribute_modification_box);
+int			get_reflections_boxes_index(
+				t_gui_box *object_attribute_modification_box);
+int			get_texture_boxes_index(
+				t_gui_box *object_attribute_modification_box);
+
 int			init_cone_attributes_modification_box(t_engine *engine,
 				t_gui_box *gui_box);
 int			init_cylinder_attributes_modification_box(t_engine *engine,
