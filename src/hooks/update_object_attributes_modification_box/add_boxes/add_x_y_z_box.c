@@ -37,9 +37,7 @@ int	add_x_y_z_box(t_engine *engine, t_gui_box *gui_box, int *i,
 			.y = *i}, \
 		(t_vector2i){
 			.x = parent->size.x,
-			.y = parent->size.y * (OBJECT_ATTRIBUTE_BOX_XYZ_BOX_SIZE \
-					/ OBJECT_ATTRIBUTE_BOX_TOTAL_SIZE) \
-				- OBJECT_ATTRIBUTE_BOX_OFFSET}, \
+			.y = get_xyz_box_size(parent)}, \
 		true});
 	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);

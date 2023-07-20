@@ -84,6 +84,7 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/add_boxes/add_reflection_box.c			\
 	hooks/update_object_attributes_modification_box/add_boxes/add_specular_reflection_box.c	\
 	hooks/update_object_attributes_modification_box/add_boxes/add_x_y_z_box.c				\
+	hooks/update_object_attributes_modification_box/add_boxes/get_box_size.c				\
 	hooks/update_object_attributes_modification_box/add_boxes/get_x_y_z_input_box.c			\
 	\
 	hooks/update_object_attributes_modification_box/get_box_category_index.c					\

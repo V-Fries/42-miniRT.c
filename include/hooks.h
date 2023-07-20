@@ -49,6 +49,8 @@ int			init_plane_attributes_modification_box(t_engine *engine,
 int			init_sphere_attributes_modification_box(t_engine *engine,
 				t_gui_box *gui_box);
 
+int			get_normal_box_size(t_gui_box *attribute_box);
+int			get_xyz_box_size(t_gui_box *attribute_box);
 int			add_x_y_z_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
 

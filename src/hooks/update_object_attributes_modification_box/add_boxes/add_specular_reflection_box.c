@@ -39,9 +39,7 @@ int	add_specular_reflection_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				.y = *i}, \
 		(t_vector2i){\
 				.x = parent->size.x, \
-				.y = parent->size.y * (OBJECT_ATTRIBUTE_BOX_NORMAL_BOX_SIZE \
-						/ OBJECT_ATTRIBUTE_BOX_TOTAL_SIZE) \
-					- OBJECT_ATTRIBUTE_BOX_OFFSET}, \
+				.y = get_normal_box_size(parent)}, \
 		true});
 	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);

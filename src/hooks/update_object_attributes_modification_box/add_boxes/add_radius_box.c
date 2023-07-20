@@ -18,6 +18,7 @@
 #include "font/render.h"
 #include "events.h"
 #include "gui/object_modification_box.h"
+#include "hooks.h"
 
 static int	init_radius_box_children(t_engine *engine, t_gui_box *gui_box);
 static void	radius_input_box_on_click_plus(struct s_gui_box *self,
@@ -36,9 +37,7 @@ int	add_radius_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				.y = *i}, \
 		(t_vector2i){\
 				.x = parent->size.x, \
-				.y = parent->size.y * (OBJECT_ATTRIBUTE_BOX_NORMAL_BOX_SIZE \
-						/ OBJECT_ATTRIBUTE_BOX_TOTAL_SIZE) \
-					- OBJECT_ATTRIBUTE_BOX_OFFSET}, \
+				.y = get_normal_box_size(parent)}, \
 		true});
 	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);
