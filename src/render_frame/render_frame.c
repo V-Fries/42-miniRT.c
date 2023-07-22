@@ -107,7 +107,7 @@ static int	get_incrementer(t_engine *engine)
 		return (1);
 	fps_count += engine->gui.fps.fps_nb;
 	if (frame_count >= FRAME_BEFORE_ADAPTION
-		&& fps_count / frame_count < FPS_GOAL)// * 0.66f)
+		&& fps_count / frame_count < FPS_GOAL * 0.66f)
 	{
 		incrementer++;
 		frame_count = 0;

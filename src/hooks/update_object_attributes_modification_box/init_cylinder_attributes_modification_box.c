@@ -17,11 +17,12 @@
 
 static int	add_transformation_boxes(t_engine *engine, t_gui_box *gui_box);
 static int	add_reflection_boxes(t_engine *engine, t_gui_box *gui_box);
+static int	add_texture_boxes(t_engine *engine, t_gui_box *gui_box);
 
 int	init_cylinder_attributes_modification_box(t_engine *engine,
 		t_gui_box *gui_box)
 {
-	gui_box->children.size = 6;
+	gui_box->children.size = 7;
 	gui_box->children.data = malloc(sizeof(*gui_box->children.data)
 			* gui_box->children.size);
 	if (gui_box->children.data == NULL)
@@ -32,6 +33,8 @@ int	init_cylinder_attributes_modification_box(t_engine *engine,
 	if (add_transformation_boxes(engine, gui_box) < 0)
 		return (-1);
 	if (add_reflection_boxes(engine, gui_box) < 0)
+		return (-1);
+	if (add_texture_boxes(engine, gui_box) < 0)
 		return (-1);
 	return (0);
 }
@@ -84,6 +87,21 @@ static int	add_reflection_boxes(t_engine *engine, t_gui_box *gui_box)
 			gui_box) < 0)
 	{
 		gui_box->children.size = 5;
+		destroy_t_gui_box(&engine->window, gui_box);
+		return (-1);
+	}
+	return (0);
+}
+
+static int	add_texture_boxes(t_engine *engine, t_gui_box *gui_box)
+{
+	int	y;
+
+	y = get_texture_boxes_index(gui_box);
+	if (add_checked_pattern_toggle_box(engine, gui_box->children.data + 6, &y,
+			gui_box) < 0)
+	{
+		gui_box->children.size = 6;
 		destroy_t_gui_box(&engine->window, gui_box);
 		return (-1);
 	}

@@ -53,9 +53,13 @@ int			get_normal_box_size(t_gui_box *attribute_box);
 int			get_xyz_box_size(t_gui_box *attribute_box);
 int			add_x_y_z_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
+int			add_toggle_box(t_engine *engine, t_gui_box *gui_box, int *i,
+				t_gui_box *parent);
 
 int			add_brightness_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
+int			add_checked_pattern_toggle_box(t_engine *engine, t_gui_box *gui_box,
+				int *i, t_gui_box *parent);
 int			add_height_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
 int			add_normal_box(t_engine *engine, t_gui_box *gui_box, int *i,

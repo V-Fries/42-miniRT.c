@@ -282,8 +282,8 @@ add_executable(minirt
         src/hooks/update_object_attributes_modification_box/add_boxes/add_normal_box.c
         src/hooks/update_object_attributes_modification_box/add_boxes/add_position_box.c
         src/hooks/update_object_attributes_modification_box/add_boxes/add_radius_box.c
-        src/hooks/update_object_attributes_modification_box/add_boxes/add_x_y_z_box.c
-        src/hooks/update_object_attributes_modification_box/add_boxes/get_x_y_z_input_box.c
+        src/hooks/update_object_attributes_modification_box/add_boxes/utils/add_x_y_z_box.c
+        src/hooks/update_object_attributes_modification_box/add_boxes/utils/get_x_y_z_input_box.c
         src/hooks/update_object_attributes_modification_box/init_cylinder_attributes_modification_box.c
         src/hooks/update_object_attributes_modification_box/init_plane_attributes_modification_box.c
         src/hooks/update_object_attributes_modification_box/init_sphere_attributes_modification_box.c
@@ -392,4 +392,4 @@ add_executable(minirt
         src/hooks/update_object_attributes_modification_box/add_boxes/add_brightness_box.c
         src/hooks/update_object_attributes_modification_box/add_boxes/add_reflection_box.c
         src/object/object_calculate_cache.c
-        src/hooks/update_object_attributes_modification_box/add_boxes/add_specular_reflection_box.c src/hooks/update_object_attributes_modification_box/update_float_input_boxes.c src/image/draw_outline.c src/gui/object_list_box/init_object_list_box.c include/gui/object_list_box.h src/gui/object_list_box/create_object_gui_box.c src/gui/object_list_box/object_list_gui_box_draw.c src/gui/object_list_box/create_light_gui_box.c src/ray_tracer_gui_api/add_and_remove_object_and_light.c include/init_scene.h src/gui/object_list_box/object_list_gui_box_on_click.c src/hooks/update_color_picker_color.c src/gui/object_list_box/object_box_getters.c src/hooks/update_object_attributes_modification_box/get_box_category_index.c src/hooks/update_object_attributes_modification_box/add_boxes/add_checked_pattern_toggle_box.c src/hooks/update_object_attributes_modification_box/add_boxes/get_box_size.c)
+        src/hooks/update_object_attributes_modification_box/add_boxes/add_specular_reflection_box.c src/hooks/update_object_attributes_modification_box/update_float_input_boxes.c src/image/draw_outline.c src/gui/object_list_box/init_object_list_box.c include/gui/object_list_box.h src/gui/object_list_box/create_object_gui_box.c src/gui/object_list_box/object_list_gui_box_draw.c src/gui/object_list_box/create_light_gui_box.c src/ray_tracer_gui_api/add_and_remove_object_and_light.c include/init_scene.h src/gui/object_list_box/object_list_gui_box_on_click.c src/hooks/update_color_picker_color.c src/gui/object_list_box/object_box_getters.c src/hooks/update_object_attributes_modification_box/get_box_category_index.c src/hooks/update_object_attributes_modification_box/add_boxes/add_checked_pattern_toggle_box.c src/hooks/update_object_attributes_modification_box/add_boxes/utils/get_box_size.c src/hooks/update_object_attributes_modification_box/add_boxes/utils/add_toggle_box.c src/image/draw_check_mark.c)

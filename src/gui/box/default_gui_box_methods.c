@@ -74,7 +74,7 @@ static void	draw_gui_box_image(t_gui_box *self, t_engine *engine,
 # error "Unsuported OS"
 #endif
 
-void	default_gui_box_on_click(t_gui_box *self, t_engine *minirt,
+void	default_gui_box_on_click(t_gui_box *self, t_engine *engine,
 			t_click_data click_data)
 {
 	t_gui_box	*clicked_gui_box;
@@ -82,5 +82,5 @@ void	default_gui_box_on_click(t_gui_box *self, t_engine *minirt,
 	clicked_gui_box = get_clicked_gui_box(self->children,
 			&click_data.click_position.x, &click_data.click_position.y);
 	if (clicked_gui_box != NULL && clicked_gui_box->on_click != NULL)
-		clicked_gui_box->on_click(clicked_gui_box, minirt, click_data);
+		clicked_gui_box->on_click(clicked_gui_box, engine, click_data);
 }

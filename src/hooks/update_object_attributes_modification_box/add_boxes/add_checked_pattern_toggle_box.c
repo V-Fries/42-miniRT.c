@@ -10,45 +10,69 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
 #include "engine.h"
 #include "gui/box.h"
-#include "gui/object_modification_box.h"
 #include "gui/UI.h"
 #include "hooks.h"
+#include "font/render.h"
+#include "events.h"
 
-static int	init_checked_pattern_toggle_box_children(t_engine *engine,
-				t_gui_box *gui_box);
+static void	checked_pattern_toggle_box_on_click(t_gui_box *self,
+				t_engine *engine, t_click_data click_data);
 
 int	add_checked_pattern_toggle_box(t_engine *engine, t_gui_box *gui_box, int *i,
 		t_gui_box *parent)
 {
-	*gui_box = create_t_gui_box(engine, (t_gui_box_create){parent, \
-		(t_vector2i){\
-				.x = 0, \
-				.y = *i}, \
-		(t_vector2i){\
-				.x = parent->size.x, \
-				.y = get_normal_box_size(parent)}, \
-		true});
-	if (errno == EINVAL || errno == ENOMEM)
+	if (add_toggle_box(engine, gui_box, i, parent) < 0)
 		return (-1);
-	*i += gui_box->size.y + OBJECT_ATTRIBUTE_BOX_OFFSET;
-	if (init_checked_pattern_toggle_box_children(engine, gui_box) < 0)
-	{
-		destroy_t_image(&engine->window, &gui_box->image);
-		ft_bzero(gui_box, sizeof(*gui_box));
-		return (-1);
-	}
-	gui_box->draw = &default_gui_box_draw;
-	gui_box->on_click = &default_gui_box_on_click;
-	change_image_color(&gui_box->image, SUB_GUI_COLOR);
-	round_image_corners(&gui_box->image, BOX_ROUNDING_RADIUS);
+	change_image_color(&gui_box->children.data->image, COLOR_TRANSPARENT);
+	if (engine->gui.selected_object.object->material.is_checked_pattern)
+		image_draw_check_mark(&gui_box->children.data->image, COLOR_WHITE,
+			TOGGLE_BOX_BUTTON_OUTLINE_WIDTH);
+	image_draw_outline(&gui_box->children.data->image,
+		TOGGLE_BOX_BUTTON_OUTLINE_WIDTH, COLOR_BLACK);
+	change_image_color(&gui_box->children.data->on_hover_image,
+		HOVER_GUI_COLOR);
+	if (engine->gui.selected_object.object->material.is_checked_pattern)
+		image_draw_check_mark(&gui_box->children.data->on_hover_image,
+			COLOR_WHITE, TOGGLE_BOX_BUTTON_OUTLINE_WIDTH);
+	image_draw_outline(&gui_box->children.data->on_hover_image,
+		TOGGLE_BOX_BUTTON_OUTLINE_WIDTH, COLOR_BLACK);
+	change_image_color(&gui_box->children.data[1].image, COLOR_TRANSPARENT);
+	write_centered_string_to_image(&engine->gui.font,
+		&gui_box->children.data[1].image, "Checked pattern");
+	gui_box->children.data->on_click = &checked_pattern_toggle_box_on_click;
 	return (0);
 }
 
-static int	init_checked_pattern_toggle_box_children(t_engine *engine,
-				t_gui_box *gui_box)
+static void	checked_pattern_toggle_box_on_click(t_gui_box *self,
+				t_engine *engine, t_click_data click_data)
 {
+	t_object	*object;
 
+	object = engine->gui.selected_object.object;
+	if (click_data.button != BUTTON_LEFT || object == NULL)
+		return ;
+	object->material.is_checked_pattern = !object->material.is_checked_pattern;
+	object->material.checked_pattern_size.y = 5;
+	object->material.checked_pattern_size.x = 5;
+	object->material.checked_pattern_albedo = (t_vector3f){
+		1.f - object->material.albedo.x,
+		1.f - object->material.albedo.y,
+		1.f - object->material.albedo.z};
+	object_calculate_cache(object);
+	change_image_color(&self->image, COLOR_TRANSPARENT);
+	if (engine->gui.selected_object.object->material.is_checked_pattern)
+		image_draw_check_mark(&self->image, COLOR_WHITE,
+			TOGGLE_BOX_BUTTON_OUTLINE_WIDTH);
+	image_draw_outline(&self->image, TOGGLE_BOX_BUTTON_OUTLINE_WIDTH,
+		COLOR_BLACK);
+	change_image_color(&self->on_hover_image, HOVER_GUI_COLOR);
+	if (engine->gui.selected_object.object->material.is_checked_pattern)
+		image_draw_check_mark(&self->on_hover_image, COLOR_WHITE,
+			TOGGLE_BOX_BUTTON_OUTLINE_WIDTH);
+	image_draw_outline(&self->on_hover_image, TOGGLE_BOX_BUTTON_OUTLINE_WIDTH,
+		COLOR_BLACK);
+	redraw_icons(engine, engine->gui.selected_object.object->material);
+	engine->scene_changed = true;
 }

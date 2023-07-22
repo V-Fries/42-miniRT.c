@@ -76,16 +76,19 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/add_boxes/position_input_box_on_clicks/y.c	\
 	hooks/update_object_attributes_modification_box/add_boxes/position_input_box_on_clicks/z.c	\
 	\
-	hooks/update_object_attributes_modification_box/add_boxes/add_brightness_box.c			\
-	hooks/update_object_attributes_modification_box/add_boxes/add_height_box.c				\
-	hooks/update_object_attributes_modification_box/add_boxes/add_normal_box.c				\
-	hooks/update_object_attributes_modification_box/add_boxes/add_position_box.c			\
-	hooks/update_object_attributes_modification_box/add_boxes/add_radius_box.c				\
-	hooks/update_object_attributes_modification_box/add_boxes/add_reflection_box.c			\
-	hooks/update_object_attributes_modification_box/add_boxes/add_specular_reflection_box.c	\
-	hooks/update_object_attributes_modification_box/add_boxes/add_x_y_z_box.c				\
-	hooks/update_object_attributes_modification_box/add_boxes/get_box_size.c				\
-	hooks/update_object_attributes_modification_box/add_boxes/get_x_y_z_input_box.c			\
+	hooks/update_object_attributes_modification_box/add_boxes/utils/add_toggle_box.c		\
+	hooks/update_object_attributes_modification_box/add_boxes/utils/add_x_y_z_box.c			\
+	hooks/update_object_attributes_modification_box/add_boxes/utils/get_box_size.c			\
+	hooks/update_object_attributes_modification_box/add_boxes/utils/get_x_y_z_input_box.c	\
+	\
+	hooks/update_object_attributes_modification_box/add_boxes/add_brightness_box.c				\
+	hooks/update_object_attributes_modification_box/add_boxes/add_checked_pattern_toggle_box.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/add_height_box.c					\
+	hooks/update_object_attributes_modification_box/add_boxes/add_normal_box.c					\
+	hooks/update_object_attributes_modification_box/add_boxes/add_position_box.c				\
+	hooks/update_object_attributes_modification_box/add_boxes/add_radius_box.c					\
+	hooks/update_object_attributes_modification_box/add_boxes/add_reflection_box.c				\
+	hooks/update_object_attributes_modification_box/add_boxes/add_specular_reflection_box.c		\
 	\
 	hooks/update_object_attributes_modification_box/get_box_category_index.c					\
 	hooks/update_object_attributes_modification_box/init_cone_attributes_modification_box.c		\
@@ -107,6 +110,7 @@ SRC				=\
 	\
 	image/destroy_t_image.c		\
 	image/draw.c				\
+	image/draw_check_mark.c		\
 	image/draw_outline.c		\
 	image/image.c				\
 	image/put_image_to_image.c	\

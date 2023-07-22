@@ -53,6 +53,9 @@ void			image_draw_plus(t_image *image, float thickness,
 					float border, unsigned int color);
 void			image_draw_minus(t_image *image, int thickness,
 					int border, unsigned int color);
+void			image_draw_check_mark(t_image *image, unsigned int color,
+					float border);
+
 
 void			image_draw_outline(t_image *image, int width,
 					unsigned int color);
