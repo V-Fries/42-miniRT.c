@@ -22,7 +22,7 @@ t_material	material_create(t_vector3f albedo, float roughness, float metallic)
 	material.roughness = roughness;
 	material.reflect = 0;
 	material.specular = 0;
-	material.is_checked_pattern = false;
+	material.is_checkered_pattern = false;
 	(void) metallic;
 	return (material);
 }

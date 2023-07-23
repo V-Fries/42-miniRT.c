@@ -22,7 +22,7 @@ static int	add_texture_boxes(t_engine *engine, t_gui_box *gui_box);
 int	init_plane_attributes_modification_box(t_engine *engine,
 		t_gui_box *gui_box)
 {
-	gui_box->children.size = 5;
+	gui_box->children.size = 6;
 	gui_box->children.data = malloc(sizeof(*gui_box->children.data)
 			* gui_box->children.size);
 	if (gui_box->children.data == NULL)
@@ -86,10 +86,17 @@ static int	add_texture_boxes(t_engine *engine, t_gui_box *gui_box)
 	int	y;
 
 	y = get_texture_boxes_index(gui_box);
-	if (add_checked_pattern_toggle_box(engine, gui_box->children.data + 4, &y,
-			gui_box) < 0)
+	if (add_checkered_pattern_toggle_box(engine, gui_box->children.data + 4, &y,
+										 gui_box) < 0)
 	{
 		gui_box->children.size = 4;
+		destroy_t_gui_box(&engine->window, gui_box);
+		return (-1);
+	}
+	if (add_checkered_pattern_color_toggle_box(engine, gui_box->children.data + 5,
+											   &y, gui_box) < 0)
+	{
+		gui_box->children.size = 5;
 		destroy_t_gui_box(&engine->window, gui_box);
 		return (-1);
 	}

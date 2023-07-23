@@ -34,7 +34,7 @@ t_hit	hit_sphere(const t_ray *ray, const t_object *sphere,
 	hit.object = sphere;
 	hit.ray = *ray;
 	hit.hit = true;
-	if (hit.object->material.is_checked_pattern)
+	if (hit.object->material.is_checkered_pattern)
 		hit.albedo = get_checked_pattern(hit, sphere);
 	else
 		hit.albedo = sphere->material.albedo;

@@ -33,7 +33,7 @@ t_hit	hit_plane(const t_ray *ray, const t_object *plane, const t_hit hit_distanc
 	hit.object = plane;
 	hit.ray = *ray;
 	hit.hit = true;
-	if (plane->material.is_checked_pattern)
+	if (plane->material.is_checkered_pattern)
 		hit.albedo = get_checked_pattern(hit, plane);
 	else
 		hit.albedo = plane->material.albedo;

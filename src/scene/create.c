@@ -39,10 +39,10 @@ int	init_scene(t_engine *engine)
 //	add_object(engine, object);
 
 	material = material_create(vector3f_create(1, 0, 0), 0, 0);
-	material.is_checked_pattern = false;
-	material.checked_pattern_albedo = vector3f_create(0, 0, 0);
-	material.checked_pattern_size = vector2f_create(20, 10);
-	material.checked_pattern_albedo = vector3f_create(1, 1, 1);
+	material.is_checkered_pattern = false;
+	material.checkered_pattern_albedo = vector3f_create(0, 0, 0);
+	material.checkered_pattern_size = vector2f_create(20, 10);
+	material.checkered_pattern_albedo = vector3f_create(1, 1, 1);
 	material.specular = 0.5f;
 //	object = sphere_create(vector3f_create(0, 0, 0), 1, material);
 //	object = plane_create(vector3f_create(0, 0, 0), vector3f_create(0, 1, 0), material);

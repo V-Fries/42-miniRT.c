@@ -58,8 +58,12 @@ int			add_toggle_box(t_engine *engine, t_gui_box *gui_box, int *i,
 
 int			add_brightness_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
-int			add_checked_pattern_toggle_box(t_engine *engine, t_gui_box *gui_box,
-				int *i, t_gui_box *parent);
+int			add_checkered_pattern_color_toggle_box(t_engine *engine,
+				t_gui_box *gui_box, int *i, t_gui_box *parent);
+void		checkered_pattern_color_toggle_box_on_click(t_gui_box *self,
+				t_engine *engine, t_click_data click_data);
+int			add_checkered_pattern_toggle_box(t_engine *engine,
+				t_gui_box *gui_box, int *i, t_gui_box *parent);
 int			add_height_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
 int			add_normal_box(t_engine *engine, t_gui_box *gui_box, int *i,

@@ -79,13 +79,13 @@ static t_vector2f	get_planar_map(t_vector3f hit_position,
 static t_vector3f	get_checked_pattern_at(t_vector2f uv,
 											const t_object *object)
 {
-	const double	u2 = floorf(uv.x * object->material.checked_pattern_size.x);
-	const double	v2 = floorf(uv.y * object->material.checked_pattern_size.y);
+	const double	u2 = floorf(uv.x * object->material.checkered_pattern_size.x);
+	const double	v2 = floorf(uv.y * object->material.checkered_pattern_size.y);
 
 	if (fmodf(u2 + v2, 2) == 0)
 		return (object->material.albedo);
 	else
-		return (object->material.checked_pattern_albedo);
+		return (object->material.checkered_pattern_albedo);
 }
 
 

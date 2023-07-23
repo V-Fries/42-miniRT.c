@@ -40,7 +40,7 @@ t_hit	hit_cylinder(const t_ray *ray, const t_object *cylinder,
 		hit.normal = vector3f_multiply(hit.normal, -1);
 	hit.object = cylinder;
 	hit.ray = *ray;
-	if (hit.object->material.is_checked_pattern)
+	if (hit.object->material.is_checkered_pattern)
 		hit.albedo = get_checked_pattern(hit, cylinder);
 	else
 		hit.albedo = cylinder->material.albedo;

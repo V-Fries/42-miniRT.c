@@ -37,9 +37,9 @@ typedef struct s_material
 	float		reflect;
 	float		specular;
 	float		roughness;
-	bool		is_checked_pattern;
-	t_vector3f	checked_pattern_albedo;
-	t_vector2f	checked_pattern_size;
+	bool		is_checkered_pattern;
+	t_vector3f	checkered_pattern_albedo;
+	t_vector2f	checkered_pattern_size;
 
 }	t_material;
 

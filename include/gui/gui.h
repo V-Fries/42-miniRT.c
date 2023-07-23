@@ -77,6 +77,8 @@ typedef struct s_gui
 	t_vector					object_boxes;
 	t_vector					light_boxes;
 	t_float_input_boxes_images	float_input_boxes;
+	struct s_gui_box			*checkered_pattern_color_toggle_box;
+	bool						color_being_changed_is_checked_pattern;
 }	t_gui;
 
 #endif
