@@ -68,6 +68,9 @@ SRC				=\
 	gui/init_gui.c					\
 	\
 	\
+	hooks/update_object_attributes_modification_box/add_boxes/checkered_pattern_size_on_clicks/x.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/checkered_pattern_size_on_clicks/y.c	\
+	\
 	hooks/update_object_attributes_modification_box/add_boxes/normal_input_box_on_clicks/x.c	\
 	hooks/update_object_attributes_modification_box/add_boxes/normal_input_box_on_clicks/y.c	\
 	hooks/update_object_attributes_modification_box/add_boxes/normal_input_box_on_clicks/z.c	\
@@ -77,12 +80,16 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/add_boxes/position_input_box_on_clicks/z.c	\
 	\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/add_toggle_box.c		\
+	hooks/update_object_attributes_modification_box/add_boxes/utils/add_x_y_box.c			\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/add_x_y_z_box.c			\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/get_box_size.c			\
+	hooks/update_object_attributes_modification_box/add_boxes/utils/get_x_y_input_box.c		\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/get_x_y_z_input_box.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/utils/init_description_box.c	\
 	\
 	hooks/update_object_attributes_modification_box/add_boxes/add_brightness_box.c						\
 	hooks/update_object_attributes_modification_box/add_boxes/add_checkered_pattern_color_toggle_box.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/add_checkered_pattern_size_box.c			\
 	hooks/update_object_attributes_modification_box/add_boxes/add_checkered_pattern_toggle_box.c		\
 	hooks/update_object_attributes_modification_box/add_boxes/add_height_box.c							\
 	hooks/update_object_attributes_modification_box/add_boxes/add_normal_box.c							\

@@ -26,3 +26,10 @@ int	get_xyz_box_size(t_gui_box *attribute_box)
 			/ OBJECT_ATTRIBUTE_BOX_TOTAL_SIZE)
 		- OBJECT_ATTRIBUTE_BOX_OFFSET);
 }
+
+int	get_xy_box_size(t_gui_box *attribute_box)
+{
+	return (attribute_box->size.y * (OBJECT_ATTRIBUTE_BOX_XY_BOX_SIZE
+			/ OBJECT_ATTRIBUTE_BOX_TOTAL_SIZE)
+		- OBJECT_ATTRIBUTE_BOX_OFFSET);
+}

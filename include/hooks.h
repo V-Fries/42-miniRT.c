@@ -27,8 +27,9 @@ void		update_color_picker_color(t_gui *gui);
 
 int			update_object_attributes_modification_box(t_engine *engine);
 void		update_xyz_float_input_boxes(t_engine *engine,
-				t_vector3f xyz,
-				t_xyz_input_boxes_images *xyz_input_boxes_images);
+				t_vector3f xyz, t_xyz_float_input_boxes *xyz_input_boxes);
+void		update_xy_float_input_boxes(t_engine *engine,
+				t_vector2f xy, t_xy_float_input_boxes *xy_input_boxes);
 void		update_float_input_boxes(t_engine *engine);
 
 int			get_transformations_boxes_index(
@@ -49,12 +50,17 @@ int			init_plane_attributes_modification_box(t_engine *engine,
 int			init_sphere_attributes_modification_box(t_engine *engine,
 				t_gui_box *gui_box);
 
-int			get_normal_box_size(t_gui_box *attribute_box);
-int			get_xyz_box_size(t_gui_box *attribute_box);
-int			add_x_y_z_box(t_engine *engine, t_gui_box *gui_box, int *i,
-				t_gui_box *parent);
 int			add_toggle_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
+int			add_x_y_box(t_engine *engine, t_gui_box *gui_box, int *i,
+				t_gui_box *parent);
+int			add_x_y_z_box(t_engine *engine, t_gui_box *gui_box, int *i,
+				t_gui_box *parent);
+int			get_xyz_box_size(t_gui_box *attribute_box);
+int			get_xy_box_size(t_gui_box *attribute_box);
+int			get_normal_box_size(t_gui_box *attribute_box);
+int			init_description_box(t_engine *engine, t_gui_box *gui_box,
+				const char *description);
 
 int			add_brightness_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
@@ -62,6 +68,8 @@ int			add_checkered_pattern_color_toggle_box(t_engine *engine,
 				t_gui_box *gui_box, int *i, t_gui_box *parent);
 void		checkered_pattern_color_toggle_box_on_click(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
+int			add_checkered_pattern_size_box(t_engine *engine, t_gui_box *gui_box,
+				int *i, t_gui_box *parent);
 int			add_checkered_pattern_toggle_box(t_engine *engine,
 				t_gui_box *gui_box, int *i, t_gui_box *parent);
 int			add_height_box(t_engine *engine, t_gui_box *gui_box, int *i,
@@ -79,24 +87,19 @@ int			add_specular_reflection_box(t_engine *engine, t_gui_box *gui_box,
 
 t_gui_box	*get_x_y_z_input_box(t_gui_box *gui_box, char type,
 				char click_type);
+t_gui_box	*get_x_y_input_box(t_gui_box *gui_box, char type, char click_type);
 
-void		position_input_box_x_on_click_plus(struct s_gui_box *self,
+void		checkered_pattern_size_input_box_x_on_click_plus(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
-void		position_input_box_x_on_click_minus(struct s_gui_box *self,
+void		checkered_pattern_size_input_box_x_on_click_minus(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
-void		position_input_box_x_on_click_text(t_gui_box *self,
+void		checkered_pattern_size_input_box_x_on_click_text(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
-void		position_input_box_y_on_click_plus(struct s_gui_box *self,
+void		checkered_pattern_size_input_box_y_on_click_plus(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
-void		position_input_box_y_on_click_minus(struct s_gui_box *self,
+void		checkered_pattern_size_input_box_y_on_click_minus(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
-void		position_input_box_y_on_click_text(t_gui_box *self,
-				t_engine *engine, t_click_data click_data);
-void		position_input_box_z_on_click_plus(struct s_gui_box *self,
-				t_engine *engine, t_click_data click_data);
-void		position_input_box_z_on_click_minus(struct s_gui_box *self,
-				t_engine *engine, t_click_data click_data);
-void		position_input_box_z_on_click_text(t_gui_box *self,
+void		checkered_pattern_size_input_box_y_on_click_text(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
 
 void		normal_input_box_x_on_click_plus(struct s_gui_box *self,
@@ -117,5 +120,25 @@ void		normal_input_box_z_on_click_minus(struct s_gui_box *self,
 				t_engine *engine, t_click_data click_data);
 void		normal_input_box_z_on_click_text(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
+
+
+void		position_input_box_x_on_click_plus(struct s_gui_box *self,
+				t_engine *engine, t_click_data click_data);
+void		position_input_box_x_on_click_minus(struct s_gui_box *self,
+				t_engine *engine, t_click_data click_data);
+void		position_input_box_x_on_click_text(t_gui_box *self,
+				t_engine *engine, t_click_data click_data);
+void		position_input_box_y_on_click_plus(struct s_gui_box *self,
+				t_engine *engine, t_click_data click_data);
+void		position_input_box_y_on_click_minus(struct s_gui_box *self,
+				t_engine *engine, t_click_data click_data);
+void		position_input_box_y_on_click_text(t_gui_box *self,
+				t_engine *engine, t_click_data click_data);
+void		position_input_box_z_on_click_plus(struct s_gui_box *self,
+				t_engine *engine, t_click_data click_data);
+void		position_input_box_z_on_click_minus(struct s_gui_box *self,
+				t_engine *engine, t_click_data click_data);
+void		position_input_box_z_on_click_text(t_gui_box *self,
+				t_engine *engine, t_click_data click_data);
 
 #endif //HOOKS_H

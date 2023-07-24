@@ -22,7 +22,7 @@ static int	add_texture_boxes(t_engine *engine, t_gui_box *gui_box);
 int	init_cylinder_attributes_modification_box(t_engine *engine,
 		t_gui_box *gui_box)
 {
-	gui_box->children.size = 8;
+	gui_box->children.size = 9;
 	gui_box->children.data = malloc(sizeof(*gui_box->children.data)
 			* gui_box->children.size);
 	if (gui_box->children.data == NULL)
@@ -99,16 +99,23 @@ static int	add_texture_boxes(t_engine *engine, t_gui_box *gui_box)
 
 	y = get_texture_boxes_index(gui_box);
 	if (add_checkered_pattern_toggle_box(engine, gui_box->children.data + 6, &y,
-										 gui_box) < 0)
+			gui_box) < 0)
 	{
 		gui_box->children.size = 6;
 		destroy_t_gui_box(&engine->window, gui_box);
 		return (-1);
 	}
-	if (add_checkered_pattern_color_toggle_box(engine, gui_box->children.data + 7,
-											   &y, gui_box) < 0)
+	if (add_checkered_pattern_color_toggle_box(engine,
+			gui_box->children.data + 7, &y, gui_box) < 0)
 	{
 		gui_box->children.size = 7;
+		destroy_t_gui_box(&engine->window, gui_box);
+		return (-1);
+	}
+	if (add_checkered_pattern_size_box(engine, gui_box->children.data + 8,
+			&y, gui_box) < 0)
+	{
+		gui_box->children.size = 8;
 		destroy_t_gui_box(&engine->window, gui_box);
 		return (-1);
 	}

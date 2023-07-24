@@ -17,12 +17,18 @@ static void	update_float_input_boxes_object(t_engine *engine);
 static void	update_float_input_boxes_light(t_engine *engine);
 
 void	update_xyz_float_input_boxes(t_engine *engine,
-			const t_vector3f xyz,
-			t_xyz_input_boxes_images *xyz_input_boxes_images)
+			const t_vector3f xyz, t_xyz_float_input_boxes *xyz_input_boxes)
 {
-	update_float_input_box(engine, xyz.x, xyz_input_boxes_images->x);
-	update_float_input_box(engine, xyz.y, xyz_input_boxes_images->y);
-	update_float_input_box(engine, xyz.z, xyz_input_boxes_images->z);
+	update_float_input_box(engine, xyz.x, xyz_input_boxes->x);
+	update_float_input_box(engine, xyz.y, xyz_input_boxes->y);
+	update_float_input_box(engine, xyz.z, xyz_input_boxes->z);
+}
+
+void	update_xy_float_input_boxes(t_engine *engine,
+			const t_vector2f xy, t_xy_float_input_boxes *xy_input_boxes)
+{
+	update_float_input_box(engine, xy.x, xy_input_boxes->x);
+	update_float_input_box(engine, xy.y, xy_input_boxes->y);
 }
 
 void	update_float_input_boxes(t_engine *engine)
@@ -53,6 +59,9 @@ static void	update_float_input_boxes_object(t_engine *engine)
 	update_float_input_box(engine,
 		engine->gui.selected_object.object->material.specular,
 		engine->gui.float_input_boxes.specular_reflection);
+	update_xy_float_input_boxes(engine,
+		engine->gui.selected_object.object->material.checkered_pattern_size,
+		&engine->gui.float_input_boxes.checkered_pattern_size);
 }
 
 static void	update_float_input_boxes_light(t_engine *engine)
