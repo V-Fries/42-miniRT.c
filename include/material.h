@@ -18,9 +18,8 @@
 
 enum e_texture_type
 {
-	NONE,
-	PPM_TEXTURE,
 	CHECKERBOARD,
+	PPM_TEXTURE,
 };
 
 typedef struct s_checker_board

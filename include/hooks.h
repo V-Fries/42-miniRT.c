@@ -64,13 +64,13 @@ int			init_description_box(t_engine *engine, t_gui_box *gui_box,
 
 int			add_brightness_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
+int			add_cap_checkerboard_size_box(t_engine *engine, t_gui_box *gui_box,
+				int *i, t_gui_box *parent);
 int			add_checkered_pattern_color_toggle_box(t_engine *engine,
 				t_gui_box *gui_box, int *i, t_gui_box *parent);
 void		checkered_pattern_color_toggle_box_on_click(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
-int			add_checkered_pattern_size_box(t_engine *engine, t_gui_box *gui_box,
-				int *i, t_gui_box *parent);
-int			add_checkered_pattern_toggle_box(t_engine *engine,
+int			add_outline_checkerboard_size_box(t_engine *engine,
 				t_gui_box *gui_box, int *i, t_gui_box *parent);
 int			add_height_box(t_engine *engine, t_gui_box *gui_box, int *i,
 				t_gui_box *parent);
@@ -89,17 +89,30 @@ t_gui_box	*get_x_y_z_input_box(t_gui_box *gui_box, char type,
 				char click_type);
 t_gui_box	*get_x_y_input_box(t_gui_box *gui_box, char type, char click_type);
 
-void		checkered_pattern_size_input_box_x_on_click_plus(t_gui_box *self,
+void		cap_checkerboard_size_input_box_x_on_click_plus(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
-void		checkered_pattern_size_input_box_x_on_click_minus(t_gui_box *self,
+void		cap_checkerboard_size_input_box_x_on_click_minus(
+				t_gui_box *self, t_engine *engine, t_click_data click_data);
+void		cap_checkerboard_size_input_box_x_on_click_text(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
-void		checkered_pattern_size_input_box_x_on_click_text(t_gui_box *self,
+void		cap_checkerboard_size_input_box_y_on_click_plus(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
-void		checkered_pattern_size_input_box_y_on_click_plus(t_gui_box *self,
+void		cap_checkerboard_size_input_box_y_on_click_minus(
+				t_gui_box *self, t_engine *engine, t_click_data click_data);
+void		cap_checkerboard_size_input_box_y_on_click_text(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
-void		checkered_pattern_size_input_box_y_on_click_minus(t_gui_box *self,
+
+void		outline_checkerboard_size_input_box_x_on_click_plus(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
-void		checkered_pattern_size_input_box_y_on_click_text(t_gui_box *self,
+void		outline_checkerboard_size_input_box_x_on_click_minus(
+				t_gui_box *self, t_engine *engine, t_click_data click_data);
+void		outline_checkerboard_size_input_box_x_on_click_text(t_gui_box *self,
+				t_engine *engine, t_click_data click_data);
+void		outline_checkerboard_size_input_box_y_on_click_plus(t_gui_box *self,
+				t_engine *engine, t_click_data click_data);
+void		outline_checkerboard_size_input_box_y_on_click_minus(
+				t_gui_box *self, t_engine *engine, t_click_data click_data);
+void		outline_checkerboard_size_input_box_y_on_click_text(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
 
 void		normal_input_box_x_on_click_plus(struct s_gui_box *self,

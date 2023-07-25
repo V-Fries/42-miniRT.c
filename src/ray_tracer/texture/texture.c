@@ -32,12 +32,6 @@ t_vector3f	get_texture_color(t_hit hit, const t_object *object)
 	t_vector2f			uv;
 	enum e_hit_context	texture_context;
 
-	if (hit.context == OUTLINE && object->material.texture.outline_type == NONE)
-		return (object->material.albedo);
-	if ((hit.context == CAP1 || hit.context == CAP2)
-		&& object->material.texture.cap_type == NONE)
-		return (object->material.albedo);
-
 	if (hit.context == CAP1 || hit.context == CAP2)
 		uv = calculate_cap_map(hit.position, object);
 	else
