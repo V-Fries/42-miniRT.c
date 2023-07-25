@@ -418,7 +418,7 @@ add_executable(minirt
         src/ray_tracer/shade/light.c
         src/ray_tracer/shade/shade.c
         src/ray_tracer/shade/shadow.c
-        src/ray_tracer/texture/checkerboard.c
+        src/material/checkerboard.c
         src/ray_tracer/texture/mapping.c
         src/ray_tracer/texture/texture.c
         src/ray_tracer/interpolate_ray_tracing.c

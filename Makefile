@@ -129,8 +129,9 @@ SRC				=\
 	light/lights.c	\
 	\
 	\
-	material/material.c	\
-	material/texture.c	\
+	material/checkerboard.c	\
+	material/material.c		\
+	material/texture.c		\
 	\
 	\
 	math/matrix/matrix3.c			\
@@ -225,7 +226,6 @@ SRC				=\
 	ray_tracer/shade/shade.c	\
 	ray_tracer/shade/shadow.c	\
 	\
-	ray_tracer/texture/checkerboard.c	\
 	ray_tracer/texture/mapping.c		\
 	ray_tracer/texture/texture.c		\
 	\
@@ -253,20 +253,19 @@ SRC				=\
 	init_minirt.c		\
 	main.c
 
-SRC_FILES_WITH_FULL_PATH	=	$(patsubst %.c, $(SRC_PATH)%.c, $(SRC))
-DIR_BUILD					=	.build/
-OBJS						=	$(patsubst %.c, $(DIR_BUILD)%.o, $(SRC))
-DEPS						=	$(patsubst %.c, $(DIR_BUILD)%.d, $(SRC))
-DEPS_FLAGS					=	-MMD -MP
-BASE_CFLAGS					=	-Wall -Wextra -Werror
-DEBUG_CLFAGS				=	-g3 -fsanitize=address
+DIR_BUILD		=	.build/
+OBJS			=	$(patsubst %.c, $(DIR_BUILD)%.o, $(SRC))
+DEPS			=	$(patsubst %.c, $(DIR_BUILD)%.d, $(SRC))
+DEPS_FLAGS		=	-MMD -MP
+BASE_CFLAGS		=	-Wall -Wextra -Werror
+DEBUG_CLFAGS	=	-g3 -fsanitize=address
 #-ffast-math reduces calculation precision, need to check behaviour before using
-OPTI_CFLAGS					=	-O3 -march=native #-ffast-math
-CFLAGS						=	$(BASE_CFLAGS) $(OPTI_CFLAGS)
-#CFLAGS						=	$(BASE_CFLAGS) $(DEBUG_CLFAGS)
-#CFLAGS						=	$(BASE_CFLAGS) $(OPTI_CFLAGS) $(DEBUG_CLFAGS)
-RM							=	rm -rf
-AR							=	ar rcs
+OPTI_CFLAGS		=	-O3 -march=native #-ffast-math
+CFLAGS			=	$(BASE_CFLAGS) $(OPTI_CFLAGS)
+#CFLAGS			=	$(BASE_CFLAGS) $(DEBUG_CLFAGS)
+#CFLAGS			=	$(BASE_CFLAGS) $(OPTI_CFLAGS) $(DEBUG_CLFAGS)
+RM				=	rm -rf
+AR				=	ar rcs
 
 LIBFT_PATH		=	lib/libft/
 LIBFT_INCLUDES	=	$(LIBFT_PATH)include/
@@ -325,10 +324,6 @@ all:
 			$(MAKE_LIBFT)
 			$(MAKE_MINILIBX)
 			$(MAKE) $(NAME)
-
-.PHONY:		no_object_files
-no_object_files:
-			$(CC) $(CFLAGS) $(INCLUDES) $(SRC_FILES_WITH_FULL_PATH) $(FRAMEWORKS) $(LIBS) -o $(NAME)
 
 .PHONY:		run
 run:
