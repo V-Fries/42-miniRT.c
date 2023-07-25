@@ -51,21 +51,21 @@ static int	add_transformation_boxes(t_engine *engine, t_gui_box *gui_box)
 		gui_box->children.data = NULL;
 		return (-1);
 	}
-	if (add_normal_box(engine, gui_box->children.data + 3, &y, gui_box) < 0)
-	{
-		gui_box->children.size = 3;
-		destroy_t_gui_box(&engine->window, gui_box);
-		return (-1);
-	}
-	if (add_radius_box(engine, gui_box->children.data + 1, &y, gui_box) < 0)
+	if (add_normal_box(engine, gui_box->children.data + 1, &y, gui_box) < 0)
 	{
 		gui_box->children.size = 1;
 		destroy_t_gui_box(&engine->window, gui_box);
 		return (-1);
 	}
-	if (add_height_box(engine, gui_box->children.data + 2, &y, gui_box) < 0)
+	if (add_radius_box(engine, gui_box->children.data + 2, &y, gui_box) < 0)
 	{
 		gui_box->children.size = 2;
+		destroy_t_gui_box(&engine->window, gui_box);
+		return (-1);
+	}
+	if (add_height_box(engine, gui_box->children.data + 3, &y, gui_box) < 0)
+	{
+		gui_box->children.size = 3;
 		destroy_t_gui_box(&engine->window, gui_box);
 		return (-1);
 	}
