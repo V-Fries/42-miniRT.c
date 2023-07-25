@@ -26,7 +26,7 @@ t_vector3f	render_ray(t_ray ray, const t_scene *scene)
 	ray_color = vector3f_create(0, 0, 0);
 	for (int i = 0; i < bounces_per_pixel; i++)
 	{
-		if (multiplier < 0.01)
+		if (multiplier < 0.01f)
 			return (ray_color);
 		ray_hit = calculate_ray_intersection(&ray, scene);
 		if (!ray_hit.hit)

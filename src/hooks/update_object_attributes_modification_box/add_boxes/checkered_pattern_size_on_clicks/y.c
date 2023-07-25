@@ -28,9 +28,9 @@ void	checkered_pattern_size_input_box_y_on_click_plus(t_gui_box *self,
 	object = engine->gui.selected_object.object;
 	if (object == NULL)
 		return ;
-	object->material.checkered_pattern_size.y++;
+	object->material.texture.outline_checkerboard.size.y++;
 	engine->scene_changed = true;
-	update_xy_float_input_boxes(engine, object->material.checkered_pattern_size,
+	update_xy_float_input_boxes(engine, object->material.texture.outline_checkerboard.size,
 		&engine->gui.float_input_boxes.checkered_pattern_size);
 }
 
@@ -44,12 +44,12 @@ void	checkered_pattern_size_input_box_y_on_click_minus(t_gui_box *self,
 		return (checkered_pattern_size_input_box_y_on_click_text(self, engine,
 				click_data));
 	object = engine->gui.selected_object.object;
-	if (object == NULL || object->material.checkered_pattern_size.y
+	if (object == NULL || object->material.texture.outline_checkerboard.size.y
 		<= FLT_EPSILON)
 		return ;
-	object->material.checkered_pattern_size.y--;
+	object->material.texture.outline_checkerboard.size.y--;
 	engine->scene_changed = true;
-	update_xy_float_input_boxes(engine, object->material.checkered_pattern_size,
+	update_xy_float_input_boxes(engine, object->material.texture.outline_checkerboard.size,
 		&engine->gui.float_input_boxes.checkered_pattern_size);
 }
 

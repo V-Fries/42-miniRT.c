@@ -60,7 +60,7 @@ static void	update_float_input_boxes_object(t_engine *engine)
 		engine->gui.selected_object.object->material.specular,
 		engine->gui.float_input_boxes.specular_reflection);
 	update_xy_float_input_boxes(engine,
-		engine->gui.selected_object.object->material.checkered_pattern_size,
+		engine->gui.selected_object.object->material.texture.outline_checkerboard.size,
 		&engine->gui.float_input_boxes.checkered_pattern_size);
 }
 

@@ -27,14 +27,14 @@ int	add_checkered_pattern_toggle_box(t_engine *engine, t_gui_box *gui_box,
 	if (add_toggle_box(engine, gui_box, i, parent) < 0)
 		return (-1);
 	change_image_color(&gui_box->children.data->image, COLOR_TRANSPARENT);
-	if (engine->gui.selected_object.object->material.is_checkered_pattern)
+	if (engine->gui.selected_object.object->material.texture.outline_type == CHECKERBOARD)
 		image_draw_check_mark(&gui_box->children.data->image, COLOR_WHITE,
 			TOGGLE_BOX_BUTTON_OUTLINE_WIDTH);
 	image_draw_outline(&gui_box->children.data->image,
 		TOGGLE_BOX_BUTTON_OUTLINE_WIDTH, COLOR_BLACK);
 	change_image_color(&gui_box->children.data->on_hover_image,
 		HOVER_GUI_COLOR);
-	if (engine->gui.selected_object.object->material.is_checkered_pattern)
+	if (engine->gui.selected_object.object->material.texture.outline_type == CHECKERBOARD)
 		image_draw_check_mark(&gui_box->children.data->on_hover_image,
 			COLOR_WHITE, TOGGLE_BOX_BUTTON_OUTLINE_WIDTH);
 	image_draw_outline(&gui_box->children.data->on_hover_image,
@@ -54,24 +54,26 @@ static void	checkered_pattern_toggle_box_on_click(t_gui_box *self,
 	object = engine->gui.selected_object.object;
 	if (click_data.button != BUTTON_LEFT || object == NULL)
 		return ;
-	object->material.is_checkered_pattern
-		= !object->material.is_checkered_pattern;
+	if (object->material.texture.outline_type == CHECKERBOARD)
+		object->material.texture.outline_type = NONE;
+	else
+		object->material.texture.outline_type = CHECKERBOARD;
 	update_checkered_pattern_color_toggle_box(engine);
-	object->material.checkered_pattern_size.y = 5;
-	object->material.checkered_pattern_size.x = 5;
-	object->material.checkered_pattern_albedo = (t_vector3f){
+	object->material.texture.outline_checkerboard.size.y = 5;
+	object->material.texture.outline_checkerboard.size.x = 5;
+	object->material.texture.outline_checkerboard.albedo = (t_vector3f){
 		1.f - object->material.albedo.x,
 		1.f - object->material.albedo.y,
 		1.f - object->material.albedo.z};
 	object_calculate_cache(object);
 	change_image_color(&self->image, COLOR_TRANSPARENT);
-	if (engine->gui.selected_object.object->material.is_checkered_pattern)
+	if (engine->gui.selected_object.object->material.texture.outline_type == CHECKERBOARD)
 		image_draw_check_mark(&self->image, COLOR_WHITE,
 			TOGGLE_BOX_BUTTON_OUTLINE_WIDTH);
 	image_draw_outline(&self->image, TOGGLE_BOX_BUTTON_OUTLINE_WIDTH,
 		COLOR_BLACK);
 	change_image_color(&self->on_hover_image, HOVER_GUI_COLOR);
-	if (engine->gui.selected_object.object->material.is_checkered_pattern)
+	if (engine->gui.selected_object.object->material.texture.outline_type == CHECKERBOARD)
 		image_draw_check_mark(&self->on_hover_image, COLOR_WHITE,
 			TOGGLE_BOX_BUTTON_OUTLINE_WIDTH);
 	image_draw_outline(&self->on_hover_image, TOGGLE_BOX_BUTTON_OUTLINE_WIDTH,
@@ -82,7 +84,7 @@ static void	checkered_pattern_toggle_box_on_click(t_gui_box *self,
 
 static void	update_checkered_pattern_color_toggle_box(t_engine *engine)
 {
-	if (!engine->gui.selected_object.object->material.is_checkered_pattern)
+	if (engine->gui.selected_object.object->material.texture.outline_type != CHECKERBOARD)
 		checkered_pattern_color_toggle_box_on_click(
 			engine->gui.checkered_pattern_color_toggle_box, engine,
 			(t_click_data){(t_vector2i){0}, BUTTON_LEFT});

@@ -60,11 +60,11 @@ SRC				=\
 	gui/object_modification_box/init_object_modification_box.c				\
 	\
 	gui/create_boxes_utils.c		\
+	gui/float_input_box.c			\
 	gui/create_horizontal_boxes.c	\
 	gui/create_n_horizontal_boxes.c	\
 	gui/create_vertical_boxes.c		\
 	gui/draw_icon.c					\
-	gui/float_input_box.c			\
 	gui/init_gui.c					\
 	\
 	\
@@ -129,6 +129,10 @@ SRC				=\
 	light/lights.c	\
 	\
 	\
+	material/material.c	\
+	material/texture.c	\
+	\
+	\
 	math/matrix/matrix3.c			\
 	math/matrix/matrix3_math.c		\
 	math/matrix/matrix3_rotation.c	\
@@ -157,6 +161,7 @@ SRC				=\
 	\
 	math/conversion.c	\
 	math/equation.c		\
+	math/modulo.c		\
 	\
 	\
 	object/cone/create.c				\
@@ -171,10 +176,9 @@ SRC				=\
 	object/sphere/create.c				\
 	object/sphere/transformations.c		\
 	\
-	object/material.c				\
-	object/object_calculate_cache.c	\
 	object/objects.c				\
 	object/transformations.c		\
+	object/object_calculate_cache.c	\
 	\
 	\
 	parsing/line_parsing/utils/add_object_to_object_list.c	\
@@ -195,6 +199,7 @@ SRC				=\
 	\
 	parsing/free_scene_content.c	\
 	parsing/get_scene_content.c		\
+	parsing/parse_ppm_file.c		\
 	parsing/parse_scene_content.c	\
 	parsing/parsing.c				\
 	\
@@ -220,8 +225,11 @@ SRC				=\
 	ray_tracer/shade/shade.c	\
 	ray_tracer/shade/shadow.c	\
 	\
+	ray_tracer/texture/checkerboard.c	\
+	ray_tracer/texture/mapping.c		\
+	ray_tracer/texture/texture.c		\
+	\
 	ray_tracer/interpolate_ray_tracing.c	\
-	ray_tracer/mapping.c					\
 	ray_tracer/render.c						\
 	ray_tracer/render_icon.c				\
 	ray_tracer/render_ray.c					\
@@ -245,19 +253,20 @@ SRC				=\
 	init_minirt.c		\
 	main.c
 
-DIR_BUILD		=	.build/
-OBJS			=	$(patsubst %.c, $(DIR_BUILD)%.o, $(SRC))
-DEPS			=	$(patsubst %.c, $(DIR_BUILD)%.d, $(SRC))
-DEPS_FLAGS		=	-MMD -MP
-BASE_CFLAGS		=	-Wall -Wextra -Werror
-DEBUG_CLFAGS	=	-g3 -fsanitize=address
+SRC_FILES_WITH_FULL_PATH	=	$(patsubst %.c, $(SRC_PATH)%.c, $(SRC))
+DIR_BUILD					=	.build/
+OBJS						=	$(patsubst %.c, $(DIR_BUILD)%.o, $(SRC))
+DEPS						=	$(patsubst %.c, $(DIR_BUILD)%.d, $(SRC))
+DEPS_FLAGS					=	-MMD -MP
+BASE_CFLAGS					=	-Wall -Wextra -Werror
+DEBUG_CLFAGS				=	-g3 -fsanitize=address
 #-ffast-math reduces calculation precision, need to check behaviour before using
-OPTI_CFLAGS		=	-O3 -march=native #-ffast-math
-CFLAGS			=	$(BASE_CFLAGS) $(OPTI_CFLAGS)
-#CFLAGS			=	$(BASE_CFLAGS) $(DEBUG_CLFAGS)
-#CFLAGS			=	$(BASE_CFLAGS) $(OPTI_CFLAGS) $(DEBUG_CLFAGS)
-RM				=	rm -rf
-AR				=	ar rcs
+OPTI_CFLAGS					=	-O3 -march=native #-ffast-math
+CFLAGS						=	$(BASE_CFLAGS) $(OPTI_CFLAGS)
+#CFLAGS						=	$(BASE_CFLAGS) $(DEBUG_CLFAGS)
+#CFLAGS						=	$(BASE_CFLAGS) $(OPTI_CFLAGS) $(DEBUG_CLFAGS)
+RM							=	rm -rf
+AR							=	ar rcs
 
 LIBFT_PATH		=	lib/libft/
 LIBFT_INCLUDES	=	$(LIBFT_PATH)include/
@@ -316,6 +325,10 @@ all:
 			$(MAKE_LIBFT)
 			$(MAKE_MINILIBX)
 			$(MAKE) $(NAME)
+
+.PHONY:		no_object_files
+no_object_files:
+			$(CC) $(CFLAGS) $(INCLUDES) $(SRC_FILES_WITH_FULL_PATH) $(FRAMEWORKS) $(LIBS) -o $(NAME)
 
 .PHONY:		run
 run:

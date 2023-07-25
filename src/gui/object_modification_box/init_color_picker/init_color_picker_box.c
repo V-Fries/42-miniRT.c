@@ -157,8 +157,8 @@ static void	color_picker_on_click(t_gui_box *self, t_engine *engine,
 		return (redraw_icons(engine, material_create(albedo, 0, 0)));
 	}
 	if (engine->gui.color_being_changed_is_checked_pattern)
-		engine->gui.selected_object.object->material.checkered_pattern_albedo
-			= albedo;
+		engine->gui.selected_object.object->material.texture.\
+			outline_checkerboard.albedo = albedo;
 	else
 		engine->gui.selected_object.object->material.albedo = albedo;
 	redraw_icons(engine, engine->gui.selected_object.object->material);

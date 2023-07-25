@@ -18,6 +18,7 @@
 
 # include "math/vector.h"
 # include "colors.h"
+# include "material.h"
 
 # define LIGHT (-1)
 
@@ -29,19 +30,6 @@ enum e_object_type
 	CYLINDER_INF,
 	CONE,
 };
-
-typedef struct s_material
-{
-
-	t_vector3f	albedo;
-	float		reflect;
-	float		specular;
-	float		roughness;
-	bool		is_checkered_pattern;
-	t_vector3f	checkered_pattern_albedo;
-	t_vector2f	checkered_pattern_size;
-
-}	t_material;
 
 typedef struct s_cone_cache
 {

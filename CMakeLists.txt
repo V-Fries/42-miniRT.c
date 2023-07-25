@@ -27,7 +27,7 @@ add_executable(minirt
         include/math/quaternion.h
         include/math/vector.h
         include/ray_tracer/camera.h
-        include/ray_tracer/mapping.h
+        include/ray_tracer/texture.h
         include/ray_tracer/rays.h
         include/ray_tracer/render.h
         include/ray_tracer/shade.h
@@ -326,6 +326,7 @@ add_executable(minirt
         src/math/vector/vector4_operations.c
         src/math/conversion.c
         src/math/equation.c
+<<<<<<< HEAD
         src/object/cone/create.c
         src/object/cone/transformations.c
         src/object/cylinder/create.c
@@ -335,6 +336,9 @@ add_executable(minirt
         src/object/sphere/create.c
         src/object/sphere/transformations.c
         src/object/material.c
+=======
+        src/material/material.c
+>>>>>>> main
         src/object/objects.c
         src/object/transformations.c
         src/parsing/line_parsing/utils/add_object_to_object_list.c
@@ -373,7 +377,7 @@ add_executable(minirt
         src/ray_tracer/shade/shade.c
         src/ray_tracer/shade/shadow.c
         src/ray_tracer/interpolate_ray_tracing.c
-        src/ray_tracer/mapping.c
+        src/ray_tracer/texture/mapping.c
         src/ray_tracer/render.c
         src/ray_tracer/render_icon.c
         src/ray_tracer/render_ray.c
@@ -386,6 +390,7 @@ add_executable(minirt
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
+<<<<<<< HEAD
         src/main.c
         src/hooks/update_object_attributes_modification_box/init_cone_attributes_modification_box.c
         src/hooks/update_object_attributes_modification_box/init_light_attributes_modification_box.c
@@ -393,3 +398,7 @@ add_executable(minirt
         src/hooks/update_object_attributes_modification_box/add_boxes/add_reflection_box.c
         src/object/object_calculate_cache.c
         src/hooks/update_object_attributes_modification_box/add_boxes/add_specular_reflection_box.c src/hooks/update_object_attributes_modification_box/update_float_input_boxes.c src/image/draw_outline.c src/gui/object_list_box/init_object_list_box.c include/gui/object_list_box.h src/gui/object_list_box/create_object_gui_box.c src/gui/object_list_box/object_list_gui_box_draw.c src/gui/object_list_box/create_light_gui_box.c src/ray_tracer_gui_api/add_and_remove_object_and_light.c include/init_scene.h src/gui/object_list_box/object_list_gui_box_on_click.c src/hooks/update_color_picker_color.c src/gui/object_list_box/object_box_getters.c src/hooks/update_object_attributes_modification_box/get_box_category_index.c src/hooks/update_object_attributes_modification_box/add_boxes/add_checkered_pattern_toggle_box.c src/hooks/update_object_attributes_modification_box/add_boxes/utils/get_box_size.c src/hooks/update_object_attributes_modification_box/add_boxes/utils/add_toggle_box.c src/image/draw_check_mark.c src/hooks/update_object_attributes_modification_box/add_boxes/add_checkered_pattern_color_toggle_box.c src/hooks/update_object_attributes_modification_box/add_boxes/utils/add_x_y_box.c src/hooks/update_object_attributes_modification_box/add_boxes/utils/init_description_box.c src/hooks/update_object_attributes_modification_box/add_boxes/add_checkered_pattern_size_box.c src/hooks/update_object_attributes_modification_box/add_boxes/utils/get_x_y_input_box.c src/hooks/update_object_attributes_modification_box/add_boxes/checkered_pattern_size_on_clicks/y.c src/hooks/update_object_attributes_modification_box/add_boxes/checkered_pattern_size_on_clicks/x.c)
+=======
+        src/main.c   src/object/cone/transformations.c src/object/cylinder/transformations.c src/object/cone/transformations.c src/object/cylinder/create.c src/object/plane/create.c src/object/plane/create.c src/object/plane/transformations.c src/object/sphere/create.c src/object/sphere/transformations.c src/object/transformations.c src/object/cone/create.c src/object/cone/create.c src/object/cone/create.c src/light/light.c  include/material.h src/material/texture.c src/ray_tracer/texture/texture.c src/ray_tracer/texture/texture.c include/ppm.h src/parsing/parse_ppm_file.c src/math/modulo.c include/math/modulo.h src/ray_tracer/texture/checkerboard.c)
+
+>>>>>>> main
