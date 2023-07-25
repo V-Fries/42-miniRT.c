@@ -23,23 +23,23 @@ int	add_checkered_pattern_size_box(t_engine *engine, t_gui_box *gui_box, int *i,
 	write_centered_string_to_image(&engine->gui.font,
 		&gui_box->children.data[0].image, "Checkered pattern size");
 	get_x_y_input_box(gui_box, 'x', '-')->on_click \
-		= &normal_input_box_x_on_click_minus;
+		= &checkered_pattern_size_input_box_x_on_click_plus;
 	get_x_y_input_box(gui_box, 'x', 't')->on_click \
-		= &normal_input_box_x_on_click_text;
+		= &checkered_pattern_size_input_box_x_on_click_text;
 	get_x_y_input_box(gui_box, 'x', '+')->on_click \
-		= &normal_input_box_x_on_click_plus;
+		= &checkered_pattern_size_input_box_x_on_click_plus;
 	get_x_y_input_box(gui_box, 'x', 'd')->on_click \
-		= &normal_input_box_x_on_click_text;
+		= &checkered_pattern_size_input_box_x_on_click_text;
 	engine->gui.float_input_boxes.checkered_pattern_size.x
 		= get_x_y_input_box(gui_box, 'x', 'b');
 	get_x_y_input_box(gui_box, 'y', '-')->on_click \
-		= &normal_input_box_y_on_click_minus;
+		= &checkered_pattern_size_input_box_y_on_click_minus;
 	get_x_y_input_box(gui_box, 'y', 't')->on_click \
-		= &normal_input_box_y_on_click_text;
+		= &checkered_pattern_size_input_box_y_on_click_text;
 	get_x_y_input_box(gui_box, 'y', '+')->on_click \
-		= &normal_input_box_y_on_click_plus;
+		= &checkered_pattern_size_input_box_y_on_click_plus;
 	get_x_y_input_box(gui_box, 'y', 'd')->on_click \
-		= &normal_input_box_y_on_click_text;
+		= &checkered_pattern_size_input_box_y_on_click_text;
 	engine->gui.float_input_boxes.checkered_pattern_size.y
 		= get_x_y_input_box(gui_box, 'y', 'b');
 	return (0);

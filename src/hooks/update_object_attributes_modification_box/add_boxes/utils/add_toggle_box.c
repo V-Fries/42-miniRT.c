@@ -105,10 +105,10 @@ static int	init_toggle_box_text_box(t_engine *engine, t_gui_box *gui_box,
 	*gui_box = create_t_gui_box(engine, (t_gui_box_create){parent, \
 		(t_vector2i){
 			.x = button_size + OFFSET * 2,
-			.y = OFFSET}, \
+			.y = 0}, \
 		(t_vector2i){
 			.x = parent->size.x - (button_size + OFFSET * 3),
-			.y = parent->size.y - OFFSET * 2}, \
+			.y = parent->size.y}, \
 		true});
 	if (errno == EINVAL || errno == ENOMEM)
 		return (-1);

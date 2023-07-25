@@ -32,6 +32,7 @@ void	checkered_pattern_size_input_box_y_on_click_plus(t_gui_box *self,
 	engine->scene_changed = true;
 	update_xy_float_input_boxes(engine, object->material.texture.outline_checkerboard.size,
 		&engine->gui.float_input_boxes.checkered_pattern_size);
+	redraw_icons(engine, engine->gui.selected_object.object->material);
 }
 
 void	checkered_pattern_size_input_box_y_on_click_minus(t_gui_box *self,
@@ -51,6 +52,7 @@ void	checkered_pattern_size_input_box_y_on_click_minus(t_gui_box *self,
 	engine->scene_changed = true;
 	update_xy_float_input_boxes(engine, object->material.texture.outline_checkerboard.size,
 		&engine->gui.float_input_boxes.checkered_pattern_size);
+	redraw_icons(engine, engine->gui.selected_object.object->material);
 }
 
 void	checkered_pattern_size_input_box_y_on_click_text(t_gui_box *self,

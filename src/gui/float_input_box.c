@@ -21,6 +21,7 @@
 
 #define BORDER 4
 #define LINE_THICKNESS_DIVIDER 11
+#define SPRINTF_PARAM "%.2f"
 
 static int	init_left_box_image(t_engine *engine, t_gui_box *gui_box);
 static int	init_center_box_image(t_engine *engine, t_gui_box *gui_box);
@@ -36,12 +37,12 @@ void	update_float_input_box(const t_engine *engine, const float f,
 	if (input_box == NULL)
 		return ;
 	draw_center_box_image(&input_box->children.data[1].image);
-	size = snprintf(NULL, 0, "%f", f) + 1;
+	size = snprintf(NULL, 0, SPRINTF_PARAM, f) + 1;
 	buffer = malloc(size);
 	if (buffer == NULL)
 		return (write_centered_string_to_image(&engine->gui.font,
 				&input_box->children.data[1].image, "ENOMEM"));
-	snprintf(buffer, size, "%f", f);
+	snprintf(buffer, size, SPRINTF_PARAM, f);
 	write_centered_string_to_image(&engine->gui.font,
 		&input_box->children.data[1].image, buffer);
 	free(buffer);
