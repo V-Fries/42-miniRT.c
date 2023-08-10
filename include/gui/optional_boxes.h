@@ -8,7 +8,11 @@ void	init_settings_box(t_engine *engine, t_gui_box *gui_box,
 			const t_gui_box *main_gui_box, const t_gui_box *object_list_box);
 void	init_cam_fov_box(t_engine *engine, t_gui_box *gui_box, int *y,
 			t_gui_box *parent);
+void	init_reset_camera_peaking_box(t_engine *engine, t_gui_box *gui_box,
+			int *y, t_gui_box *parent);
 
+void	add_button_box(t_engine *engine, t_gui_box *gui_box, int *y,
+			t_gui_box *parent);
 void	add_plus_minus_box(t_engine *engine, t_gui_box *gui_box, int *y,
 			t_gui_box *parent);
 
