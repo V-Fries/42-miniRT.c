@@ -1,0 +1,15 @@
+#ifndef OPTIONAL_BOXES_H
+# define OPTIONAL_BOXES_H
+
+# include "engine.h"
+# include "box.h"
+
+void	init_settings_box(t_engine *engine, t_gui_box *gui_box,
+			const t_gui_box *main_gui_box, const t_gui_box *object_list_box);
+void	init_cam_fov_box(t_engine *engine, t_gui_box *gui_box, int *y,
+			t_gui_box *parent);
+
+void	add_plus_minus_box(t_engine *engine, t_gui_box *gui_box, int *y,
+			t_gui_box *parent);
+
+#endif //OPTIONAL_BOXES_H

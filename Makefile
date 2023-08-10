@@ -79,6 +79,10 @@ SRC				=\
 	\
 	gui/object_modification_box/init_object_modification_box.c				\
 	\
+	gui/optional_boxes/settings_box/init_cam_fov_box.c	\
+	gui/optional_boxes/settings_box/init_settings_box.c	\
+	gui/optional_boxes/add_plus_minus_box.c				\
+	\
 	gui/create_boxes_utils.c		\
 	gui/create_horizontal_boxes.c	\
 	gui/create_n_horizontal_boxes.c	\
