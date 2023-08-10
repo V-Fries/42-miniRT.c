@@ -110,7 +110,15 @@ static void	render_minirt(t_engine *engine, const uint64_t start_time)
 	else if (engine->should_render_ray_tracing
 		&& engine->should_render_at_full_resolution)
 	{
-		render_anti_aliased_raytracing(engine);
+		if (engine->antialiasing)
+			render_anti_aliased_raytracing(engine);
+		else
+		{
+			render_raytracing(engine, 1);
+			for (size_t i = 0; i < engine->ray_traced_image.size; i++)
+				engine->ray_traced_image.address[i]
+						= vec_rgb_to_uint(engine->raytraced_pixels.data[i]);
+		}
 		engine->scene_changed = false;
 	}
 	mlx_put_image_to_window(engine->window.mlx, engine->window.window,
@@ -248,22 +256,6 @@ static void	deal_keys(t_engine *engine)
 			camera_peek(&engine->camera, 4.f);
 	}
 }
-
-//static t_vector2i	clamp_mouse(t_engine *engine, t_vector2i mouse_position)
-//{
-//	if (mouse_position.x < 0)
-//		mouse_position.x = engine->camera.viewport.size.x - 1;
-//	else if (mouse_position.x >= engine->camera.viewport.size.x - 1)
-//		mouse_position.x = 0;
-//	if (mouse_position.y < 0)
-//		mouse_position.y = engine->camera.viewport.size.y - 1;
-//	else if (mouse_position.y >= engine->camera.viewport.size.y - 1)
-//		mouse_position.y = 0;
-//	mlx_mouse_move(engine->window.window,
-//		mouse_position.x,
-//		mouse_position.y);
-//	return (mouse_position);
-//}
 
 static void	update_placed_object_position(t_engine *engine)
 {

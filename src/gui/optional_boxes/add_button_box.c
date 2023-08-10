@@ -20,12 +20,12 @@ void	add_button_box(t_engine *engine, t_gui_box *gui_box, int *y,
 			t_gui_box *parent)
 {
 	*gui_box = create_t_gui_box(engine, (t_gui_box_create){parent, \
-		(t_vector2i){\
-				.x = 0, \
-				.y = *y}, \
-		(t_vector2i){\
-				.x = parent->size.x, \
-				.y = get_normal_box_size(\
+		(t_vector2i){
+			.x = 0,
+			.y = *y}, \
+		(t_vector2i){
+			.x = parent->size.x,
+			.y = get_normal_box_size(\
 					engine->gui.object_attributes_modification_box)}, \
 		true});
 	*y += gui_box->size.y + OBJECT_ATTRIBUTE_BOX_OFFSET;

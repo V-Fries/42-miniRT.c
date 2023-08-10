@@ -6,14 +6,12 @@
 #include "mlx.h"
 
 #include "gui/init.h"
-#include "gui/utils.h"
 #include "events.h"
 #include "parsing.h"
 #include "hooks.h"
 #include "render_frame.h"
 #include "window.h"
 #include "engine.h"
-#include "colors.h"
 #include "font/render.h"
 #include "init_scene.h"
 
@@ -23,6 +21,7 @@ static void	print_scene_content(t_raytracing_data *raytracing_data);
 int	init_engine(t_engine *engine, const char *start_up_scene)
 {
 	ft_bzero(engine, sizeof(t_engine));
+	engine->antialiasing = true;
 	get_screen_size(&engine->window.size.x, &engine->window.size.y); // TODO check that screen size is not too small
 //	printf("%i, %i\n", engine->window.size.x, engine->window.size.y);
 //	exit(0);

@@ -55,6 +55,7 @@ typedef struct s_engine
 	int						pressed_keys_index;
 	bool					should_render_ray_tracing;
 	bool					should_render_at_full_resolution;
+	bool					antialiasing;
 	bool					scene_changed;
 }	t_engine;
 

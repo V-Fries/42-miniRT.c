@@ -79,6 +79,7 @@ SRC				=\
 	\
 	gui/object_modification_box/init_object_modification_box.c				\
 	\
+	gui/optional_boxes/settings_box/init_antialiasing_toggle_box.c	\
 	gui/optional_boxes/settings_box/init_cam_fov_box.c				\
 	gui/optional_boxes/settings_box/init_reset_camera_peaking_box.c	\
 	gui/optional_boxes/settings_box/init_settings_box.c				\
@@ -110,6 +111,7 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/add_toggle_box.c		\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/add_x_y_box.c			\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/add_x_y_z_box.c			\
+	hooks/update_object_attributes_modification_box/add_boxes/utils/draw_toggle_box.c		\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/get_box_size.c			\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/get_x_y_input_box.c		\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/get_x_y_z_input_box.c	\
