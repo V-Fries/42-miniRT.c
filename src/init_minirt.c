@@ -15,6 +15,9 @@
 #include "font/render.h"
 #include "init_scene.h"
 
+#define DEFAULT_MAX_RESOLUTION_REDUCTION 21
+#define DEFAULT_MIN_RESOLUTION_REDUCTION 1
+
 static void	init_hooks(t_engine *engine);
 
 static void	print_scene_content(t_raytracing_data *raytracing_data);
@@ -22,6 +25,8 @@ int	init_engine(t_engine *engine, const char *start_up_scene)
 {
 	ft_bzero(engine, sizeof(t_engine));
 	engine->antialiasing = true;
+	engine->quality.max_reduction = DEFAULT_MAX_RESOLUTION_REDUCTION;
+	engine->quality.min_reduction = DEFAULT_MIN_RESOLUTION_REDUCTION;
 	get_screen_size(&engine->window.size.x, &engine->window.size.y); // TODO check that screen size is not too small
 //	printf("%i, %i\n", engine->window.size.x, engine->window.size.y);
 //	exit(0);

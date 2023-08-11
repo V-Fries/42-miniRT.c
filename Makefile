@@ -81,6 +81,8 @@ SRC				=\
 	\
 	gui/optional_boxes/settings_box/init_antialiasing_toggle_box.c	\
 	gui/optional_boxes/settings_box/init_cam_fov_box.c				\
+	gui/optional_boxes/settings_box/init_max_resolution_reduction.c	\
+	gui/optional_boxes/settings_box/init_min_resolution_reduction.c	\
 	gui/optional_boxes/settings_box/init_reset_camera_peaking_box.c	\
 	gui/optional_boxes/settings_box/init_settings_box.c				\
 	\

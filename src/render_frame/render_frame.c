@@ -29,6 +29,7 @@
 
 static void			render_screen_shot_animation(t_engine *engine);
 static void			render_minirt(t_engine *engine, uint64_t start_time);
+static int			adjust_incrementer(t_quality quality, int incrementer);
 static int			get_incrementer(t_engine *engine);
 static void			update_scene(t_engine *engine);
 static int			deal_mouse(t_engine *engine);
@@ -114,7 +115,10 @@ static void	render_minirt(t_engine *engine, const uint64_t start_time)
 			render_anti_aliased_raytracing(engine);
 		else
 		{
-			render_raytracing(engine, 1);
+			render_raytracing(engine, engine->quality.min_reduction);
+			if (engine->quality.min_reduction > 1)
+				interpolate_ray_tracing(&engine->raytraced_pixels,
+					engine->quality.min_reduction);
 			for (size_t i = 0; i < engine->ray_traced_image.size; i++)
 				engine->ray_traced_image.address[i]
 						= vec_rgb_to_uint(engine->raytraced_pixels.data[i]);
@@ -131,7 +135,7 @@ static void	render_minirt(t_engine *engine, const uint64_t start_time)
 
 static int	get_incrementer(t_engine *engine)
 {
-	static int	incrementer = 2;
+	static int	incrementer = 1;
 	static int	fps_count = 0;
 	static int	frame_count = 0;
 
@@ -141,20 +145,29 @@ static int	get_incrementer(t_engine *engine)
 	if (frame_count >= FRAME_BEFORE_ADAPTION
 		&& fps_count / frame_count < FPS_GOAL * 0.66f)
 	{
-		incrementer++;
 		frame_count = 0;
 		fps_count = 0;
-		return (incrementer);
+		incrementer++;
 	}
-	if (frame_count >= FRAME_BEFORE_ADAPTION && incrementer > 1
+	else if (frame_count >= FRAME_BEFORE_ADAPTION && incrementer > 1
 		&& fps_count / frame_count > FPS_GOAL * 1.33f)
 	{
-		incrementer--;
 		frame_count = 0;
 		fps_count = 0;
-		return (incrementer);
+		incrementer--;
 	}
-	frame_count++;
+	else
+		frame_count++;
+	incrementer = adjust_incrementer(engine->quality, incrementer);
+	return (incrementer);
+}
+
+static int	adjust_incrementer(t_quality quality, int incrementer)
+{
+	if (incrementer >= quality.max_reduction)
+		return (quality.max_reduction);
+	if (incrementer <= quality.min_reduction)
+		return (quality.min_reduction);
 	return (incrementer);
 }
 
