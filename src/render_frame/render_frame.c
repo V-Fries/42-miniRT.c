@@ -24,8 +24,9 @@
 #include "events.h"
 #include "hooks.h"
 
-#define FPS_GOAL 45
+#define FPS_GOAL 45.f
 #define FRAME_BEFORE_ADAPTION 20
+#define DEFAULT_INCREMENTER_VALUE 2
 
 static void			render_screen_shot_animation(t_engine *engine);
 static void			render_minirt(t_engine *engine, uint64_t start_time);
@@ -135,29 +136,25 @@ static void	render_minirt(t_engine *engine, const uint64_t start_time)
 
 static int	get_incrementer(t_engine *engine)
 {
-	static int	incrementer = 1;
+	static int	incrementer = DEFAULT_INCREMENTER_VALUE;
 	static int	fps_count = 0;
 	static int	frame_count = 0;
+	float		average_fps;
 
 	if (engine->should_render_at_full_resolution)
-		return (1);
+		return (engine->quality.min_reduction);
 	fps_count += engine->gui.fps.fps_nb;
-	if (frame_count >= FRAME_BEFORE_ADAPTION
-		&& fps_count / frame_count < FPS_GOAL * 0.66f)
+	frame_count++;
+	if (frame_count >= FRAME_BEFORE_ADAPTION)
 	{
+		average_fps = fps_count / (float)frame_count;
+		if (average_fps <= FPS_GOAL * 0.66f)
+			incrementer++;
+		else if (incrementer > 1 && average_fps > FPS_GOAL * 1.33f)
+			incrementer--;
 		frame_count = 0;
 		fps_count = 0;
-		incrementer++;
 	}
-	else if (frame_count >= FRAME_BEFORE_ADAPTION && incrementer > 1
-		&& fps_count / frame_count > FPS_GOAL * 1.33f)
-	{
-		frame_count = 0;
-		fps_count = 0;
-		incrementer--;
-	}
-	else
-		frame_count++;
 	incrementer = adjust_incrementer(engine->quality, incrementer);
 	return (incrementer);
 }
