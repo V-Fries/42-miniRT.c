@@ -72,18 +72,25 @@ typedef struct s_gui_hide_animation
 enum e_color_being_changed
 {
 	BASE_COLOR,
-	OUTLINE_COLOR,
-	CAP_COLOR
+	OUTLINE_CHECKERBOARD_COLOR,
+	CAP_CHECKERBOARD_COLOR
+};
+
+enum e_texture_being_changed
+{
+	OUTLINE_TEXTURE,
+	CAP_TEXTURE
 };
 
 typedef struct s_color_and_material
 {
-	bool						color_picker_base_color_was_changed;
-	t_color						color_picker_base_color;
-	t_material					material_to_assign_to_new_objects;
-	struct s_gui_box			*outline_checkered_pattern_color_toggle_box;
-	struct s_gui_box			*cap_checkered_pattern_color_toggle_box;
-	enum e_color_being_changed	color_being_changed;
+	bool							color_picker_base_color_was_changed;
+	t_color							color_picker_base_color;
+	t_material						material_to_assign_to_new_objects;
+	struct s_gui_box				*outline_checkered_pattern_color_toggle_box;
+	struct s_gui_box				*cap_checkered_pattern_color_toggle_box;
+	enum e_color_being_changed		color_being_changed;
+	enum e_texture_being_changed	texture_being_changed;
 }	t_color_and_material;
 
 typedef struct s_screen_shot
@@ -98,6 +105,7 @@ enum e_optional_box
 	SETTINGS_BOX,
 	BUMP_MAP_BOX,
 	TEXTURE_BOX,
+	NUMBER_OF_OPTIONAL_BOXES
 };
 
 typedef struct s_gui

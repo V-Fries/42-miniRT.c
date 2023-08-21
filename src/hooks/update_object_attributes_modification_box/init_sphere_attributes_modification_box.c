@@ -25,7 +25,7 @@ void	init_sphere_attributes_modification_box(t_engine *engine,
 {
 	int	i;
 
-	gui_box->children.size = 7;
+	gui_box->children.size = 8;
 	gui_box->children.data = ft_calloc(gui_box->children.size,
 			sizeof(*gui_box->children.data));
 	if (gui_box->children.data == NULL)
@@ -67,4 +67,6 @@ static void	add_texture_boxes(t_engine *engine, t_gui_box *gui_box, int *i)
 		&y, gui_box);
 	add_outline_checkerboard_color_toggle_box(engine,
 		gui_box->children.data + (*i)++, &y, gui_box);
+	add_outline_texture_button(engine, gui_box->children.data + (*i)++,
+		&y, gui_box);
 }

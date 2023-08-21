@@ -122,11 +122,13 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/add_boxes/add_brightness_box.c								\
 	hooks/update_object_attributes_modification_box/add_boxes/add_cap_checkerboard_size_box.c					\
 	hooks/update_object_attributes_modification_box/add_boxes/add_cap_checkered_pattern_color_toggle_box.c		\
+	hooks/update_object_attributes_modification_box/add_boxes/add_cap_texture_button.c							\
 	hooks/update_object_attributes_modification_box/add_boxes/add_delete_box.c									\
 	hooks/update_object_attributes_modification_box/add_boxes/add_height_box.c									\
 	hooks/update_object_attributes_modification_box/add_boxes/add_normal_box.c									\
 	hooks/update_object_attributes_modification_box/add_boxes/add_outline_checkerboard_size_box.c				\
 	hooks/update_object_attributes_modification_box/add_boxes/add_outline_checkered_pattern_color_toggle_box.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/add_outline_texture_button.c						\
 	hooks/update_object_attributes_modification_box/add_boxes/add_position_box.c								\
 	hooks/update_object_attributes_modification_box/add_boxes/add_radius_box.c									\
 	hooks/update_object_attributes_modification_box/add_boxes/add_reflection_box.c								\
@@ -294,6 +296,7 @@ BASE_CFLAGS		=	-Wall -Wextra -Werror
 DEBUG_CLFAGS	=	-g3 -fsanitize=address
 #-ffast-math reduces calculation precision, need to check behaviour before using
 OPTI_CFLAGS		=	-Ofast -march=native -flto -fno-signed-zeros -funroll-loops #-ffast-math
+#CFLAGS			=	$(BASE_CFLAGS)
 CFLAGS			=	$(BASE_CFLAGS) $(OPTI_CFLAGS)
 #CFLAGS			=	$(BASE_CFLAGS) $(DEBUG_CLFAGS)
 #CFLAGS			=	$(BASE_CFLAGS) $(OPTI_CFLAGS) $(DEBUG_CLFAGS)
