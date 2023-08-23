@@ -19,7 +19,7 @@ void	init_texture_box(t_engine *engine, t_gui_box *gui_box,
 
 static void	init_children_boxes(t_engine *engine, t_gui_box *gui_box)
 {
-	create_vertical_boxes(engine, gui_box, "1 10 1 10 1 76 1",
+	create_vertical_boxes(engine, gui_box, "1 6 1 6 1 84 1",
 		roundf(gui_box->size.y / 100.f));
 	init_outline_cap_picker(engine, gui_box->children.data + 1);
 	init_texture_bump_map_picker(engine, gui_box->children.data + 3);

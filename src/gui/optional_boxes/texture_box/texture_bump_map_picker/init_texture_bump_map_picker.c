@@ -4,8 +4,8 @@
 #include "gui/optional_boxes.h"
 #include "font/render.h"
 
-#define OUTLINE_BOX_TEXT "  Texture  "
-#define CAP_BOX_TEXT     "  Bump map  "
+#define OUTLINE_BOX_TEXT "Texture"
+#define CAP_BOX_TEXT "Bump map"
 
 static void	init_texture_button(t_engine *engine, t_gui_box *gui_box);
 static void	init_bump_map_button(t_engine *engine, t_gui_box *gui_box);

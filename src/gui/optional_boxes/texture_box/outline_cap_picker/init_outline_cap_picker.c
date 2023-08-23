@@ -4,8 +4,8 @@
 #include "gui/optional_boxes.h"
 #include "font/render.h"
 
-#define OUTLINE_BOX_TEXT "  Outline  "
-#define CAP_BOX_TEXT "    Cap    "
+#define OUTLINE_BOX_TEXT "Outline"
+#define CAP_BOX_TEXT "Cap"
 
 static void	init_outline_button(t_engine *engine, t_gui_box *gui_box);
 static void	init_cap_button(t_engine *engine, t_gui_box *gui_box);

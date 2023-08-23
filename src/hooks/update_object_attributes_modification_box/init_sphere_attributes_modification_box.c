@@ -63,9 +63,9 @@ static void	add_texture_boxes(t_engine *engine, t_gui_box *gui_box, int *i)
 	int	y;
 
 	y = get_texture_boxes_index(gui_box);
+	add_texture_button(engine, gui_box->children.data + (*i)++, &y, gui_box);
 	add_outline_checkerboard_size_box(engine, gui_box->children.data + (*i)++,
 		&y, gui_box);
 	add_outline_checkerboard_color_toggle_box(engine,
 		gui_box->children.data + (*i)++, &y, gui_box);
-	add_texture_button(engine, gui_box->children.data + (*i)++, &y, gui_box);
 }
