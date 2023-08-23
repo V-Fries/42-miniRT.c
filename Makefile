@@ -86,8 +86,15 @@ SRC				=\
 	gui/optional_boxes/settings_box/init_reset_camera_peaking_box.c	\
 	gui/optional_boxes/settings_box/init_settings_box.c				\
 	\
-	gui/optional_boxes/add_button_box.c		\
-	gui/optional_boxes/add_plus_minus_box.c	\
+	gui/optional_boxes/texture_box/outline_cap_picker/draw.c					\
+	gui/optional_boxes/texture_box/outline_cap_picker/init_outline_cap_picker.c	\
+	gui/optional_boxes/texture_box/outline_cap_picker/on_click.c				\
+	\
+	gui/optional_boxes/texture_box/init_texture_box.c							\
+	\
+	gui/optional_boxes/add_button_box.c			\
+	gui/optional_boxes/add_plus_minus_box.c		\
+	gui/optional_boxes/create_optional_box.c	\
 	\
 	gui/create_boxes_utils.c		\
 	gui/create_horizontal_boxes.c	\
