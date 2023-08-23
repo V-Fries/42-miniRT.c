@@ -35,7 +35,7 @@
 
 # define OBJECT_ATTRIBUTE_BOX_TEXTURE_NB_OF_XYZ_BOXES 0.f
 # define OBJECT_ATTRIBUTE_BOX_TEXTURE_NB_OF_XY_BOXES 2.f
-# define OBJECT_ATTRIBUTE_BOX_TEXTURE_NB_OF_NORMAL_BOXES 4.f
+# define OBJECT_ATTRIBUTE_BOX_TEXTURE_NB_OF_NORMAL_BOXES 3.f
 
 void	init_object_modification_gui_box(t_engine *minirt,
 			t_gui_box *gui_box, const t_gui_box *main_gui_box);

@@ -74,9 +74,7 @@ void		add_cap_checkerboard_color_toggle_box(t_engine *engine,
 				t_gui_box *gui_box, int *i, t_gui_box *parent);
 void		add_outline_checkerboard_size_box(t_engine *engine,
 				t_gui_box *gui_box, int *i, t_gui_box *parent);
-void		add_cap_texture_button(t_engine *engine, t_gui_box *gui_box,
-				int *y, t_gui_box *parent);
-void		add_outline_texture_button(t_engine *engine, t_gui_box *gui_box,
+void		add_texture_button(t_engine *engine, t_gui_box *gui_box,
 				int *y, t_gui_box *parent);
 void		add_delete_box(t_engine *engine, t_gui_box *gui_box,
 				t_gui_box *parent);
