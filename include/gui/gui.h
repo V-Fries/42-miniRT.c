@@ -82,6 +82,12 @@ enum e_texture_being_changed
 	CAP_TEXTURE
 };
 
+enum e_bump_map_and_texture
+{
+	TEXTURE,
+	BUMP_MAP
+};
+
 typedef struct s_color_and_material
 {
 	bool							color_picker_base_color_was_changed;
@@ -91,6 +97,7 @@ typedef struct s_color_and_material
 	struct s_gui_box				*cap_checkered_pattern_color_toggle_box;
 	enum e_color_being_changed		color_being_changed;
 	enum e_texture_being_changed	texture_being_changed;
+	enum e_bump_map_and_texture		changing_bump_map_or_texture;
 }	t_color_and_material;
 
 typedef struct s_screen_shot
@@ -103,7 +110,6 @@ enum e_optional_box
 {
 	NO_OPTIONAL_BOX = -1,
 	SETTINGS_BOX,
-	BUMP_MAP_BOX,
 	TEXTURE_BOX,
 	NUMBER_OF_OPTIONAL_BOXES
 };

@@ -30,6 +30,15 @@ void		outline_picker_on_click(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
 void		cap_picker_on_click(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
+void		init_texture_bump_map_picker(t_engine *engine, t_gui_box *gui_box);
+void		texture_picker_draw(t_gui_box *self, t_engine *engine,
+				t_draw_data draw_data);
+void		bump_map_picker_draw(t_gui_box *self, t_engine *engine,
+				t_draw_data draw_data);
+void		texture_picker_on_click(t_gui_box *self, t_engine *engine,
+				t_click_data click_data);
+void		bump_map_picker_on_click(t_gui_box *self, t_engine *engine,
+				t_click_data click_data);
 
 void		add_button_box(t_engine *engine, t_gui_box *gui_box, int *y,
 				t_gui_box *parent);

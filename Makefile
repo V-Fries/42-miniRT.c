@@ -90,6 +90,10 @@ SRC				=\
 	gui/optional_boxes/texture_box/outline_cap_picker/init_outline_cap_picker.c	\
 	gui/optional_boxes/texture_box/outline_cap_picker/on_click.c				\
 	\
+	gui/optional_boxes/texture_box/texture_bump_map_picker/draw.c							\
+	gui/optional_boxes/texture_box/texture_bump_map_picker/init_texture_bump_map_picker.c	\
+	gui/optional_boxes/texture_box/texture_bump_map_picker/on_click.c						\
+	\
 	gui/optional_boxes/texture_box/init_texture_box.c							\
 	\
 	gui/optional_boxes/add_button_box.c			\
