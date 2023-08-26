@@ -101,5 +101,5 @@ static void	create_ppm_box(t_engine *engine, t_gui_box *box, char *file)
 	round_image_corners(&box->on_hover_image, 10);
 	*dot_address = '.';
 	box->draw = NULL;
-	// TODO change on click
+	box->on_click = NULL;
 }

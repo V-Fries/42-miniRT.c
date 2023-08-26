@@ -95,9 +95,10 @@ SRC				=\
 	gui/optional_boxes/texture_box/texture_bump_map_picker/init_texture_bump_map_picker.c	\
 	gui/optional_boxes/texture_box/texture_bump_map_picker/on_click.c						\
 	\
-	gui/optional_boxes/texture_box/init_texture_box.c				\
-	gui/optional_boxes/texture_box/load_textures_and_bump_maps.c	\
-	gui/optional_boxes/texture_box/ppm_boxes_draw.c					\
+	gui/optional_boxes/texture_box/init_texture_box.c					\
+	gui/optional_boxes/texture_box/load_textures_and_bump_maps.c		\
+	gui/optional_boxes/texture_box/textures_and_bump_maps_draw.c		\
+	gui/optional_boxes/texture_box/textures_and_bump_maps_on_click.c	\
 	\
 	gui/optional_boxes/add_button_box.c			\
 	gui/optional_boxes/add_plus_minus_box.c		\
