@@ -42,6 +42,7 @@ SRC				=\
 	gui/box/create_gui_box.c			\
 	gui/box/default_gui_box_methods.c	\
 	gui/box/destroy_t_gui_box.c			\
+	gui/box/destroy_t_gui_boxes.c		\
 	gui/box/get_clicked_gui_box.c		\
 	gui/box/mouse_utils.c				\
 	\
@@ -94,7 +95,8 @@ SRC				=\
 	gui/optional_boxes/texture_box/texture_bump_map_picker/init_texture_bump_map_picker.c	\
 	gui/optional_boxes/texture_box/texture_bump_map_picker/on_click.c						\
 	\
-	gui/optional_boxes/texture_box/init_texture_box.c							\
+	gui/optional_boxes/texture_box/init_texture_box.c				\
+	gui/optional_boxes/texture_box/load_textures_and_bump_maps.c	\
 	\
 	gui/optional_boxes/add_button_box.c			\
 	gui/optional_boxes/add_plus_minus_box.c		\

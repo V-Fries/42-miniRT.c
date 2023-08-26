@@ -4,6 +4,8 @@
 # include "engine.h"
 # include "box.h"
 
+# define TEXTURE_BOX_PPM_OFFSET 4
+
 void		init_settings_box(t_engine *engine, t_gui_box *gui_box,
 				const t_gui_box *main_gui_box,
 				const t_gui_box *object_list_box);
@@ -39,6 +41,10 @@ void		texture_picker_on_click(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
 void		bump_map_picker_on_click(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
+void		load_textures_and_bump_maps(t_engine *engine,
+				t_textures_and_bump_maps *textures_and_bump_maps);
+void		reload_textures_and_bump_maps(t_engine *engine,
+				t_textures_and_bump_maps *textures_and_bump_maps);
 
 void		add_button_box(t_engine *engine, t_gui_box *gui_box, int *y,
 				t_gui_box *parent);
