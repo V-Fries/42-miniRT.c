@@ -11,9 +11,12 @@ static void	create_ppm_boxes(t_engine *engine, t_gui_boxes *boxes,
 				char **files);
 static void	create_ppm_box(t_engine *engine, t_gui_box *box, char *file);
 
-void	load_textures_and_bump_maps(t_engine *engine,
-			t_textures_and_bump_maps *textures_and_bump_maps)
+void	load_textures_and_bump_maps(t_engine *engine)
 {
+	t_textures_and_bump_maps	*textures_and_bump_maps;
+
+	textures_and_bump_maps
+		= &engine->gui.color_and_material.textures_and_bump_maps;
 	update_ppm_boxes(engine, &textures_and_bump_maps->textures_files,
 		&textures_and_bump_maps->textures_boxes,
 		textures_and_bump_maps->path_to_textures_folder);
@@ -23,13 +26,16 @@ void	load_textures_and_bump_maps(t_engine *engine,
 	textures_and_bump_maps->last_update = ft_get_current_time();
 }
 
-void	reload_textures_and_bump_maps(t_engine *engine,
-			t_textures_and_bump_maps *textures_and_bump_maps)
+void	reload_textures_and_bump_maps(t_engine *engine)
 {
+	t_textures_and_bump_maps	*textures_and_bump_maps;
+
+	textures_and_bump_maps
+		= &engine->gui.color_and_material.textures_and_bump_maps;
 	if (ft_get_time_elapsed_in_seconds(textures_and_bump_maps->last_update)
 		< 5.f)
 		return ;
-	load_textures_and_bump_maps(engine, textures_and_bump_maps);
+	load_textures_and_bump_maps(engine);
 }
 
 static void	update_ppm_boxes(t_engine *engine, char ***files,
@@ -94,5 +100,6 @@ static void	create_ppm_box(t_engine *engine, t_gui_box *box, char *file)
 		file);
 	round_image_corners(&box->on_hover_image, 10);
 	*dot_address = '.';
+	box->draw = NULL;
 	// TODO change on click
 }

@@ -97,6 +97,7 @@ SRC				=\
 	\
 	gui/optional_boxes/texture_box/init_texture_box.c				\
 	gui/optional_boxes/texture_box/load_textures_and_bump_maps.c	\
+	gui/optional_boxes/texture_box/ppm_boxes_draw.c					\
 	\
 	gui/optional_boxes/add_button_box.c			\
 	gui/optional_boxes/add_plus_minus_box.c		\

@@ -41,10 +41,10 @@ void		texture_picker_on_click(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
 void		bump_map_picker_on_click(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
-void		load_textures_and_bump_maps(t_engine *engine,
-				t_textures_and_bump_maps *textures_and_bump_maps);
-void		reload_textures_and_bump_maps(t_engine *engine,
-				t_textures_and_bump_maps *textures_and_bump_maps);
+void		load_textures_and_bump_maps(t_engine *engine);
+void		reload_textures_and_bump_maps(t_engine *engine);
+void		textures_and_bump_maps_draw(t_gui_box *self, t_engine *engine,
+				t_draw_data draw_data);
 
 void		add_button_box(t_engine *engine, t_gui_box *gui_box, int *y,
 				t_gui_box *parent);

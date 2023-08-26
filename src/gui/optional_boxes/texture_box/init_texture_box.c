@@ -32,10 +32,12 @@ static void	init_children_boxes(t_engine *engine, t_gui_box *gui_box)
 static void	init_selection_boxes(t_engine *engine, t_gui_box *gui_box)
 {
 	get_paths_to_ppm_files(engine);
+	init_image(&gui_box->image, &engine->window, gui_box->size.x,
+		gui_box->size.y);
+	gui_box->draw = &textures_and_bump_maps_draw;
 	engine->gui.color_and_material.textures_and_bump_maps.selection_box
 		= gui_box;
-	load_textures_and_bump_maps(engine,
-		&engine->gui.color_and_material.textures_and_bump_maps);
+	load_textures_and_bump_maps(engine);
 }
 
 static void	get_paths_to_ppm_files(t_engine *engine)
