@@ -13,8 +13,6 @@
 #include "engine.h"
 #include "gui/box.h"
 #include "events.h"
-#include "gui/object_list_box.h"
-#include "hooks.h"
 #include "gui/optional_boxes.h"
 
 static void		handle_scroll(t_gui_box *self, int button,
@@ -39,6 +37,8 @@ void	textures_and_bump_maps_on_click(t_gui_box *self, t_engine *engine,
 	else
 		gui_boxes = &engine->gui.color_and_material.textures_and_bump_maps.\
 			textures_boxes;
+	if (gui_boxes->size == 0)
+		return ;
 	handle_scroll(self, click_data.button, gui_boxes);
 	if (click_data.button != BUTTON_LEFT)
 		return ;

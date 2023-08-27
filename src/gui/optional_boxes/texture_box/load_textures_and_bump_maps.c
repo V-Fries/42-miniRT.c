@@ -67,6 +67,8 @@ static void	create_ppm_boxes(t_engine *engine, t_gui_boxes *boxes, char **files)
 
 	destroy_t_gui_boxes(&engine->window, boxes);
 	boxes->size = ft_split_len(files);
+	if (boxes->size == 0)
+		return ;
 	boxes->data = ft_calloc(boxes->size, sizeof(*boxes->data));
 	if (boxes->data == NULL)
 		ft_fatal_error("Failed to allocate memory for ppm boxes");
