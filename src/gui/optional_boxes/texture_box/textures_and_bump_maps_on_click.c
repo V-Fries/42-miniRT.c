@@ -129,9 +129,23 @@ static void	set_normal_map(const t_color_and_material *color_and_material,
 
 	files = color_and_material->textures_and_bump_maps.bump_maps_files;
 	if (is_cap)
-		set_cap_normals_map(&object->material, files[index]);
+	{
+		if (set_cap_normals_map(&object->material, files[index]) < 0)
+		{
+			ft_print_error("Warning: Failed to set cap normal map ");
+			ft_print_error(files[index]);
+			ft_print_error("\n");
+		}
+	}
 	else
-		set_outline_normals_map(&object->material, files[index]);
+	{
+		if (set_outline_normals_map(&object->material, files[index]) < 0)
+		{
+			ft_print_error("Warning: Failed to set outline normal map ");
+			ft_print_error(files[index]);
+			ft_print_error("\n");
+		}
+	}
 }
 
 static void	set_texture(const t_color_and_material *color_and_material,
@@ -141,7 +155,21 @@ static void	set_texture(const t_color_and_material *color_and_material,
 
 	files = color_and_material->textures_and_bump_maps.textures_files;
 	if (is_cap)
-		set_cap_texture(&object->material, files[index]);
+	{
+		if (set_cap_texture(&object->material, files[index]) < 0)
+		{
+			ft_print_error("Warning: Failed to set cap texture ");
+			ft_print_error(files[index]);
+			ft_print_error("\n");
+		}
+	}
 	else
-		set_outline_texture(&object->material, files[index]);
+	{
+		if (set_outline_texture(&object->material, files[index]) < 0)
+		{
+			ft_print_error("Warning: Failed to set outline texture ");
+			ft_print_error(files[index]);
+			ft_print_error("\n");
+		}
+	}
 }
