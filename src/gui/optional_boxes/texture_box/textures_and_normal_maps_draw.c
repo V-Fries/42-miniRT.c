@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   textures_and_bump_maps_draw.c                      :+:      :+:    :+:   */
+/*   textures_and_normal_maps_draw.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -21,10 +21,10 @@ static void	draw_ppm_boxes(t_engine *engine, int y, t_draw_data draw_data);
 static void	draw_ppm_box(t_gui_box *self, t_engine *engine, t_vector2i offset,
 				t_draw_data draw_data);
 
-void	textures_and_bump_maps_draw(t_gui_box *self, t_engine *engine,
+void	textures_and_normal_maps_draw(t_gui_box *self, t_engine *engine,
 			t_draw_data draw_data)
 {
-	reload_textures_and_bump_maps(engine);
+	reload_textures_and_normal_maps(engine);
 	change_image_color(&self->image, COLOR_TRANSPARENT);
 	draw_ppm_boxes(engine, self->scroll, (t_draw_data){\
 		(t_vector2i){draw_data.offset.x + self->position.x, \
@@ -41,11 +41,12 @@ static void	draw_ppm_boxes(t_engine *engine, int y, t_draw_data draw_data)
 	size_t		i;
 	t_gui_boxes	*gui_boxes;
 
-	if (engine->gui.color_and_material.changing_bump_map_or_texture == BUMP_MAP)
-		gui_boxes = &engine->gui.color_and_material.textures_and_bump_maps.\
-			bump_maps_boxes;
+	if (engine->gui.color_and_material.changing_normal_map_or_texture
+		== NORMAL_MAP)
+		gui_boxes = &engine->gui.color_and_material.textures_and_normal_maps.\
+			normal_maps_boxes;
 	else
-		gui_boxes = &engine->gui.color_and_material.textures_and_bump_maps.\
+		gui_boxes = &engine->gui.color_and_material.textures_and_normal_maps.\
 			textures_boxes;
 	i = -1;
 	while (++i < gui_boxes->size)

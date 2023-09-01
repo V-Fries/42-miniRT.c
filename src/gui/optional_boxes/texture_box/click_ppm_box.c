@@ -23,7 +23,7 @@ void	click_ppm_box(t_engine *engine, size_t index)
 	const t_color_and_material	*color_and_material
 		= &engine->gui.color_and_material;
 	const bool					is_normal_map
-		= color_and_material->changing_bump_map_or_texture == BUMP_MAP;
+		= color_and_material->changing_normal_map_or_texture == NORMAL_MAP;
 	const bool					is_cap
 		= color_and_material->texture_being_changed == CAP_TEXTURE;
 
@@ -43,7 +43,7 @@ static void	set_normal_map(const t_color_and_material *color_and_material,
 {
 	char	**files;
 
-	files = color_and_material->textures_and_bump_maps.bump_maps_files;
+	files = color_and_material->textures_and_normal_maps.normal_maps_files;
 	if (is_cap)
 	{
 		if (set_cap_normals_map(&object->material, files[index]) < 0)
@@ -69,7 +69,7 @@ static void	set_texture(const t_color_and_material *color_and_material,
 {
 	char	**files;
 
-	files = color_and_material->textures_and_bump_maps.textures_files;
+	files = color_and_material->textures_and_normal_maps.textures_files;
 	if (is_cap)
 	{
 		if (set_cap_texture(&object->material, files[index]) < 0)

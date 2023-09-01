@@ -32,21 +32,22 @@ void		outline_picker_on_click(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
 void		cap_picker_on_click(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
-void		init_texture_bump_map_picker(t_engine *engine, t_gui_box *gui_box);
+void		init_texture_normal_map_picker(t_engine *engine,
+				t_gui_box *gui_box);
 void		texture_picker_draw(t_gui_box *self, t_engine *engine,
 				t_draw_data draw_data);
-void		bump_map_picker_draw(t_gui_box *self, t_engine *engine,
+void		normal_map_picker_draw(t_gui_box *self, t_engine *engine,
 				t_draw_data draw_data);
 void		texture_picker_on_click(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
-void		bump_map_picker_on_click(t_gui_box *self, t_engine *engine,
+void		normal_map_picker_on_click(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
 void		init_selection_boxes(t_engine *engine, t_gui_box *gui_box);
-void		load_textures_and_bump_maps(t_engine *engine);
-void		reload_textures_and_bump_maps(t_engine *engine);
-void		textures_and_bump_maps_draw(t_gui_box *self, t_engine *engine,
+void		load_textures_and_normal_maps(t_engine *engine);
+void		reload_textures_and_normal_maps(t_engine *engine);
+void		textures_and_normal_maps_draw(t_gui_box *self, t_engine *engine,
 				t_draw_data draw_data);
-void		textures_and_bump_maps_on_click(t_gui_box *self, t_engine *engine,
+void		textures_and_normal_maps_on_click(t_gui_box *self, t_engine *engine,
 				t_click_data click_data);
 void		click_ppm_box(t_engine *engine, size_t index);
 

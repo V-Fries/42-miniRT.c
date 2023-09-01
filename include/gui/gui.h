@@ -82,23 +82,23 @@ enum e_texture_being_changed
 	CAP_TEXTURE
 };
 
-enum e_bump_map_and_texture
+enum e_normal_map_and_texture
 {
 	TEXTURE,
-	BUMP_MAP
+	NORMAL_MAP
 };
 
-typedef struct s_textures_and_bump_maps
+typedef struct s_textures_and_normal_maps
 {
 	struct s_gui_box	*selection_box;
 	struct timeval		last_update;
 	char				*path_to_textures_folder;
 	t_gui_boxes			textures_boxes;
 	char				**textures_files;
-	char				*path_to_bump_maps_folder;
-	t_gui_boxes			bump_maps_boxes;
-	char				**bump_maps_files;
-}	t_textures_and_bump_maps;
+	char				*path_to_normal_maps_folder;
+	t_gui_boxes			normal_maps_boxes;
+	char				**normal_maps_files;
+}	t_textures_and_normal_maps;
 
 typedef struct s_color_and_material
 {
@@ -109,8 +109,8 @@ typedef struct s_color_and_material
 	struct s_gui_box				*cap_checkered_pattern_color_toggle_box;
 	enum e_color_being_changed		color_being_changed;
 	enum e_texture_being_changed	texture_being_changed;
-	enum e_bump_map_and_texture		changing_bump_map_or_texture;
-	t_textures_and_bump_maps		textures_and_bump_maps;
+	enum e_normal_map_and_texture	changing_normal_map_or_texture;
+	t_textures_and_normal_maps		textures_and_normal_maps;
 }	t_color_and_material;
 
 typedef struct s_screen_shot

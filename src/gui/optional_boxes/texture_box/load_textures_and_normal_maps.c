@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   load_textures_and_bump_maps.c                      :+:      :+:    :+:   */
+/*   load_textures_and_normal_maps.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -23,31 +23,31 @@ static void	create_ppm_boxes(t_engine *engine, t_gui_boxes *boxes,
 				char **files);
 static void	create_ppm_box(t_engine *engine, t_gui_box *box, char *file);
 
-void	load_textures_and_bump_maps(t_engine *engine)
+void	load_textures_and_normal_maps(t_engine *engine)
 {
-	t_textures_and_bump_maps	*textures_and_bump_maps;
+	t_textures_and_normal_maps	*textures_and_normal_maps;
 
-	textures_and_bump_maps
-		= &engine->gui.color_and_material.textures_and_bump_maps;
-	update_ppm_boxes(engine, &textures_and_bump_maps->textures_files,
-		&textures_and_bump_maps->textures_boxes,
-		textures_and_bump_maps->path_to_textures_folder);
-	update_ppm_boxes(engine, &textures_and_bump_maps->bump_maps_files,
-		&textures_and_bump_maps->bump_maps_boxes,
-		textures_and_bump_maps->path_to_bump_maps_folder);
-	textures_and_bump_maps->last_update = ft_get_current_time();
+	textures_and_normal_maps
+		= &engine->gui.color_and_material.textures_and_normal_maps;
+	update_ppm_boxes(engine, &textures_and_normal_maps->textures_files,
+		&textures_and_normal_maps->textures_boxes,
+		textures_and_normal_maps->path_to_textures_folder);
+	update_ppm_boxes(engine, &textures_and_normal_maps->normal_maps_files,
+		&textures_and_normal_maps->normal_maps_boxes,
+		textures_and_normal_maps->path_to_normal_maps_folder);
+	textures_and_normal_maps->last_update = ft_get_current_time();
 }
 
-void	reload_textures_and_bump_maps(t_engine *engine)
+void	reload_textures_and_normal_maps(t_engine *engine)
 {
-	t_textures_and_bump_maps	*textures_and_bump_maps;
+	t_textures_and_normal_maps	*textures_and_normal_maps;
 
-	textures_and_bump_maps
-		= &engine->gui.color_and_material.textures_and_bump_maps;
-	if (ft_get_time_elapsed_in_seconds(textures_and_bump_maps->last_update)
+	textures_and_normal_maps
+		= &engine->gui.color_and_material.textures_and_normal_maps;
+	if (ft_get_time_elapsed_in_seconds(textures_and_normal_maps->last_update)
 		< 5.f)
 		return ;
-	load_textures_and_bump_maps(engine);
+	load_textures_and_normal_maps(engine);
 }
 
 static void	update_ppm_boxes(t_engine *engine, char ***files,
@@ -95,7 +95,7 @@ static void	create_ppm_box(t_engine *engine, t_gui_box *box, char *file)
 	char		*dot_address;
 
 	parent
-		= engine->gui.color_and_material.textures_and_bump_maps.selection_box;
+		= engine->gui.color_and_material.textures_and_normal_maps.selection_box;
 	*box = create_t_gui_box(engine, (t_gui_box_create){parent, \
 			{TEXTURE_BOX_PPM_OFFSET, 0}, \
 			{parent->size.x - TEXTURE_BOX_PPM_OFFSET * 2,
