@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   create_optional_box.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/01 18:25:30 by vfries            #+#    #+#             */
+/*   Updated: 2023/09/01 18:25:31 by vfries           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "gui/box.h"
 
 t_gui_box	create_optional_box(t_engine *engine, const t_gui_box *main_gui_box,
