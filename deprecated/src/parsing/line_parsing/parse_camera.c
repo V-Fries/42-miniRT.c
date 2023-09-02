@@ -18,24 +18,23 @@
 
 static int	get_camera_fov(char *fov_string, float *fov_destination);
 
-int	parse_camera(t_engine *engine, char **scene_content_line,
-		t_rt_file_requirements *rt_file_requirements)
+int	parse_camera(t_engine *minirt, char **scene_content_line,
+					t_rt_file_requirements *rt_file_requirements, t_list **object_list)
 {
+	(void)object_list;
 	if (rt_file_requirements->camera == true)
 		return (error("Error\nCamera already defined\n"));
 	if (ft_split_len(scene_content_line) != 4)
 		return (error("Error\nFailed to get camera line\n"));
 	if (get_position(scene_content_line[1],
-			&engine->camera.position) < 0)
+			&minirt->raytracing_data.camera.position) < 0)
 		return (error("Error\nFailed to get camera position\n"));
 	if (get_normalized_vector(scene_content_line[2],
-			&engine->camera.direction) < 0)
+			&minirt->raytracing_data.camera.direction) < 0)
 		return (error("Error\nFailed to get camera orientation\n"));
 	if (get_camera_fov(scene_content_line[3],
-			&engine->camera.horizontal_fov) < 0)
+			&minirt->raytracing_data.camera.horizontal_fov) < 0)
 		return (error("Error\nFailed to get camera fov\n"));
-	camera_create(&engine->camera, vector2f_create(engine->window.size.x,
-			engine->window.size.y));
 	rt_file_requirements->camera = true;
 	return (0);
 }

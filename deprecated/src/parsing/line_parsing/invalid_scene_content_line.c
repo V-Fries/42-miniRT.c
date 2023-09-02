@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_tracer_gui_api.h                               :+:      :+:    :+:   */
+/*   invalid_scene_content_line.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 14:57:00 by vfries            #+#    #+#             */
-/*   Updated: 2023/05/31 14:57:00 by vfries           ###   ########lyon.fr   */
+/*   Created: 2023/04/21 03:19:02 by vfries            #+#    #+#             */
+/*   Updated: 2023/04/21 03:19:02 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef RAY_TRACER_GUI_API_H
-# define RAY_TRACER_GUI_API_H
 
-# include "engine.h"
+#include "libft.h"
 
-int			add_object(t_engine *engine, t_object object);
-int			add_light(t_engine *engine, t_light light);
-void		remove_object(t_engine *engine, size_t index);
-void		remove_light(t_engine *engine, size_t index);
+void	invalid_scene_content_line(char **scene_content_line)
+{
+	size_t	i;
 
-t_object	*get_clicked_object(t_engine *engine, int x, int y);
-
-#endif
+	ft_putstr_fd("Invalid scene_content line: ", STDERR_FILENO);
+	i = 0;
+	while (scene_content_line[i] != NULL)
+	{
+		ft_putstr_fd(scene_content_line[i], STDERR_FILENO);
+		ft_putstr_fd(" ", STDERR_FILENO);
+		i++;
+	}
+	ft_putstr_fd("\n", STDERR_FILENO);
+}

@@ -8,8 +8,6 @@ include_directories(lib/libft/include)
 include_directories(lib/minilibx_opengl_20191021)
 
 add_executable(minirt
-        include/deprecated/t_ambient_light.h
-        include/deprecated/t_raytracing_data.h
         include/font/render.h
         include/font/rendering_structs.h
         include/font/ttf_parser.h
@@ -40,7 +38,6 @@ add_executable(minirt
         include/export.h
         include/hooks.h
         include/image.h
-        include/init_scene.h
         include/light.h
         include/material.h
         include/object.h
@@ -427,7 +424,6 @@ add_executable(minirt
         src/object/calculate_cache.c
         src/object/objects.c
         src/object/transformations.c
-        src/parsing/line_parsing/utils/add_object_to_object_list.c
         src/parsing/line_parsing/utils/error.c
         src/parsing/line_parsing/utils/get_color.c
         src/parsing/line_parsing/utils/get_float.c
@@ -477,8 +473,7 @@ add_executable(minirt
         src/render_frame/print_fps_counter.c
         src/render_frame/render_frame.c
         src/render_frame/render_user_interface.c
-        src/scene/create.c
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c)
+        src/main.c src/parsing/line_parsing/parse_material.c src/parsing/line_parsing/parse_cone.c)

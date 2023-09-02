@@ -1,24 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_tracer_gui_api.h                               :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 14:57:00 by vfries            #+#    #+#             */
-/*   Updated: 2023/05/31 14:57:00 by vfries           ###   ########lyon.fr   */
+/*   Created: 2023/04/21 03:23:35 by vfries            #+#    #+#             */
+/*   Updated: 2023/04/21 03:24:20 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef RAY_TRACER_GUI_API_H
-# define RAY_TRACER_GUI_API_H
 
-# include "engine.h"
+#include "libft.h"
 
-int			add_object(t_engine *engine, t_object object);
-int			add_light(t_engine *engine, t_light light);
-void		remove_object(t_engine *engine, size_t index);
-void		remove_light(t_engine *engine, size_t index);
-
-t_object	*get_clicked_object(t_engine *engine, int x, int y);
-
-#endif
+int	error(const char *error_message)
+{
+	ft_putstr_fd(error_message, STDERR_FILENO);
+	return (-1);
+}

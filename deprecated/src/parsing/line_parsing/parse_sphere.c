@@ -14,15 +14,16 @@
 
 #include "engine.h"
 #include "parsing.h"
-#include "ray_tracer_gui_api.h"
 
-int	parse_sphere(t_engine *engine, char **scene_content_line,
-		t_rt_file_requirements *rt_file_requirements)
+int	parse_sphere(t_engine *minirt, char **scene_content_line,
+					t_rt_file_requirements *rt_file_requirements, t_list **object_list)
 {
 	t_object	sphere;
 
+	(void)minirt;
 	(void)rt_file_requirements;
-	ft_bzero(&sphere, sizeof(sphere));
+	ft_bzero(&sphere, sizeof(t_object));
+	sphere.type = SPHERE;
 	if (ft_split_len(scene_content_line) != 4)
 		return (error("Error\nFailed to get sphere line\n"));
 	if (get_position(scene_content_line[1], &sphere.position) < 0)
@@ -31,7 +32,5 @@ int	parse_sphere(t_engine *engine, char **scene_content_line,
 		return (error("Error\nFailed to get sphere radius\n"));
 	if (get_color(scene_content_line[3], &sphere.material.albedo) < 0)
 		return (error("Error\nFailed to get sphere albedo\n"));
-	sphere.material.albedo = vector3f_divide(sphere.material.albedo, 255.f);
-	sphere = sphere_create(sphere.position, sphere.radius, sphere.material);
-	return (add_object(engine, sphere));
+	return (add_object_to_object_list(object_list, sphere));
 }

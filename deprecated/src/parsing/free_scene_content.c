@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_tracer_gui_api.h                               :+:      :+:    :+:   */
+/*   free_scene_content.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 14:57:00 by vfries            #+#    #+#             */
-/*   Updated: 2023/05/31 14:57:00 by vfries           ###   ########lyon.fr   */
+/*   Created: 2023/04/21 03:18:59 by vfries            #+#    #+#             */
+/*   Updated: 2023/04/21 03:19:00 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef RAY_TRACER_GUI_API_H
-# define RAY_TRACER_GUI_API_H
 
-# include "engine.h"
+#include <stdlib.h>
 
-int			add_object(t_engine *engine, t_object object);
-int			add_light(t_engine *engine, t_light light);
-void		remove_object(t_engine *engine, size_t index);
-void		remove_light(t_engine *engine, size_t index);
+#include "libft.h"
 
-t_object	*get_clicked_object(t_engine *engine, int x, int y);
+void	free_scene_content(char ***scene_content)
+{
+	size_t	i;
 
-#endif
+	i = 0;
+	while (scene_content[i] != NULL)
+	{
+		ft_free_split(scene_content[i]);
+		i++;
+	}
+	free(scene_content);
+}

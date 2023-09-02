@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_tracer_gui_api.h                               :+:      :+:    :+:   */
+/*   get_float.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 14:57:00 by vfries            #+#    #+#             */
-/*   Updated: 2023/05/31 14:57:00 by vfries           ###   ########lyon.fr   */
+/*   Created: 2023/04/21 03:19:18 by vfries            #+#    #+#             */
+/*   Updated: 2023/04/21 03:19:18 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef RAY_TRACER_GUI_API_H
-# define RAY_TRACER_GUI_API_H
 
-# include "engine.h"
+#include <errno.h>
 
-int			add_object(t_engine *engine, t_object object);
-int			add_light(t_engine *engine, t_light light);
-void		remove_object(t_engine *engine, size_t index);
-void		remove_light(t_engine *engine, size_t index);
+#include "libft.h"
 
-t_object	*get_clicked_object(t_engine *engine, int x, int y);
+int	get_float(char *float_string, float *float_destination)
+{
+	const float	float_value = ft_atof(float_string);
 
-#endif
+	if (errno == ERANGE || errno == EINVAL)
+		return (-1);
+	*float_destination = float_value;
+	return (0);
+}

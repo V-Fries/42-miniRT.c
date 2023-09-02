@@ -231,7 +231,6 @@ SRC				=\
 	object/calculate_cache.c		\
 	\
 	\
-	parsing/line_parsing/utils/add_object_to_object_list.c	\
 	parsing/line_parsing/utils/error.c						\
 	parsing/line_parsing/utils/get_color.c					\
 	parsing/line_parsing/utils/get_float.c					\
@@ -242,8 +241,10 @@ SRC				=\
 	parsing/line_parsing/invalid_scene_content_line.c	\
 	parsing/line_parsing/parse_ambient_light.c			\
 	parsing/line_parsing/parse_camera.c					\
+	parsing/line_parsing/parse_cone.c					\
 	parsing/line_parsing/parse_cylinder.c				\
 	parsing/line_parsing/parse_light.c					\
+	parsing/line_parsing/parse_material.c				\
 	parsing/line_parsing/parse_plane.c					\
 	parsing/line_parsing/parse_sphere.c					\
 	\
@@ -294,9 +295,6 @@ SRC				=\
 	render_frame/print_fps_counter.c		\
 	render_frame/render_frame.c				\
 	render_frame/render_user_interface.c	\
-	\
-	\
-	scene/create.c	\
 	\
 	\
 	close_miniRT.c		\
@@ -380,7 +378,7 @@ all:
 .PHONY:		run
 run:
 			$(MAKE) -j
-			./miniRT data/test.rt || true
+			./miniRT exported_scene.rt || true
 
 $(NAME):	$(OBJS) src/get_window_size.swift
 	@if [ $(OS) = "Darwin" ]; then\

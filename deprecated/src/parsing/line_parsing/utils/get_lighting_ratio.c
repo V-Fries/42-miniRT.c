@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray_tracer_gui_api.h                               :+:      :+:    :+:   */
+/*   get_lighting_ratio.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/05/31 14:57:00 by vfries            #+#    #+#             */
-/*   Updated: 2023/05/31 14:57:00 by vfries           ###   ########lyon.fr   */
+/*   Created: 2023/04/21 03:19:20 by vfries            #+#    #+#             */
+/*   Updated: 2023/04/21 03:19:20 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef RAY_TRACER_GUI_API_H
-# define RAY_TRACER_GUI_API_H
 
-# include "engine.h"
+#include <errno.h>
 
-int			add_object(t_engine *engine, t_object object);
-int			add_light(t_engine *engine, t_light light);
-void		remove_object(t_engine *engine, size_t index);
-void		remove_light(t_engine *engine, size_t index);
+#include "libft.h"
 
-t_object	*get_clicked_object(t_engine *engine, int x, int y);
+int	get_lighting_ratio(char *lighting_ratio_string,
+		float *lighting_ratio_destination)
+{
+	const float	lighting_ratio = ft_atof(lighting_ratio_string);
 
-#endif
+	if (lighting_ratio < 0.0 || lighting_ratio > 1.0
+		|| errno == ERANGE || errno == EINVAL)
+		return (-1);
+	*lighting_ratio_destination = lighting_ratio;
+	return (0);
+}
