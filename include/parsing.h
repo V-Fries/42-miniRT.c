@@ -23,6 +23,15 @@ typedef struct s_rt_file_requirements
 //	bool	light;  // TODO add this for mandatory part
 }	t_rt_file_requirements;
 
+void	parse_cap_checkerboard(t_object *object, char *file);
+void	parse_cap_normal_map(t_object *object, char *file);
+void	parse_cap_texture(t_object *object, char *file);
+void	parse_outline_checkerboard(t_object *object, char *file);
+void	parse_outline_normal_map(t_object *object, char *file);
+void	parse_outline_texture(t_object *object, char *file);
+void	parse_reflection(t_object *object, char *reflection);
+void	parse_specular(t_object *object, char *specular);
+
 int		error(const char *error_message);
 int		get_color(char *color_string, t_color *color_destination);
 int		get_float(char *float_string, float *float_destination);

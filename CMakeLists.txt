@@ -476,4 +476,4 @@ add_executable(minirt
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c src/parsing/line_parsing/parse_material.c src/parsing/line_parsing/parse_cone.c)
+        src/main.c src/parsing/line_parsing/parse_material.c src/parsing/line_parsing/parse_cone.c src/parsing/line_parsing/utils/material/parse_reflection.c src/parsing/line_parsing/utils/material/parse_specular.c src/parsing/line_parsing/utils/material/parse_outline_texture.c src/parsing/line_parsing/utils/material/parse_outline_checkerboard.c src/parsing/line_parsing/utils/material/parse_cap_checkerboard.c src/parsing/line_parsing/utils/material/parse_cap_normal_map.c src/parsing/line_parsing/utils/material/parse_cap_texture.c src/parsing/line_parsing/utils/material/parse_outline_normal_map.c)

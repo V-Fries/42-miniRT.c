@@ -231,6 +231,15 @@ SRC				=\
 	object/calculate_cache.c		\
 	\
 	\
+	parsing/line_parsing/utils/material/parse_cap_checkerboard.c		\
+	parsing/line_parsing/utils/material/parse_cap_normal_map.c			\
+	parsing/line_parsing/utils/material/parse_cap_texture.c				\
+	parsing/line_parsing/utils/material/parse_outline_checkerboard.c	\
+	parsing/line_parsing/utils/material/parse_outline_normal_map.c		\
+	parsing/line_parsing/utils/material/parse_outline_texture.c			\
+	parsing/line_parsing/utils/material/parse_reflection.c				\
+	parsing/line_parsing/utils/material/parse_specular.c				\
+	\
 	parsing/line_parsing/utils/error.c						\
 	parsing/line_parsing/utils/get_color.c					\
 	parsing/line_parsing/utils/get_float.c					\
