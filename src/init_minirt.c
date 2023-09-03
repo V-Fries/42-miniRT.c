@@ -56,7 +56,7 @@ int	init_engine(t_engine *engine, const char *start_up_scene, const char **argv)
 
 	init_hooks(engine);
 
-	if (get_font(&engine->gui.font, "data/fonts/Envy Code R PR7/Envy Code R.ttf") < 0)
+	if (get_font(&engine->gui.font, "assets/fonts/Envy Code R PR7/Envy Code R.ttf") < 0)
 		return (-1); // TODO free everything
 	init_gui(engine);
 	if (parse_scene(engine, start_up_scene) < 0)
