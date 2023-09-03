@@ -72,9 +72,9 @@ static int	write_outline_texture(t_material material, int fd)
 	if (return_code < 0)
 		return (-1);
 	if (material.texture.outline.texture_type == CHECKERBOARD)
-		return_code = dprintf(fd, "\toutline_checkerboard:%f,%f-%f,%f,%f",
-				material.texture.outline.checkerboard.size.x,
-				material.texture.outline.checkerboard.size.y,
+		return_code = dprintf(fd, "\toutline_checkerboard:%u,%u-%f,%f,%f",
+				(u_int32_t)material.texture.outline.checkerboard.size.x,
+				(u_int32_t)material.texture.outline.checkerboard.size.y,
 				material.texture.outline.checkerboard.albedo.x * 255.f,
 				material.texture.outline.checkerboard.albedo.y * 255.f,
 				material.texture.outline.checkerboard.albedo.z * 255.f);

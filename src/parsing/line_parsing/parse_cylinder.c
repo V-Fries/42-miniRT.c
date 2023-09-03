@@ -31,6 +31,7 @@ int	parse_cylinder(t_engine *engine, char **scene_content_line,
 		return (error("Error\nFailed to get cylinder orientation\n"));
 	if (get_float(scene_content_line[3], &cylinder.radius) < 0)
 		return (error("Error\nFailed to get cylinder radius\n"));
+	cylinder.radius /= 2.f;
 	if (get_float(scene_content_line[4], &cylinder.height) < 0)
 		return (error("Error\nFailed to get cylinder y\n"));
 	if (get_color(scene_content_line[5], &cylinder.material.albedo) < 0)

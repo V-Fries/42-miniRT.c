@@ -29,6 +29,7 @@ int	parse_sphere(t_engine *engine, char **scene_content_line,
 		return (error("Error\nFailed to get sphere position\n"));
 	if (get_float(scene_content_line[2], &sphere.radius) < 0)
 		return (error("Error\nFailed to get sphere radius\n"));
+	sphere.radius /= 2.f;
 	if (get_color(scene_content_line[3], &sphere.material.albedo) < 0)
 		return (error("Error\nFailed to get sphere albedo\n"));
 	sphere.material.albedo = vector3f_divide(sphere.material.albedo, 255.f);

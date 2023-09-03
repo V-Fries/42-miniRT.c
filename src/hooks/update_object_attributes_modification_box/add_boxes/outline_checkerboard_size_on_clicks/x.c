@@ -30,7 +30,7 @@ void	outline_checkerboard_size_input_box_x_on_click_plus(t_gui_box *self,
 	if ((int)object->material.texture.outline.checkerboard.size.x % 2)
 		object->material.texture.outline.checkerboard.size.x++;
 	object->material.texture.outline.checkerboard.size.x
-			= (int)object->material.texture.outline.checkerboard.size.x + 2;
+		= (int)object->material.texture.outline.checkerboard.size.x + 2;
 	object->material.texture.outline.texture_type = CHECKERBOARD;
 	engine->scene_changed = true;
 	update_xy_float_input_boxes(engine,
