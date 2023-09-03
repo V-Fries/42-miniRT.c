@@ -1,7 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_outline_checkerboard.c                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/03 11:05:36 by vfries            #+#    #+#             */
+/*   Updated: 2023/09/03 11:06:28 by vfries           ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "object.h"
 #include "parsing.h"
 
-void	parse_outline_checkerboard(t_object *object, char *raw_checkerboard_data)
+void	parse_outline_checkerboard(t_object *object,
+			char *raw_checkerboard_data)
 {
 	const t_checkerboard_parsing_data	checkerboard_data
 		= get_checkerboard_parsing_data(raw_checkerboard_data);
