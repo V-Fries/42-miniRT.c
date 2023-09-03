@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 03:19:09 by vfries            #+#    #+#             */
-/*   Updated: 2023/04/21 03:26:45 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2023/09/03 20:18:37 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parse_light(t_engine *engine, char **scene_content_line,
 	float		brightness;
 	t_color		color;
 
-	(void)rt_file_requirements; // TODO remove this in bonus part
+	(void)rt_file_requirements; // TODO remove this in mandatory part
 //	if (rt_file_requirements->light == true)
 //		return (error("Error\nLight already defined\n")); // TODO add this for mandatory part
 	if (ft_split_len(scene_content_line) != 4)
