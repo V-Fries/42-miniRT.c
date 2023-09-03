@@ -15,6 +15,7 @@
 
 #include "engine.h"
 #include "parsing.h"
+#include "gui/utils.h"
 
 static int	get_camera_fov(char *fov_string, float *fov_destination);
 
@@ -36,6 +37,8 @@ int	parse_camera(t_engine *engine, char **scene_content_line,
 		return (error("Error\nFailed to get camera fov\n"));
 	camera_create(&engine->camera, vector2f_create(engine->window.size.x,
 			engine->window.size.y));
+	update_float_input_box(engine, engine->camera.horizontal_fov,
+		engine->gui.float_input_boxes.camera_fov);
 	rt_file_requirements->camera = true;
 	return (0);
 }
