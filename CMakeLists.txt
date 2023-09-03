@@ -318,12 +318,12 @@ add_executable(minirt
         src/gui/optional_boxes/texture_box/texture_normal_map_picker/draw.c
         src/gui/optional_boxes/texture_box/texture_normal_map_picker/init_texture_normal_map_picker.c
         src/gui/optional_boxes/texture_box/texture_normal_map_picker/on_click.c
-        src/gui/optional_boxes/texture_box/click_ppm_box.c
-        src/gui/optional_boxes/texture_box/init_selection_boxes.c
+        src/gui/optional_boxes/texture_box/selection_box/click_ppm_box.c
+        src/gui/optional_boxes/texture_box/selection_box/init_selection_boxes.c
         src/gui/optional_boxes/texture_box/init_texture_box.c
-        src/gui/optional_boxes/texture_box/load_textures_and_normal_maps.c
-        src/gui/optional_boxes/texture_box/textures_and_normal_maps_draw.c
-        src/gui/optional_boxes/texture_box/textures_and_normal_maps_on_click.c
+        src/gui/optional_boxes/texture_box/selection_box/load_textures_and_normal_maps.c
+        src/gui/optional_boxes/texture_box/selection_box/textures_and_normal_maps_draw.c
+        src/gui/optional_boxes/texture_box/selection_box/textures_and_normal_maps_on_click.c
         src/gui/optional_boxes/add_button_box.c
         src/gui/optional_boxes/add_plus_minus_box.c
         src/gui/optional_boxes/create_optional_box.c
