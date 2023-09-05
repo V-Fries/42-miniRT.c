@@ -42,6 +42,7 @@ add_executable(minirt
         include/material.h
         include/object.h
         include/parsing.h
+        include/path.h
         include/ppm.h
         include/ray_tracer_gui_api.h
         include/render_frame.h
@@ -244,6 +245,7 @@ add_executable(minirt
         lib/minilibx_opengl_20191021/mlx_rgb.c
         lib/minilibx_opengl_20191021/mlx_shaders.c
         lib/minilibx_opengl_20191021/mlx_xpm.c
+        src/export/scene/datetime.c
         src/export/scene/material.c
         src/export/scene/object.c
         src/export/scene/scene.c
@@ -315,6 +317,11 @@ add_executable(minirt
         src/gui/optional_boxes/texture_box/outline_cap_picker/draw.c
         src/gui/optional_boxes/texture_box/outline_cap_picker/init_outline_cap_picker.c
         src/gui/optional_boxes/texture_box/outline_cap_picker/on_click.c
+        src/gui/optional_boxes/texture_box/selection_box/click_ppm_box.c
+        src/gui/optional_boxes/texture_box/selection_box/init_selection_boxes.c
+        src/gui/optional_boxes/texture_box/selection_box/load_textures_and_normal_maps.c
+        src/gui/optional_boxes/texture_box/selection_box/textures_and_normal_maps_draw.c
+        src/gui/optional_boxes/texture_box/selection_box/textures_and_normal_maps_on_click.c
         src/gui/optional_boxes/texture_box/texture_normal_map_picker/draw.c
         src/gui/optional_boxes/texture_box/texture_normal_map_picker/init_texture_normal_map_picker.c
         src/gui/optional_boxes/texture_box/texture_normal_map_picker/on_click.c
@@ -419,6 +426,15 @@ add_executable(minirt
         src/object/calculate_cache.c
         src/object/objects.c
         src/object/transformations.c
+        src/parsing/line_parsing/utils/material/get_checkerboard_parsing_data.c
+        src/parsing/line_parsing/utils/material/parse_cap_checkerboard.c
+        src/parsing/line_parsing/utils/material/parse_cap_normal_map.c
+        src/parsing/line_parsing/utils/material/parse_cap_texture.c
+        src/parsing/line_parsing/utils/material/parse_outline_checkerboard.c
+        src/parsing/line_parsing/utils/material/parse_outline_normal_map.c
+        src/parsing/line_parsing/utils/material/parse_outline_texture.c
+        src/parsing/line_parsing/utils/material/parse_reflection.c
+        src/parsing/line_parsing/utils/material/parse_specular.c
         src/parsing/line_parsing/utils/error.c
         src/parsing/line_parsing/utils/get_color.c
         src/parsing/line_parsing/utils/get_float.c
@@ -428,8 +444,10 @@ add_executable(minirt
         src/parsing/line_parsing/invalid_scene_content_line.c
         src/parsing/line_parsing/parse_ambient_light.c
         src/parsing/line_parsing/parse_camera.c
+        src/parsing/line_parsing/parse_cone.c
         src/parsing/line_parsing/parse_cylinder.c
         src/parsing/line_parsing/parse_light.c
+        src/parsing/line_parsing/parse_material.c
         src/parsing/line_parsing/parse_plane.c
         src/parsing/line_parsing/parse_sphere.c
         src/parsing/free_scene_content.c
@@ -472,4 +490,4 @@ add_executable(minirt
         src/color.c
         src/init_minirt.c
         src/main.c
-        src/export/scene/datetime.c src/gui/object_list_box/update_object_list_icons.c src/gui/object_list_box/update_object_list_icons.c)
+        src/export/scene/datetime.c src/gui/object_list_box/update_object_list_icons.c)
