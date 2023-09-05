@@ -72,6 +72,7 @@ SRC				=\
 	gui/object_list_box/object_box_getters.c			\
 	gui/object_list_box/object_list_gui_box_draw.c		\
 	gui/object_list_box/object_list_gui_box_on_click.c	\
+	gui/object_list_box/update_object_list_icons.c		\
 	\
 	gui/object_modification_box/init_color_picker/add_hover_color_circle.c	\
 	gui/object_modification_box/init_color_picker/color_getter_functions.c	\

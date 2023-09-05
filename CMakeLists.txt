@@ -8,8 +8,6 @@ include_directories(lib/libft/include)
 include_directories(lib/minilibx_opengl_20191021)
 
 add_executable(minirt
-        include/deprecated/t_ambient_light.h
-        include/deprecated/t_raytracing_data.h
         include/font/render.h
         include/font/rendering_structs.h
         include/font/ttf_parser.h
@@ -40,7 +38,6 @@ add_executable(minirt
         include/export.h
         include/hooks.h
         include/image.h
-        include/init_scene.h
         include/light.h
         include/material.h
         include/object.h
@@ -321,12 +318,7 @@ add_executable(minirt
         src/gui/optional_boxes/texture_box/texture_normal_map_picker/draw.c
         src/gui/optional_boxes/texture_box/texture_normal_map_picker/init_texture_normal_map_picker.c
         src/gui/optional_boxes/texture_box/texture_normal_map_picker/on_click.c
-        src/gui/optional_boxes/texture_box/click_ppm_box.c
-        src/gui/optional_boxes/texture_box/init_selection_boxes.c
         src/gui/optional_boxes/texture_box/init_texture_box.c
-        src/gui/optional_boxes/texture_box/load_textures_and_normal_maps.c
-        src/gui/optional_boxes/texture_box/textures_and_normal_maps_draw.c
-        src/gui/optional_boxes/texture_box/textures_and_normal_maps_on_click.c
         src/gui/optional_boxes/add_button_box.c
         src/gui/optional_boxes/add_plus_minus_box.c
         src/gui/optional_boxes/create_optional_box.c
@@ -427,7 +419,6 @@ add_executable(minirt
         src/object/calculate_cache.c
         src/object/objects.c
         src/object/transformations.c
-        src/parsing/line_parsing/utils/add_object_to_object_list.c
         src/parsing/line_parsing/utils/error.c
         src/parsing/line_parsing/utils/get_color.c
         src/parsing/line_parsing/utils/get_float.c
@@ -477,9 +468,8 @@ add_executable(minirt
         src/render_frame/print_fps_counter.c
         src/render_frame/render_frame.c
         src/render_frame/render_user_interface.c
-        src/scene/create.c
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
         src/main.c
-        src/export/scene/datetime.c)
+        src/export/scene/datetime.c src/gui/object_list_box/update_object_list_icons.c src/gui/object_list_box/update_object_list_icons.c)

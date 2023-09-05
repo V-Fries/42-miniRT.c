@@ -39,4 +39,6 @@ void	create_light_gui_box(t_engine *engine, t_gui_box *gui_box,
 
 t_image	*object_box_get_icon_image(const t_gui_box *object_box);
 
+void	update_object_list_icons(t_engine *engine);
+
 #endif
