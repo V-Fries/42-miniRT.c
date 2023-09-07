@@ -2,8 +2,8 @@
 
 #include "gui/box.h"
 #include "gui/UI.h"
-#include "font/render.h"
 #include "gui/main_gui_box.h"
+#include "font/render.h"
 #include "events.h"
 #include "export.h"
 
