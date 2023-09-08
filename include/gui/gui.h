@@ -55,6 +55,7 @@ typedef struct s_float_input_boxes
 	struct s_gui_box		*height;
 	t_xyz_float_input_boxes	normal;
 	t_xyz_float_input_boxes	position;
+	t_xyz_float_input_boxes	scale;
 	struct s_gui_box		*radius;
 	struct s_gui_box		*reflection;
 	struct s_gui_box		*specular_reflection;

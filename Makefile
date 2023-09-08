@@ -141,6 +141,10 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/add_boxes/position_input_box_on_clicks/y.c	\
 	hooks/update_object_attributes_modification_box/add_boxes/position_input_box_on_clicks/z.c	\
 	\
+	hooks/update_object_attributes_modification_box/add_boxes/scale_input_box_on_clicks/x.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/scale_input_box_on_clicks/y.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/scale_input_box_on_clicks/z.c	\
+	\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/add_toggle_box.c		\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/add_x_y_box.c			\
 	hooks/update_object_attributes_modification_box/add_boxes/utils/add_x_y_z_box.c			\
@@ -161,6 +165,7 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/add_boxes/add_position_box.c								\
 	hooks/update_object_attributes_modification_box/add_boxes/add_radius_box.c									\
 	hooks/update_object_attributes_modification_box/add_boxes/add_reflection_box.c								\
+	hooks/update_object_attributes_modification_box/add_boxes/add_scale_box.c									\
 	hooks/update_object_attributes_modification_box/add_boxes/add_specular_reflection_box.c						\
 	hooks/update_object_attributes_modification_box/add_boxes/add_texture_button.c								\
 	\
