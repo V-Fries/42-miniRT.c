@@ -71,7 +71,7 @@ static char	*get_obj_name(const char *obj_file)
 void	mesh_free(t_mesh *mesh)
 {
 	vectors3f_free(&mesh->base_vertex);
-	vectors3f_free(&mesh->normals);
+	vectors3f_free(&mesh->base_normals);
 	mesh_faces_free(&mesh->faces);
 	ft_bzero(mesh, sizeof(*mesh));
 }
@@ -85,12 +85,17 @@ static int	init_cache(t_object *mesh_object)
 			mesh_object->mesh.base_vertex.length) < 0)
 		return (-1);
 	cache->vertex.length = mesh_object->mesh.base_vertex.length;
+	if (vectors3f_initialize(&cache->normals,
+			mesh_object->mesh.base_normals.length) < 0)
+		return (-1);
+	cache->normals.length = mesh_object->mesh.base_normals.length;
 	cache->translation = create_translation_matrix(mesh_object->position);
 	cache->scale_vector = (t_vector3f){1, 1, 1};
 	cache->scale = create_scale_matrix(cache->scale_vector);
 	mesh_object->axis = (t_vector3f){0, 0, 0};
 	mesh_object->axis_degrees = mesh_object->axis;
 	cache->rotation = create_rotation_matrix(mesh_object->axis);
-	mesh_object_calculate_cache(mesh_object);
+	mesh_object_update_normals(mesh_object);
+	mesh_object_update_vertex(mesh_object);
 	return (0);
 }

@@ -69,7 +69,7 @@ static int	parse_normal_line(t_mesh *mesh, char **split_line)
 	new_normal.z = ft_atof(split_line[3]);
 	if (errno != 0)
 		return (0);
-	if (vectors3f_add(&mesh->normals, new_normal) < 0)
+	if (vectors3f_add(&mesh->base_normals, new_normal) < 0)
 		return (-1);
 	return (1);
 }
@@ -115,7 +115,7 @@ static int	parse_face_vertex(t_mesh *mesh, t_vector2i *face, char *vertex_face)
 	if (errno != 0)
 		return (0);
 	if (face->x > (int)mesh->base_vertex.length
-		|| face->y > (int)mesh->normals.length)
+		|| face->y > (int)mesh->base_normals.length)
 		return (0);
 	return (1);
 }

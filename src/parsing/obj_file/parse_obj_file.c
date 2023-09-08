@@ -48,7 +48,7 @@ static int	initialize_vectors_in_mesh(t_mesh *mesh)
 {
 	if (vectors3f_initialize(&mesh->base_vertex, 100) < 0)
 		return (-1);
-	if (vectors3f_initialize(&mesh->normals, 100) < 0)
+	if (vectors3f_initialize(&mesh->base_normals, 100) < 0)
 	{
 		vectors3f_free(&mesh->base_vertex);
 		return (-1);
@@ -56,7 +56,7 @@ static int	initialize_vectors_in_mesh(t_mesh *mesh)
 	if (mesh_faces_initialize(&mesh->faces, 100) < 0)
 	{
 		vectors3f_free(&mesh->base_vertex);
-		vectors3f_free(&mesh->normals);
+		vectors3f_free(&mesh->base_normals);
 		return (-1);
 	}
 	return (0);

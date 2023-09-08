@@ -65,7 +65,7 @@ t_hit	calculate_mesh_distance(const t_ray *ray, const t_object *mesh)
 		if (distance > 0.f && (t == -1.f || distance < t))
 		{
 			t = distance;
-			hit.normal = mesh->mesh.normals.data[\
+			hit.normal = mesh->cache.mesh.normals.data[\
 						mesh->mesh.faces.data[i].vertex_a.y - 1];
 		}
 		i++;

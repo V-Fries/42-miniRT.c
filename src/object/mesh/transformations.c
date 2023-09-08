@@ -22,7 +22,7 @@ void	mesh_object_move(t_object *mesh_object, const t_vector3f movement_axis,
 			vector3f_multiply(movement_axis, distance));
 	mesh_object->cache.mesh.translation = create_translation_matrix(
 			mesh_object->position);
-	mesh_object_calculate_cache(mesh_object);
+	mesh_object_update_vertex(mesh_object);
 }
 
 void	mesh_object_set_position(t_object *mesh_object,
@@ -32,7 +32,7 @@ void	mesh_object_set_position(t_object *mesh_object,
 		return ;
 	mesh_object->position = position;
 	mesh_object->cache.mesh.translation = create_translation_matrix(position);
-	mesh_object_calculate_cache(mesh_object);
+	mesh_object_update_vertex(mesh_object);
 }
 
 void	mesh_object_set_rotation(t_object *mesh_object,
@@ -43,7 +43,8 @@ void	mesh_object_set_rotation(t_object *mesh_object,
 	mesh_object->axis = rotation_axis;
 	mesh_object->cache.mesh.rotation = create_rotation_matrix(
 			mesh_object->axis);
-	mesh_object_calculate_cache(mesh_object);
+	mesh_object_update_normals(mesh_object);
+	mesh_object_update_vertex(mesh_object);
 }
 
 void	mesh_object_set_scale(t_object *mesh_object, const t_vector3f scale)
@@ -52,5 +53,5 @@ void	mesh_object_set_scale(t_object *mesh_object, const t_vector3f scale)
 		return ;
 	mesh_object->cache.mesh.scale_vector = scale;
 	mesh_object->cache.mesh.scale = create_scale_matrix(scale);
-	mesh_object_calculate_cache(mesh_object);
+	mesh_object_update_vertex(mesh_object);
 }
