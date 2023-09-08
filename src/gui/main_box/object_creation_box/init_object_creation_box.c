@@ -21,7 +21,7 @@
 #include "engine.h"
 #include "colors.h"
 
-#define NUMBER_OF_OBJECT_TYPES 5
+#define NUMBER_OF_OBJECT_TYPES 6
 
 static void	init_object_creation_children(t_engine *engine, t_gui_box *gui_box);
 static void	create_images(t_engine *engine, t_gui_box *gui_box);
@@ -51,7 +51,8 @@ static void	init_object_creation_children(t_engine *engine, t_gui_box *gui_box)
 	init_object_creation_box(engine, gui_box->children.data + 1, PLANE);
 	init_object_creation_box(engine, gui_box->children.data + 2, CYLINDER);
 	init_object_creation_box(engine, gui_box->children.data + 3, CONE);
-	init_object_creation_box(engine, gui_box->children.data + 4, LIGHT);
+	init_object_creation_box(engine, gui_box->children.data + 4, MESH);
+	init_object_creation_box(engine, gui_box->children.data + 5, LIGHT);
 	engine->gui.object_creation_boxes = &gui_box->children;
 }
 
@@ -74,10 +75,13 @@ static void	init_object_creation_box(const t_engine *engine, t_gui_box *gui_box,
 {
 	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
 	change_image_color(&gui_box->on_hover_image, HOVER_GUI_COLOR);
-	draw_icon(&gui_box->image, type, COLOR_TRANSPARENT,
-		engine->gui.color_and_material.material_to_assign_to_new_objects);
-	draw_icon(&gui_box->on_hover_image, type, HOVER_GUI_COLOR,
-		engine->gui.color_and_material.material_to_assign_to_new_objects);
+	if (type != MESH) // TODO make a mesh icon
+	{
+		draw_icon(&gui_box->image, type, COLOR_TRANSPARENT,
+			engine->gui.color_and_material.material_to_assign_to_new_objects);
+		draw_icon(&gui_box->on_hover_image, type, HOVER_GUI_COLOR,
+			engine->gui.color_and_material.material_to_assign_to_new_objects);
+	}
 	round_image_corners(&gui_box->on_hover_image, BOX_ROUNDING_RADIUS);
 	round_image_corners(&gui_box->image, BOX_ROUNDING_RADIUS);
 	if (type == SPHERE)
@@ -88,6 +92,8 @@ static void	init_object_creation_box(const t_engine *engine, t_gui_box *gui_box,
 		gui_box->on_click = &cylinder_create_on_click;
 	else if (type == CONE)
 		gui_box->on_click = &cone_create_on_click;
+	else if (type == MESH)
+		gui_box->on_click = &mesh_create_on_click;
 	else
 		gui_box->on_click = &light_create_on_click;
 }

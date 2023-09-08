@@ -84,7 +84,7 @@ static void	create_mesh_boxes(t_engine *engine, t_gui_boxes *boxes,
 	while (++i < boxes->size)
 		create_mesh_box(engine, &boxes->data[i], files[i]);
 }
-#include "stdio.h"
+
 static void	create_mesh_box(t_engine *engine, t_gui_box *box, char *file)
 {
 	t_gui_box	*parent;
@@ -97,7 +97,6 @@ static void	create_mesh_box(t_engine *engine, t_gui_box *box, char *file)
 			get_normal_box_size(\
 				engine->gui.object_attributes_modification_box)},
 			true});
-	printf("%s\n", file);
 	file = ft_strrchr(file, '/') + 1;
 	dot_address = ft_strrchr(file, '.');
 	*dot_address = '\0';

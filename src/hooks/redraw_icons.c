@@ -33,7 +33,9 @@ void	redraw_icons(t_engine *engine, t_material material)
 		CYLINDER, material);
 	redraw_object_creation_box(engine->gui.object_creation_boxes->data + 3,
 		CONE, material);
-	redraw_object_creation_box(engine->gui.object_creation_boxes->data + 4,
+//	redraw_object_creation_box(engine->gui.object_creation_boxes->data + 4,
+//		MESH, material); // TODO make a mesh icon
+	redraw_object_creation_box(engine->gui.object_creation_boxes->data + 5,
 		LIGHT, material);
 }
 

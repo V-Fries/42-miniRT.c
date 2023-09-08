@@ -122,6 +122,18 @@ void	cone_create_on_click(t_gui_box *self, t_engine *engine,
 	(void)self;
 }
 
+void	mesh_create_on_click(t_gui_box *self, t_engine *engine,
+			t_click_data click_data)
+{
+	(void)self;
+	if (click_data.button != BUTTON_LEFT)
+		return ;
+	if (engine->gui.current_optional_box == MESH_OBJECT_CREATION_BOX)
+		engine->gui.current_optional_box = NO_OPTIONAL_BOX;
+	else
+		engine->gui.current_optional_box = MESH_OBJECT_CREATION_BOX;
+}
+
 void	light_create_on_click(t_gui_box *self, t_engine *engine,
 			t_click_data click_data)
 {
