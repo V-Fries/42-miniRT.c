@@ -168,6 +168,7 @@ SRC				=\
 	hooks/update_object_attributes_modification_box/init_cone_attributes_modification_box.c		\
 	hooks/update_object_attributes_modification_box/init_cylinder_attributes_modification_box.c	\
 	hooks/update_object_attributes_modification_box/init_light_attributes_modification_box.c	\
+	hooks/update_object_attributes_modification_box/init_mesh_attributes_modification_box.c		\
 	hooks/update_object_attributes_modification_box/init_plane_attributes_modification_box.c	\
 	hooks/update_object_attributes_modification_box/init_sphere_attributes_modification_box.c	\
 	hooks/update_object_attributes_modification_box/update_object_attributes_modification_box.c	\

@@ -156,6 +156,10 @@ void		mesh_object_move(t_object *mesh_object,
 				const t_vector3f movement_axis, const float distance);
 void		mesh_object_set_position(t_object *mesh_object,
 				const t_vector3f position);
+void		mesh_object_set_rotation(t_object *mesh_object,
+				const t_vector3f rotation_axis);
+void		mesh_object_set_scale(t_object *mesh_object,
+				const t_vector3f scale);
 
 //	plane/create.c
 t_object	plane_create(const t_vector3f position, const t_vector3f normal,

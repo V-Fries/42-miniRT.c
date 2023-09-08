@@ -1,16 +1,21 @@
 #include <math.h>
 
+#include "libft.h"
+
 #include "math/matrix.h"
 
 static t_matrix4	create_rotation_x_matrix(const float theta);
 static t_matrix4	create_rotation_y_matrix(const float theta);
 static t_matrix4	create_rotation_z_matrix(const float theta);
 
-t_matrix4	create_rotation_matrix(const t_vector3f rotation)
+t_matrix4	create_rotation_matrix(const t_vector3f degrees)
 {
-	const t_matrix4	x_rotation = create_rotation_x_matrix(rotation.x);
-	const t_matrix4	y_rotation = create_rotation_y_matrix(rotation.y);
-	const t_matrix4	z_rotation = create_rotation_z_matrix(rotation.z);
+	const t_matrix4	x_rotation = create_rotation_x_matrix(
+			ft_angle_to_theta(degrees.x));
+	const t_matrix4	y_rotation = create_rotation_y_matrix(
+			ft_angle_to_theta(degrees.y));
+	const t_matrix4	z_rotation = create_rotation_z_matrix(
+			ft_angle_to_theta(degrees.z));
 	const t_matrix4	x_times_y = matrix4_multiply(&x_rotation, &y_rotation);
 
 	return (matrix4_multiply(&x_times_y, &z_rotation));

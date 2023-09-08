@@ -48,6 +48,8 @@ void		init_cylinder_attributes_modification_box(t_engine *engine,
 				t_gui_box *gui_box);
 void		init_light_attributes_modification_box(t_engine *engine,
 				t_gui_box *gui_box);
+void		init_mesh_attributes_modification_box(t_engine *engine,
+				t_gui_box *gui_box);
 void		init_plane_attributes_modification_box(t_engine *engine,
 				t_gui_box *gui_box);
 void		init_sphere_attributes_modification_box(t_engine *engine,

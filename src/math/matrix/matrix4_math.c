@@ -10,44 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "math/matrix.h"
+#include <stdint.h>
 
-static float	multiply_row_column(const t_matrix4 *m1, const t_matrix4 *m2,
-					int y, int x);
+#include "math/matrix.h"
 
 t_matrix4	matrix4_multiply(const t_matrix4 *m1, const t_matrix4 *m2)
 {
 	t_matrix4	result;
-	int			y;
-	int			x;
+	int8_t		y;
+	int8_t		x;
 
-	result = matrix4_create(0);
-	y = 0;
-	x = 0;
-	while (y < 4)
+	y = -1;
+	while (++y < 4)
 	{
-		while (x < 4)
-		{
-			result.matrix[y][x] = multiply_row_column(m1, m2, y, x);
-			x++;
-		}
-		y++;
-	}
-	return (result);
-}
-
-static float	multiply_row_column(const t_matrix4 *m1, const t_matrix4 *m2,
-					const int y, const int x)
-{
-	float	result;
-	int		i;
-
-	result = 0;
-	i = 0;
-	while (i < 4)
-	{
-		result += m1->matrix[y][i] * m2->matrix[i][x];
-		i++;
+		x = -1;
+		while (++x < 4)
+			result.matrix[x][y] = m1->matrix[x][0] * m2->matrix[0][y]
+				+ m1->matrix[x][1] * m2->matrix[1][y]
+				+ m1->matrix[x][2] * m2->matrix[2][y]
+				+ m1->matrix[x][3] * m2->matrix[3][y];
 	}
 	return (result);
 }

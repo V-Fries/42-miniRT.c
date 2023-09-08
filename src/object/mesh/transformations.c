@@ -35,13 +35,12 @@ void	mesh_object_set_position(t_object *mesh_object,
 	mesh_object_calculate_cache(mesh_object);
 }
 
-void	mesh_object_rotate(t_object *mesh_object,
-			const t_vector3f rotation_axis, const float degrees)
+void	mesh_object_set_rotation(t_object *mesh_object,
+			const t_vector3f rotation_axis)
 {
 	if (mesh_object->type != MESH)
 		return ;
-	mesh_object->axis = vector3f_add(mesh_object->axis,
-			vector3f_multiply(rotation_axis, degrees));
+	mesh_object->axis = rotation_axis;
 	mesh_object->cache.mesh.rotation = create_rotation_matrix(
 			mesh_object->axis);
 	mesh_object_calculate_cache(mesh_object);
