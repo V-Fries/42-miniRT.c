@@ -88,7 +88,9 @@ static int	init_cache(t_object *mesh_object)
 	cache->translation = create_translation_matrix(mesh_object->position);
 	cache->scale_vector = (t_vector3f){1, 1, 1};
 	cache->scale = create_scale_matrix(cache->scale_vector);
+	mesh_object->axis = (t_vector3f){0, 0, 0};
+	mesh_object->axis_degrees = mesh_object->axis;
 	cache->rotation = create_rotation_matrix(mesh_object->axis);
-	object_calculate_cache(mesh_object);
+	mesh_object_calculate_cache(mesh_object);
 	return (0);
 }
