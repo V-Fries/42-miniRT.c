@@ -85,6 +85,12 @@ SRC				=\
 	\
 	gui/object_modification_box/init_object_modification_box.c				\
 	\
+	gui/optional_boxes/add_mesh_object_box/click_mesh_box.c					\
+	gui/optional_boxes/add_mesh_object_box/init_add_mesh_object_box.c		\
+	gui/optional_boxes/add_mesh_object_box/load_mesh_objects.c				\
+	gui/optional_boxes/add_mesh_object_box/mesh_object_selection_draw.c		\
+	gui/optional_boxes/add_mesh_object_box/mesh_object_selection_on_click.c	\
+	\
 	gui/optional_boxes/settings_box/init_antialiasing_toggle_box.c	\
 	gui/optional_boxes/settings_box/init_cam_fov_box.c				\
 	gui/optional_boxes/settings_box/init_max_resolution_reduction.c	\

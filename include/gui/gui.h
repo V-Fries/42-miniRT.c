@@ -125,6 +125,7 @@ enum e_optional_box
 	NO_OPTIONAL_BOX = -1,
 	SETTINGS_BOX,
 	TEXTURE_BOX,
+	MESH_OBJECT_CREATION_BOX,
 	NUMBER_OF_OPTIONAL_BOXES
 };
 
@@ -139,6 +140,15 @@ typedef struct s_message
 	int			y_position;
 }	t_message;
 
+typedef struct s_mesh_objects
+{
+	struct s_gui_box	*mesh_object_creation_box;
+	struct s_gui_box	*selection_box;
+	struct timeval		last_update;
+	t_gui_boxes			mesh_boxes;
+	char				**mesh_files;
+}	t_mesh_objects;
+
 typedef struct s_gui
 {
 	t_font					font;
@@ -149,6 +159,7 @@ typedef struct s_gui
 	t_gui_boxes				optional_gui_boxes;
 	enum e_optional_box		current_optional_box;
 	t_color_and_material	color_and_material;
+	t_mesh_objects			mesh_objects;
 	void					(*draw_gui_image)(t_image *destination, \
 								const t_image *source, t_vector2i position);
 	t_fps					fps;
