@@ -19,7 +19,7 @@
 
 typedef struct s_mesh
 {
-	t_vectors3f		vertex;
+	t_vectors3f		base_vertex;
 	t_vectors3f		normals;
 	t_mesh_faces	faces;
 }	t_mesh;

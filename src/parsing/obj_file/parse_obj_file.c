@@ -46,16 +46,16 @@ int	initialize_mesh_with_obj(t_mesh *mesh, const char *file_name)
 
 static int	initialize_vectors_in_mesh(t_mesh *mesh)
 {
-	if (vectors3f_initialize(&mesh->vertex, 100) < 0)
+	if (vectors3f_initialize(&mesh->base_vertex, 100) < 0)
 		return (-1);
 	if (vectors3f_initialize(&mesh->normals, 100) < 0)
 	{
-		vectors3f_free(&mesh->vertex);
+		vectors3f_free(&mesh->base_vertex);
 		return (-1);
 	}
 	if (mesh_faces_initialize(&mesh->faces, 100) < 0)
 	{
-		vectors3f_free(&mesh->vertex);
+		vectors3f_free(&mesh->base_vertex);
 		vectors3f_free(&mesh->normals);
 		return (-1);
 	}

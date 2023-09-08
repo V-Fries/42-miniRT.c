@@ -207,6 +207,7 @@ SRC				=\
 	math/matrix/matrix4.c			\
 	math/matrix/matrix4_inverse.c	\
 	math/matrix/matrix4_math.c		\
+	math/matrix/rotation_matrix.c	\
 	\
 	math/quaternion/quaternion.c				\
 	math/quaternion/quaternion_math.c			\
@@ -235,7 +236,9 @@ SRC				=\
 	object/cylinder/create.c			\
 	object/cylinder/transformations.c	\
 	\
+	object/mesh/cache.c					\
 	object/mesh/create.c				\
+	object/mesh/transformations.c		\
 	\
 	object/plane/create.c				\
 	object/plane/transformations.c		\

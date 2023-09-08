@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_line_in_obj_file.c                                       :+:      :+:    :+:   */
+/*   parse_line_in_obj_file.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tdameros <tdameros@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -54,7 +54,7 @@ static int	parse_vertex_line(t_mesh *mesh, char **split_line)
 	new_vertex.z = ft_atof(split_line[3]);
 	if (errno != 0)
 		return (0);
-	if (vectors3f_add(&mesh->vertex, new_vertex) < 0)
+	if (vectors3f_add(&mesh->base_vertex, new_vertex) < 0)
 		return (-1);
 	return (1);
 }
@@ -114,7 +114,7 @@ static int	parse_face_vertex(t_mesh *mesh, t_vector2i *face, char *vertex_face)
 	ft_free_split(split_face);
 	if (errno != 0)
 		return (0);
-	if (face->x > (int)mesh->vertex.length
+	if (face->x > (int)mesh->base_vertex.length
 		|| face->y > (int)mesh->normals.length)
 		return (0);
 	return (1);

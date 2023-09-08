@@ -16,6 +16,7 @@
 #include "vectors.h"
 
 static char	*get_obj_name(const char *obj_file);
+static int	init_cache(t_object *mesh_object);
 
 /*
  * Return code:
@@ -36,6 +37,11 @@ int	mesh_object_initialize(t_object *mesh_object, const char *obj_file,
 		return (return_code);
 	mesh_object->name = get_obj_name(obj_file);
 	if (mesh_object->name == NULL)
+	{
+		mesh_free(&mesh_object->mesh);
+		return (-1);
+	}
+	if (init_cache(mesh_object) < 0)
 	{
 		mesh_free(&mesh_object->mesh);
 		return (-1);
@@ -64,8 +70,25 @@ static char	*get_obj_name(const char *obj_file)
 
 void	mesh_free(t_mesh *mesh)
 {
-	vectors3f_free(&mesh->vertex);
+	vectors3f_free(&mesh->base_vertex);
 	vectors3f_free(&mesh->normals);
 	mesh_faces_free(&mesh->faces);
 	ft_bzero(mesh, sizeof(*mesh));
+}
+
+static int	init_cache(t_object *mesh_object)
+{
+	t_mesh_object_cache	*cache;
+
+	cache = &mesh_object->cache.mesh;
+	if (vectors3f_initialize(&cache->vertex,
+			mesh_object->mesh.base_vertex.length) < 0)
+		return (-1);
+	cache->vertex.length = mesh_object->mesh.base_vertex.length;
+	cache->translation = create_translation_matrix(mesh_object->position);
+	cache->scale_vector = (t_vector3f){1, 1, 1};
+	cache->scale = create_scale_matrix(cache->scale_vector);
+	cache->rotation = create_rotation_matrix(mesh_object->axis);
+	object_calculate_cache(mesh_object);
+	return (0);
 }

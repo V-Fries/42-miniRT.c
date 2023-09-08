@@ -20,6 +20,7 @@
 # include "colors.h"
 # include "material.h"
 # include "mesh.h"
+#include "math/matrix.h"
 
 # define LIGHT (-1)
 
@@ -63,12 +64,22 @@ typedef struct s_sphere_cache
 	float	square_radius;
 }	t_sphere_cache;
 
+typedef struct s_mesh_object_cache
+{
+	t_matrix4	rotation;
+	t_matrix4	translation;
+	t_matrix4	scale;
+	t_vector3f	scale_vector;
+	t_vectors3f	vertex;
+}	t_mesh_object_cache;
+
 union u_object_cache
 {
 	t_cone_cache		cone;
 	t_cylinder_cache	cylinder;
 	t_plane_cache		plane;
 	t_sphere_cache		sphere;
+	t_mesh_object_cache	mesh;
 };
 
 typedef struct s_object_size
@@ -132,10 +143,19 @@ void		cylinder_set_position(t_object *cylinder,
 void		cylinder_set_height(t_object *cylinder, const float height);
 void		cylinder_set_radius(t_object *cylinder, const float radius);
 
+//	mesh/cache.c
+void		mesh_object_calculate_cache(t_object *mesh_object);
+
 //	mesh/create.c
 int			mesh_object_initialize(t_object *mesh_object, const char *obj_file,
 				t_material material);
 void		mesh_free(t_mesh *mesh);
+
+//	mesh/transformations.c
+void		mesh_object_move(t_object *mesh_object,
+				const t_vector3f movement_axis, const float distance);
+void		mesh_object_set_position(t_object *mesh_object,
+				const t_vector3f position);
 
 //	plane/create.c
 t_object	plane_create(const t_vector3f position, const t_vector3f normal,

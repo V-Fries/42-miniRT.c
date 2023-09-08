@@ -60,6 +60,8 @@ void	object_set_position(t_object *object, const t_vector3f position)
 		plane_set_position(object, position);
 	else if (object->type == SPHERE)
 		sphere_set_position(object, position);
+	else if (object->type == MESH)
+		mesh_object_set_position(object, position);
 }
 
 void	object_set_height(t_object *object, const float height)
