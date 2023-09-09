@@ -373,6 +373,10 @@ MAKE_LIBFT		=	$(MAKE) -C $(LIBFT_PATH)
 
 ASSETS_PATH			=	assets
 
+OBJECTS_PATH		=	$(ASSETS_PATH)/objects
+OBJECTS_ARCHIVE		=	$(OBJECTS_PATH)/objects.tar.gz
+OBJECTS				=	$(OBJECTS_PATH)/*.obj
+
 TEXTURES_PATH		=	$(ASSETS_PATH)/textures
 TEXTURES_ARCHIVE	=	$(TEXTURES_PATH)/textures.tar.gz
 TEXTURES			=	$(TEXTURES_PATH)/*.ppm
@@ -476,6 +480,12 @@ $(DIR_BUILD)%.o : $(SRC_PATH)%.c $(LIBFT_A)
 
 .PHONY: compress
 compress:
+	@if [ "$$(find $(OBJECTS_PATH) -maxdepth 1 -name '*.obj' -print)" ]; then \
+		tar -czvf $(OBJECTS_ARCHIVE) $(OBJECTS); \
+		rm -rf $(OBJECTS); \
+    else \
+      echo "No objects (*.obj) to compress found"; \
+    fi
 	@if [ "$$(find $(TEXTURES_PATH) -maxdepth 1 -name '*.ppm' -print)" ]; then \
 		tar -czvf $(TEXTURES_ARCHIVE) $(TEXTURES); \
 		rm -rf $(TEXTURES); \
@@ -491,6 +501,12 @@ compress:
 
 .PHONY: decompress
 decompress:
+	@if [ -e $(OBJECTS_ARCHIVE) ]; then\
+        tar -xzvf $(OBJECTS_ARCHIVE); \
+        rm -rf $(OBJECTS_ARCHIVE); \
+    else \
+      echo "No objects archive to decompress was found"; \
+    fi
 	@if [ -e $(TEXTURES_ARCHIVE) ]; then\
         tar -xzvf $(TEXTURES_ARCHIVE); \
         rm -rf $(TEXTURES_ARCHIVE); \
