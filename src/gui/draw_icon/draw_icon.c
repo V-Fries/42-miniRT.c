@@ -16,31 +16,32 @@
 #include "gui/utils.h"
 
 static void		tmp_camera_create(t_camera *camera, t_vector2f viewport);
-static void		init_tmp_scene(t_engine *tmp_engine, enum e_object_type type,
-					t_material material, t_vector3f sky_color);
+static void		init_tmp_scene(t_engine *tmp_engine, const t_object *object,
+					t_vector3f sky_color);
 static t_object	get_sphere(const t_camera *camera, t_material material);
 static t_object	get_plane(t_material material);
 static t_object	get_cylinder(const t_camera *camera, t_material material);
 static t_object	get_cone(const t_camera *camera, t_material material);
 
-void	draw_icon(t_image *image, const int type,
-			const unsigned int background_color, const t_material material)
+void	draw_icon(t_image *image, const t_object *object, const t_light *light,
+			const unsigned int background_color)
 {
 	t_engine		tmp_engine;
 	const t_color	sky_color = vector3f_divide(
 			get_t_color_from_uint(background_color), 255.f);
 
-	if (type == LIGHT)
-		return (draw_light_icon(image, background_color,
-			vector3f_multiply(material.albedo, 255.f)));
+	if (light != NULL)
+		return (draw_light_icon(image, background_color, light->color));
+	if (object == NULL)
+		return ;
 	ft_bzero(&tmp_engine, sizeof(tmp_engine));
 	tmp_engine.ray_traced_image = *image;
 	tmp_camera_create(&tmp_engine.camera,
 		(t_vector2f){image->width, image->height});
-	init_tmp_scene(&tmp_engine, type, material, sky_color);
+	init_tmp_scene(&tmp_engine, object, sky_color);
 	render_icon(&tmp_engine, background_color);
 //	free(tmp_engine.camera.rays);
-	free_objects(&tmp_engine.scene.objects);
+//	free_objects(&tmp_engine.scene.objects); // TODO causes use after free! (need to make deep copy of object)
 	free_lights(&tmp_engine.scene.lights);
 }
 
@@ -71,23 +72,25 @@ static void	tmp_camera_create(t_camera *camera, t_vector2f viewport)
 //	camera_recalculate_rays(camera);
 }
 
-static void	init_tmp_scene(t_engine *tmp_engine, const enum e_object_type type,
-				const t_material material, const t_vector3f sky_color)
+static void	init_tmp_scene(t_engine *tmp_engine, const t_object *base_object,
+				const t_vector3f sky_color)
 {
-	t_object		object;
-	t_light			light;
+	t_object	object;
+	t_light		light;
 
 	initialize_objects_array(&tmp_engine->scene.objects, 1);
 	initialize_lights_array(&tmp_engine->scene.lights, 1);
 
-	if (type == SPHERE)
-		object = get_sphere(&tmp_engine->camera, material);
-	else if (type == PLANE)
-		object = get_plane(material);
-	else if (type == CYLINDER)
-		object = get_cylinder(&tmp_engine->camera, material);
+	if (base_object->type == SPHERE)
+		object = get_sphere(&tmp_engine->camera, base_object->material);
+	else if (base_object->type == PLANE)
+		object = get_plane(base_object->material);
+	else if (base_object->type == CYLINDER)
+		object = get_cylinder(&tmp_engine->camera, base_object->material);
+	else if (base_object->type == CONE)
+		object = get_cone(&tmp_engine->camera, base_object->material);
 	else
-		object = get_cone(&tmp_engine->camera, material);
+		object = *base_object; // TODO need to make object fit viewport
 	add_object_in_objects(&tmp_engine->scene.objects, object);
 	// TODO exit on error
 
@@ -159,20 +162,19 @@ static t_object	get_cylinder(const t_camera *camera, const t_material material)
 	height = vector3f_length(vector3f_subtract(left, right));
 	cylinder = cylinder_create(vector3f_create(0, 0, -2.f),
 			vector3f_create(1, 0, 0), (t_object_size){radius, height},
-		material);
+			material);
 	object_rotate(&cylinder, (t_vector3f){0.f, 1.f, 0.f}, -35);
 	return (cylinder);
 }
 
 static t_object	get_cone(const t_camera *camera, const t_material material)
 {
-	(void)camera;
 	t_vector3f	top;
 	t_vector3f	bottom;
 	float		height;
 	t_vector3f	left;
 	t_vector3f	right;
-	float 		radius;
+	float		radius;
 
 	top = get_ray_direction(camera, camera->viewport.size.y / 7.5f, \
 			camera->viewport.size.x / 2.f);
@@ -189,5 +191,6 @@ static t_object	get_cone(const t_camera *camera, const t_material material)
 	right = vector3f_multiply(right, 2.f / right.z);
 	radius = vector3f_length(vector3f_subtract(left, right)) / 2.f;
 	return (cone_create(vector3f_create(0, 0, -2),
-			vector3f_create(0, 1, 0), (t_object_size){radius, height}, material));
+			vector3f_create(0, 1, 0), (t_object_size){radius, height}, \
+			material));
 }

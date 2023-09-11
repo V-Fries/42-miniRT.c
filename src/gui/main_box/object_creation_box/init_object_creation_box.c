@@ -20,6 +20,7 @@
 #include "gui/UI.h"
 #include "engine.h"
 #include "colors.h"
+#include "font/render.h"
 
 #define NUMBER_OF_OBJECT_TYPES 6
 
@@ -73,14 +74,34 @@ static void	create_images(t_engine *engine, t_gui_box *gui_box)
 static void	init_object_creation_box(const t_engine *engine, t_gui_box *gui_box,
 				const int type)
 {
+	t_light		tmp_light;
+	t_object	tmp_object;
+
 	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
 	change_image_color(&gui_box->on_hover_image, HOVER_GUI_COLOR);
-	if (type != MESH) // TODO make a mesh icon
+	if (type == MESH)
 	{
-		draw_icon(&gui_box->image, type, COLOR_TRANSPARENT,
-			engine->gui.color_and_material.material_to_assign_to_new_objects);
-		draw_icon(&gui_box->on_hover_image, type, HOVER_GUI_COLOR,
-			engine->gui.color_and_material.material_to_assign_to_new_objects);
+		write_centered_string_to_image(&engine->gui.font, &gui_box->image,
+			".obj");
+		write_centered_string_to_image(&engine->gui.font,
+			&gui_box->on_hover_image, ".obj");
+	}
+	else if (type == LIGHT)
+	{
+		tmp_light.color = engine->gui.color_and_material.\
+			material_to_assign_to_new_objects.albedo;
+		draw_icon(&gui_box->image, NULL, &tmp_light, COLOR_TRANSPARENT);
+		draw_icon(&gui_box->on_hover_image, NULL, &tmp_light,
+			COLOR_TRANSPARENT);
+	}
+	else
+	{
+		tmp_object.material = engine->gui.color_and_material.\
+			material_to_assign_to_new_objects;
+		tmp_object.type = type;
+		draw_icon(&gui_box->image, &tmp_object, NULL, COLOR_TRANSPARENT);
+		draw_icon(&gui_box->on_hover_image, &tmp_object, NULL,
+			COLOR_TRANSPARENT);
 	}
 	round_image_corners(&gui_box->on_hover_image, BOX_ROUNDING_RADIUS);
 	round_image_corners(&gui_box->image, BOX_ROUNDING_RADIUS);

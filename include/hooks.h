@@ -24,7 +24,8 @@ int			key_release_handler(int key_code, t_engine *engine);
 void		add_key_to_pressed_keys(t_engine *engine, int key_code);
 void		remove_key_from_pressed_keys(t_engine *engine, int key_code);
 void		clear_pressed_keys(t_engine *engine);
-void		redraw_icons(t_engine *engine, t_material material);
+void		redraw_icons(t_engine *engine, const t_object *object,
+				const t_light *light);
 void		toggle_gui(t_gui *gui);
 void		update_color_picker_color(t_gui *gui);
 
