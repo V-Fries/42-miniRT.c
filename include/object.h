@@ -153,6 +153,9 @@ int			mesh_object_initialize(t_object *mesh_object, const char *obj_file,
 				t_material material);
 void		mesh_free(t_mesh *mesh);
 
+// mesh/mesh_deep_copy.c
+int			mesh_deep_copy(t_mesh *dst, const t_mesh *src);
+
 //	mesh/transformations.c
 void		mesh_object_move(t_object *mesh_object,
 				const t_vector3f movement_axis, const float distance);
@@ -185,6 +188,9 @@ void		sphere_move(t_object *sphere, const t_vector3f movement_axis,
 				const float distance);
 void		sphere_set_position(t_object *sphere, const t_vector3f position);
 void		sphere_set_radius(t_object *sphere, const float radius);
+
+// object_deep_copy.c
+int			object_deep_copy(t_object *dst, const t_object *src);
 
 //	objects.c
 int			initialize_objects_array(t_objects *objects, size_t size);

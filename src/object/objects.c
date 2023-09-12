@@ -73,6 +73,7 @@ void	free_object(t_object *object)
 		vectors3f_free(&object->cache.mesh.normals);
 	}
 	free(object->name);
+	object->name = NULL;
 }
 
 void	free_objects(t_objects *objects)

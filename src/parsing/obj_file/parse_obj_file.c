@@ -10,6 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <float.h>
 #include "mesh.h"
 #include "parsing.h"
 #include "vectors.h"
@@ -67,6 +68,8 @@ static int	parse_obj_file(t_mesh *mesh, t_string file_content)
 	size_t	i;
 	char	**lines;
 
+	mesh->vertex_max = (t_vector3f){FLT_MIN, FLT_MIN, FLT_MIN};
+	mesh->vertex_min = (t_vector3f){FLT_MAX, FLT_MAX, FLT_MAX};
 	i = 0;
 	lines = ft_split(file_content.data, '\n');
 	if (lines == NULL)

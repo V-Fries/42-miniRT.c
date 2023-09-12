@@ -244,6 +244,7 @@ SRC				=\
 	\
 	object/mesh/cache.c					\
 	object/mesh/create.c				\
+	object/mesh/mesh_deep_copy.c		\
 	object/mesh/transformations.c		\
 	\
 	object/plane/create.c				\
@@ -252,6 +253,7 @@ SRC				=\
 	object/sphere/create.c				\
 	object/sphere/transformations.c		\
 	\
+	object/object_deep_copy.c		\
 	object/objects.c				\
 	object/transformations.c		\
 	object/calculate_cache.c		\
@@ -338,9 +340,10 @@ SRC				=\
 	render_frame/render_user_interface.c	\
 	\
 	\
-	vectors/mesh_faces.c	\
-	vectors/vectors3f.c		\
-	vectors/vectors3i.c		\
+	vectors/mesh_faces.c		\
+	vectors/vectors3f.c			\
+	vectors/vectors3f_utils.c	\
+	vectors/vectors3i.c			\
 	\
 	close_miniRT.c		\
 	color.c				\

@@ -81,14 +81,11 @@ static int	init_cache(t_object *mesh_object)
 	t_mesh_object_cache	*cache;
 
 	cache = &mesh_object->cache.mesh;
-	if (vectors3f_initialize(&cache->vertex,
-			mesh_object->mesh.base_vertex.length) < 0)
+	if (vectors3f_deep_copy(&cache->vertex, &mesh_object->mesh.base_vertex) < 0)
 		return (-1);
-	cache->vertex.length = mesh_object->mesh.base_vertex.length;
-	if (vectors3f_initialize(&cache->normals,
-			mesh_object->mesh.base_normals.length) < 0)
+	if (vectors3f_deep_copy(&cache->normals,
+			&mesh_object->mesh.base_normals) < 0)
 		return (-1);
-	cache->normals.length = mesh_object->mesh.base_normals.length;
 	cache->translation = create_translation_matrix(mesh_object->position);
 	cache->scale_vector = (t_vector3f){1, 1, 1};
 	cache->scale = create_scale_matrix(cache->scale_vector);

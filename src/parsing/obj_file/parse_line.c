@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <errno.h>
+#include <math.h>
 
 #include "mesh.h"
 #include "math/vector.h"
@@ -56,6 +57,12 @@ static int	parse_vertex_line(t_mesh *mesh, char **split_line)
 		return (0);
 	if (vectors3f_add(&mesh->base_vertex, new_vertex) < 0)
 		return (-1);
+	mesh->vertex_min = (t_vector3f){fminf(new_vertex.x, mesh->vertex_min.x), \
+									fminf(new_vertex.y, mesh->vertex_min.y), \
+									fminf(new_vertex.z, mesh->vertex_min.z)};
+	mesh->vertex_max = (t_vector3f){fmaxf(new_vertex.x, mesh->vertex_max.x), \
+									fmaxf(new_vertex.y, mesh->vertex_max.y), \
+									fmaxf(new_vertex.z, mesh->vertex_max.z)};
 	return (1);
 }
 

@@ -10,10 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <math.h>
-#include "errno.h"
-
 #include "gui/box.h"
 #include "gui/main_gui_box.h"
 #include "gui/utils.h"
@@ -77,10 +73,10 @@ static void	init_object_creation_box(const t_engine *engine, t_gui_box *gui_box,
 	t_light		tmp_light;
 	t_object	tmp_object;
 
-	change_image_color(&gui_box->image, COLOR_TRANSPARENT);
-	change_image_color(&gui_box->on_hover_image, HOVER_GUI_COLOR);
 	if (type == MESH)
 	{
+		change_image_color(&gui_box->image, COLOR_TRANSPARENT);
+		change_image_color(&gui_box->on_hover_image, HOVER_GUI_COLOR);
 		write_centered_string_to_image(&engine->gui.font, &gui_box->image,
 			".obj");
 		write_centered_string_to_image(&engine->gui.font,
@@ -92,7 +88,7 @@ static void	init_object_creation_box(const t_engine *engine, t_gui_box *gui_box,
 			material_to_assign_to_new_objects.albedo;
 		draw_icon(&gui_box->image, NULL, &tmp_light, COLOR_TRANSPARENT);
 		draw_icon(&gui_box->on_hover_image, NULL, &tmp_light,
-			COLOR_TRANSPARENT);
+			HOVER_GUI_COLOR);
 	}
 	else
 	{
@@ -101,7 +97,7 @@ static void	init_object_creation_box(const t_engine *engine, t_gui_box *gui_box,
 		tmp_object.type = type;
 		draw_icon(&gui_box->image, &tmp_object, NULL, COLOR_TRANSPARENT);
 		draw_icon(&gui_box->on_hover_image, &tmp_object, NULL,
-			COLOR_TRANSPARENT);
+			HOVER_GUI_COLOR);
 	}
 	round_image_corners(&gui_box->on_hover_image, BOX_ROUNDING_RADIUS);
 	round_image_corners(&gui_box->image, BOX_ROUNDING_RADIUS);

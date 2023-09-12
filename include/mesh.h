@@ -20,6 +20,8 @@
 typedef struct s_mesh
 {
 	t_vectors3f		base_vertex;
+	t_vector3f		vertex_min;
+	t_vector3f		vertex_max;
 	t_vectors3f		base_normals;
 	t_mesh_faces	faces;
 }	t_mesh;
