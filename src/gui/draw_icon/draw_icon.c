@@ -198,7 +198,7 @@ static t_object	get_cone(const t_camera *camera, const t_material material)
 			vector3f_create(0, 1, 0), (t_object_size){radius, height}, \
 			material));
 }
-#include "stdio.h"
+
 static t_object	get_mesh_object(const t_camera *camera, const t_object *object)
 {
 	t_vector3f	top;
@@ -206,6 +206,7 @@ static t_object	get_mesh_object(const t_camera *camera, const t_object *object)
 	t_vector3f	left;
 	t_vector3f	right;
 	t_object	mesh_object;
+	float		min_y;
 
 	top = get_ray_direction(camera, camera->viewport.size.y / 7.5f, \
 			camera->viewport.size.x / 2.f);
@@ -226,7 +227,7 @@ static t_object	get_mesh_object(const t_camera *camera, const t_object *object)
 	mesh_object_set_scale(&mesh_object, get_mesh_object_scale(&mesh_object,
 			vector3f_length(vector3f_subtract(left, right)),
 			vector3f_length(vector3f_subtract(bottom, top))));
-	float min_y = vectors3f_get_min_values(mesh_object.cache.mesh.vertex).y;
+	min_y = vectors3f_get_min_values(mesh_object.cache.mesh.vertex).y;
 	mesh_object_set_position(&mesh_object, vector3f_create(0, bottom.y - min_y, -2.f));
 //	mesh_object_set_scale(&mesh_object, (t_vector3f){1, 1, 1});
 	return (mesh_object);
