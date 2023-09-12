@@ -13,10 +13,8 @@
 #include "hooks.h"
 #include "ray_tracer_gui_api.h"
 
-#include "stdio.h"
 void	click_mesh_box(t_engine *engine, size_t index)
 {
-	printf("Clicked mesh box\n");
 	t_material	material;
 	t_object	object;
 
