@@ -77,6 +77,8 @@ float		vector2f_dot(t_vector2f v1, t_vector2f v2);
 t_vector3f	vector3f_create(float x, float y, float z);
 void		vector3f_print(t_vector3f vector);
 t_vector3f	vector3f_clamp(t_vector3f vector, float min, float max);
+t_vector3f	vector3f_min(t_vector3f a, t_vector3f b);
+t_vector3f	vector3f_max(t_vector3f a, t_vector3f b);
 
 //	vector3_math.c
 t_vector3f	vector3f_add(t_vector3f v1, t_vector3f v2);

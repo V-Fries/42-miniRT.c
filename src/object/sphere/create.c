@@ -33,3 +33,31 @@ void	sphere_calculate_cache(t_object *sphere)
 {
 	sphere->cache.sphere.square_radius = sphere->radius * sphere->radius;
 }
+
+void	sphere_calculate_bounding_box(t_object *sphere)
+{
+	float radius = sphere->radius;
+	sphere->bounding_box.a = vector3f_add(sphere->position,
+			(t_vector3f){radius, radius, -radius});
+
+	sphere->bounding_box.b = vector3f_add(sphere->position,
+			(t_vector3f){radius, radius, radius});
+
+	sphere->bounding_box.c = vector3f_add(sphere->position,
+			(t_vector3f){-radius, radius, radius});
+
+	sphere->bounding_box.d = vector3f_add(sphere->position,
+			(t_vector3f){-radius, radius, -radius});
+
+	sphere->bounding_box.e = vector3f_add(sphere->position,
+			(t_vector3f){radius, -radius, -radius});
+
+	sphere->bounding_box.f = vector3f_add(sphere->position,
+			(t_vector3f){radius, -radius, radius});
+
+	sphere->bounding_box.g = vector3f_add(sphere->position,
+			(t_vector3f){-radius, -radius, radius});
+
+	sphere->bounding_box.h = vector3f_add(sphere->position,
+			(t_vector3f){-radius, -radius, -radius});
+}

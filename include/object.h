@@ -89,6 +89,18 @@ typedef struct s_object_size
 	float	height;
 }	t_object_size;
 
+typedef struct s_bounding_box
+{
+	t_vector3f	a;
+	t_vector3f	b;
+	t_vector3f	c;
+	t_vector3f	d;
+	t_vector3f	e;
+	t_vector3f	f;
+	t_vector3f	g;
+	t_vector3f	h;
+}	t_bounding_box;
+
 typedef struct s_object
 {
 	enum e_object_type		type;
@@ -101,6 +113,7 @@ typedef struct s_object
 	union u_object_cache	cache;
 	char					*name;
 	t_mesh					mesh;
+	t_bounding_box			bounding_box;
 }	t_object;
 
 typedef struct s_objects
@@ -110,6 +123,8 @@ typedef struct s_objects
 	size_t				size;
 }	t_objects;
 
+void		sphere_calculate_bounding_box(t_object *sphere);
+void		cylinder_calculate_bounding_box(t_object *cylinder);
 
 //	cone/create.c
 t_object	cone_create(const t_vector3f position, const t_vector3f axis,

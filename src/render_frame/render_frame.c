@@ -104,6 +104,10 @@ static void	render_minirt(t_engine *engine, const uint64_t start_time)
 		render_raytracing(engine, incrementer);
 		if (incrementer > 1)
 			interpolate_ray_tracing(&engine->raytraced_pixels, incrementer);
+		// TODO: remove it
+		render_bounding_box(engine);
+
+
 		for (size_t i = 0; i < engine->ray_traced_image.size; i++)
 			engine->ray_traced_image.address[i]
 				= vec_rgb_to_uint(engine->raytraced_pixels.data[i]);
@@ -113,13 +117,19 @@ static void	render_minirt(t_engine *engine, const uint64_t start_time)
 		&& engine->should_render_at_full_resolution)
 	{
 		if (engine->antialiasing)
+		{
 			render_anti_aliased_raytracing(engine);
+			// TODO: remove it
+			render_bounding_box(engine);
+		}
 		else
 		{
 			render_raytracing(engine, engine->quality.min_reduction);
 			if (engine->quality.min_reduction > 1)
 				interpolate_ray_tracing(&engine->raytraced_pixels,
 					engine->quality.min_reduction);
+			// TODO: remove it
+			render_bounding_box(engine);
 			for (size_t i = 0; i < engine->ray_traced_image.size; i++)
 				engine->ray_traced_image.address[i]
 						= vec_rgb_to_uint(engine->raytraced_pixels.data[i]);

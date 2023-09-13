@@ -45,3 +45,25 @@ t_vector3f	vector3f_clamp(t_vector3f vector, float min, float max)
 		vector.z = max;
 	return (vector);
 }
+
+t_vector3f	vector3f_min(t_vector3f a, t_vector3f b)
+{
+	if (b.x < a.x)
+		a.x = b.x;
+	if (b.y < a.y)
+		a.y = b.y;
+	if (b.z < a.z)
+		a.z = b.z;
+	return (a);
+}
+
+t_vector3f	vector3f_max(t_vector3f a, t_vector3f b)
+{
+	if (b.x > a.x)
+		a.x = b.x;
+	if (b.y > a.y)
+		a.y = b.y;
+	if (b.z > a.z)
+		a.z = b.z;
+	return (a);
+}
