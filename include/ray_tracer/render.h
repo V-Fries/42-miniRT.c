@@ -30,8 +30,7 @@ typedef struct s_raytracing_routine_args
 typedef struct s_render_raytraced_icon_routine_arg
 {
 	t_engine		*engine;
-	int				*current_line;
-	pthread_mutex_t	*current_line_mutex;
+	int				current_line;
 	unsigned int	background_color;
 }	t_render_raytraced_icon_routine_arg;
 

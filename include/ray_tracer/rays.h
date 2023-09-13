@@ -26,8 +26,7 @@
 typedef struct s_recalculate_rays_args
 {
 	struct s_camera	*camera;
-	int				*current_line;
-	pthread_mutex_t	*current_line_mutex;
+	int				current_line;
 }	t_recalculate_rays_args;
 
 typedef struct s_ray
