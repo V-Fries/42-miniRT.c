@@ -131,6 +131,8 @@ static	t_vector2i	convert_world_point_in_screen_space(t_engine *engine,
 	t_vector4f view = matrix4_multiply_vector4(&engine->camera.view, world);
 	t_vector4f projection = matrix4_multiply_vector4(&engine->camera.projection, view);
 
+	if (projection.w < engine->camera.near_clip)
+		return ((t_vector2i){-1, -1});
 	projection = vector4f_divide(projection, projection.w);
 
 	t_vector2f screen_pos = (t_vector2f){projection.x, projection.y};
@@ -163,6 +165,8 @@ void	libx_put_line(t_engine *engine, t_vector2i point1, t_vector2i point2)
 	double	dx;
 	double	dy;
 
+	if (point1.x < 0 || point2.x < 0)
+		return ;
 	dx = fabs((double) point2.x - point1.x);
 	dy = fabs((double) point2.y - point1.y);
 	if (dx >= dy)
