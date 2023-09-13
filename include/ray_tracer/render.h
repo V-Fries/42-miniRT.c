@@ -38,8 +38,7 @@ typedef struct s_render_raytraced_icon_routine_arg
 typedef struct s_raytracing_anti_aliasing_routine_args
 {
 	t_engine		*engine;
-	int				*current_line;
-	pthread_mutex_t	*current_line_mutex;
+	int				current_line;
 }	t_raytracing_anti_aliasing_routine_args;
 
 t_vector3f	calculate_post_processing_color(const t_engine *engine, t_vector3f color);

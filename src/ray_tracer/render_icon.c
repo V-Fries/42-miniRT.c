@@ -25,14 +25,6 @@ static t_ray		get_ray(const t_engine *engine, float x, float y);
 
 void	render_icon(t_engine *minirt, const unsigned int background_color)
 {
-	t_render_raytraced_icon_routine_arg	arg;
-
-	arg.engine = engine;
-	arg.current_line = 0;
-	arg.incrementer = incrementer;
-	start_threads(&arg, &render_raytracing_routine,
-				  render_raytracing_on_failure);
-
 	pthread_t							threads[NB_OF_THREADS];
 	t_render_raytraced_icon_routine_arg	thread_args[NB_OF_THREADS];
 	pthread_mutex_t						mutex;
