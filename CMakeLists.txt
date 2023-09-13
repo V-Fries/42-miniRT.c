@@ -536,4 +536,4 @@ add_executable(minirt
         src/color.c
         src/init_minirt.c
         src/main.c
-        lib/libft/src/string/skip_chars.c)
+        lib/libft/src/string/skip_chars.c src/threads.c include/threads.h)

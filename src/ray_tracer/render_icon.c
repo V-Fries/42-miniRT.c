@@ -14,17 +14,9 @@
 
 #include "engine.h"
 #include "ray_tracer/render.h"
+#include "threads.h"
 
 #define PIXEL_DIVISION 2.f
-
-typedef struct s_raytracing_anti_aliasing_routine_args
-{
-	// TODO move this in a header
-	t_engine		*engine;
-	int				*current_line;
-	pthread_mutex_t	*current_line_mutex;
-	unsigned int	background_color;
-}	t_raytracing_anti_aliasing_routine_args;
 
 static void			*render_raytracing_routine(void *args_void);
 static unsigned int	get_color(const t_engine *engine, int x, int y,
@@ -33,17 +25,25 @@ static t_ray		get_ray(const t_engine *engine, float x, float y);
 
 void	render_icon(t_engine *minirt, const unsigned int background_color)
 {
-	pthread_t								threads[NB_OF_THREADS];
-	t_raytracing_anti_aliasing_routine_args	thread_args[NB_OF_THREADS];
-	pthread_mutex_t							mutex;
-	int										current_screen_zone;
+	t_render_raytraced_icon_routine_arg	arg;
+
+	arg.engine = engine;
+	arg.current_line = 0;
+	arg.incrementer = incrementer;
+	start_threads(&arg, &render_raytracing_routine,
+				  render_raytracing_on_failure);
+
+	pthread_t							threads[NB_OF_THREADS];
+	t_render_raytraced_icon_routine_arg	thread_args[NB_OF_THREADS];
+	pthread_mutex_t						mutex;
+	int									current_screen_zone;
 
 	// TODO secure thread functions
 	pthread_mutex_init(&mutex, NULL);
 	current_screen_zone = 0;
 	for (size_t i = 0; i < NB_OF_THREADS - 1; i++)
-		thread_args[i] = (t_raytracing_anti_aliasing_routine_args){minirt,
-			&current_screen_zone, &mutex, background_color};
+		thread_args[i] = (t_render_raytraced_icon_routine_arg){minirt,
+															   &current_screen_zone, &mutex, background_color};
 	for (size_t i = 0; i < NB_OF_THREADS - 1; i++)
 		pthread_create(threads + i, NULL, &render_raytracing_routine, thread_args + i);
 	for (size_t i = 0; i < NB_OF_THREADS; i++)
@@ -53,10 +53,10 @@ void	render_icon(t_engine *minirt, const unsigned int background_color)
 
 static void	*render_raytracing_routine(void *args_void)
 {
-	t_raytracing_anti_aliasing_routine_args	*args;
-	int										x;
-	int										y;
-	unsigned int							*line;
+	t_render_raytraced_icon_routine_arg	*args;
+	int									x;
+	int									y;
+	unsigned int						*line;
 
 	args = args_void;
 	pthread_mutex_lock(args->current_line_mutex);

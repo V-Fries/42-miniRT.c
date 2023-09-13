@@ -10,26 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
-
 #include "engine.h"
 #include "ray_tracer/render.h"
+#include "threads.h"
 
 #define PIXEL_DIVISION 2.f
-
-typedef struct s_raytracing_anti_aliasing_routine_args
-{
-	// TODO move this in a header
-	t_engine		*engine;
-	int				*current_line;
-	pthread_mutex_t	*current_line_mutex;
-}	t_raytracing_anti_aliasing_routine_args;
 
 static void			*render_raytracing_routine(void *args_void);
 static unsigned int	get_color(const t_engine *engine, int x, int y);
 static t_ray		get_ray(const t_engine *engine, float x, float y);
 
-void	render_anti_aliased_raytracing(t_engine *minirt)
+void	render_anti_aliased_raytracing(t_engine *engine)
 {
 	pthread_t								threads[NB_OF_THREADS];
 	t_raytracing_anti_aliasing_routine_args	thread_args[NB_OF_THREADS];
@@ -40,7 +31,7 @@ void	render_anti_aliased_raytracing(t_engine *minirt)
 	pthread_mutex_init(&mutex, NULL);
 	current_screen_zone = 0;
 	for (size_t i = 0; i < NB_OF_THREADS - 1; i++)
-		thread_args[i] = (t_raytracing_anti_aliasing_routine_args){minirt,
+		thread_args[i] = (t_raytracing_anti_aliasing_routine_args){engine,
 			&current_screen_zone, &mutex};
 	for (size_t i = 0; i < NB_OF_THREADS - 1; i++)
 		pthread_create(threads + i, NULL, &render_raytracing_routine, thread_args + i);

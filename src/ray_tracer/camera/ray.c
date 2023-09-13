@@ -10,17 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
-
 #include "engine.h"
-
-typedef struct s_recalculate_rays_args
-{
-	// TODO move this in a header
-	t_camera		*camera;
-	int				*current_line;
-	pthread_mutex_t	*current_line_mutex;
-}	t_recalculate_rays_args;
+#include "threads.h"
 
 static void			*recalculate_rays_routine(void *args_void);
 
