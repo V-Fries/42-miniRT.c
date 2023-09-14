@@ -59,6 +59,13 @@ typedef struct s_round_image_corners_routine_arg
 	t_image	*image;
 }	t_round_image_corners_routine_arg;
 
+typedef struct s_put_background_routine_arg
+{
+	unsigned int	current_line_index;
+	t_image			*dst;
+	const t_image	*src;
+}	t_put_background_routine_arg;
+
 void			init_image(t_image *image, t_window *window, int width,
 					int height);
 void			init_image_from_xpm(t_image *image, t_window *window,
@@ -67,6 +74,7 @@ void			destroy_t_image(t_window *minirt_window, t_image *image);
 void			put_pixel_on_image(t_image *image, int y, int x,
 					unsigned int color);
 unsigned int	get_image_pixel_color(const t_image *image, int y, int x);
+
 void			change_image_color(t_image *image, unsigned int color);
 void			put_image_to_image(t_image *destination, const t_image *source,
 					t_vector2i position);

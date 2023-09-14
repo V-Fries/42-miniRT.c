@@ -528,4 +528,4 @@ add_executable(minirt
         src/color.c
         src/init_minirt.c
         src/main.c
-        src/threads/threads.c src/parsing/line_parsing/parse_mesh_object.c src/parsing/line_parsing/utils/get_vector3f.c src/threads/mutex.c src/threads/threads_private_header.h src/threads/get_routine_data.c src/image/draw_circle.c src/image/change_image_color.c src/image/round_image_corners_utils.c)
+        src/threads/threads.c src/parsing/line_parsing/parse_mesh_object.c src/parsing/line_parsing/utils/get_vector3f.c src/threads/mutex.c src/threads/threads_private_header.h src/threads/get_routine_data.c src/image/draw_circle.c src/image/change_image_color.c src/image/round_image_corners_utils.c src/image/put_background.c)

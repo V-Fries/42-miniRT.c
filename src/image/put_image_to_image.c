@@ -46,19 +46,6 @@ void	put_image_to_image(register t_image *destination, const t_image *source,
 	}
 }
 
-void	put_background(t_image *destination, const t_image *source)
-{
-	register const unsigned int	*dest_end
-		= destination->address + destination->height * destination->line_length;
-	register unsigned int		*dest_curr;
-	register unsigned int		*source_curr;
-
-	source_curr = source->address;
-	dest_curr = destination->address;
-	while (dest_curr < dest_end)
-		*dest_curr++ = *source_curr++;
-}
-
 void	put_image_to_image_unsafe(t_image *destination,
 			const t_image *source, t_vector2i position)
 {
