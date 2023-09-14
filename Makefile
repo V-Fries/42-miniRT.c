@@ -190,9 +190,10 @@ SRC				=\
 	\
 	\
 	image/destroy_t_image.c		\
-	image/draw.c				\
 	image/draw_check_mark.c		\
+	image/draw_circle.c			\
 	image/draw_outline.c		\
+	image/draw_plus_minus.c		\
 	image/image.c				\
 	image/put_image_to_image.c	\
 	image/round_image_corners.c	\

@@ -31,11 +31,18 @@ typedef struct s_image
 	size_t			size;
 }	t_image;
 
-typedef struct s_circle_info
+typedef struct s_draw_circle_routine_arg
 {
-	t_vector2f	circle_center;
-	float		radius_squared;
-}	t_circle_info;
+	t_vector2f		circle_center;
+	float			radius_squared;
+	float			radius;
+	unsigned int	current_line;
+	unsigned int	max_current_line;
+	unsigned int	x_start;
+	unsigned int	x_max;
+	t_image			*image;
+	unsigned int	color;
+}	t_draw_circle_routine_arg;
 
 void			init_image(t_image *image, t_window *window, int width,
 					int height);
