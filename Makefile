@@ -189,6 +189,7 @@ SRC				=\
 	hooks/update_color_picker_color.c	\
 	\
 	\
+	image/change_image_color.c	\
 	image/destroy_t_image.c		\
 	image/draw_check_mark.c		\
 	image/draw_circle.c			\

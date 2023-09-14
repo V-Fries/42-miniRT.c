@@ -44,6 +44,14 @@ typedef struct s_draw_circle_routine_arg
 	unsigned int	color;
 }	t_draw_circle_routine_arg;
 
+typedef struct s_change_image_color_routine_arg
+{
+	unsigned int	*current_line;
+	unsigned int	*image_end;
+	unsigned int	incrementer;
+	unsigned int	color;
+}	t_change_image_color_routine_arg;
+
 void			init_image(t_image *image, t_window *window, int width,
 					int height);
 void			init_image_from_xpm(t_image *image, t_window *window,
