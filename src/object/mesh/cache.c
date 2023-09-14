@@ -34,7 +34,7 @@ void	mesh_object_update_normals(t_object *mesh_object)
 
 void	mesh_cache_free(t_mesh_object_cache *cache)
 {
-	vectors3f_free(&cache->normals);
+	vectors3f_free(&cache->vertex);
 	vectors3f_free(&cache->normals);
 	free(cache->obj_file_path);
 	ft_bzero(cache, sizeof(*cache));

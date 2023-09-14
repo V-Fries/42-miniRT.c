@@ -114,7 +114,7 @@ static int	write_cone(const t_object cone, int fd)
 static int	write_mesh_object(const t_object mesh, int fd)
 {
 	const ssize_t	return_code = dprintf(fd, \
-						"mesh\t%f,%f,%f\t%f,%f,%f\t%f,%f,%f\t%f,%f,%f\t%s\n",
+			"mesh\t%f,%f,%f\t%f,%f,%f\t%f,%f,%f\t%f,%f,%f\t\"%s\"\n",
 			mesh.position.x,
 			mesh.position.y,
 			mesh.position.z,
