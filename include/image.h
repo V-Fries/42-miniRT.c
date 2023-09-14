@@ -52,6 +52,13 @@ typedef struct s_change_image_color_routine_arg
 	unsigned int	color;
 }	t_change_image_color_routine_arg;
 
+typedef struct s_round_image_corners_routine_arg
+{
+	int		current_line;
+	int		radius;
+	t_image	*image;
+}	t_round_image_corners_routine_arg;
+
 void			init_image(t_image *image, t_window *window, int width,
 					int height);
 void			init_image_from_xpm(t_image *image, t_window *window,
@@ -61,7 +68,6 @@ void			put_pixel_on_image(t_image *image, int y, int x,
 					unsigned int color);
 unsigned int	get_image_pixel_color(const t_image *image, int y, int x);
 void			change_image_color(t_image *image, unsigned int color);
-void			round_image_corners(t_image *image, int radius);
 void			put_image_to_image(t_image *destination, const t_image *source,
 					t_vector2i position);
 void			put_image_to_image_unsafe(register t_image *destination,
@@ -88,5 +94,14 @@ void			image_draw_left_outline(t_image *image, int width,
 					unsigned int color);
 void			image_draw_right_outline(t_image *image, int width,
 					unsigned int color);
+
+void			round_image_corners(t_image *image, int radius);
+bool			is_in_top_left_corner(int x, int y, int radius);
+bool			is_in_top_right_corner(int x, int y, int radius,
+					t_image *image);
+bool			is_in_bottom_left_corner(int x, int y, int radius,
+					t_image *image);
+bool			is_in_bottom_right_corner(int x, int y, int radius,
+					t_image *image);
 
 #endif //IMAGE_H
