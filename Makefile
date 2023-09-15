@@ -199,6 +199,7 @@ SRC				=\
 	image/mix_colors.c					\
 	image/put_background.c				\
 	image/put_image_to_image.c			\
+	image/put_image_to_image_unsafe.c	\
 	image/round_image_corners.c			\
 	image/round_image_corners_utils.c	\
 	\

@@ -15,10 +15,10 @@
 #include "threads.h"
 
 static void		*put_image_to_image_routine(void *routine_arg);
-inline static void	draw_line(unsigned int *dst_line, \
-						const unsigned int *src_line, \
-						const unsigned int *dst_line_limit, \
-						const unsigned int *src_line_limit);
+inline static void	draw_line(unsigned int *dst_cursor, \
+					const unsigned int *src_cursor, \
+					const unsigned int *dst_cursor_limit, \
+					const unsigned int *src_cursor_limit);
 
 void	put_image_to_image(register t_image *dst, const t_image *src,
 			t_vector2i position)
@@ -53,66 +53,41 @@ void	put_image_to_image(register t_image *dst, const t_image *src,
 static void	*put_image_to_image_routine(void *routine_arg)
 {
 	t_put_image_to_image_routine_arg	*data;
-	unsigned int						*dst_line;
-	const unsigned int					*src_line;
-	const unsigned int					*dst_line_limit;
-	const unsigned int					*src_line_limit;
+	unsigned int						*dst_cursor;
+	const unsigned int					*src_cursor;
+	const unsigned int					*dst_cursor_limit;
+	const unsigned int					*src_cursor_limit;
 
 	data = get_routine_data(routine_arg);
 	mutex_lock(routine_arg);
 	while (data->current_dst_line < data->dst->limit
 		&& data->current_src_line < data->src->limit)
 	{
-		dst_line = data->current_dst_line;
-		src_line = data->current_src_line;
+		dst_cursor = data->current_dst_line;
+		src_cursor = data->current_src_line;
 		data->current_dst_line += data->dst->width;
 		data->current_src_line += data->src->width;
 		mutex_unlock(routine_arg);
-		dst_line_limit = dst_line + data->dst->width;
-		src_line_limit = src_line + data->src->width;
-		dst_line += data->dst_x_start;
-		src_line += data->src_x_start;
-		draw_line(dst_line, src_line, dst_line_limit, src_line_limit);
+		dst_cursor_limit = dst_cursor + data->dst->width;
+		src_cursor_limit = src_cursor + data->src->width;
+		dst_cursor += data->dst_x_start;
+		src_cursor += data->src_x_start;
+		draw_line(dst_cursor, src_cursor, dst_cursor_limit, src_cursor_limit);
 		mutex_lock(routine_arg);
 	}
 	mutex_unlock(routine_arg);
 	return (NULL);
 }
 
-inline static void	draw_line(unsigned int *dst_line,
-						const unsigned int *src_line,
-						const unsigned int *dst_line_limit,
-						const unsigned int *src_line_limit)
+inline static void	draw_line(unsigned int *dst_cursor,
+						const unsigned int *src_cursor,
+						const unsigned int *dst_cursor_limit,
+						const unsigned int *src_cursor_limit)
 {
-	while (dst_line < dst_line_limit && src_line < src_line_limit)
+	while (dst_cursor < dst_cursor_limit && src_cursor < src_cursor_limit)
 	{
-		*dst_line = mix_colors(*src_line, *dst_line);
-		dst_line++;
-		src_line++;
-	}
-}
-
-void	put_image_to_image_unsafe(t_image *destination,
-			const t_image *source, t_vector2i position)
-{
-	const unsigned int		*source_end
-		= source->address + source->height * source->line_length;
-	const int				x_max = source->width + position.x;
-	register unsigned int	*source_curr;
-	register unsigned int	*dest_curr;
-	register int			x;
-
-	dest_curr = destination->address + position.y * destination->line_length;
-	x = position.x;
-	source_curr = source->address;
-	while (source_curr < source_end)
-	{
-		dest_curr[x] = mix_colors(*source_curr++, dest_curr[x]);
-		x++;
-		if (x >= x_max)
-		{
-			x = position.x;
-			dest_curr += destination->line_length;
-		}
+		*dst_cursor = mix_colors(*src_cursor, *dst_cursor);
+		dst_cursor++;
+		src_cursor++;
 	}
 }

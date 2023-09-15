@@ -68,13 +68,22 @@ typedef struct s_put_background_routine_arg
 
 typedef struct s_put_image_to_image_routine_arg
 {
-	unsigned int	*current_dst_line;
-	unsigned int	*current_src_line;
-	int				dst_x_start;
-	int				src_x_start;
-	t_image			*dst;
-	const t_image	*src;
+	unsigned int		*current_dst_line;
+	const unsigned int	*current_src_line;
+	int					dst_x_start;
+	int					src_x_start;
+	const t_image		*dst;
+	const t_image		*src;
 }	t_put_image_to_image_routine_arg;
+
+typedef struct s_put_image_to_image_unsafe_routine_arg
+{
+	unsigned int		x_offset;
+	unsigned int		*current_dst_line;
+	const unsigned int	*current_src_line;
+	const t_image		*dst;
+	const t_image		*src;
+}	t_put_image_to_image_unsafe_routine_arg;
 
 void			init_image(t_image *image, t_window *window, int width,
 					int height);
