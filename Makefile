@@ -196,6 +196,7 @@ SRC				=\
 	image/draw_outline.c				\
 	image/draw_plus_minus.c				\
 	image/image.c						\
+	image/mix_colors.c					\
 	image/put_background.c				\
 	image/put_image_to_image.c			\
 	image/round_image_corners.c			\

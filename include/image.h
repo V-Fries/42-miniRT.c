@@ -66,6 +66,16 @@ typedef struct s_put_background_routine_arg
 	const t_image	*src;
 }	t_put_background_routine_arg;
 
+typedef struct s_put_image_to_image_routine_arg
+{
+	unsigned int	*current_dst_line;
+	unsigned int	*current_src_line;
+	int				dst_x_start;
+	int				src_x_start;
+	t_image			*dst;
+	const t_image	*src;
+}	t_put_image_to_image_routine_arg;
+
 void			init_image(t_image *image, t_window *window, int width,
 					int height);
 void			init_image_from_xpm(t_image *image, t_window *window,
@@ -81,6 +91,8 @@ void			put_image_to_image(t_image *destination, const t_image *source,
 void			put_image_to_image_unsafe(register t_image *destination,
 					const t_image *source, t_vector2i position);
 void			put_background(t_image *destination, const t_image *source);
+
+unsigned int	mix_colors(unsigned int added_color, unsigned int base_color);
 
 void			image_draw_circle(t_image *image, t_vector2f circle_center,
 					float radius, unsigned int color);
