@@ -44,27 +44,12 @@ typedef struct s_draw_circle_routine_arg
 	unsigned int	color;
 }	t_draw_circle_routine_arg;
 
-typedef struct s_change_image_color_routine_arg
-{
-	unsigned int	*current_line;
-	unsigned int	*image_end;
-	unsigned int	incrementer;
-	unsigned int	color;
-}	t_change_image_color_routine_arg;
-
 typedef struct s_round_image_corners_routine_arg
 {
 	int		current_line;
 	int		radius;
 	t_image	*image;
 }	t_round_image_corners_routine_arg;
-
-typedef struct s_put_background_routine_arg
-{
-	unsigned int	current_line_index;
-	t_image			*dst;
-	const t_image	*src;
-}	t_put_background_routine_arg;
 
 typedef struct s_put_image_to_image_data
 {
@@ -73,15 +58,6 @@ typedef struct s_put_image_to_image_data
 	int					dst_x_start;
 	int					src_x_start;
 }	t_put_image_to_image_data;
-
-typedef struct s_put_image_to_image_unsafe_routine_arg
-{
-	unsigned int		x_offset;
-	unsigned int		*current_dst_line;
-	const unsigned int	*current_src_line;
-	const t_image		*dst;
-	const t_image		*src;
-}	t_put_image_to_image_unsafe_routine_arg;
 
 void			init_image(t_image *image, t_window *window, int width,
 					int height);
