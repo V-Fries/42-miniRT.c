@@ -76,14 +76,35 @@ void	cylinder_calculate_bounding_box(t_object *cylinder)
 	circle_vector1 = vector3f_multiply(circle_vector1, cylinder->radius);
 	circle_vector2 = vector3f_multiply(circle_vector2, cylinder->radius);
 
-	cylinder->bounding_box.a = vector3f_add(center_bottom, vector3f_add(circle_vector1, circle_vector2));
-	cylinder->bounding_box.b = vector3f_add(center_bottom, vector3f_subtract(circle_vector2, circle_vector1));
-	cylinder->bounding_box.c = vector3f_subtract(center_bottom, vector3f_add(circle_vector1, circle_vector2));
-	cylinder->bounding_box.d = vector3f_add(center_bottom, vector3f_subtract(circle_vector1, circle_vector2));
+	cylinder->bounding_box.top_face[0] = vector3f_add(center_bottom, vector3f_add(circle_vector1, circle_vector2));
+	cylinder->bounding_box.top_face[1] = vector3f_add(center_bottom, vector3f_subtract(circle_vector2, circle_vector1));
+	cylinder->bounding_box.top_face[2] = vector3f_subtract(center_bottom, vector3f_add(circle_vector1, circle_vector2));
+	cylinder->bounding_box.top_face[3] = vector3f_add(center_bottom, vector3f_subtract(circle_vector1, circle_vector2));
 
-	cylinder->bounding_box.e = vector3f_add(center_top, vector3f_add(circle_vector1, circle_vector2));
-	cylinder->bounding_box.f = vector3f_add(center_top, vector3f_subtract(circle_vector2, circle_vector1));
-	cylinder->bounding_box.g = vector3f_subtract(center_top, vector3f_add(circle_vector1, circle_vector2));
-	cylinder->bounding_box.h = vector3f_add(center_top, vector3f_subtract(circle_vector1, circle_vector2));
+	cylinder->bounding_box.bottom_face[0] = vector3f_add(center_top, vector3f_add(circle_vector1, circle_vector2));
+	cylinder->bounding_box.bottom_face[1] = vector3f_add(center_top, vector3f_subtract(circle_vector2, circle_vector1));
+	cylinder->bounding_box.bottom_face[2] = vector3f_subtract(center_top, vector3f_add(circle_vector1, circle_vector2));
+	cylinder->bounding_box.bottom_face[3] = vector3f_add(center_top, vector3f_subtract(circle_vector1, circle_vector2));
+
+	t_vector3f min = cylinder->bounding_box.top_face[0];
+	min = vector3f_min(min, cylinder->bounding_box.top_face[1]);
+	min = vector3f_min(min, cylinder->bounding_box.top_face[2]);
+	min = vector3f_min(min, cylinder->bounding_box.top_face[3]);
+	min = vector3f_min(min, cylinder->bounding_box.bottom_face[0]);
+	min = vector3f_min(min, cylinder->bounding_box.bottom_face[1]);
+	min = vector3f_min(min, cylinder->bounding_box.bottom_face[2]);
+	min = vector3f_min(min, cylinder->bounding_box.bottom_face[3]);
+
+	t_vector3f max = cylinder->bounding_box.top_face[0];
+	max = vector3f_max(max, cylinder->bounding_box.top_face[1]);
+	max = vector3f_max(max, cylinder->bounding_box.top_face[2]);
+	max = vector3f_max(max, cylinder->bounding_box.top_face[3]);
+	max = vector3f_max(max, cylinder->bounding_box.bottom_face[0]);
+	max = vector3f_max(max, cylinder->bounding_box.bottom_face[1]);
+	max = vector3f_max(max, cylinder->bounding_box.bottom_face[2]);
+	max = vector3f_max(max, cylinder->bounding_box.bottom_face[3]);
+
+	cylinder->bounding_box.aabb_min = min;
+	cylinder->bounding_box.aabb_max = max;
 
 }

@@ -14,113 +14,111 @@
 #include <float.h>
 
 #include "render_frame.h"
+#include "ray_tracer/bvh.h"
+
+
+static void	safe_put_color(t_engine *engine, t_vector2i point, t_vector3f color);
+static void	libx_put_line_dy_greater(t_engine *engine,
+										t_vector2i point1, t_vector2i point2, t_vector3f color);
+static void	libx_put_line_dx_greater(t_engine *engine,
+										t_vector2i point1, t_vector2i point2, t_vector3f color);
+void	libx_put_line(t_engine *engine, t_vector2i point1, t_vector2i point2, t_vector3f color);
+
+
 
 static	t_vector2i	convert_world_point_in_screen_space(t_engine *engine, t_vector3f world_point);
-static void	safe_put_color(t_engine *engine, t_vector2i point);
-
-static	void	draw_bounding_box(t_engine *engine, t_bounding_box bounding_box);
-
-static void	libx_put_line_dy_greater(t_engine *engine,
-										t_vector2i point1, t_vector2i point2);
-static void	libx_put_line_dx_greater(t_engine *engine,
-										t_vector2i point1, t_vector2i point2);
-void	libx_put_line(t_engine *engine, t_vector2i point1, t_vector2i point2);
-static	t_bounding_box	calculate_objets_bounding_box(t_objects *objects);
+static	void	draw_bounding_box(t_engine *engine, t_bounding_box bounding_box, t_vector3f color);
+//static	t_bounding_box	calculate_objets_bounding_box(t_objects *objects);
+static void	draw_bvh_node(t_engine *engine, t_bvh_node *node, t_vector3f color);
+static void	draw_bvh_tree(t_engine *engine, t_bvh_node *root_node, int color_level);
 
 void	render_bounding_box(t_engine *engine)
 {
 	for (size_t i = 0; i < engine->scene.objects.length; i++)
 	{
-		t_object	object = engine->scene.objects.data[i];
-		if (object.type == SPHERE)
-		{
-			sphere_calculate_bounding_box(&object);
-			draw_bounding_box(engine, object.bounding_box);
-		}
-		else if (object.type == CYLINDER || object.type == CONE)
-		{
-			cylinder_calculate_bounding_box(&object);
-			draw_bounding_box(engine, object.bounding_box);
-		}
+		t_object	*object = &engine->scene.objects.data[i];
+		if (object->type == SPHERE)
+			sphere_calculate_bounding_box(object);
+		else if (object->type == CYLINDER || object->type == CONE)
+			cylinder_calculate_bounding_box(object);
 	}
-	t_bounding_box box = calculate_objets_bounding_box(&engine->scene.objects);
-	draw_bounding_box(engine, box);
+	t_bvh_node *root_node = bvh_node_create_root(&engine->scene.objects);
+	bvh_node_update_bounding_box(root_node);
+	bvh_subdivide(root_node, LEFT_AND_RIGHT);
+	draw_bvh_tree(engine, root_node, 0);
+	bvh_tree_free(root_node);
 }
 
+static void	draw_bvh_tree(t_engine *engine, t_bvh_node *root_node, int color_level)
+{
+	if (color_level >= 4)
+		return;
+	t_vector3f	colors[4] = {
+			(t_vector3f){255.f, 0.f, 0.f},
+			(t_vector3f){0.f, 255.f, 0.f},
+			(t_vector3f){0.f, 0.f, 255.f},
+			(t_vector3f){0.f, 100.f, 100.f}
+	};
+	if (root_node->is_leaf)
+	{
+		for (size_t i = 0; i < root_node->index_objects.length; i++)
+		{
+			t_object *object = &root_node->objects->data[root_node->index_objects.data[i]];
+			if (object->type != MESH && object->type != PLANE)
+				draw_bounding_box(engine, object->bounding_box, (t_vector3f){255.f, 255.f, 255.f});
+		}
+		draw_bvh_node(engine, root_node, (t_vector3f){255.f, 0.f, 255.f});
+		return;
+	}
+	draw_bvh_node(engine, root_node, colors[color_level]);
+	if (root_node->left_node != NULL)
+		draw_bvh_tree(engine, root_node->left_node, color_level + 1);
+	if (root_node->right_node != NULL)
+		draw_bvh_tree(engine, root_node->right_node, color_level + 1);
+}
 
-static	t_bounding_box	calculate_objets_bounding_box(t_objects *objects)
+static	void	draw_bounding_box(t_engine *engine, t_bounding_box bounding_box, t_vector3f color)
+{
+	t_vector2i	a = convert_world_point_in_screen_space(engine, bounding_box.top_face[0]);
+	t_vector2i	b = convert_world_point_in_screen_space(engine, bounding_box.top_face[1]);
+	t_vector2i	c = convert_world_point_in_screen_space(engine, bounding_box.top_face[2]);
+	t_vector2i	d = convert_world_point_in_screen_space(engine, bounding_box.top_face[3]);
+	t_vector2i	e = convert_world_point_in_screen_space(engine, bounding_box.bottom_face[0]);
+	t_vector2i	f = convert_world_point_in_screen_space(engine, bounding_box.bottom_face[1]);
+	t_vector2i	g = convert_world_point_in_screen_space(engine, bounding_box.bottom_face[2]);
+	t_vector2i	h = convert_world_point_in_screen_space(engine, bounding_box.bottom_face[3]);
+
+	libx_put_line(engine, a, b, color);
+	libx_put_line(engine, b, c, color);
+	libx_put_line(engine, c, d, color);
+	libx_put_line(engine, d, a, color);
+
+	libx_put_line(engine, e, f, color);
+	libx_put_line(engine, f, g, color);
+	libx_put_line(engine, g, h, color);
+	libx_put_line(engine, h, e, color);
+
+	libx_put_line(engine, a, e, color);
+	libx_put_line(engine, b, f, color);
+	libx_put_line(engine, c, g, color);
+	libx_put_line(engine, d, h, color);
+}
+
+static void	draw_bvh_node(t_engine *engine, t_bvh_node *node, t_vector3f color)
 {
 	t_bounding_box	bounding_box;
-	t_vector3f 		min;
-	t_vector3f 		max;
 
-
-	min = (t_vector3f){FLT_MAX, FLT_MAX, FLT_MAX};
-	max = (t_vector3f){-FLT_MAX, -FLT_MAX, -FLT_MAX};
-	for (size_t  i = 0; i < objects->length; i++)
-	{
-		t_object	object = objects->data[i];
-		if (object.type == SPHERE || object.type == CYLINDER || object.type == CONE)
-		{
-			if (object.type == SPHERE)
-				sphere_calculate_bounding_box(&object);
-			else
-				cylinder_calculate_bounding_box(&object);
-			min = vector3f_min(min, object.bounding_box.a);
-			min = vector3f_min(min, object.bounding_box.b);
-			min = vector3f_min(min, object.bounding_box.c);
-			min = vector3f_min(min, object.bounding_box.d);
-			min = vector3f_min(min, object.bounding_box.e);
-			min = vector3f_min(min, object.bounding_box.f);
-			min = vector3f_min(min, object.bounding_box.g);
-			min = vector3f_min(min, object.bounding_box.h);
-
-			max = vector3f_max(max, object.bounding_box.a);
-			max = vector3f_max(max, object.bounding_box.b);
-			max = vector3f_max(max, object.bounding_box.c);
-			max = vector3f_max(max, object.bounding_box.d);
-			max = vector3f_max(max, object.bounding_box.e);
-			max = vector3f_max(max, object.bounding_box.f);
-			max = vector3f_max(max, object.bounding_box.g);
-			max = vector3f_max(max, object.bounding_box.h);
-		}
-	}
-	bounding_box.a = (t_vector3f){max.x, max.y, min.z};
-	bounding_box.b = max;
-	bounding_box.c = (t_vector3f){min.x, max.y, max.z};
-	bounding_box.d = (t_vector3f){min.x, max.y, min.z};
-	bounding_box.e = (t_vector3f){max.x, min.y, min.z};
-	bounding_box.f = (t_vector3f){max.x, min.y, max.z};
-	bounding_box.g = (t_vector3f){min.x, min.y, max.z};
-	bounding_box.h = min;
-	return (bounding_box);
-}
-
-static	void	draw_bounding_box(t_engine *engine, t_bounding_box bounding_box)
-{
-	t_vector2i	a = convert_world_point_in_screen_space(engine, bounding_box.a);
-	t_vector2i	b = convert_world_point_in_screen_space(engine, bounding_box.b);
-	t_vector2i	c = convert_world_point_in_screen_space(engine, bounding_box.c);
-	t_vector2i	d = convert_world_point_in_screen_space(engine, bounding_box.d);
-	t_vector2i	e = convert_world_point_in_screen_space(engine, bounding_box.e);
-	t_vector2i	f = convert_world_point_in_screen_space(engine, bounding_box.f);
-	t_vector2i	g = convert_world_point_in_screen_space(engine, bounding_box.g);
-	t_vector2i	h = convert_world_point_in_screen_space(engine, bounding_box.h);
-
-	libx_put_line(engine, a, b);
-	libx_put_line(engine, b, c);
-	libx_put_line(engine, c, d);
-	libx_put_line(engine, d, a);
-
-	libx_put_line(engine, e, f);
-	libx_put_line(engine, f, g);
-	libx_put_line(engine, g, h);
-	libx_put_line(engine, h, e);
-
-	libx_put_line(engine, a, e);
-	libx_put_line(engine, b, f);
-	libx_put_line(engine, c, g);
-	libx_put_line(engine, d, h);
+	t_vector3f max = node->aabb_max;
+	t_vector3f min = node->aabb_min;
+	bounding_box.top_face[0] = (t_vector3f){max.x, max.y, min.z};
+	bounding_box.top_face[1] = max;
+	bounding_box.top_face[2] = (t_vector3f){min.x, max.y, max.z};
+	bounding_box.top_face[3] = (t_vector3f){min.x, max.y, min.z};
+	bounding_box.bottom_face[0] = (t_vector3f){max.x, min.y, min.z};
+	bounding_box.bottom_face[1] = (t_vector3f){max.x, min.y, max.z};
+	bounding_box.bottom_face[2] = (t_vector3f){min.x, min.y, max.z};
+	bounding_box.bottom_face[3] = min;
+	draw_bounding_box(engine, bounding_box, color);
 }
 
 static	t_vector2i	convert_world_point_in_screen_space(t_engine *engine,
@@ -145,14 +143,13 @@ static	t_vector2i	convert_world_point_in_screen_space(t_engine *engine,
 	return ((t_vector2i){(int) screen_pos.x, (int) screen_pos.y});
 }
 
-static void	safe_put_color(t_engine *engine, t_vector2i point)
+static void	safe_put_color(t_engine *engine, t_vector2i point, t_vector3f color)
 {
 	if (point.x <= 0 || point.x >= engine->raytraced_pixels.width)
 		return;
 	if (point.y <= 0 || point.y >= engine->raytraced_pixels.height)
 		return;
-	engine->raytraced_pixels.data[point.x + point.y * engine->raytraced_pixels.width] =\
-	(t_vector3f) {255.f, 255.f, 255.f};
+	engine->raytraced_pixels.data[point.x + point.y * engine->raytraced_pixels.width] = color;
 }
 
 
@@ -160,7 +157,7 @@ static void	safe_put_color(t_engine *engine, t_vector2i point)
  * Put a line between 2 points in mlx image.
  * (protected if there are pixels is outside the image)
  */
-void	libx_put_line(t_engine *engine, t_vector2i point1, t_vector2i point2)
+void	libx_put_line(t_engine *engine, t_vector2i point1, t_vector2i point2, t_vector3f color)
 {
 	double	dx;
 	double	dy;
@@ -170,9 +167,9 @@ void	libx_put_line(t_engine *engine, t_vector2i point1, t_vector2i point2)
 	dx = fabs((double) point2.x - point1.x);
 	dy = fabs((double) point2.y - point1.y);
 	if (dx >= dy)
-		libx_put_line_dx_greater(engine, point1, point2);
+		libx_put_line_dx_greater(engine, point1, point2, color);
 	else
-		libx_put_line_dy_greater(engine, point1, point2);
+		libx_put_line_dy_greater(engine, point1, point2, color);
 }
 
 /**
@@ -180,7 +177,7 @@ void	libx_put_line(t_engine *engine, t_vector2i point1, t_vector2i point2)
  * (protected if there are pixels is outside the image)
  */
 static void	libx_put_line_dx_greater(t_engine *engine,
-										t_vector2i point1, t_vector2i point2)
+										t_vector2i point1, t_vector2i point2, t_vector3f color)
 {
 	const double	dx = fabs((double) point2.x - point1.x);
 	const double	dy = fabs((double) point2.y - point1.y);
@@ -192,7 +189,7 @@ static void	libx_put_line_dx_greater(t_engine *engine,
 	e = 0;
 	while (i++ <= dx)
 	{
-		safe_put_color(engine, point1);
+		safe_put_color(engine, point1, color);
 		if (point1.x > point2.x)
 			point1.x--;
 		else
@@ -214,7 +211,7 @@ static void	libx_put_line_dx_greater(t_engine *engine,
  * (protected if there are pixels is outside the image)
  */
 static void	libx_put_line_dy_greater(t_engine *engine,
-										t_vector2i point1, t_vector2i point2)
+										t_vector2i point1, t_vector2i point2, t_vector3f color)
 {
 	const double	dx = fabs((double) point2.x - point1.x);
 	const double	dy = fabs((double) point2.y - point1.y);
@@ -226,7 +223,7 @@ static void	libx_put_line_dy_greater(t_engine *engine,
 	e = 0;
 	while (i++ <= dy)
 	{
-		safe_put_color(engine, point1);
+		safe_put_color(engine, point1, color);
 		if (point1.y > point2.y)
 			point1.y--;
 		else

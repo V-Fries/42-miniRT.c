@@ -37,27 +37,49 @@ void	sphere_calculate_cache(t_object *sphere)
 void	sphere_calculate_bounding_box(t_object *sphere)
 {
 	float radius = sphere->radius;
-	sphere->bounding_box.a = vector3f_add(sphere->position,
+	sphere->bounding_box.top_face[0] = vector3f_add(sphere->position,
 			(t_vector3f){radius, radius, -radius});
 
-	sphere->bounding_box.b = vector3f_add(sphere->position,
+	sphere->bounding_box.top_face[1] = vector3f_add(sphere->position,
 			(t_vector3f){radius, radius, radius});
 
-	sphere->bounding_box.c = vector3f_add(sphere->position,
+	sphere->bounding_box.top_face[2] = vector3f_add(sphere->position,
 			(t_vector3f){-radius, radius, radius});
 
-	sphere->bounding_box.d = vector3f_add(sphere->position,
+	sphere->bounding_box.top_face[3] = vector3f_add(sphere->position,
 			(t_vector3f){-radius, radius, -radius});
 
-	sphere->bounding_box.e = vector3f_add(sphere->position,
+	sphere->bounding_box.bottom_face[0] = vector3f_add(sphere->position,
 			(t_vector3f){radius, -radius, -radius});
 
-	sphere->bounding_box.f = vector3f_add(sphere->position,
+	sphere->bounding_box.bottom_face[1] = vector3f_add(sphere->position,
 			(t_vector3f){radius, -radius, radius});
 
-	sphere->bounding_box.g = vector3f_add(sphere->position,
+	sphere->bounding_box.bottom_face[2] = vector3f_add(sphere->position,
 			(t_vector3f){-radius, -radius, radius});
 
-	sphere->bounding_box.h = vector3f_add(sphere->position,
+	sphere->bounding_box.bottom_face[3] = vector3f_add(sphere->position,
 			(t_vector3f){-radius, -radius, -radius});
+
+	t_vector3f min = sphere->bounding_box.top_face[0];
+	min = vector3f_min(min, sphere->bounding_box.top_face[1]);
+	min = vector3f_min(min, sphere->bounding_box.top_face[2]);
+	min = vector3f_min(min, sphere->bounding_box.top_face[3]);
+	min = vector3f_min(min, sphere->bounding_box.bottom_face[0]);
+	min = vector3f_min(min, sphere->bounding_box.bottom_face[1]);
+	min = vector3f_min(min, sphere->bounding_box.bottom_face[2]);
+	min = vector3f_min(min, sphere->bounding_box.bottom_face[3]);
+
+	t_vector3f max = sphere->bounding_box.top_face[0];
+	max = vector3f_max(max, sphere->bounding_box.top_face[1]);
+	max = vector3f_max(max, sphere->bounding_box.top_face[2]);
+	max = vector3f_max(max, sphere->bounding_box.top_face[3]);
+	max = vector3f_max(max, sphere->bounding_box.bottom_face[0]);
+	max = vector3f_max(max, sphere->bounding_box.bottom_face[1]);
+	max = vector3f_max(max, sphere->bounding_box.bottom_face[2]);
+	max = vector3f_max(max, sphere->bounding_box.bottom_face[3]);
+
+	sphere->bounding_box.aabb_min = min;
+	sphere->bounding_box.aabb_max = max;
+
 }

@@ -91,6 +91,8 @@ typedef struct s_object_size
 
 typedef struct s_bounding_box
 {
+	t_vector3f	top_face[4];
+	t_vector3f	bottom_face[4];
 	t_vector3f	a;
 	t_vector3f	b;
 	t_vector3f	c;
@@ -99,6 +101,8 @@ typedef struct s_bounding_box
 	t_vector3f	f;
 	t_vector3f	g;
 	t_vector3f	h;
+	t_vector3f	aabb_min;
+	t_vector3f	aabb_max;
 }	t_bounding_box;
 
 typedef struct s_object

@@ -325,6 +325,7 @@ SRC				=\
 	ray_tracer/texture/texture.c		\
 	\
 	ray_tracer/bounding_box.c				\
+	ray_tracer/bvh_node.c					\
 	ray_tracer/interpolate_ray_tracing.c	\
 	ray_tracer/post_processing.c			\
 	ray_tracer/render.c						\
@@ -346,6 +347,7 @@ SRC				=\
 	vectors/vectors3f.c			\
 	vectors/vectors3f_utils.c	\
 	vectors/vectors3i.c			\
+	vectors/vectors_int.c		\
 	\
 	close_miniRT.c		\
 	color.c				\
