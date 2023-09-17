@@ -43,7 +43,7 @@ void	draw_icon(t_image *image, const t_object *object, const t_light *light,
 	tmp_camera_create(&tmp_engine.camera,
 		(t_vector2f){image->width, image->height});
 	init_tmp_scene(&tmp_engine, object, sky_color);
-	render_icon(&tmp_engine, background_color);
+//	render_icon(&tmp_engine, background_color);
 //	free(tmp_engine.camera.rays);
 //	free_objects(&tmp_engine.scene.objects); // TODO causes use after free! (need to make deep copy of object)
 	free_lights(&tmp_engine.scene.lights);

@@ -44,10 +44,16 @@ static t_hit	calculate_shadow_ray_intersection(const t_ray *ray,
 	index = 0;
 	while (index < scene->objects.length)
 	{
-		hit = calculate_object_distance(ray, scene->objects.data + index);
-		if (hit.distance > 0.f && hit.distance < light_distance)
-			return (hit_object(ray, scene->objects.data + index, hit));
+		if (scene->objects.data[index].type == PLANE)
+		{
+			hit = calculate_object_distance(ray, scene->objects.data + index);
+			if (hit.distance > 0.f && hit.distance < light_distance)
+				return (hit_object(ray, scene->objects.data + index, hit));
+		}
 		index++;
 	}
+	t_hit bvh_hit = objects_bvh_calculate_ray_intersection(ray, scene->bvh_tree);
+	if (bvh_hit.distance > 0.f && bvh_hit.distance < light_distance)
+		return (hit_object(ray, scene->objects.data + bvh_hit.index_obj, bvh_hit));
 	return (miss_hit());
 }

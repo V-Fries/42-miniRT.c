@@ -224,6 +224,7 @@ SRC				=\
 	math/vector/vector2_math.c			\
 	math/vector/vector2_operations.c	\
 	math/vector/vector3.c				\
+	math/vector/vector3_limit.c			\
 	math/vector/vector3_math.c			\
 	math/vector/vector3_operations.c	\
 	math/vector/vector3_rotation.c		\
@@ -296,6 +297,13 @@ SRC				=\
 	parsing/parsing.c				\
 	\
 	\
+	ray_tracer/bvh/objects/bounding_box.c	\
+	ray_tracer/bvh/objects/node.c			\
+	ray_tracer/bvh/objects/subdivide.c		\
+	ray_tracer/bvh/objects/tree.c			\
+	ray_tracer/bvh/bounding_box.c			\
+	\
+	\
 	ray_tracer/camera/create.c		\
 	ray_tracer/camera/movement.c	\
 	ray_tracer/camera/projection.c	\
@@ -312,6 +320,7 @@ SRC				=\
 	ray_tracer/rays/intersections/mesh.c				\
 	ray_tracer/rays/intersections/plane.c				\
 	ray_tracer/rays/intersections/sphere.c				\
+	ray_tracer/rays/intersections/objects_bvh.c			\
 	\
 	ray_tracer/rays/context.c		\
 	ray_tracer/rays/rays.c			\
@@ -324,8 +333,6 @@ SRC				=\
 	ray_tracer/texture/normal.c			\
 	ray_tracer/texture/texture.c		\
 	\
-	ray_tracer/bounding_box.c				\
-	ray_tracer/bvh_node.c					\
 	ray_tracer/interpolate_ray_tracing.c	\
 	ray_tracer/post_processing.c			\
 	ray_tracer/render.c						\

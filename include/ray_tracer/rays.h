@@ -45,8 +45,14 @@ typedef struct s_hit
 	t_vector3f			shade_normal;
 	t_ray				ray;
 	t_vector3f			albedo;
+
+
+	ssize_t 				index_obj;
 	enum e_hit_context	context;
 }	t_hit;
+
+#include "ray_tracer/bvh.h"
+t_hit	objects_bvh_calculate_ray_intersection(const t_ray *ray, const t_objects_bvh_node *tree);
 
 //	intersections/cone.c
 t_hit		hit_cone(const t_ray *ray, const t_object *cone,

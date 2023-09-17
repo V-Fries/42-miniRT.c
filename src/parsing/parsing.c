@@ -45,5 +45,14 @@ int	parse_scene(t_engine *engine, const char *start_up_scene)
 	}
 	update_object_list_icons(engine);
 	free_scene_content(scene_content);
+	for (size_t i = 0; i < engine->scene.objects.length; i++)
+	{
+		t_object	*object = &engine->scene.objects.data[i];
+		if (object->type == SPHERE)
+			sphere_calculate_bounding_box(object);
+		else if (object->type == CYLINDER || object->type == CONE)
+			cylinder_calculate_bounding_box(object);
+	}
+	engine->scene.bvh_tree = objects_bvh_create_tree(&engine->scene.objects);
 	return (0);
 }

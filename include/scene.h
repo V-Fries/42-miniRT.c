@@ -17,6 +17,7 @@
 
 # include "object.h"
 # include "light.h"
+# include "ray_tracer/bvh.h"
 
 typedef struct s_scene
 {
@@ -24,6 +25,7 @@ typedef struct s_scene
 	t_lights	lights;
 	t_light		ambient_light;
 	t_vector3f	sky_color;
+	t_objects_bvh_node	*bvh_tree;
 }	t_scene;
 
 #endif

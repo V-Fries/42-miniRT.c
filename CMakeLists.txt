@@ -538,4 +538,5 @@ add_executable(minirt
         src/main.c
         src/ray_tracer/bounding_box.c
         src/vectors/vectors_int.c
-        src/ray_tracer/bvh_node.c)
+        src/ray_tracer/bvh_node.c
+        src/ray_tracer/bvh/objects/bounding_box.c)

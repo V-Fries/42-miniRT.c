@@ -24,17 +24,25 @@ t_hit	calculate_ray_intersection(const t_ray *ray, const t_scene *scene)
 	near_object_index = -1;
 	while (index < scene->objects.length)
 	{
-		hit = calculate_object_distance(ray, scene->objects.data + index);
-		if ((hit.distance < near_hit.distance || near_hit.distance == -1)
-			&& hit.distance > 0.f)
+		if (scene->objects.data[index].type == PLANE)
 		{
-			near_hit = hit;
-			near_object_index = index;
+			hit = calculate_object_distance(ray, scene->objects.data + index);
+			if ((hit.distance < near_hit.distance || near_hit.distance == -1)
+				&& hit.distance > 0.f)
+			{
+				near_hit = hit;
+				near_object_index = index;
+			}
 		}
 		index++;
 	}
-	if (near_hit.distance == -1)
+	t_hit bvh_hit = objects_bvh_calculate_ray_intersection(ray, scene->bvh_tree);
+	if (bvh_hit.hit == true && (near_hit.distance < 0 || bvh_hit.distance < near_hit.distance))
+		return (hit_object(ray, scene->objects.data + bvh_hit.index_obj, bvh_hit));
+	if (near_hit.distance < 0)
+	{
 		return (miss_hit());
+	}
 	return (hit_object(ray, scene->objects.data + near_object_index, near_hit));
 }
 
@@ -64,9 +72,12 @@ t_hit	miss_hit(void)
 	return (hit);
 }
 
+#include <stdio.h>
+
 t_hit	hit_object(const t_ray *ray, const t_object *object,
 					t_hit hit_distance)
 {
+//	printf("%zu\n", hit_distance.index_obj);
 	if (object->type == SPHERE)
 		return (hit_sphere(ray, object, hit_distance));
 	else if (object->type == PLANE)
