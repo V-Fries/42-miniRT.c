@@ -189,13 +189,19 @@ SRC				=\
 	hooks/update_color_picker_color.c	\
 	\
 	\
-	image/destroy_t_image.c		\
-	image/draw.c				\
-	image/draw_check_mark.c		\
-	image/draw_outline.c		\
-	image/image.c				\
-	image/put_image_to_image.c	\
-	image/round_image_corners.c	\
+	image/change_image_color.c			\
+	image/destroy_t_image.c				\
+	image/draw_check_mark.c				\
+	image/draw_circle.c					\
+	image/draw_outline.c				\
+	image/draw_plus_minus.c				\
+	image/image.c						\
+	image/mix_colors.c					\
+	image/put_background.c				\
+	image/put_image_to_image.c			\
+	image/put_image_to_image_unsafe.c	\
+	image/round_image_corners.c			\
+	image/round_image_corners_utils.c	\
 	\
 	\
 	light/light.c	\
@@ -276,6 +282,7 @@ SRC				=\
 	parsing/line_parsing/utils/get_lighting_ratio.c			\
 	parsing/line_parsing/utils/get_normalized_vector.c		\
 	parsing/line_parsing/utils/get_position.c				\
+	parsing/line_parsing/utils/get_vector3f.c				\
 	\
 	parsing/line_parsing/invalid_scene_content_line.c	\
 	parsing/line_parsing/parse_ambient_light.c			\
@@ -285,6 +292,7 @@ SRC				=\
 	parsing/line_parsing/parse_light.c					\
 	parsing/line_parsing/parse_material.c				\
 	parsing/line_parsing/parse_plane.c					\
+	parsing/line_parsing/parse_mesh_object.c			\
 	parsing/line_parsing/parse_sphere.c					\
 	\
 	parsing/obj_file/parse_obj_file.c	\
@@ -350,6 +358,11 @@ SRC				=\
 	render_frame/render_user_interface.c	\
 	\
 	\
+	threads/get_routine_data.c	\
+	threads/mutex.c				\
+	threads/threads.c			\
+	\
+	\
 	vectors/mesh_faces.c		\
 	vectors/vectors3f.c			\
 	vectors/vectors3f_utils.c	\
@@ -366,7 +379,7 @@ OBJS			=	$(patsubst %.c, $(DIR_BUILD)%.o, $(SRC))
 DEPS			=	$(patsubst %.c, $(DIR_BUILD)%.d, $(SRC))
 DEPS_FLAGS		=	-MMD -MP
 BASE_CFLAGS		=	-Wall -Wextra -Werror
-DEBUG_CLFAGS	=	-g3 -fsanitize=address
+DEBUG_CLFAGS	=	-g3 -fsanitize=address -D DEFAULT_MAX_RESOLUTION_REDUCTION=100 -D DEFAULT_MIN_RESOLUTION_REDUCTION=100 -D DEFAULT_ANTIALIASING_VALUE=0
 #-ffast-math reduces calculation precision, need to check behaviour before using
 OPTI_CFLAGS		=	-Ofast -march=native -flto -fno-signed-zeros -funroll-loops #-ffast-math
 #CFLAGS			=	$(BASE_CFLAGS) -g3
