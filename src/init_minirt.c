@@ -45,7 +45,7 @@ int	init_engine(t_engine *engine, const char *start_up_scene,
 	if (engine->window.mlx == NULL)
 		return (-1);
 #ifdef __APPLE__
-	get_screen_size(&engine->window.size.x, &engine->window.size.y); // TODO check that screen size is not too small
+	get_screen_size_macos(&engine->window.size.x, &engine->window.size.y); // TODO check that screen size is not too small
 #endif
 #ifdef __linux__
 	if (mlx_get_screen_size(engine->window.mlx, &engine->window.size.x, &engine->window.size.y))
