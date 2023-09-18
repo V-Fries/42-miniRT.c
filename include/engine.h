@@ -71,6 +71,7 @@ typedef struct s_engine
 	bool					should_render_at_full_resolution; // enum {NO_RENDER, RENDER, FULL_RENDER}
 	bool					antialiasing;
 	bool					scene_changed;
+	bool					display_bounding_box;
 	enum e_effect			post_processing_effect;
 	t_quality				quality;
 }	t_engine;

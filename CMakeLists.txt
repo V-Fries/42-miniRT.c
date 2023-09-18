@@ -503,7 +503,6 @@ add_executable(42_miniRT
         src/ray_tracer/bvh/objects/node.c
         src/ray_tracer/bvh/objects/subdivide.c
         src/ray_tracer/bvh/objects/tree.c
-        src/ray_tracer/bvh/bounding_box.c
         src/ray_tracer/camera/create.c
         src/ray_tracer/camera/movement.c
         src/ray_tracer/camera/projection.c
@@ -551,4 +550,10 @@ add_executable(42_miniRT
         src/close_miniRT.c
         src/color.c
         src/init_minirt.c
-        src/main.c)
+        src/main.c
+        src/draw/draw.c
+        src/draw/draw_line.c
+        src/draw/objects_bvh_node.c
+        src/ray_tracer/rays/intersections/aabb.c
+        src/ray_tracer/rays/intersections/aabb.c
+        src/ray_tracer/rays/intersections/light.c)

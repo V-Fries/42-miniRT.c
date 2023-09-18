@@ -61,4 +61,5 @@ int					objects_bvh_subdivide(t_objects_bvh_node *node);
 t_objects_bvh_node	*objects_bvh_create_tree(const t_objects *objects);
 void				objects_bvh_free_tree(t_objects_bvh_node *root_node);
 
+
 #endif

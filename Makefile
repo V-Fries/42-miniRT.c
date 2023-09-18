@@ -4,6 +4,11 @@ NAME			=	miniRT
 SRC_PATH		=	src/
 
 SRC				=\
+	draw/draw.c				\
+	draw/draw_line.c		\
+	draw/objects_bvh_node.c	\
+	\
+	\
 	export/scene/datetime.c	\
 	export/scene/material.c	\
 	export/scene/object.c	\
@@ -317,7 +322,6 @@ SRC				=\
 	ray_tracer/bvh/objects/node.c			\
 	ray_tracer/bvh/objects/subdivide.c		\
 	ray_tracer/bvh/objects/tree.c			\
-	ray_tracer/bvh/bounding_box.c			\
 	\
 	\
 	ray_tracer/camera/create.c		\
@@ -327,12 +331,14 @@ SRC				=\
 	ray_tracer/camera/rotation.c	\
 	ray_tracer/camera/view.c		\
 	\
+	ray_tracer/rays/intersections/aabb.c				\
 	ray_tracer/rays/intersections/cone.c				\
 	ray_tracer/rays/intersections/cone_utils.c			\
 	ray_tracer/rays/intersections/cylinder.c			\
 	ray_tracer/rays/intersections/cylinder_caps.c		\
 	ray_tracer/rays/intersections/cylinder_infinite.c	\
 	ray_tracer/rays/intersections/intersection.c		\
+	ray_tracer/rays/intersections/light.c				\
 	ray_tracer/rays/intersections/mesh.c				\
 	ray_tracer/rays/intersections/plane.c				\
 	ray_tracer/rays/intersections/sphere.c				\
@@ -475,7 +481,7 @@ all:
 .PHONY:		run
 run:
 			$(MAKE) -j
-			./miniRT assets/scenes/test.rt || true
+			./miniRT assets/scenes/big.rt || true
 
 $(NAME):	$(OBJS) src/get_window_size.swift
 	@if [ $(OS) = "Darwin" ]; then\

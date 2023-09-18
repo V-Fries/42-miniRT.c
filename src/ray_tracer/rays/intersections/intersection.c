@@ -72,12 +72,9 @@ t_hit	miss_hit(void)
 	return (hit);
 }
 
-#include <stdio.h>
-
 t_hit	hit_object(const t_ray *ray, const t_object *object,
 					t_hit hit_distance)
 {
-//	printf("%zu\n", hit_distance.index_obj);
 	if (object->type == SPHERE)
 		return (hit_sphere(ray, object, hit_distance));
 	else if (object->type == PLANE)
