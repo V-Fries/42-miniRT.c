@@ -243,6 +243,7 @@ SRC				=\
 	\
 	\
 	mlx_wrapper/get_mouse_position.c	\
+	mlx_wrapper/get_screen_size.c		\
 	mlx_wrapper/mouse_hide.c			\
 	mlx_wrapper/mouse_move.c			\
 	mlx_wrapper/mouse_show.c			\

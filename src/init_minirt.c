@@ -4,6 +4,7 @@
 #include "libft.h"
 #include "mlx.h"
 
+#include "mlx_wrapper.h"
 #include "gui/init.h"
 #include "events.h"
 #include "parsing.h"
@@ -44,13 +45,7 @@ int	init_engine(t_engine *engine, const char *start_up_scene,
 	engine->window.mlx = mlx_init();
 	if (engine->window.mlx == NULL)
 		return (-1);
-#ifdef __APPLE__
-	get_screen_size_macos(&engine->window.size.x, &engine->window.size.y); // TODO check that screen size is not too small
-#endif
-#ifdef __linux__
-	if (mlx_get_screen_size(engine->window.mlx, &engine->window.size.x, &engine->window.size.y))
-		ft_print_error("mlx_get_screen_size failed\n");
-#endif
+	get_screen_size(engine);
 	engine->window.window = mlx_new_window(engine->window.mlx,
 			engine->window.size.x, engine->window.size.y, "miniRT");
 	if (engine->window.window == NULL)
