@@ -13,8 +13,7 @@
 #include <errno.h>
 #include <math.h>
 
-#include "mlx.h"
-
+#include "mlx_wrapper.h"
 #include "gui/box.h"
 #include "gui/utils.h"
 #include "gui/object_modification_box.h"
@@ -47,29 +46,6 @@ void	init_color_picker_box(t_engine *engine, t_gui_box *gui_box,
 	gui_box->draw = &color_picker_draw;
 	gui_box->on_click = &color_picker_on_click;
 }
-#ifdef __linux__
-
-static void	color_picker_draw(t_gui_box *self, t_engine *engine,
-				t_draw_data draw_data)
-{
-	const t_vector2i	position = {self->position.x + draw_data.offset.x,
-		self->position.y + draw_data.offset.y};
-
-	if (engine->gui.color_and_material.color_picker_base_color_was_changed)
-	{
-		update_image(self, engine);
-		engine->gui.color_and_material.color_picker_base_color_was_changed
-			= false;
-	}
-	engine->gui.draw_gui_image(&engine->main_image, &self->image, position);
-	if (is_mouse_hovering_box(self, draw_data.offset, &self->image,
-			draw_data.mouse_position) == false)
-		return ;
-	add_hover_color_circle(self, draw_data.offset, draw_data.mouse_position);
-	engine->gui.draw_gui_image(&engine->main_image, &self->on_hover_image, position);
-}
-#endif
-#ifdef __APPLE__
 
 static void	color_picker_draw(t_gui_box *self, t_engine *engine,
 				t_draw_data draw_data)
@@ -90,7 +66,6 @@ static void	color_picker_draw(t_gui_box *self, t_engine *engine,
 	add_hover_color_circle(self, draw_data.offset, draw_data.mouse_position);
 	put_image(engine, &self->on_hover_image, position);
 }
-#endif
 
 static void	update_image(t_gui_box *self, t_engine *engine)
 {
