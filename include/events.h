@@ -93,8 +93,8 @@ enum e_mouse_buttons
 {
 	BUTTON_LEFT = 1,
 	BUTTON_RIGHT = 3,
-	SCROLL_DOWN = -1,
-	SCROLL_UP = -1,
+	SCROLL_DOWN = 5,
+	SCROLL_UP = 4,
 };
 # else
 #  error "Unsuported OS"
@@ -189,8 +189,8 @@ enum e_key_codes
 	KEY_DOT = 46,
 	KEY_S_QUOTE = 39,
 	KEY_SEMI_COLON = 59,
-	KEY_COMMAND = -1,
-	KEY_BACKSPACE = -1,
+	KEY_COMMAND = 65507,
+	KEY_BACKSPACE = 65288,
 };
 # else
 #  error "Unsuported OS"

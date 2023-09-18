@@ -104,6 +104,8 @@ static void	toggle_camera_lock(t_engine *engine)
 		engine->previous_mouse_position = screen_center;
 		engine->camera.lock = false;
 		mouse_hide(engine);
+		if (engine->object_being_placed.light || engine->object_being_placed.object)
+			engine->scene_changed = true;
 		return ;
 	}
 	if (engine->gui.should_show_gui_on_camera_lock
