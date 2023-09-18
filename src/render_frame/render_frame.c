@@ -29,6 +29,12 @@
 #define FRAME_BEFORE_ADAPTION 20
 #define DEFAULT_INCREMENTER_VALUE 2
 
+#ifdef __linux__
+# define IS_LINUX true
+#else
+# define IS_LINUX false
+#endif
+
 static void			render_screen_shot_animation(t_engine *engine);
 static void			render_minirt(t_engine *engine, uint64_t start_time);
 static int			adjust_incrementer(t_quality quality, int incrementer);
@@ -46,9 +52,8 @@ int	render_frame(t_engine *engine)
 
 	render_minirt(engine, ft_timeval_to_ms(start_time));
 	render_screen_shot_animation(engine);
-#ifdef __linux__
-	mlx_put_image_to_window(engine->window.mlx, engine->window.window, engine->main_image.data, 0, 0);
-#endif
+	if (IS_LINUX)
+		mlx_put_image_to_window(engine->window.mlx, engine->window.window, engine->main_image.data, 0, 0);
 	if (engine->should_render_ray_tracing)
 		print_fps_counter(engine, start_time);
 	return (0);
