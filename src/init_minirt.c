@@ -73,6 +73,8 @@ int	init_engine(t_engine *engine, const char *start_up_scene,
 	if (get_font(&engine->gui.font, "assets/fonts/Envy Code R PR7/Envy Code R.ttf") < 0)
 		return (-1); // TODO free everything
 	init_gui(engine);
+	// TODO secure it
+	vectors_int_initialize(&engine->scene.plane_indexes, 5);
 	if (parse_scene(engine, engine->start_up_scene) < 0)
 		return (-1); // TODO free stuff
 	return (0);

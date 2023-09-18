@@ -22,17 +22,13 @@ t_hit	calculate_ray_intersection(const t_ray *ray, const t_scene *scene)
 	near_hit.distance = -1;
 	index = 0;
 	near_object_index = -1;
-	while (index < scene->objects.length)
+	while (index < scene->plane_indexes.length)
 	{
-		if (scene->objects.data[index].type == PLANE)
+		hit = calculate_object_distance(ray, scene->objects.data + scene->plane_indexes.data[index]);
+		if ((hit.distance < near_hit.distance || near_hit.distance == -1) && hit.distance > 0.f)
 		{
-			hit = calculate_object_distance(ray, scene->objects.data + index);
-			if ((hit.distance < near_hit.distance || near_hit.distance == -1)
-				&& hit.distance > 0.f)
-			{
-				near_hit = hit;
-				near_object_index = index;
-			}
+			 near_hit = hit;
+			 near_object_index = index;
 		}
 		index++;
 	}
