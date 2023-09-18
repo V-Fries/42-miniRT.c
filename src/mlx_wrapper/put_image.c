@@ -6,7 +6,7 @@
 
 void	put_image(t_engine *engine, t_image *image, t_vector2i position)
 {
-	mlx_put_image_to_window(engine->window.mlx, engine.window.window,
+	mlx_put_image_to_window(engine->window.mlx, engine->window.window,
 			image->data, position.x, position.y);
 }
 #endif
