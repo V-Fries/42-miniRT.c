@@ -128,6 +128,9 @@ bool		is_cap_context(enum e_hit_context context);
 bool		context_has_normal_map(enum e_hit_context context,
 				const t_material *material);
 
+//	hit.c
+t_hit		min_hit(t_hit hit, t_hit near_hit);
+
 //	ray.c
 t_ray		ray_create(const t_vector3f origin, const t_vector3f direction);
 t_vector3f	ray_at(const t_ray *ray, const float t);

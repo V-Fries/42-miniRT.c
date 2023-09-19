@@ -15,31 +15,27 @@
 t_hit	calculate_ray_intersection(const t_ray *ray, const t_scene *scene)
 {
 	size_t		index;
-	size_t		near_object_index;
 	t_hit		near_hit;
 	t_hit		hit;
 
 	near_hit.distance = -1;
+	near_hit.index_obj = -1;
 	index = 0;
-	near_object_index = -1;
 	while (index < scene->plane_indexes.length)
 	{
-		hit = calculate_object_distance(ray, scene->objects.data + scene->plane_indexes.data[index]);
-		if ((hit.distance < near_hit.distance || near_hit.distance == -1) && hit.distance > 0.f)
-		{
-			 near_hit = hit;
-			 near_object_index = index;
-		}
+		hit = calculate_plane_distance(ray,
+				scene->objects.data + scene->plane_indexes.data[index]);
+		hit.index_obj = scene->plane_indexes.data[index];
+		near_hit = min_hit(hit, near_hit);
 		index++;
 	}
-	t_hit bvh_hit = objects_bvh_calculate_ray_intersection(ray, scene->bvh_tree);
-	if (bvh_hit.hit == true && (near_hit.distance < 0 || bvh_hit.distance < near_hit.distance))
-		return (hit_object(ray, scene->objects.data + bvh_hit.index_obj, bvh_hit));
+	hit = objects_bvh_calculate_ray_intersection(ray, scene->bvh_tree);
+	if (hit.hit && (near_hit.distance < 0 || hit.distance < near_hit.distance))
+		near_hit = hit;
 	if (near_hit.distance < 0)
-	{
 		return (miss_hit());
-	}
-	return (hit_object(ray, scene->objects.data + near_object_index, near_hit));
+	return (hit_object(ray, scene->objects.data + near_hit.index_obj,
+			near_hit));
 }
 
 t_hit	calculate_object_distance(const t_ray *ray, const t_object *object)

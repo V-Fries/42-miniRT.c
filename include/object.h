@@ -128,13 +128,12 @@ typedef struct s_objects
 	size_t				size;
 }	t_objects;
 
-void		sphere_calculate_bounding_box(t_object *sphere);
-void		cylinder_calculate_bounding_box(t_object *cylinder);
 
 //	cone/create.c
 t_object	cone_create(const t_vector3f position, const t_vector3f axis,
 				const t_object_size size, const t_material material);
 void		cone_calculate_cache(t_object *cone);
+void		cone_calculate_bounding_box(t_object *cone);
 
 //	cone/transformations.c
 void		cone_move(t_object *cone, const t_vector3f movement_axis,
@@ -153,6 +152,7 @@ t_object	cylinder_infinite_create(const t_vector3f position,
 				const t_vector3f axis,
 				const float radius,
 				const t_material material);
+void		cylinder_calculate_bounding_box(t_object *cylinder);
 
 //	cylinder/transformations.c
 void		cylinder_move(t_object *cylinder, const t_vector3f movement_axis,
@@ -203,6 +203,7 @@ void		plane_set_position(t_object *plane, const t_vector3f position);
 t_object	sphere_create(const t_vector3f position, const float radius,
 				const t_material material);
 void		sphere_calculate_cache(t_object *sphere);
+void		sphere_calculate_bounding_box(t_object *sphere);
 
 //	sphere/transformations.c
 void		sphere_move(t_object *sphere, const t_vector3f movement_axis,
@@ -219,6 +220,10 @@ int			add_object_in_objects(t_objects *objects, t_object object);
 int			remove_object_in_objects(t_objects *objects, size_t index);
 void		free_object(t_object *object);
 void		free_objects(t_objects *objects);
+
+//	bounding_box.c
+void		object_calculate_aabb_min_max(t_object *object);
+void		object_calculate_bounding_box(t_object *object);
 
 //	calculate_cache.c
 void		object_calculate_cache(t_object *object);

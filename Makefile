@@ -273,6 +273,7 @@ SRC				=\
 	object/sphere/create.c				\
 	object/sphere/transformations.c		\
 	\
+	object/bounding_box.c			\
 	object/object_deep_copy.c		\
 	object/objects.c				\
 	object/transformations.c		\
@@ -345,6 +346,7 @@ SRC				=\
 	ray_tracer/rays/intersections/objects_bvh.c			\
 	\
 	ray_tracer/rays/context.c		\
+	ray_tracer/rays/hit.c			\
 	ray_tracer/rays/rays.c			\
 	\
 	ray_tracer/shade/light.c	\
