@@ -56,8 +56,11 @@ static void	draw_objects_bvh_objects_node(t_engine *engine,
 	while (i < node->index_objects.length)
 	{
 		object = &node->objects->data[node->index_objects.data[i]];
-		if (object->type != MESH && object->type != PLANE)
+		if (object->type != PLANE)
+		{
+//			ft_printf("here\n");
 			draw_bounding_box(engine, &object->bounding_box, color);
+		}
 		i++;
 	}
 }

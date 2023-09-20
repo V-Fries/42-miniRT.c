@@ -27,5 +27,9 @@ void	draw_line(t_raytraced_pixels *pixels,
 void	draw_objects_bvh_node(t_engine *engine, t_objects_bvh_node *node,
 							  t_vector3f color);
 
+//	mesh_bvh_node.c
+void	draw_mesh_bvh_node(t_engine *engine, t_mesh_bvh_node *node,
+						   t_vector3f color);
+
 
 #endif

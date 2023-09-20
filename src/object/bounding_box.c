@@ -45,4 +45,6 @@ void	object_calculate_bounding_box(t_object *object)
 		cylinder_calculate_bounding_box(object);
 	else if (object->type == CONE)
 		cone_calculate_bounding_box(object);
+	else if (object->type == MESH)
+		mesh_calculate_bounding_box(object);
 }

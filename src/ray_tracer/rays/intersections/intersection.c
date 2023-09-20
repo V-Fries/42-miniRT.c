@@ -38,6 +38,7 @@ t_hit	calculate_ray_intersection(const t_ray *ray, const t_scene *scene)
 			near_hit));
 }
 
+#include <stdio.h>
 t_hit	calculate_object_distance(const t_ray *ray, const t_object *object)
 {
 	if (object->type == SPHERE)
@@ -50,6 +51,10 @@ t_hit	calculate_object_distance(const t_ray *ray, const t_object *object)
 		return (calculate_cylinder_distance(ray, object));
 	else if (object->type == CONE)
 		return (calculate_cone_distance(ray, object));
+	else if (object->type == MESH && object->mesh.tree != NULL)
+	{
+		return (mesh_bvh_calculate_ray_intersection(ray, object->mesh.tree));
+	}
 	else if (object->type == MESH)
 		return (calculate_mesh_distance(ray, object));
 	return (miss_hit());

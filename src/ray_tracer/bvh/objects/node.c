@@ -47,7 +47,7 @@ t_objects_bvh_node	*objects_bvh_create_root(const t_objects	*objects)
 	for (size_t i = 0; i < objects->length; i++)
 	{
 		t_object object = objects->data[i];
-		if (object.type == SPHERE || object.type == CYLINDER || object.type == CONE)
+		if (object.type != PLANE)
 			return_code = vectors_int_add(&root_node->index_objects, (int)i);
 		if (return_code < 0)
 		{
@@ -56,6 +56,7 @@ t_objects_bvh_node	*objects_bvh_create_root(const t_objects	*objects)
 		}
 	}
 	root_node->nb_split_objects = objects->length;
+	objects_bvh_update_node_bounding_box(root_node);
 	return (root_node);
 }
 
@@ -76,7 +77,7 @@ void	objects_bvh_update_node_bounding_box(t_objects_bvh_node *node)
 	for (size_t i = 0; i < node->index_objects.length; i++)
 	{
 		object = node->objects->data[node->index_objects.data[i]];
-		if (object.type == SPHERE || object.type == CYLINDER || object.type == CONE)
+		if (object.type != PLANE)
 		{
 			min = vector3f_min(min, object.bounding_box.aabb_min);
 			max = vector3f_max(max, object.bounding_box.aabb_max);

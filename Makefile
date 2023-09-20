@@ -6,6 +6,7 @@ SRC_PATH		=	src/
 SRC				=\
 	draw/draw.c				\
 	draw/draw_line.c		\
+	draw/mesh_bvh_node.c	\
 	draw/objects_bvh_node.c	\
 	\
 	\
@@ -266,6 +267,7 @@ SRC				=\
 	object/mesh/create.c				\
 	object/mesh/mesh_deep_copy.c		\
 	object/mesh/transformations.c		\
+	object/mesh/utils.c					\
 	\
 	object/plane/create.c				\
 	object/plane/transformations.c		\
@@ -319,6 +321,11 @@ SRC				=\
 	parsing/parsing.c				\
 	\
 	\
+	ray_tracer/bvh/mesh/bounding_box.c		\
+	ray_tracer/bvh/mesh/node.c				\
+	ray_tracer/bvh/mesh/subdivide.c			\
+	ray_tracer/bvh/mesh/tree.c				\
+	\
 	ray_tracer/bvh/objects/bounding_box.c	\
 	ray_tracer/bvh/objects/node.c			\
 	ray_tracer/bvh/objects/subdivide.c		\
@@ -344,6 +351,7 @@ SRC				=\
 	ray_tracer/rays/intersections/plane.c				\
 	ray_tracer/rays/intersections/sphere.c				\
 	ray_tracer/rays/intersections/objects_bvh.c			\
+	ray_tracer/rays/intersections/mesh_bvh.c			\
 	\
 	ray_tracer/rays/context.c		\
 	ray_tracer/rays/hit.c			\
@@ -397,10 +405,10 @@ DEPS_FLAGS		=	-MMD -MP
 BASE_CFLAGS		=	-Wall -Wextra -Werror
 DEBUG_CLFAGS	=	-g3 -fsanitize=address -D DEFAULT_MAX_RESOLUTION_REDUCTION=100 -D DEFAULT_MIN_RESOLUTION_REDUCTION=100 -D DEFAULT_ANTIALIASING_VALUE=0
 #-ffast-math reduces calculation precision, need to check behaviour before using
-OPTI_CFLAGS		=	-Ofast -march=native -flto -fno-signed-zeros -funroll-loops #-ffast-math
+OPTI_CFLAGS		=	-Ofast -march=native -flto -fno-signed-zeros -funroll-loops -D DEFAULT_MAX_RESOLUTION_REDUCTION=100 -D DEFAULT_MIN_RESOLUTION_REDUCTION=100 -D DEFAULT_ANTIALIASING_VALUE=0#-ffast-math
 #CFLAGS			=	$(BASE_CFLAGS) -g3
 CFLAGS			=	$(BASE_CFLAGS) $(OPTI_CFLAGS)
-# CFLAGS			=	$(BASE_CFLAGS) $(DEBUG_CLFAGS)
+#CFLAGS			=	$(BASE_CFLAGS) $(DEBUG_CLFAGS)
 #CFLAGS			=	$(BASE_CFLAGS) $(OPTI_CFLAGS) $(DEBUG_CLFAGS)
 RM				=	rm -rf
 AR				=	ar rcs

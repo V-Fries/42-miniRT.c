@@ -110,6 +110,10 @@ t_hit		hit_mesh(const t_ray *ray, const t_object *mesh,
 					  const t_hit hit_distance);
 
 //	intersections/objects_bvh.c
+t_hit		mesh_bvh_calculate_ray_intersection(const t_ray *ray, const t_mesh_bvh_node *tree);
+
+
+//	intersections/objects_bvh.c
 t_hit		objects_bvh_calculate_ray_intersection(const t_ray *ray,
 													const t_objects_bvh_node *tree);
 

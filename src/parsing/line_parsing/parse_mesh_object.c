@@ -3,6 +3,7 @@
 
 static int	init_object(t_object *mesh, char **scene_content_line);
 
+#include <stdio.h>
 int	parse_mesh_object(t_engine *engine, char **scene_content_line,
 						t_rt_file_requirements *rt_file_requirements)
 {
@@ -23,6 +24,14 @@ int	parse_mesh_object(t_engine *engine, char **scene_content_line,
 	mesh_object_set_scale(&mesh, tmp);
 	if (add_object(engine, mesh) < 0)
 		return (free_object(&mesh), -1);
+	engine->scene.objects.data[engine->scene.objects.length - 1].mesh.tree = mesh_bvh_create_tree(&engine->scene.objects.data[engine->scene.objects.length - 1]);
+//	printf("dup2: %p\n", mesh.mesh.tree);
+//	t_mesh_bvh_node *tree = mesh.mesh.tree;
+////	printf("%p\n", object->mesh.tree);
+//	printf("%zu\n", tree->left_node->mesh_object->cache.mesh.vertex.length);
+//	printf("%zu\n", tree->right_node->mesh_object->cache.mesh.vertex.length);
+//	printf("%d\n", tree->right_node->is_leaf);
+//	printf("%d\n", tree->left_node->is_leaf);
 	return (0);
 }
 

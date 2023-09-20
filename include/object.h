@@ -173,6 +173,7 @@ void		mesh_cache_free(t_mesh_object_cache *cache);
 int			mesh_object_initialize(t_object *mesh_object, const char *obj_file,
 				t_material material);
 void		mesh_free(t_mesh *mesh);
+void		mesh_calculate_bounding_box(t_object *mesh_object);
 
 // mesh/mesh_deep_copy.c
 int			mesh_deep_copy(t_mesh *dst, const t_mesh *src);
@@ -186,6 +187,10 @@ void		mesh_object_set_rotation(t_object *mesh_object,
 				const t_vector3f rotation_axis);
 void		mesh_object_set_scale(t_object *mesh_object,
 				const t_vector3f scale);
+//	mesh/utils.c
+t_vector3f	mesh_get_vertexes_from_face(const t_object *mesh_object,
+										  size_t face_index, int vertex_index);
+
 
 //	plane/create.c
 t_object	plane_create(const t_vector3f position, const t_vector3f normal,

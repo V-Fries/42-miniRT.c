@@ -13,6 +13,7 @@
 #include "object.h"
 #include "math/quaternion.h"
 
+#include <stdio.h>
 void	mesh_object_move(t_object *mesh_object, const t_vector3f movement_axis,
 			const float distance)
 {

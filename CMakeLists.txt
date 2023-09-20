@@ -558,4 +558,11 @@ add_executable(42_miniRT
         src/ray_tracer/rays/intersections/aabb.c
         src/ray_tracer/rays/intersections/light.c
         src/object/bounding_box.c
-        src/ray_tracer/rays/hit.c)
+        src/ray_tracer/rays/hit.c
+        src/object/mesh/utils.c
+        src/ray_tracer/bvh/mesh/node.c
+        src/draw/mesh_bvh_node.c
+        src/ray_tracer/bvh/mesh/bounding_box.c
+        src/ray_tracer/bvh/mesh/subdivide.c
+        src/ray_tracer/bvh/mesh/tree.c
+        src/ray_tracer/rays/intersections/mesh_bvh.c)

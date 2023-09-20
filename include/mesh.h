@@ -24,6 +24,7 @@ typedef struct s_mesh
 	t_vector3f		vertex_max;
 	t_vectors3f		base_normals;
 	t_mesh_faces	faces;
+	struct s_mesh_bvh_node	*tree;
 }	t_mesh;
 
 int	initialize_mesh_with_obj(t_mesh *mesh, const char *file_name);
