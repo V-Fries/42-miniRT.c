@@ -37,3 +37,14 @@ void	mesh_bvh_free_tree(t_mesh_bvh_node *root_node)
 		mesh_bvh_free_tree(root_node->right_node);
 	mesh_bvh_free_node(root_node);
 }
+
+void	mesh_bvh_update_tree(const t_object *mesh_object, t_mesh_bvh_node *tree)
+{
+	if (tree == NULL)
+		return ;
+	tree->mesh_object = mesh_object;
+	if (tree->left_node != NULL)
+		mesh_bvh_update_tree(mesh_object, tree->left_node);
+	if (tree->right_node != NULL)
+		mesh_bvh_update_tree(mesh_object, tree->right_node);
+}

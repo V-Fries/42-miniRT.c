@@ -54,9 +54,12 @@ static void	draw_mesh_bvh_faces_node(t_engine *engine,
 	while (i < node->index_faces.length)
 	{
 		size_t index_face = node->index_faces.data[i];
-		t_vector3f vertex_a = mesh_get_vertexes_from_face(node->mesh_object, index_face, 0);
-		t_vector3f vertex_b = mesh_get_vertexes_from_face(node->mesh_object, index_face, 1);
-		t_vector3f vertex_c = mesh_get_vertexes_from_face(node->mesh_object, index_face, 2);
+		t_vector3f vertex_a = mesh_get_vertex_from_face(node->mesh_object,
+														index_face, 0);
+		t_vector3f vertex_b = mesh_get_vertex_from_face(node->mesh_object,
+														index_face, 1);
+		t_vector3f vertex_c = mesh_get_vertex_from_face(node->mesh_object,
+														index_face, 2);
 		t_vector2i	points[3];
 		points[0] = convert_world_point_to_screen_space(&engine->camera,
 														vertex_a);
@@ -64,9 +67,9 @@ static void	draw_mesh_bvh_faces_node(t_engine *engine,
 														vertex_b);
 		points[2] = convert_world_point_to_screen_space(&engine->camera,
 														vertex_c);
-		draw_line(&engine->raytraced_pixels, points[0], points[1], color);
-		draw_line(&engine->raytraced_pixels, points[1], points[2], color);
-		draw_line(&engine->raytraced_pixels, points[2], points[0], color);
+		draw_line(&engine->bvh_image, points[0], points[1], color);
+		draw_line(&engine->bvh_image, points[1], points[2], color);
+		draw_line(&engine->bvh_image, points[2], points[0], color);
 		i++;
 	}
 }
@@ -122,18 +125,18 @@ static	t_vector2i	convert_world_point_to_screen_space(t_camera *camera,
 static void	draw_bounding_box_points(t_engine *engine, t_vector2i points[8],
 										t_vector3f color)
 {
-	draw_line(&engine->raytraced_pixels, points[0], points[1], color);
-	draw_line(&engine->raytraced_pixels, points[1], points[2], color);
-	draw_line(&engine->raytraced_pixels, points[2], points[3], color);
-	draw_line(&engine->raytraced_pixels, points[3], points[0], color);
+	draw_line(&engine->bvh_image, points[0], points[1], color);
+	draw_line(&engine->bvh_image, points[1], points[2], color);
+	draw_line(&engine->bvh_image, points[2], points[3], color);
+	draw_line(&engine->bvh_image, points[3], points[0], color);
 
-	draw_line(&engine->raytraced_pixels, points[4], points[5], color);
-	draw_line(&engine->raytraced_pixels, points[5], points[6], color);
-	draw_line(&engine->raytraced_pixels, points[6], points[7], color);
-	draw_line(&engine->raytraced_pixels, points[7], points[4], color);
+	draw_line(&engine->bvh_image, points[4], points[5], color);
+	draw_line(&engine->bvh_image, points[5], points[6], color);
+	draw_line(&engine->bvh_image, points[6], points[7], color);
+	draw_line(&engine->bvh_image, points[7], points[4], color);
 
-	draw_line(&engine->raytraced_pixels, points[0], points[4], color);
-	draw_line(&engine->raytraced_pixels, points[1], points[5], color);
-	draw_line(&engine->raytraced_pixels, points[2], points[6], color);
-	draw_line(&engine->raytraced_pixels, points[3], points[7], color);
+	draw_line(&engine->bvh_image, points[0], points[4], color);
+	draw_line(&engine->bvh_image, points[1], points[5], color);
+	draw_line(&engine->bvh_image, points[2], points[6], color);
+	draw_line(&engine->bvh_image, points[3], points[7], color);
 }

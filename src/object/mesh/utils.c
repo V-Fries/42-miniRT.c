@@ -12,7 +12,7 @@
 
 #include "object.h"
 
-t_vector3f	mesh_get_vertexes_from_face(const t_object *mesh_object,
+t_vector3f	mesh_get_vertex_from_face(const t_object *mesh_object,
 										size_t face_index, int vertex_index)
 {
 	if (vertex_index == 0)

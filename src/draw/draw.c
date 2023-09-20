@@ -21,7 +21,6 @@ static void	draw_mesh_bvh_tree(t_engine *engine,
 								  t_mesh_bvh_node *root_node,
 								  int color_level);
 
-#include <stdio.h>
 void	render_bounding_box(t_engine *engine)
 {
 //	for (size_t i = 0; i < engine->scene.objects.length; i++)
@@ -31,26 +30,19 @@ void	render_bounding_box(t_engine *engine)
 //		object_calculate_bounding_box(object);
 //		if (object->type == MESH)
 //		{
-//			printf("\nstart test tree\n");
-//			printf("%s\n", object->name);
-//			t_mesh_bvh_node *tree = object->mesh.tree;
-////			t_mesh_bvh_node *tree = mesh_bvh_create_tree(object);
-//			printf("%p\n", object->mesh.tree);
-//			printf("%zu\n", tree->left_node->mesh_object->cache.mesh.vertex.length);
-//			printf("%zu\n", tree->right_node->mesh_object->cache.mesh.vertex.length);
-//			printf("%d\n", tree->right_node->is_leaf);
-//			printf("%d\n", tree->left_node->is_leaf);
-////			t_mesh_bvh_node	*node = mesh_bvh_create_tree(object);
-////			object->mesh.tree = node;
-////			draw_mesh_bvh_tree(engine, node, 0);
+//			object->mesh.tree = mesh_bvh_create_tree(object);
+//			draw_mesh_bvh_tree(engine, object->mesh.tree, 0);
 //		}
 //	}
-	(void) engine;
-	(void)draw_mesh_bvh_tree;
-	(void) draw_objects_bvh_tree;
+//	(void) engine;
+//	(void)draw_mesh_bvh_tree;
+//	(void) draw_objects_bvh_tree;
 //	objects_bvh_free_tree(engine->scene.bvh_tree);
 //	engine->scene.bvh_tree = objects_bvh_create_tree(&engine->scene.objects);
-//	draw_objects_bvh_tree(engine, engine->scene.bvh_tree, 0);
+	change_image_color(&engine->bvh_image, COLOR_TRANSPARENT);
+	(void) draw_mesh_bvh_tree;
+	if (engine->display_bounding_box)
+		draw_objects_bvh_tree(engine, engine->scene.bvh_tree, 0);
 }
 
 static void	draw_objects_bvh_tree(t_engine *engine,
@@ -72,13 +64,12 @@ static void	draw_objects_bvh_tree(t_engine *engine,
 }
 
 static void	draw_mesh_bvh_tree(t_engine *engine,
-									 t_mesh_bvh_node *root_node,
-									 int color_level)
+		t_mesh_bvh_node *root_node, int color_level)
 {
 	const t_vector3f	colors[6] = {
-			(t_vector3f){255.f, 0.f, 0.f}, (t_vector3f){0.f, 255.f, 0.f},
-			(t_vector3f){0.f, 0.f, 255.f}, (t_vector3f){0.f, 255.f, 255.f},
-			(t_vector3f){255.f, 255.f, 0.f}, (t_vector3f){0.f, 255.f, 255.f}};
+		(t_vector3f){255.f, 0.f, 0.f}, (t_vector3f){0.f, 255.f, 0.f},
+		(t_vector3f){0.f, 0.f, 255.f}, (t_vector3f){0.f, 255.f, 255.f},
+		(t_vector3f){255.f, 255.f, 0.f}, (t_vector3f){0.f, 255.f, 255.f}};
 
 	if (root_node == NULL || color_level >= 6)
 		return ;

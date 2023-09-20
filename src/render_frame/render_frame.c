@@ -24,6 +24,7 @@
 #include "events.h"
 #include "hooks.h"
 #include "mlx_wrapper.h"
+#include "object.h"
 
 #define FPS_GOAL 45.f
 #define FRAME_BEFORE_ADAPTION 20
@@ -94,10 +95,6 @@ static void	render_minirt(t_engine *engine, const uint64_t start_time)
 		render_raytracing(engine, incrementer);
 		if (incrementer > 1)
 			interpolate_ray_tracing(&engine->raytraced_pixels, incrementer);
-		// TODO: remove it
-		if (engine->display_bounding_box)
-			render_bounding_box(engine);
-
 
 		for (size_t i = 0; i < engine->ray_traced_image.size; i++)
 			engine->ray_traced_image.address[i]
@@ -122,6 +119,8 @@ static void	render_minirt(t_engine *engine, const uint64_t start_time)
 		engine->scene_changed = false;
 	}
 	put_image(engine, &engine->ray_traced_image, (t_vector2i){0, 0});
+	render_bounding_box(engine);
+	put_image(engine, &engine->bvh_image, (t_vector2i){0, 0});
 	render_user_interface(engine, start_time);
 }
 
@@ -290,6 +289,7 @@ static void	update_placed_object_position(t_engine *engine)
 		update_xyz_float_input_boxes(engine,
 			engine->object_being_placed.object->position,
 			&engine->gui.float_input_boxes.position);
+		recalculate_bvh_scene(&engine->scene, engine->object_being_placed.object);
 	}
 	else
 	{

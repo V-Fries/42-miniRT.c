@@ -57,6 +57,7 @@ typedef struct s_engine
 	t_gui					gui;
 	t_image					main_image;
 	t_image					ray_traced_image;
+	t_image					bvh_image;
 	t_raytraced_pixels		raytraced_pixels;
 	t_camera				camera;
 	t_scene					scene;

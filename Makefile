@@ -331,6 +331,8 @@ SRC				=\
 	ray_tracer/bvh/objects/subdivide.c		\
 	ray_tracer/bvh/objects/tree.c			\
 	\
+	ray_tracer/bvh/recalculate_bvh.c		\
+	\
 	\
 	ray_tracer/camera/create.c		\
 	ray_tracer/camera/movement.c	\
@@ -405,7 +407,7 @@ DEPS_FLAGS		=	-MMD -MP
 BASE_CFLAGS		=	-Wall -Wextra -Werror
 DEBUG_CLFAGS	=	-g3 -fsanitize=address -D DEFAULT_MAX_RESOLUTION_REDUCTION=100 -D DEFAULT_MIN_RESOLUTION_REDUCTION=100 -D DEFAULT_ANTIALIASING_VALUE=0
 #-ffast-math reduces calculation precision, need to check behaviour before using
-OPTI_CFLAGS		=	-Ofast -march=native -flto -fno-signed-zeros -funroll-loops -D DEFAULT_MAX_RESOLUTION_REDUCTION=100 -D DEFAULT_MIN_RESOLUTION_REDUCTION=100 -D DEFAULT_ANTIALIASING_VALUE=0#-ffast-math
+OPTI_CFLAGS		=	-Ofast -march=native -flto -fno-signed-zeros -funroll-loops #-ffast-math
 #CFLAGS			=	$(BASE_CFLAGS) -g3
 CFLAGS			=	$(BASE_CFLAGS) $(OPTI_CFLAGS)
 #CFLAGS			=	$(BASE_CFLAGS) $(DEBUG_CLFAGS)

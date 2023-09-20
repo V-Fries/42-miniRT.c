@@ -115,13 +115,15 @@ void	mesh_calculate_bounding_box(t_object *mesh_object)
 	max = (t_vector3f){-FLT_MAX, -FLT_MAX, -FLT_MAX};
 	for (size_t i = 0; i < mesh_object->mesh.faces.length; i++)
 	{
-		min = vector3f_min(min, mesh_get_vertexes_from_face(mesh_object, i, 0));
-		min = vector3f_min(min, mesh_get_vertexes_from_face(mesh_object, i, 1));
-		min = vector3f_min(min, mesh_get_vertexes_from_face(mesh_object, i, 2));
-		max = vector3f_max(max, mesh_get_vertexes_from_face(mesh_object, i, 0));
-		max = vector3f_max(max, mesh_get_vertexes_from_face(mesh_object, i, 1));
-		max = vector3f_max(max, mesh_get_vertexes_from_face(mesh_object, i, 2));
+		min = vector3f_min(min, mesh_get_vertex_from_face(mesh_object, i, 0));
+		min = vector3f_min(min, mesh_get_vertex_from_face(mesh_object, i, 1));
+		min = vector3f_min(min, mesh_get_vertex_from_face(mesh_object, i, 2));
+		max = vector3f_max(max, mesh_get_vertex_from_face(mesh_object, i, 0));
+		max = vector3f_max(max, mesh_get_vertex_from_face(mesh_object, i, 1));
+		max = vector3f_max(max, mesh_get_vertex_from_face(mesh_object, i, 2));
 	}
+//	min = vector3f_subtract(min, (t_vector3f){0.05f, 0.05f, 0.05f});
+//	max = vector3f_add(max, (t_vector3f){0.05f, 0.05f, 0.05f});
 	mesh_object->bounding_box.aabb_min = min;
 	mesh_object->bounding_box.aabb_max = max;
 	mesh_object->bounding_box.top_face[0] = (t_vector3f){max.x, max.y, min.z};

@@ -11,22 +11,18 @@
 /* ************************************************************************** */
 
 #include "float.h"
-#include <stdio.h>
 
 #include "ray_tracer/rays.h"
 #include "ray_tracer/bvh.h"
 
-static float	calculate_moller_triangle_distance(const t_ray *ray,
-												   const t_vector3f vertex[3],
-												   const t_vector3f edge[2]);
-static float	calculate_face_distance(const t_ray *ray, const t_object *mesh,
-										const t_mesh_face *face);
+static void		mesh_bvh_intersect(const t_ray *ray,
+					const t_mesh_bvh_node *node, t_hit *near_hit);
 static t_hit	mesh_bvh_intersect_leaf(const t_ray *ray,
-										const t_mesh_bvh_node *node,
-										t_hit near_hit);
-static void	mesh_bvh_intersect(const t_ray *ray,
-								  const t_mesh_bvh_node *node,
-								  t_hit *near_hit);
+					const t_mesh_bvh_node *node, t_hit near_hit);
+static float	calculate_face_distance(const t_ray *ray, const t_object *mesh,
+					const t_mesh_face *face);
+static float	calculate_moller_triangle_distance(const t_ray *ray,
+					const t_vector3f vertex[3], const t_vector3f edge[2]);
 
 t_hit	mesh_bvh_calculate_ray_intersection(const t_ray *ray,
 											const t_mesh_bvh_node *tree)
@@ -75,17 +71,18 @@ static t_hit	mesh_bvh_intersect_leaf(const t_ray *ray,
 {
 	size_t				i;
 	const t_mesh_face	*face;
+	float				distance;
 
 	i = 0;
-//	printf("nb vertex: %zu\n", node->mesh_object->cache.mesh.vertex.length);
 	while (i < node->index_faces.length)
 	{
 		face = &node->mesh_object->mesh.faces.data[node->index_faces.data[i]];
-		float distance = calculate_face_distance(ray, node->mesh_object, face);
+		distance = calculate_face_distance(ray, node->mesh_object, face);
 		if (distance > 0 && distance < near_hit.distance)
 		{
 			near_hit.distance = distance;
-			near_hit.normal = node->mesh_object->cache.mesh.normals.data[face->vertex_a.y - 1];
+			near_hit.normal = node->mesh_object->cache.mesh.normals.data \
+				[face->vertex_a.y - 1];
 			near_hit.hit = true;
 		}
 		i++;
@@ -96,14 +93,12 @@ static t_hit	mesh_bvh_intersect_leaf(const t_ray *ray,
 static float	calculate_face_distance(const t_ray *ray, const t_object *mesh,
 										const t_mesh_face *face)
 {
-//	printf("here index vertex a: %d\n", face->vertex_a.x - 1);
-//	printf("nb vertex: %zu\n", mesh->cache.mesh.vertex.length);
 	const t_vector3f	vertex_a
-			= mesh->cache.mesh.vertex.data[face->vertex_a.x - 1];
+		= mesh->cache.mesh.vertex.data[face->vertex_a.x - 1];
 	const t_vector3f	vertex_b
-			= mesh->cache.mesh.vertex.data[face->vertex_b.x - 1];
+		= mesh->cache.mesh.vertex.data[face->vertex_b.x - 1];
 	const t_vector3f	vertex_c
-			= mesh->cache.mesh.vertex.data[face->vertex_c.x - 1];
+		= mesh->cache.mesh.vertex.data[face->vertex_c.x - 1];
 	const t_vector3f	edge_1 = vector3f_subtract(vertex_b, vertex_a);
 	const t_vector3f	edge_2 = vector3f_subtract(vertex_c, vertex_a);
 
@@ -116,8 +111,8 @@ static float	calculate_face_distance(const t_ray *ray, const t_object *mesh,
 https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
 */
 static float	calculate_moller_triangle_distance(const t_ray *ray,
-												   const t_vector3f vertex[3],
-												   const t_vector3f edge[2])
+												const t_vector3f vertex[3],
+												const t_vector3f edge[2])
 {
 	const t_vector3f	h = vector3f_cross(ray->direction, edge[1]);
 	const float			a = vector3f_dot(edge[0], h);

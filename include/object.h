@@ -20,7 +20,7 @@
 # include "colors.h"
 # include "material.h"
 # include "mesh.h"
-#include "math/matrix.h"
+# include "math/matrix.h"
 
 # define LIGHT (-1)
 
@@ -188,8 +188,8 @@ void		mesh_object_set_rotation(t_object *mesh_object,
 void		mesh_object_set_scale(t_object *mesh_object,
 				const t_vector3f scale);
 //	mesh/utils.c
-t_vector3f	mesh_get_vertexes_from_face(const t_object *mesh_object,
-										  size_t face_index, int vertex_index);
+t_vector3f	mesh_get_vertex_from_face(const t_object *mesh_object,
+										size_t face_index, int vertex_index);
 
 
 //	plane/create.c

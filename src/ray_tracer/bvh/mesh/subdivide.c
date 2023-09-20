@@ -14,7 +14,7 @@
 
 static int	fill_children_nodes(t_mesh_bvh_node *node);
 static int	add_obj_index_in_child_node(t_mesh_bvh_node *node,
-										  size_t face_index, t_side side);
+				size_t face_index, t_side side);
 static bool	is_duplicated_node(t_mesh_bvh_node *node);
 static void	remove_duplicated_node(t_mesh_bvh_node *node);
 
@@ -71,7 +71,7 @@ static int	fill_children_nodes(t_mesh_bvh_node *node)
 }
 
 static int	add_obj_index_in_child_node(t_mesh_bvh_node *node,
-										  size_t face_index, t_side side)
+										size_t face_index, t_side side)
 {
 	if (side == LEFT_AND_RIGHT || side == LEFT)
 	{

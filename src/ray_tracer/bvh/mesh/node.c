@@ -38,17 +38,20 @@ t_mesh_bvh_node	*mesh_bvh_create_node(const t_object *mesh_object)
 t_mesh_bvh_node	*mesh_bvh_create_root(const t_object *mesh_object)
 {
 	t_mesh_bvh_node		*root_node;
+	size_t				i;
 
 	root_node = mesh_bvh_create_node(mesh_object);
 	if (root_node == NULL)
 		return (NULL);
-	for (size_t i = 0; i < mesh_object->mesh.faces.length; i++)
+	i = 0;
+	while (i < mesh_object->mesh.faces.length)
 	{
 		if (vectors_int_add(&root_node->index_faces, (int)i) < 0)
 		{
 			mesh_bvh_free_node(root_node);
 			return (NULL);
 		}
+		i++;
 	}
 	root_node->nb_split_triangles = mesh_object->mesh.faces.length;
 	mesh_bvh_update_node_bounding_box(root_node);
@@ -65,19 +68,29 @@ void	mesh_bvh_update_node_bounding_box(t_mesh_bvh_node *node)
 {
 	t_vector3f	min;
 	t_vector3f	max;
+	size_t		i;
 
 	min = (t_vector3f){FLT_MAX, FLT_MAX, FLT_MAX};
 	max = (t_vector3f){-FLT_MAX, -FLT_MAX, -FLT_MAX};
-	for (size_t i = 0; i < node->index_faces.length; i++)
+	i = 0;
+	while (i < node->index_faces.length)
 	{
-		size_t index_face = node->index_faces.data[i];
-		min = vector3f_min(min, mesh_get_vertexes_from_face(node->mesh_object, index_face, 0));
-		min = vector3f_min(min, mesh_get_vertexes_from_face(node->mesh_object, index_face, 1));
-		min = vector3f_min(min, mesh_get_vertexes_from_face(node->mesh_object, index_face, 2));
-		max = vector3f_max(max, mesh_get_vertexes_from_face(node->mesh_object, index_face, 0));
-		max = vector3f_max(max, mesh_get_vertexes_from_face(node->mesh_object, index_face, 1));
-		max = vector3f_max(max, mesh_get_vertexes_from_face(node->mesh_object, index_face, 2));
+		min = vector3f_min(min, mesh_get_vertex_from_face(node->mesh_object,
+					node->index_faces.data[i], 0));
+		min = vector3f_min(min, mesh_get_vertex_from_face(node->mesh_object,
+					node->index_faces.data[i], 1));
+		min = vector3f_min(min, mesh_get_vertex_from_face(node->mesh_object,
+					node->index_faces.data[i], 2));
+		max = vector3f_max(max, mesh_get_vertex_from_face(node->mesh_object,
+					node->index_faces.data[i], 0));
+		max = vector3f_max(max, mesh_get_vertex_from_face(node->mesh_object,
+					node->index_faces.data[i], 1));
+		max = vector3f_max(max, mesh_get_vertex_from_face(node->mesh_object,
+					node->index_faces.data[i], 2));
+		i++;
 	}
 	node->aabb_min = min;
+//	node->aabb_min = vector3f_subtract(node->aabb_min, (t_vector3f){0.05f, 0.05f, 0.05f});
 	node->aabb_max = max;
+//	node->aabb_max = vector3f_add(node->aabb_max, (t_vector3f){0.05f, 0.05f, 0.05f});
 }

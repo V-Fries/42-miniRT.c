@@ -57,10 +57,7 @@ static void	draw_objects_bvh_objects_node(t_engine *engine,
 	{
 		object = &node->objects->data[node->index_objects.data[i]];
 		if (object->type != PLANE)
-		{
-//			ft_printf("here\n");
 			draw_bounding_box(engine, &object->bounding_box, color);
-		}
 		i++;
 	}
 }
@@ -116,18 +113,18 @@ static	t_vector2i	convert_world_point_to_screen_space(t_camera *camera,
 static void	draw_bounding_box_points(t_engine *engine, t_vector2i points[8],
 										t_vector3f color)
 {
-	draw_line(&engine->raytraced_pixels, points[0], points[1], color);
-	draw_line(&engine->raytraced_pixels, points[1], points[2], color);
-	draw_line(&engine->raytraced_pixels, points[2], points[3], color);
-	draw_line(&engine->raytraced_pixels, points[3], points[0], color);
+	draw_line(&engine->bvh_image, points[0], points[1], color);
+	draw_line(&engine->bvh_image, points[1], points[2], color);
+	draw_line(&engine->bvh_image, points[2], points[3], color);
+	draw_line(&engine->bvh_image, points[3], points[0], color);
 
-	draw_line(&engine->raytraced_pixels, points[4], points[5], color);
-	draw_line(&engine->raytraced_pixels, points[5], points[6], color);
-	draw_line(&engine->raytraced_pixels, points[6], points[7], color);
-	draw_line(&engine->raytraced_pixels, points[7], points[4], color);
+	draw_line(&engine->bvh_image, points[4], points[5], color);
+	draw_line(&engine->bvh_image, points[5], points[6], color);
+	draw_line(&engine->bvh_image, points[6], points[7], color);
+	draw_line(&engine->bvh_image, points[7], points[4], color);
 
-	draw_line(&engine->raytraced_pixels, points[0], points[4], color);
-	draw_line(&engine->raytraced_pixels, points[1], points[5], color);
-	draw_line(&engine->raytraced_pixels, points[2], points[6], color);
-	draw_line(&engine->raytraced_pixels, points[3], points[7], color);
+	draw_line(&engine->bvh_image, points[0], points[4], color);
+	draw_line(&engine->bvh_image, points[1], points[5], color);
+	draw_line(&engine->bvh_image, points[2], points[6], color);
+	draw_line(&engine->bvh_image, points[3], points[7], color);
 }

@@ -52,6 +52,8 @@ int	init_engine(t_engine *engine, const char *start_up_scene,
 		return (-1); // TODO: free mlx
 	init_image(&engine->ray_traced_image, &engine->window,
 		engine->window.size.x, engine->window.size.y);
+	init_image(&engine->bvh_image, &engine->window,
+			   engine->window.size.x, engine->window.size.y);
 	engine->raytraced_pixels.data = malloc(sizeof(*engine->raytraced_pixels.data) * engine->ray_traced_image.size); // TODO secure
 	ft_bzero(engine->raytraced_pixels.data, sizeof(*engine->raytraced_pixels.data) * engine->ray_traced_image.size); // TODO remove me
 	engine->raytraced_pixels.size = engine->ray_traced_image.size;

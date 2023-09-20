@@ -31,13 +31,19 @@ t_aabb_split	split_bounding_box_mesh_node(t_mesh_bvh_node *node)
 
 t_side	get_face_side(t_mesh_bvh_node *node, int face_index, t_aabb_split split)
 {
-	bool	side[2];
+	bool		side[2];
+	t_vector3f	vertex_a;
+	t_vector3f	vertex_b;
+	t_vector3f	vertex_c;
 
 	side[0] = false;
 	side[1] = false;
-	t_vector3f vertex_a = mesh_get_vertexes_from_face(node->mesh_object, face_index, 0);
-	t_vector3f vertex_b = mesh_get_vertexes_from_face(node->mesh_object, face_index, 1);
-	t_vector3f vertex_c = mesh_get_vertexes_from_face(node->mesh_object, face_index, 2);
+	vertex_a = mesh_get_vertex_from_face(node->mesh_object,
+			face_index, 0);
+	vertex_b = mesh_get_vertex_from_face(node->mesh_object,
+			face_index, 1);
+	vertex_c = mesh_get_vertex_from_face(node->mesh_object,
+			face_index, 2);
 	side[vector3f_get(vertex_a, split.axis_index) < split.middle] = true;
 	side[vector3f_get(vertex_b, split.axis_index) < split.middle] = true;
 	side[vector3f_get(vertex_c, split.axis_index) < split.middle] = true;

@@ -13,9 +13,10 @@
 #ifndef BVH_HPP
 # define BVH_HPP
 
-#include "math/vector.h"
-#include "vectors.h"
-#include "object.h"
+# include "math/vector.h"
+# include "vectors.h"
+# include "object.h"
+# include "scene.h"
 
 typedef struct s_objects_bvh_node
 {
@@ -72,8 +73,8 @@ int					mesh_bvh_subdivide(t_mesh_bvh_node *node);
 //	mesh/tree.c
 t_mesh_bvh_node		*mesh_bvh_create_tree(const t_object *mesh_object);
 void				mesh_bvh_free_tree(t_mesh_bvh_node *root_node);
-
-
+void				mesh_bvh_update_tree(const t_object *mesh_object,
+						t_mesh_bvh_node *tree);
 
 //	objects/bounding_box.c
 t_aabb_split		split_bounding_box_objects_node(t_objects_bvh_node *node);
@@ -92,6 +93,9 @@ int					objects_bvh_subdivide(t_objects_bvh_node *node);
 //	objects/tree.c
 t_objects_bvh_node	*objects_bvh_create_tree(const t_objects *objects);
 void				objects_bvh_free_tree(t_objects_bvh_node *root_node);
+
+//	recalculate_bvh.c
+int					recalculate_bvh_scene(t_scene *scene, t_object *update_object);
 
 
 #endif

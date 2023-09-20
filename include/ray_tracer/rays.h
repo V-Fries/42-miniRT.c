@@ -20,6 +20,7 @@
 # include "scene.h"
 # include "object.h"
 # include "camera.h"
+# include "ray_tracer/bvh.h"
 
 # define HIT_DISPLACEMENT 0.01f
 

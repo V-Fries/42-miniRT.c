@@ -13,15 +13,16 @@
 #include <math.h>
 
 #include "engine.h"
+#include "colors.h"
 
-static void	put_pixel(t_raytraced_pixels *pixels, t_vector2i point,
+static void	put_pixel(t_image *image, t_vector2i point,
 				t_vector3f color);
-static void	put_line_dx_greater(t_raytraced_pixels *pixels,
+static void	put_line_dx_greater(t_image *image,
 				t_vector2i point1, t_vector2i point2, t_vector3f color);
-static void	put_line_dy_greater(t_raytraced_pixels *pixels,
+static void	put_line_dy_greater(t_image *image,
 				t_vector2i point1, t_vector2i point2, t_vector3f color);
 
-void	draw_line(t_raytraced_pixels *pixels,
+void	draw_line(t_image *image,
 				t_vector2i point1, t_vector2i point2,
 				t_vector3f color)
 {
@@ -33,12 +34,12 @@ void	draw_line(t_raytraced_pixels *pixels,
 	dx = fabs((double) point2.x - point1.x);
 	dy = fabs((double) point2.y - point1.y);
 	if (dx >= dy)
-		put_line_dx_greater(pixels, point1, point2, color);
+		put_line_dx_greater(image, point1, point2, color);
 	else
-		put_line_dy_greater(pixels, point1, point2, color);
+		put_line_dy_greater(image, point1, point2, color);
 }
 
-static void	put_line_dx_greater(t_raytraced_pixels *pixels,
+static void	put_line_dx_greater(t_image *image,
 								t_vector2i point1, t_vector2i point2,
 								t_vector3f color)
 {
@@ -52,7 +53,7 @@ static void	put_line_dx_greater(t_raytraced_pixels *pixels,
 	e = 0;
 	while (i++ <= dx)
 	{
-		put_pixel(pixels, point1, color);
+		put_pixel(image, point1, color);
 		if (point1.x > point2.x)
 			point1.x--;
 		else
@@ -69,7 +70,7 @@ static void	put_line_dx_greater(t_raytraced_pixels *pixels,
 	}
 }
 
-static void	put_line_dy_greater(t_raytraced_pixels *pixels,
+static void	put_line_dy_greater(t_image *image,
 								t_vector2i point1, t_vector2i point2,
 								t_vector3f color)
 {
@@ -83,7 +84,7 @@ static void	put_line_dy_greater(t_raytraced_pixels *pixels,
 	e = 0;
 	while (i++ <= dy)
 	{
-		put_pixel(pixels, point1, color);
+		put_pixel(image, point1, color);
 		if (point1.y > point2.y)
 			point1.y--;
 		else
@@ -100,14 +101,17 @@ static void	put_line_dy_greater(t_raytraced_pixels *pixels,
 	}
 }
 
-static void	put_pixel(t_raytraced_pixels *pixels, t_vector2i point,
+static void	put_pixel(t_image *image, t_vector2i point,
 					t_vector3f color)
 {
-	if (point.x <= 0 || point.x >= pixels->width)
+	unsigned int	int_color;
+
+	if (point.x <= 0 || point.x >= image->width)
 		return ;
-	if (point.y <= 0 || point.y >= pixels->height)
+	if (point.y <= 0 || point.y >= image->height)
 		return ;
-	pixels->data[point.x + point.y * pixels->width] = color;
+	int_color = vec_rgb_to_uint(color);
+	image->address[point.x + point.y * image->width] = int_color;
 }
 
 

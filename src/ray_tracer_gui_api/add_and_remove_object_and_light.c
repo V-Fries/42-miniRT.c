@@ -25,9 +25,12 @@ int	add_object(t_engine *engine, const t_object object)
 	if (object.type == PLANE)
 	{
 		if (vectors_int_add(&engine->scene.plane_indexes,
-							engine->scene.objects.length - 1) < 0)
+				engine->scene.objects.length - 1) < 0)
 			return (ft_print_error("Failed to add new object\n"), -1);
 	}
+	if (recalculate_bvh_scene(&engine->scene,
+		&engine->scene.objects.data[engine->scene.objects.length - 1]) < 0)
+		ft_fatal_error("add_object: recalculate_bvh_scene failed");
 	create_object_gui_box(engine, &gui_box, &object);
 	if (ft_vector_add_elem(&engine->gui.object_boxes, &gui_box) < 0)
 		ft_fatal_error("add_object: ft_vector_add_elem failed");
@@ -55,6 +58,8 @@ void	remove_object(t_engine *engine, const size_t index)
 	ft_vector_delete_elem(&engine->gui.object_boxes, index, false);
 	remove_object_in_objects(&engine->scene.objects, index);
 	update_plane_indexes(&engine->scene);
+	if (recalculate_bvh_scene(&engine->scene, NULL) < 0)
+		ft_fatal_error("add_object: recalculate_bvh_scene failed");
 }
 
 void	remove_light(t_engine *engine, const size_t index)
@@ -85,6 +90,7 @@ static int	update_plane_indexes(t_scene *scene)
 			vectors_int_free(&scene->plane_indexes);
 			return (-1);
 		}
+		i++;
 	}
 	return (0);
 }

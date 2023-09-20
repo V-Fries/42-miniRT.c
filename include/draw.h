@@ -19,7 +19,7 @@
 void	render_bounding_box(t_engine *engine);
 
 //	draw_line.c
-void	draw_line(t_raytraced_pixels *pixels,
+void	draw_line(t_image *image,
 				  t_vector2i point1, t_vector2i point2,
 				  t_vector3f color);
 

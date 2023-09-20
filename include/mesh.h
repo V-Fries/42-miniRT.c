@@ -17,6 +17,8 @@
 
 # define NO_VALID_FACES_FOUND -2
 
+# define MESH_MINIMUM_SCALE 0.001f
+
 typedef struct s_mesh
 {
 	t_vectors3f		base_vertex;
