@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_frame.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vfries <vfries@student.1337.ma>            +#+  +:+       +#+        */
+/*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 18:12:50 by vfries            #+#    #+#             */
-/*   Updated: 2023/05/07 18:38:22 by vfries           ###   ########.fr       */
+/*   Updated: 2023/09/20 18:17:22 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 #include "events.h"
 #include "hooks.h"
 #include "mlx_wrapper.h"
+#include "interpolater.h"
 
 #define FPS_GOAL 45.f
 #define FRAME_BEFORE_ADAPTION 20
