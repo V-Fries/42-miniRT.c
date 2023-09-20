@@ -25,6 +25,7 @@
 #include "hooks.h"
 #include "mlx_wrapper.h"
 #include "object.h"
+#include "interpolater.h"
 
 #define FPS_GOAL 45.f
 #define FRAME_BEFORE_ADAPTION 20
@@ -40,9 +41,9 @@ static void			render_screen_shot_animation(t_engine *engine);
 static void			render_minirt(t_engine *engine, uint64_t start_time);
 static int			adjust_incrementer(t_quality quality, int incrementer);
 static int			get_incrementer(t_engine *engine);
-static void			update_scene(t_engine *engine);
+static void			update_scene(t_engine *engine, const uint64_t start_time);
 static int			deal_mouse(t_engine *engine);
-static void			deal_keys(t_engine *engine);
+static void			deal_keys(t_engine *engine, const uint64_t start_time);
 static void			update_placed_object_position(t_engine *engine);
 static void			update_mouse_position(t_engine *engine,
 						t_vector2i *mouse_position);
@@ -54,9 +55,11 @@ int	render_frame(t_engine *engine)
 	render_minirt(engine, ft_timeval_to_ms(start_time));
 	render_screen_shot_animation(engine);
 	if (IS_LINUX)
-		mlx_put_image_to_window(engine->window.mlx, engine->window.window, engine->main_image.data, 0, 0);
+		mlx_put_image_to_window(engine->window.mlx, engine->window.window,
+			engine->main_image.data, 0, 0);
 	if (engine->should_render_ray_tracing)
 		print_fps_counter(engine, start_time);
+	engine->last_frame_start_time = ft_timeval_to_ms(start_time);
 	return (0);
 }
 
@@ -87,7 +90,7 @@ static void	render_minirt(t_engine *engine, const uint64_t start_time)
 {
 	int	incrementer;
 
-	update_scene(engine);
+	update_scene(engine, start_time);
 	if (engine->should_render_ray_tracing
 		&& engine->should_render_at_full_resolution == false)
 	{
@@ -160,14 +163,14 @@ static int	adjust_incrementer(t_quality quality, int incrementer)
 
 #define NB_OF_MS_BEFORE_FULL_RESOLUTION 600
 
-static void	update_scene(t_engine *engine)
+static void	update_scene(t_engine *engine, const uint64_t start_time)
 {
 	static uint64_t			next_update_time = 0;
 	static bool				was_rendered_at_full_resolution = false;
 	const uint64_t			current_time_in_ms = ft_timeval_to_ms(
 			ft_get_current_time());
 
-	deal_keys(engine);
+	deal_keys(engine, start_time);
 	if (deal_mouse(engine) || engine->pressed_keys_index > 0)
 	{
 		camera_recalculate_view(&engine->camera);
@@ -230,31 +233,40 @@ static int	deal_mouse(t_engine *engine)
 	return (0);
 }
 
-static void	deal_keys(t_engine *engine)
+#define TIME_FOR_FULL_DEFAULT_MOVEMENT_MS 25
+#define DEFAULT_MOUVEMENT 0.4f
+
+static void	deal_keys(t_engine *engine, const uint64_t start_time)
 {
-	int	i;
+	const float	time_since_last_frame = start_time
+										   - engine->last_frame_start_time;
+	const float	movement_ratio = time_since_last_frame
+									/ TIME_FOR_FULL_DEFAULT_MOVEMENT_MS;
+	const float	movement = DEFAULT_MOUVEMENT * movement_ratio;
+	int			i;
 
 	i = -1;
 	while (++i < engine->pressed_keys_index)
 	{
 		if (engine->pressed_keys[i] == KEY_W)
-			camera_move_forward(&engine->camera, 0.4f);
+			camera_move_forward(&engine->camera, movement);
 		else if (engine->pressed_keys[i] == KEY_S)
-			camera_move_forward(&engine->camera, -0.4f);
+			camera_move_forward(&engine->camera, -movement);
 		else if (engine->pressed_keys[i] == KEY_A)
-			camera_move_left(&engine->camera, 0.4f);
+			camera_move_left(&engine->camera, movement);
 		else if (engine->pressed_keys[i] == KEY_D)
-			camera_move_left(&engine->camera, -0.4f);
+			camera_move_left(&engine->camera, -movement);
 		else if (engine->pressed_keys[i] == KEY_SPACE)
-			camera_move_up(&engine->camera, 0.4f);
+			camera_move_up(&engine->camera, movement);
 		else if (engine->pressed_keys[i] == KEY_L_SHIFT)
-			camera_move_up(&engine->camera, -0.4f);
+			camera_move_up(&engine->camera, -movement);
 		else if (engine->pressed_keys[i] == KEY_Q)
-			camera_peek(&engine->camera, -4.f);
+			camera_peek(&engine->camera, -movement * 10.f);
 		else if (engine->pressed_keys[i] == KEY_E)
-			camera_peek(&engine->camera, 4.f);
+			camera_peek(&engine->camera, movement * 10.f);
 	}
 }
+
 
 static void	update_placed_object_position(t_engine *engine)
 {
