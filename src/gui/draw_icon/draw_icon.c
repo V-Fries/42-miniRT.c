@@ -43,13 +43,13 @@ void	draw_icon(t_image *image, const t_object *object, const t_light *light,
 	tmp_engine.ray_traced_image = *image;
 	tmp_camera_create(&tmp_engine.camera,
 		(t_vector2f){image->width, image->height});
-//	init_tmp_scene(&tmp_engine, object, sky_color);
+	init_tmp_scene(&tmp_engine, object, sky_color);
 	// TODO: secure it
 	(void) (sky_color);
 	(void) init_tmp_scene;
-//	tmp_engine.scene.bvh_tree = objects_bvh_create_tree(&tmp_engine.scene.objects);
-//	render_icon(&tmp_engine, background_color);
-//	objects_bvh_free_tree(tmp_engine.scene.bvh_tree);
+	recalculate_bvh_scene(&tmp_engine.scene, tmp_engine.scene.objects.data);
+	render_icon(&tmp_engine, background_color);
+	objects_bvh_free_tree(tmp_engine.scene.bvh_tree);
 //	free(tmp_engine.camera.rays);
 //	free_objects(&tmp_engine.scene.objects); // TODO causes use after free! (need to make deep copy of object)
 //	free_lights(&tmp_engine.scene.lights);

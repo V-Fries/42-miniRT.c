@@ -46,7 +46,7 @@ typedef struct s_mesh_bvh_node
 
 typedef struct s_aabb_split
 {
-	int		axis_index;
+	t_axis	axis;
 	float	middle;
 }	t_aabb_split;
 

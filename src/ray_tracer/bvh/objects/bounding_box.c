@@ -18,13 +18,13 @@ t_aabb_split	split_bounding_box_objects_node(t_objects_bvh_node *node)
 			node->aabb_min);
 	t_aabb_split		result;
 
-	result.axis_index = 0;
+	result.axis = X_AXIS;
 	if (extent.y > extent.x)
-		result.axis_index = 1;
-	if (extent.z > vector3f_get(extent, result.axis_index))
-		result.axis_index = 2;
-	result.middle = vector3f_get(node->aabb_min, result.axis_index)
-		+ vector3f_get(extent, result.axis_index) * 0.5f;
+		result.axis = Y_AXIS;
+	if (extent.z > vector3f_get(extent, result.axis))
+		result.axis = Z_AXIS;
+	result.middle = vector3f_get(node->aabb_min, result.axis)
+		+ vector3f_get(extent, result.axis) * 0.5f;
 	return (result);
 }
 
@@ -38,14 +38,14 @@ t_side	get_bounding_box_side(t_bounding_box *bh, t_aabb_split split)
 	i = 0;
 	while (i < 4)
 	{
-		side[vector3f_get(bh->top_face[i], split.axis_index) \
+		side[vector3f_get(bh->top_face[i], split.axis) \
 		< split.middle] = true;
 		i++;
 	}
 	i = 0;
 	while (i < 4)
 	{
-		side[vector3f_get(bh->bottom_face[i], split.axis_index) \
+		side[vector3f_get(bh->bottom_face[i], split.axis) \
 		< split.middle] = true;
 		i++;
 	}

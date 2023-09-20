@@ -19,13 +19,13 @@ t_aabb_split	split_bounding_box_mesh_node(t_mesh_bvh_node *node)
 			node->aabb_min);
 	t_aabb_split		result;
 
-	result.axis_index = 0;
+	result.axis = X_AXIS;
 	if (extent.y > extent.x)
-		result.axis_index = 1;
-	if (extent.z > vector3f_get(extent, result.axis_index))
-		result.axis_index = 2;
-	result.middle = vector3f_get(node->aabb_min, result.axis_index)
-		+ vector3f_get(extent, result.axis_index) * 0.5f;
+		result.axis = Y_AXIS;
+	if (extent.z > vector3f_get(extent, result.axis))
+		result.axis = Z_AXIS;
+	result.middle = vector3f_get(node->aabb_min, result.axis)
+		+ vector3f_get(extent, result.axis) * 0.5f;
 	return (result);
 }
 
@@ -44,9 +44,9 @@ t_side	get_face_side(t_mesh_bvh_node *node, int face_index, t_aabb_split split)
 			face_index, 1);
 	vertex_c = mesh_get_vertex_from_face(node->mesh_object,
 			face_index, 2);
-	side[vector3f_get(vertex_a, split.axis_index) < split.middle] = true;
-	side[vector3f_get(vertex_b, split.axis_index) < split.middle] = true;
-	side[vector3f_get(vertex_c, split.axis_index) < split.middle] = true;
+	side[vector3f_get(vertex_a, split.axis) < split.middle] = true;
+	side[vector3f_get(vertex_b, split.axis) < split.middle] = true;
+	side[vector3f_get(vertex_c, split.axis) < split.middle] = true;
 	if (side[0] && side[1])
 		return (LEFT_AND_RIGHT);
 	else if (side[0])

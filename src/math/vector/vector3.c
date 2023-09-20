@@ -29,11 +29,11 @@ void	vector3f_print(t_vector3f vector)
 	printf("Vector3 => x:%f y:%f, z:%f\n", vector.x, vector.y, vector.z);
 }
 
-float	vector3f_get(t_vector3f vector, int axis_index)
+float	vector3f_get(t_vector3f vector, t_axis axis)
 {
-	if (axis_index == 0)
+	if (axis == X_AXIS)
 		return (vector.x);
-	else if (axis_index == 1)
+	else if (axis == Y_AXIS)
 		return (vector.y);
 	return (vector.z);
 }

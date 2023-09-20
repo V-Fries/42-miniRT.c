@@ -301,7 +301,8 @@ static void	update_placed_object_position(t_engine *engine)
 		update_xyz_float_input_boxes(engine,
 			engine->object_being_placed.object->position,
 			&engine->gui.float_input_boxes.position);
-		recalculate_bvh_scene(&engine->scene, engine->object_being_placed.object);
+		if (recalculate_bvh_scene(&engine->scene, engine->object_being_placed.object) < 0)
+			ft_fatal_error("update_placed_object_position: recalculate_bvh_scene failed");
 	}
 	else
 	{
