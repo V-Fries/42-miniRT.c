@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 18:12:50 by vfries            #+#    #+#             */
-/*   Updated: 2023/09/20 19:23:23 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2023/09/20 20:23:19 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,6 @@ static int	deal_mouse(t_engine *engine)
 	if (engine->camera.lock == false)
 	{
 		mouse_position = get_mouse_position(engine);
-
 		yaw_delta = (engine->previous_mouse_position.x - mouse_position.x)
 			* engine->camera.rotation_speed;
 		pitch_delta = (engine->previous_mouse_position.y - mouse_position.y)

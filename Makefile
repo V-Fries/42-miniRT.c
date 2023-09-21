@@ -181,6 +181,7 @@ SRC				=\
 	\
 	hooks/button_press.c				\
 	hooks/button_release.c				\
+	hooks/focus_handler.c				\
 	hooks/key_press.c					\
 	hooks/key_release.c					\
 	hooks/pressed_keys.c				\
