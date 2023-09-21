@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/07 18:12:50 by vfries            #+#    #+#             */
-/*   Updated: 2023/09/20 20:23:19 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2023/09/21 16:28:46 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,7 @@ static int	deal_mouse(t_engine *engine)
 	float		yaw_delta;
 	float		pitch_delta;
 
-	if (engine->camera.lock == false)
+	if (engine->camera.lock == false && engine->window.is_focused)
 	{
 		mouse_position = get_mouse_position(engine);
 		yaw_delta = (engine->previous_mouse_position.x - mouse_position.x)
@@ -270,8 +270,9 @@ static void	update_placed_object_position(t_engine *engine)
 	float		yaw_delta;
 	float		pitch_delta;
 
-	if (engine->object_being_placed.object == NULL
-		&& engine->object_being_placed.light == NULL)
+	if ((engine->object_being_placed.object == NULL
+			&& engine->object_being_placed.light == NULL)
+		|| engine->window.is_focused == false)
 		return ;
 	mouse_position = get_mouse_position(engine);
 	yaw_delta = (engine->previous_mouse_position.x - mouse_position.x)
