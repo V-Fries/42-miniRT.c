@@ -92,9 +92,9 @@ static void	init_hooks(t_engine *engine)
 	mlx_hook(engine->window.window, DESTROY_NOTIFY, STRUCTURE_NOTIFY_MASK,
 		&close_engine, engine);
 	mlx_hook(engine->window.window, FOCUS_IN, FOCUS_CHANGE_MASK,
-		&focus_in_handler, &engine);
+		&focus_in_handler, engine);
 	mlx_hook(engine->window.window, FOCUS_OUT, FOCUS_CHANGE_MASK,
-		&focus_out_handler, &engine);
+		&focus_out_handler, engine);
 	mlx_loop_hook(engine->window.mlx, &render_frame, engine);
 }
 
