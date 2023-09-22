@@ -21,6 +21,8 @@
 static bool			arguments_are_bad(int argc, const char **argv);
 static const char	*get_startup_scene_path(const int argc, const char **argv);
 
+#include "ray_tracer/bvh.h"
+
 int	main(const int argc, const char **argv)
 {
 	t_engine	minirt;
@@ -34,6 +36,21 @@ int	main(const int argc, const char **argv)
 		return (2);
 	}
 	mlx_loop(minirt.window.mlx);
+//	(void) argc;
+//	(void) argv;
+//	t_objects objects;
+//	initialize_objects_array(&objects, 10);
+//	t_object 	test;
+//	ft_bzero(&test, sizeof(test));
+//
+//	t_material mat = material_create((t_vector3f){0.f, 0.f, 0.f}, 0.f, 0.f);
+//	mesh_object_initialize(&test, "assets/objects/cube.obj", mat);
+//	add_object_in_objects(&objects, test);
+////	ft_printf("%p\n", test);
+//	free_objects(&objects);
+//	(void) get_startup_scene_path;
+//	(void) test;
+//	(void) arguments_are_bad;
 }
 
 static bool	arguments_are_bad(const int argc, const char **argv)

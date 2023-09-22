@@ -46,13 +46,13 @@ void	draw_icon(t_image *image, const t_object *object, const t_light *light,
 	init_tmp_scene(&tmp_engine, object, sky_color);
 	// TODO: secure it
 	(void) (sky_color);
-	(void) init_tmp_scene;
 	recalculate_bvh_scene(&tmp_engine.scene, tmp_engine.scene.objects.data);
 	render_icon(&tmp_engine, background_color);
+	free_objects(&tmp_engine.scene.objects); // TODO causes use after free! (need to make deep copy of object)
+	vectors_int_free(&tmp_engine.scene.plane_indexes);
 	objects_bvh_free_tree(tmp_engine.scene.bvh_tree);
-//	free(tmp_engine.camera.rays);
-//	free_objects(&tmp_engine.scene.objects); // TODO causes use after free! (need to make deep copy of object)
-//	free_lights(&tmp_engine.scene.lights);
+	free(tmp_engine.camera.rays);
+	free_lights(&tmp_engine.scene.lights);
 }
 
 static void	tmp_camera_create(t_camera *camera, t_vector2f viewport)
@@ -90,15 +90,18 @@ static void	init_tmp_scene(t_engine *tmp_engine, const t_object *base_object,
 
 	initialize_objects_array(&tmp_engine->scene.objects, 1);
 	initialize_lights_array(&tmp_engine->scene.lights, 1);
+	t_material	new_material;
 
+	ft_bzero(&new_material, sizeof(new_material));
+	material_deep_copy(&new_material, &base_object->material);
 	if (base_object->type == SPHERE)
-		object = get_sphere(&tmp_engine->camera, base_object->material);
+		object = get_sphere(&tmp_engine->camera, new_material);
 	else if (base_object->type == PLANE)
-		object = get_plane(base_object->material);
+		object = get_plane(new_material);
 	else if (base_object->type == CYLINDER)
-		object = get_cylinder(&tmp_engine->camera, base_object->material);
+		object = get_cylinder(&tmp_engine->camera, new_material);
 	else if (base_object->type == CONE)
-		object = get_cone(&tmp_engine->camera, base_object->material);
+		object = get_cone(&tmp_engine->camera, new_material);
 	else
 		object = get_mesh_object(&tmp_engine->camera, base_object);
 
@@ -180,7 +183,9 @@ static t_object	get_cylinder(const t_camera *camera, const t_material material)
 	cylinder = cylinder_create(vector3f_create(0, 0, -2.f),
 			vector3f_create(1, 0, 0), (t_object_size){radius, height},
 			material);
+
 	object_rotate(&cylinder, (t_vector3f){0.f, 1.f, 0.f}, -35);
+
 	return (cylinder);
 }
 
@@ -243,6 +248,7 @@ static t_object	get_mesh_object(const t_camera *camera, const t_object *object)
 	min_y = vectors3f_get_min_values(mesh_object.cache.mesh.vertex).y;
 	mesh_object_set_position(&mesh_object, vector3f_create(0, bottom.y - min_y, -2.f));
 //	mesh_object_set_scale(&mesh_object, (t_vector3f){1, 1, 1});
+	mesh_bvh_free_tree(mesh_object.mesh.tree);
 	return (mesh_object);
 }
 

@@ -7,6 +7,7 @@
 
 static void	destroy_gui(t_engine *minirt);
 
+#include <stdio.h>
 int	close_engine(t_engine *engine)
 {
 	destroy_gui(engine);
@@ -16,6 +17,11 @@ int	close_engine(t_engine *engine)
 	if (engine->window.mlx != NULL && engine->window.window != NULL)
 		mlx_destroy_window(engine->window.mlx, engine->window.window);
 	// TODO destroy font
+
+	free_objects(&engine->scene.objects);
+	objects_bvh_free_tree(engine->scene.bvh_tree);
+	vectors_int_free(&engine->scene.plane_indexes);
+	printf("Close\n");
 	free(engine->start_up_scene);
 	exit(0); // TODO: free everything
 }
