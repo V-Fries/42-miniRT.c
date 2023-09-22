@@ -48,11 +48,9 @@ void	draw_icon(t_image *image, const t_object *object, const t_light *light,
 	(void) (sky_color);
 	recalculate_bvh_scene(&tmp_engine.scene, tmp_engine.scene.objects.data);
 	render_icon(&tmp_engine, background_color);
-	free_objects(&tmp_engine.scene.objects); // TODO causes use after free! (need to make deep copy of object)
-	vectors_int_free(&tmp_engine.scene.plane_indexes);
-	objects_bvh_free_tree(tmp_engine.scene.bvh_tree);
+	free_scene(&tmp_engine.scene);
+	camera_free(&tmp_engine.camera);
 	free(tmp_engine.camera.rays);
-	free_lights(&tmp_engine.scene.lights);
 }
 
 static void	tmp_camera_create(t_camera *camera, t_vector2f viewport)
@@ -248,7 +246,6 @@ static t_object	get_mesh_object(const t_camera *camera, const t_object *object)
 	min_y = vectors3f_get_min_values(mesh_object.cache.mesh.vertex).y;
 	mesh_object_set_position(&mesh_object, vector3f_create(0, bottom.y - min_y, -2.f));
 //	mesh_object_set_scale(&mesh_object, (t_vector3f){1, 1, 1});
-	mesh_bvh_free_tree(mesh_object.mesh.tree);
 	return (mesh_object);
 }
 

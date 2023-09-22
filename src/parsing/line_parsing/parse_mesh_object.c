@@ -22,11 +22,8 @@ int	parse_mesh_object(t_engine *engine, char **scene_content_line,
 	if (get_vector3f(scene_content_line[3], &tmp) < 0)
 		return (error("Error\nFailed to get mesh scale\n"));
 	mesh_object_set_scale(&mesh, tmp);
-	mesh_bvh_free_tree(mesh.mesh.tree);
 	if (add_object(engine, mesh) < 0)
 		return (free_object(&mesh), -1);
-	mesh_bvh_free_tree(engine->scene.objects.data[engine->scene.objects.length - 1].mesh.tree);
-	engine->scene.objects.data[engine->scene.objects.length - 1].mesh.tree = mesh_bvh_create_tree(&engine->scene.objects.data[engine->scene.objects.length - 1]);
 	return (0);
 }
 

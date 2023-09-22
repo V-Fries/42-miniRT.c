@@ -405,7 +405,8 @@ SRC				=\
 	close_miniRT.c		\
 	color.c				\
 	init_minirt.c		\
-	main.c
+	main.c				\
+	scene.c
 
 DIR_BUILD			=	.build/
 OBJS				=	$(patsubst %.c, $(DIR_BUILD)%.o, $(SRC))
