@@ -50,7 +50,6 @@ void	draw_icon(t_image *image, const t_object *object, const t_light *light,
 	render_icon(&tmp_engine, background_color);
 	free_scene(&tmp_engine.scene);
 	camera_free(&tmp_engine.camera);
-	free(tmp_engine.camera.rays);
 }
 
 static void	tmp_camera_create(t_camera *camera, t_vector2f viewport)
