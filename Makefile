@@ -14,6 +14,7 @@ SRC				=\
 	export/scene/datetime.c	\
 	export/scene/material.c	\
 	export/scene/object.c	\
+	export/scene/objects.c	\
 	export/scene/scene.c	\
 	export/image_to_ppm.c	\
 	export/screenshot.c		\

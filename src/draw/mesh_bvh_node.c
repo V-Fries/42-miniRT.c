@@ -12,10 +12,10 @@
 
 #include "draw.h"
 
-static void	draw_mesh_bvh_faces_node(t_engine *engine, t_mesh_bvh_node *node,
-				t_vector3f color);
+static void	draw_mesh_bvh_faces_node(t_engine *engine,
+				const t_mesh_bvh_node *node, t_vector3f color);
 
-void	draw_mesh_bvh_node(t_engine *engine, t_mesh_bvh_node *node,
+void	draw_mesh_bvh_node(t_engine *engine, const t_mesh_bvh_node *node,
 				t_vector3f color)
 {
 	const t_vector3f	max = node->aabb_max;
@@ -36,7 +36,8 @@ void	draw_mesh_bvh_node(t_engine *engine, t_mesh_bvh_node *node,
 			(t_vector3f){255.f, 255.f, 255.f});
 }
 
-static void	draw_mesh_bvh_faces_node(t_engine *engine, t_mesh_bvh_node *node,
+static void	draw_mesh_bvh_faces_node(t_engine *engine,
+									const t_mesh_bvh_node *node,
 									t_vector3f color)
 {
 	t_vector3f	vertices[3];
