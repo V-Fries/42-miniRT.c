@@ -48,11 +48,11 @@ static void	draw_mesh_bvh_faces_node(t_engine *engine,
 	while (i < node->index_faces.length)
 	{
 		vertices[0] = mesh_get_vertex_from_face(node->mesh_object,
-				node->index_faces.data[i], 0);
+				node->index_faces.data[i], VERTEX_A);
 		vertices[1] = mesh_get_vertex_from_face(node->mesh_object,
-				node->index_faces.data[i], 1);
+				node->index_faces.data[i], VERTEX_B);
 		vertices[2] = mesh_get_vertex_from_face(node->mesh_object,
-				node->index_faces.data[i], 2);
+				node->index_faces.data[i], VERTEX_C);
 		points[0] = convert_world_point_to_screen_space(&engine->camera,
 				vertices[0]);
 		points[1] = convert_world_point_to_screen_space(&engine->camera,

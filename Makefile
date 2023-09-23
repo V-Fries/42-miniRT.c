@@ -273,6 +273,7 @@ SRC				=\
 	object/cylinder/create.c			\
 	object/cylinder/transformations.c	\
 	\
+	object/mesh/bounding_box.c			\
 	object/mesh/cache.c					\
 	object/mesh/create.c				\
 	object/mesh/mesh_deep_copy.c		\

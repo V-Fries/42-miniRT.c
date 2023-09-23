@@ -141,10 +141,6 @@ t_object	cylinder_create(const t_vector3f position,
 				const t_vector3f rotation_degrees,
 				const t_object_size size, const t_material material);
 void		cylinder_calculate_cache(t_object *cylinder);
-t_object	cylinder_infinite_create(const t_vector3f position,
-				const t_vector3f axis,
-				const float radius,
-				const t_material material);
 void		cylinder_calculate_bounding_box(t_object *cylinder);
 
 //	cylinder/transformations.c
@@ -180,10 +176,10 @@ void		mesh_object_set_rotation(t_object *mesh_object,
 				const t_vector3f rotation_degrees);
 void		mesh_object_set_scale(t_object *mesh_object,
 				const t_vector3f scale);
+
 //	mesh/utils.c
 t_vector3f	mesh_get_vertex_from_face(const t_object *mesh_object,
-										size_t face_index, int vertex_index);
-
+				size_t face_index, t_vertices vertex);
 
 //	plane/create.c
 t_object	plane_create(const t_vector3f position,
