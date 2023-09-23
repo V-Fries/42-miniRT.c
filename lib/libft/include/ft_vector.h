@@ -29,7 +29,7 @@ typedef struct s_vector
 	size_t	elem_size;
 }	t_vector;
 
-typedef t_vector t_str_vector;
+typedef t_vector	t_str_vector;
 
 // str_vector
 int		ft_str_vector_add_elem(t_str_vector *vector, char *elem);
@@ -54,6 +54,5 @@ void	ft_vector_delete_elem(t_vector *vector, size_t index,
 void	ft_vector_destroy(t_vector *vector);
 void	*ft_vector_get_ptr_to_elem(const t_vector *vector, const size_t index);
 int		ft_vector_minimize_size(t_vector *vector);
-
 
 #endif
