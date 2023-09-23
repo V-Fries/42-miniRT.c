@@ -15,6 +15,8 @@
 #include "ray_tracer/shade.h"
 #include "ray_tracer/render.h"
 
+#define ICON_BOUNCES_PER_PIXEL 2
+
 static	t_ray	calculate_bounce_ray(t_ray current_ray, t_hit ray_hit);
 
 t_vector3f	render_ray(t_ray ray, const t_scene *scene)
@@ -63,18 +65,17 @@ t_vector3f	render_ray_icon(t_ray ray, const t_scene *scene, int *missed_object)
 	float			multiplier;
 	unsigned int	i;
 
-	i = 0;
+	i = -1;
 	multiplier = 1.0f;
 	ray_color = vector3f_create(0, 0, 0);
-	while (i < 2)
+	while (++i < ICON_BOUNCES_PER_PIXEL)
 	{
 		if (multiplier < 0.01f)
 			return (ray_color);
 		ray_hit = calculate_ray_intersection(&ray, scene);
 		if (!ray_hit.hit)
 		{
-			if (i == 0)
-				(*missed_object)++;
+			*missed_object += i == 0;
 			return (vector3f_add(ray_color, \
 					vector3f_multiply(scene->sky_color, multiplier)));
 		}
@@ -82,7 +83,6 @@ t_vector3f	render_ray_icon(t_ray ray, const t_scene *scene, int *missed_object)
 		ray_color = vector3f_add(ray_color, color);
 		multiplier *= ray_hit.object->material.reflection;
 		ray = calculate_bounce_ray(ray, ray_hit);
-		i++;
 	}
 	return (ray_color);
 }
