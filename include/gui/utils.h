@@ -6,9 +6,10 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 02:01:00 by vfries            #+#    #+#             */
-/*   Updated: 2023/05/11 02:01:00 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2023/09/24 01:17:52 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #ifndef UTILS_H
 # define UTILS_H
 
@@ -56,6 +57,11 @@ void				draw_center_box_image(t_image *image);
 
 void				draw_icon(t_image *image, const t_object *object,
 						const t_light *light, unsigned int background_color);
+t_object			get_object(const t_object *base_object,
+						t_engine *tmp_engine);
+t_object			get_mesh_object(const t_camera *camera,
+						const t_object *object);
+
 
 void				draw_light_icon(t_image *image,
 						unsigned int background_color, t_color color);

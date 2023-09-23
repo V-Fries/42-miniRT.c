@@ -57,6 +57,10 @@ SRC				=\
 	gui/box/get_clicked_gui_box.c		\
 	gui/box/mouse_utils.c				\
 	\
+	\
+	gui/draw_icon/get_object/get_mesh_object.c	\
+	gui/draw_icon/get_object/get_object.c		\
+	\
 	gui/draw_icon/draw_icon.c								\
 	gui/draw_icon/draw_light_icon/draw_bottom_rectangles.c	\
 	gui/draw_icon/draw_light_icon/draw_light_icon.c			\
