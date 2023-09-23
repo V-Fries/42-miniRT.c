@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 01:51:00 by vfries            #+#    #+#             */
-/*   Updated: 2023/06/13 01:51:00 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2023/09/24 01:44:58 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,8 @@ int			get_quadratic_bezier_points(t_vector *dest,
 
 bool		do_segments_intersect(t_vector2f a, t_vector2f b, t_vector2f c,
 				t_vector2f d);
+
+bool		is_point_inside_glyph(t_vector2f point,
+				const t_glyph_generated_points *points);
 
 #endif

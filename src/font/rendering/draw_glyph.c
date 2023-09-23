@@ -6,11 +6,12 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/25 14:36:00 by vfries            #+#    #+#             */
-/*   Updated: 2023/06/25 14:36:00 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2023/09/24 01:43:46 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
+
 #include "font/render.h"
 #include "threads.h"
 
@@ -26,10 +27,6 @@ static void						draw_pixel(unsigned int *dst,
 									t_vector2f pixel,
 									t_vector3f background_color,
 									const t_glyph_generated_points *points);
-static bool						is_point_inside_glyph(t_vector2f point,
-									const t_glyph_generated_points *points);
-static int						add_intersection(t_segment segment_1,
-									t_segment segment_2);
 
 typedef struct s_draw_glyph_routine_arg
 {
@@ -145,59 +142,4 @@ static void	draw_pixel(unsigned int *dst, const t_vector2f pixel,
 				- nb_of_points_in_glyph));
 	new_color = vector3f_divide(new_color, PIXEL_DIVISION * PIXEL_DIVISION);
 	*dst = vec_rgb_to_uint(new_color);
-}
-
-static bool	is_point_inside_glyph(t_vector2f point,
-				const t_glyph_generated_points *points)
-{
-	int16_t			contour;
-	size_t			contour_start;
-	size_t			i;
-	const t_segment	segment = {point,
-		(t_vector2f){points->bounds.xMax + 100.f, points->bounds.yMax}};
-	size_t			nb_of_intersected_segments;
-
-	nb_of_intersected_segments = 0;
-	contour = -1;
-	while (++contour < points->nb_of_contours)
-	{
-		if (contour != 0)
-			contour_start = points->contours_limits[contour - 1];
-		else
-			contour_start = 0;
-		i = contour_start - 1;
-		while (++i < points->contours_limits[contour] - 1)
-			nb_of_intersected_segments += add_intersection(segment,
-					(t_segment){points->points[i], points->points[i + 1]});
-		nb_of_intersected_segments += add_intersection(segment,
-				(t_segment){points->points[i], points->points[contour_start]});
-	}
-	return (nb_of_intersected_segments % 2);
-}
-
-static int	add_intersection(t_segment segment_1, t_segment segment_2)
-{
-	t_segment	corrected_segment_1;
-
-	if ((vector2f_are_equal(segment_1.a, segment_2.a)
-			|| vector2f_are_equal(segment_1.a, segment_2.b))
-		&& (vector2f_are_equal(segment_1.b, segment_2.a)
-			|| vector2f_are_equal(segment_1.b, segment_2.b)))
-		return (0);
-	if (vector2f_are_equal(segment_1.a, segment_2.a)
-		|| vector2f_are_equal(segment_1.a, segment_2.b))
-		corrected_segment_1.a = vector2f_add(vector2f_multiply(
-					vector2f_subtract(segment_1.b, segment_1.a), 0.05f),
-				segment_1.a);
-	else
-		corrected_segment_1.a = segment_1.a;
-	if (vector2f_are_equal(segment_1.b, segment_2.a)
-		|| vector2f_are_equal(segment_1.b, segment_2.b))
-		corrected_segment_1.b = vector2f_add(vector2f_multiply(
-					vector2f_subtract(segment_1.a, segment_1.b), 0.05f),
-				segment_1.b);
-	else
-		corrected_segment_1.b = segment_1.b;
-	return (do_segments_intersect(corrected_segment_1.a, corrected_segment_1.b,
-			segment_2.a, segment_2.b));
 }

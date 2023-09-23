@@ -43,6 +43,7 @@ SRC				=\
 	font/rendering/draw_glyph.c						\
 	font/rendering/get_glyph_points.c				\
 	font/rendering/get_quadratic_bezier_points.c	\
+	font/rendering/is_point_inside_glyph.c			\
 	font/rendering/write_centered_number_to_image.c	\
 	font/rendering/write_centered_string_to_image.c	\
 	\
