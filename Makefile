@@ -72,6 +72,7 @@ SRC				=\
 	gui/main_box/menu_box/init_settings_icon.c	\
 	\
 	gui/main_box/object_creation_box/init_object_creation_box.c		\
+	gui/main_box/object_creation_box/light_create_on_click.c		\
 	gui/main_box/object_creation_box/object_creation_on_clicks.c	\
 	\
 	gui/main_box/init_main_box.c		\
@@ -90,6 +91,7 @@ SRC				=\
 	gui/object_modification_box/init_color_picker/init_base_color_box.c		\
 	gui/object_modification_box/init_color_picker/init_color_picker_box.c	\
 	gui/object_modification_box/init_color_picker/init_rgb_picker.c			\
+	gui/object_modification_box/init_color_picker/on_clicks.c				\
 	\
 	gui/object_modification_box/init_object_modification_box.c				\
 	\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_modification_box.h                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdameros <tdameros@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 00:04:00 by tdameros          #+#    #+#             */
-/*   Updated: 2023/05/11 00:04:00 by tdameros         ###   ########lyon.fr   */
+/*   Updated: 2023/09/23 23:02:38 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,9 @@ void	init_color_picker_box(t_engine *minirt, t_gui_box *gui_box,
 			t_gui_box *parent);
 void	add_hover_color_circle(t_gui_box *self, t_vector2i offset,
 			t_vector2i mouse_position);
+void	base_color_picker_on_click(t_gui_box *self, t_engine *engine,
+			t_click_data click_data);
+void	color_picker_on_click(t_gui_box *self, t_engine *engine,
+			t_click_data click_data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/30 18:22:23 by vfries            #+#    #+#             */
-/*   Updated: 2023/07/30 18:22:24 by vfries           ###   ########.fr       */
+/*   Updated: 2023/09/23 22:38:01 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static bool	does_gui_box_overlap_with_another_on_the_same_level(
 	while (i--)
 		if (same_level_gui_boxes.data[i].was_initialised
 			&& do_gui_boxes_overlap(new_gui_box_limit,
-					same_level_gui_boxes.data + i))
+				same_level_gui_boxes.data + i))
 			return (true);
 	return (false);
 }
