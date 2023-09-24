@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   round_image_corners_utils.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdameros <tdameros@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/24 03:08:52 by tdameros          #+#    #+#             */
-/*   Updated: 2023/09/24 03:08:53 by tdameros         ###   ########lyon.fr   */
+/*   Created: 2023/09/24 01:47:39 by vfries            #+#    #+#             */
+/*   Updated: 2023/09/24 03:40:47 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

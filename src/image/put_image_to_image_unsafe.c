@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_image_to_image_unsafe.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdameros <tdameros@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/24 03:05:10 by tdameros          #+#    #+#             */
-/*   Updated: 2023/09/24 03:05:19 by tdameros         ###   ########lyon.fr   */
+/*   Created: 2023/09/24 01:47:28 by vfries            #+#    #+#             */
+/*   Updated: 2023/09/24 03:40:18 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

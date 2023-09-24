@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   put_background.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tdameros <tdameros@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/24 03:07:30 by tdameros          #+#    #+#             */
-/*   Updated: 2023/09/24 03:07:31 by tdameros         ###   ########lyon.fr   */
+/*   Created: 2023/09/24 01:47:35 by vfries            #+#    #+#             */
+/*   Updated: 2023/09/24 03:40:36 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
