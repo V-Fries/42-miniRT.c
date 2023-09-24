@@ -139,15 +139,17 @@ SRC				=\
 	gui/init_gui.c					\
 	\
 	\
-	hooks/update_object_attributes_modification_box/add_boxes/cap_checkerboard_size_on_clicks/x.c	\
-	hooks/update_object_attributes_modification_box/add_boxes/cap_checkerboard_size_on_clicks/y.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/cap_checkerboard_size_on_clicks/disable_cap_checkerboard.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/cap_checkerboard_size_on_clicks/x.c							\
+	hooks/update_object_attributes_modification_box/add_boxes/cap_checkerboard_size_on_clicks/y.c							\
 	\
 	hooks/update_object_attributes_modification_box/add_boxes/normal_input_box_on_clicks/x.c	\
 	hooks/update_object_attributes_modification_box/add_boxes/normal_input_box_on_clicks/y.c	\
 	hooks/update_object_attributes_modification_box/add_boxes/normal_input_box_on_clicks/z.c	\
 	\
-	hooks/update_object_attributes_modification_box/add_boxes/outline_checkerboard_size_on_clicks/x.c	\
-	hooks/update_object_attributes_modification_box/add_boxes/outline_checkerboard_size_on_clicks/y.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/outline_checkerboard_size_on_clicks/disable_outline_checkerboard.c	\
+	hooks/update_object_attributes_modification_box/add_boxes/outline_checkerboard_size_on_clicks/x.c								\
+	hooks/update_object_attributes_modification_box/add_boxes/outline_checkerboard_size_on_clicks/y.c								\
 	\
 	hooks/update_object_attributes_modification_box/add_boxes/position_input_box_on_clicks/x.c	\
 	hooks/update_object_attributes_modification_box/add_boxes/position_input_box_on_clicks/y.c	\
@@ -201,6 +203,7 @@ SRC				=\
 	hooks/motion_handler.c				\
 	hooks/pressed_keys.c				\
 	hooks/redraw_icons.c				\
+	hooks/toggle_camera_lock.c			\
 	hooks/toggle_gui.c					\
 	hooks/update_color_picker_color.c	\
 	\

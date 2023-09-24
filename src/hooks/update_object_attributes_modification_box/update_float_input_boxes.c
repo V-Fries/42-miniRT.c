@@ -6,14 +6,15 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 18:38:00 by vfries            #+#    #+#             */
-/*   Updated: 2023/09/24 09:24:41 by vfries           ###   ########.fr       */
+/*   Updated: 2023/09/24 09:33:05 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "engine.h"
 #include "gui/utils.h"
 
-static void	update_float_input_boxes_object(t_engine *engine);
+static void	update_float_input_boxes_object(t_engine *engine,
+				t_float_input_boxes *float_input_boxes, t_object *object);
 static void	update_float_input_boxes_light(t_engine *engine);
 
 void	update_xyz_float_input_boxes(t_engine *engine,
