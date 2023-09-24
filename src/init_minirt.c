@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_minirt.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tdameros <tdameros@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/24 03:05:27 by tdameros          #+#    #+#             */
+/*   Updated: 2023/09/24 03:05:28 by tdameros         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stddef.h>
 #include <stdlib.h>
 
@@ -85,9 +97,9 @@ int	init_engine(t_engine *engine, const char *start_up_scene,
 	vectors_int_initialize(&engine->scene.plane_indexes, 5);
 	if (parse_scene(engine, engine->start_up_scene) < 0)
 		return (-1); // TODO free stuff
-	camera_recalculate_view(&engine->camera);
-	camera_recalculate_projection(&engine->camera);
-	camera_recalculate_rays(&engine->camera);
+//	camera_recalculate_view(&engine->camera);
+//	camera_recalculate_projection(&engine->camera);
+//	camera_recalculate_rays(&engine->camera);
 	return (0);
 }
 
