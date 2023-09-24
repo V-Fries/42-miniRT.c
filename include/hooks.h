@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 10:45:44 by vfries            #+#    #+#             */
-/*   Updated: 2023/09/24 07:13:00 by vfries           ###   ########.fr       */
+/*   Updated: 2023/09/24 09:18:38 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int			key_release_handler(int key_code, t_engine *engine);
 int			motion_handler(int x, int y, t_engine *engine);
 int			focus_in_handler(t_engine *engine);
 int			focus_out_handler(t_engine *engine);
+void		toggle_camera_lock(t_engine *engine);
 
 void		add_key_to_pressed_keys(t_engine *engine, int key_code);
 void		remove_key_from_pressed_keys(t_engine *engine, int key_code);
@@ -108,6 +109,7 @@ t_gui_box	*get_x_y_z_input_box(t_gui_box *gui_box, char type,
 				char click_type);
 t_gui_box	*get_x_y_input_box(t_gui_box *gui_box, char type, char click_type);
 
+void		disable_cap_checkerboard(t_engine *engine, t_object *object);
 void		cap_checkerboard_size_input_box_x_on_click_plus(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
 void		cap_checkerboard_size_input_box_x_on_click_minus(
@@ -121,6 +123,7 @@ void		cap_checkerboard_size_input_box_y_on_click_minus(
 void		cap_checkerboard_size_input_box_y_on_click_text(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
 
+void		disable_outline_checkerboard(t_engine *engine, t_object *object);
 void		outline_checkerboard_size_input_box_x_on_click_plus(t_gui_box *self,
 				t_engine *engine, t_click_data click_data);
 void		outline_checkerboard_size_input_box_x_on_click_minus(
