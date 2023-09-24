@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:18:38 by tdameros          #+#    #+#             */
-/*   Updated: 2023/09/19 19:50:04 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2023/09/24 04:01:59 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ typedef struct s_engine
 	int						pressed_keys[NB_OF_MOVEMENT_KEYS];
 	int						pressed_keys_index;
 	bool					command_key_is_pressed;
-	bool					should_render_ray_tracing; // TODO refactor this with an enum
-	bool					should_render_at_full_resolution; // enum {NO_RENDER, RENDER, FULL_RENDER}
+	bool					should_render_ray_tracing;
+	bool					should_render_at_full_resolution;
 	bool					antialiasing;
 	bool					scene_changed;
 	bool					display_bounding_box;

@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 10:45:44 by vfries            #+#    #+#             */
-/*   Updated: 2023/09/20 20:02:43 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2023/09/24 07:13:00 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 int			button_release_handler(int button, int x, int y, t_engine *engine);
 int			button_press_handler(int button, int x, int y, t_engine *engine);
+void		deal_keys(t_engine *engine, const uint64_t start_time);
+int			deal_mouse(t_engine *engine);
 int			key_press_handler(int key_code, t_engine *engine);
 int			key_release_handler(int key_code, t_engine *engine);
 int			motion_handler(int x, int y, t_engine *engine);

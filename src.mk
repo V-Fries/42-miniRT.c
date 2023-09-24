@@ -193,6 +193,8 @@ SRC				=\
 	\
 	hooks/button_press.c				\
 	hooks/button_release.c				\
+	hooks/deal_keys.c					\
+	hooks/deal_mouse.c					\
 	hooks/focus_handler.c				\
 	hooks/key_press.c					\
 	hooks/key_release.c					\
@@ -394,9 +396,14 @@ SRC				=\
 	ray_tracer_gui_api/get_clicked_object.c					\
 	\
 	\
-	render_frame/print_fps_counter.c		\
-	render_frame/render_frame.c				\
-	render_frame/render_user_interface.c	\
+	render_frame/print_fps_counter.c						\
+	render_frame/put_raytraced_pixels_to_raytraced_image.c	\
+	render_frame/render_frame.c								\
+	render_frame/render_message.c							\
+	render_frame/render_screen_shot_animation.c				\
+	render_frame/render_user_interface.c					\
+	render_frame/update_placed_object_position.c			\
+	render_frame/update_scene.c								\
 	\
 	\
 	threads/get_routine_data.c	\
