@@ -28,12 +28,12 @@ void		render_bounding_box(t_engine *engine);
 void		draw_line(t_image *image, t_vector2i point1, t_vector2i point2,
 				t_vector3f color);
 
-//	objects_bvh_node.c
-void		draw_objects_bvh_node(t_engine *engine,
-				const t_objects_bvh_node *node, t_vector3f color);
-
 //	mesh_bvh_node.c
 void		draw_mesh_bvh_node(t_engine *engine, const t_mesh_bvh_node *node,
 				t_vector3f color);
+
+//	objects_bvh_node.c
+void		draw_objects_bvh_node(t_engine *engine,
+				const t_objects_bvh_node *node, t_vector3f color);
 
 #endif

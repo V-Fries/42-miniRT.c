@@ -19,14 +19,6 @@
 #include "window.h"
 #include "engine.h"
 
-struct s_limit
-{
-	int	left;
-	int	right;
-	int	top;
-	int	bottom;
-};
-
 static bool	can_gui_box_be_placed(const t_engine *engine,
 				const t_gui_box *parent, t_vector2i position, t_vector2i size);
 static bool	is_gui_box_too_big_to_fit_in_parent(t_vector2i parent_size,

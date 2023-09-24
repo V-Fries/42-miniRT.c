@@ -43,26 +43,35 @@ typedef struct s_write_character_data
 	bool		*is_decimal;
 }	t_write_character_data;
 
-int			get_font(t_font *font, char *font_file);
-
-void		write_centered_string_to_image(const t_font *font, t_image *image,
-				const char *string);
-void		write_centered_number_to_image(const t_font *font, t_image *image,
-				const char *number);
-
-void		draw_glyph(const t_glyph_generated_points *raw_points,
-				t_draw_glyph_data data);
-
-int			get_glyph_points(t_vector *dest, const t_glyph_outline *glyph,
-				size_t **end_of_generated_contours);
-
-int			get_quadratic_bezier_points(t_vector *dest,
-				const t_vector2f *points, size_t number_of_points);
-
+//	do_segments_intersect.c
 bool		do_segments_intersect(t_vector2f a, t_vector2f b, t_vector2f c,
 				t_vector2f d);
 
+//	draw_glyph.c
+void		draw_glyph(const t_glyph_generated_points *raw_points,
+				t_draw_glyph_data data);
+
+//	get_glyph_points.c
+int			get_glyph_points(t_vector *dest, const t_glyph_outline *glyph,
+				size_t **end_of_generated_contours);
+
+//	get_quadratic_bezier_points.c
+int			get_quadratic_bezier_points(t_vector *dest,
+				const t_vector2f *points, size_t number_of_points);
+
+//	is_point_inside_glyph.c
 bool		is_point_inside_glyph(t_vector2f point,
 				const t_glyph_generated_points *points);
+
+//	write_centered_number_to_image.c
+void		write_centered_number_to_image(const t_font *font, t_image *image,
+				const char *number);
+
+//	write_centered_string_to_image.c
+void		write_centered_string_to_image(const t_font *font, t_image *image,
+				const char *string);
+
+//	get_font.c
+int			get_font(t_font *font, char *font_file);
 
 #endif

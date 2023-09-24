@@ -79,8 +79,11 @@ typedef struct s_engine
 	uint64_t				last_frame_start_time;
 }	t_engine;
 
-int		init_engine(t_engine *engine, const char *start_up_scene,
-			const char *path_to_minirt_binary);
+//	close_engine.c
 int		close_engine(t_engine *engine);
 
-#endif //ENGINE_H
+//	init_engine.c
+int		init_engine(t_engine *engine, const char *start_up_scene,
+			const char *path_to_minirt_binary);
+
+#endif

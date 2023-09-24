@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <float.h>
+#include "float.h"
+
 #include "engine.h"
 #include "gui/box.h"
 #include "gui/UI.h"

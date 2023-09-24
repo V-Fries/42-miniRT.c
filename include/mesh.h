@@ -29,11 +29,11 @@ typedef enum e_vertices
 
 typedef struct s_mesh
 {
-	t_vectors3f		base_vertex;
-	t_vector3f		vertex_min;
-	t_vector3f		vertex_max;
-	t_vectors3f		base_normals;
-	t_mesh_faces	faces;
+	t_vectors3f				base_vertex;
+	t_vector3f				vertex_min;
+	t_vector3f				vertex_max;
+	t_vectors3f				base_normals;
+	t_mesh_faces			faces;
 	struct s_mesh_bvh_node	*tree;
 }	t_mesh;
 

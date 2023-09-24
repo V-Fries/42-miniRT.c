@@ -16,13 +16,13 @@
 # include <stddef.h>
 # include <stdbool.h>
 
+# include "math/matrix.h"
 # include "math/vector.h"
 # include "colors.h"
 # include "material.h"
 # include "mesh.h"
-# include "math/matrix.h"
 
-# define LIGHT (-1)
+# define LIGHT -1
 
 enum e_object_type
 {
@@ -119,7 +119,6 @@ typedef struct s_objects
 	size_t				length;
 	size_t				size;
 }	t_objects;
-
 
 //	cone/create.c
 t_object	cone_create(const t_vector3f position,

@@ -420,8 +420,8 @@ SRC				=\
 	vectors/vectors3i.c			\
 	vectors/vectors_int.c		\
 	\
-	close_miniRT.c		\
+	close_engine.c		\
 	color.c				\
-	init_minirt.c		\
+	init_engine.c		\
 	main.c				\
 	scene.c

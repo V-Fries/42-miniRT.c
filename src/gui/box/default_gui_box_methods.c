@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx.h"
-
 #include "mlx_wrapper.h"
 #include "gui/box.h"
 #include "engine.h"

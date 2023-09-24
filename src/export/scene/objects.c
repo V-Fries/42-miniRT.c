@@ -32,7 +32,8 @@ int	write_sphere(const t_object sphere, int fd)
 
 int	write_plane(const t_object plane, int fd)
 {
-	const ssize_t	return_code = dprintf(fd, "pl\t%f,%f,%f\t%f,%f,%f\t%f,%f,%f\n",
+	const ssize_t	return_code = dprintf(fd,
+			"pl\t%f,%f,%f\t%f,%f,%f\t%f,%f,%f\n",
 			plane.position.x,
 			plane.position.y,
 			plane.position.z,

@@ -230,7 +230,6 @@ typedef struct s_ttf_font_directory
 	t_table_directory	*table_directory;
 }	t_font_directory;
 
-
 typedef struct s_ttf
 {
 	t_font_directory	font_directory;
@@ -247,34 +246,17 @@ typedef struct s_ttf
 	t_glyph_outline		*glyphs;
 }	t_ttf;
 
-int					ttf_parser(t_ttf *font, char *file_name);
-void				destroy_t_ttf(t_ttf *ttf);
-
-int					read_font_directory(const t_string *file,
-						t_font_directory *font_directory);
-int					read_cmap(const t_string *file, t_ttf *ttf);
-int					read_format4(const t_string *file, t_ttf *ttf);
-int					read_head(const t_string *file, t_ttf *ttf);
-int					read_maxp(const t_string *file, t_ttf *ttf);
-int					read_hhea(const t_string *file, t_ttf *ttf);
-int					read_hmtx(const t_string *file, t_ttf *ttf);
-int					read_loca(const t_string *file, t_ttf *ttf);
-int					read_x_coordinates(const t_string *file,
-						size_t *file_cursor, t_glyph_outline *outline,
-						uint16_t last_index);
-int					read_y_coordinates(const t_string *file,
-						size_t *file_cursor, t_glyph_outline *outline,
-						uint16_t last_index);
-int					read_glyph_outline(const t_string *file, size_t offset,
-						t_glyph_outline *outline);
-
-int64_t				ttf_get_table_offset(const t_ttf *ttf,
-						const char *table_name);
+//	get_glyph_offset.c
 uint32_t			get_glyph_offset(uint32_t glyph_index, const t_ttf *ttf);
 uint32_t			get_glyph_index(uint16_t code_point, const t_ttf *ttf);
+
+//	get_glyph_outlines.c
 t_glyph_outline		*get_glyph_outlines(const t_string *file, t_ttf *ttf);
+
+//	get_long_hor_metric.c
 t_long_hor_metric	get_long_hor_metric(uint16_t glyph_index, const t_ttf *ttf);
 
+//	read_8_bits.c
 int					read_uint8(const t_string *file, size_t i, uint8_t *dest);
 int					read_uint8_move(const t_string *file, size_t *i,
 						uint8_t *dest);
@@ -282,6 +264,7 @@ int					read_int8(const t_string *file, size_t i, int8_t *dest);
 int					read_int8_move(const t_string *file, size_t *i,
 						int8_t *dest);
 
+//	read_16_bits.c
 int					read_uint16(const t_string *file, size_t i, uint16_t *dest);
 int					read_uint16_move(const t_string *file, size_t *i,
 						uint16_t *dest);
@@ -290,6 +273,7 @@ int					read_int16(const t_string *file, size_t i, int16_t *dest);
 int					read_int16_move(const t_string *file, size_t *i,
 						int16_t *dest);
 
+//	read_32_bits.c
 int					read_uint32(const t_string *file, size_t i, uint32_t *dest);
 int					read_uint32_move(const t_string *file, size_t *i,
 						uint32_t *dest);
@@ -298,8 +282,54 @@ int					read_int32(const t_string *file, size_t i, int32_t *dest);
 int					read_int32_move(const t_string *file, size_t *i,
 						int32_t *dest);
 
+//	read_64_bits.c
 int					read_int64(const t_string *file, size_t i, int64_t *dest);
 int					read_int64_move(const t_string *file, size_t *i,
 						int64_t *dest);
+
+//	read_cmap.c
+int					read_cmap(const t_string *file, t_ttf *ttf);
+
+//	read_font_directory.c
+int					read_font_directory(const t_string *file,
+						t_font_directory *font_directory);
+
+//	read_format4.c
+int					read_format4(const t_string *file, t_ttf *ttf);
+
+//	read_glyph_outline.c
+int					read_glyph_outline(const t_string *file, size_t offset,
+						t_glyph_outline *outline);
+
+//	read_glyph_outline_coordinates.c
+int					read_x_coordinates(const t_string *file,
+						size_t *file_cursor, t_glyph_outline *outline,
+						uint16_t last_index);
+int					read_y_coordinates(const t_string *file,
+						size_t *file_cursor, t_glyph_outline *outline,
+						uint16_t last_index);
+
+//	read_head.c
+int					read_head(const t_string *file, t_ttf *ttf);
+
+//	read_hhea.c
+int					read_hhea(const t_string *file, t_ttf *ttf);
+
+//	read_hmtx.c
+int					read_hmtx(const t_string *file, t_ttf *ttf);
+
+//	read_loca.c
+int					read_loca(const t_string *file, t_ttf *ttf);
+
+//	read_maxp.c
+int					read_maxp(const t_string *file, t_ttf *ttf);
+
+//	ttf_get_table_offset.c
+int64_t				ttf_get_table_offset(const t_ttf *ttf,
+						const char *table_name);
+
+//	ttf_parser.c
+int					ttf_parser(t_ttf *font, char *file_name);
+void				destroy_t_ttf(t_ttf *ttf);
 
 #endif

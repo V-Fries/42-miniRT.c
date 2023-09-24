@@ -78,7 +78,7 @@
 # define GENERIC_EVENT		35
 # define LAST_EVENT			36
 
-# if defined __APPLE__
+# if defined(__APPLE__)
 
 enum e_mouse_buttons
 {
@@ -87,7 +87,7 @@ enum e_mouse_buttons
 	SCROLL_DOWN = 4,
 	SCROLL_UP = 5,
 };
-# elif defined __linux__
+# elif defined(__linux__)
 
 enum e_mouse_buttons
 {
@@ -100,7 +100,7 @@ enum e_mouse_buttons
 #  error "Unsuported OS"
 # endif
 
-# if defined __APPLE__
+# if defined(__APPLE__)
 
 enum e_key_codes
 {
@@ -146,7 +146,7 @@ enum e_key_codes
 	KEY_COMMAND = 259,
 	KEY_BACKSPACE = 51,
 };
-# elif defined __linux__
+# elif defined(__linux__)
 
 enum e_key_codes
 {
@@ -196,4 +196,4 @@ enum e_key_codes
 #  error "Unsuported OS"
 # endif
 
-#endif //EVENTS_H
+#endif
