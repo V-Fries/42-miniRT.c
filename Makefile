@@ -182,3 +182,8 @@ decompress:
     else \
       echo "No normal maps archive to decompress was found"; \
     fi
+
+
+.PHONY: render
+render: all
+	find assets/scenes -name "*.rt" -exec ./miniRT {} \;
