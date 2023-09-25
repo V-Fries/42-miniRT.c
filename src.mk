@@ -223,6 +223,12 @@ SRC				=\
 	image/round_image_corners_utils.c	\
 	\
 	\
+	init/init_engine_images.c								\
+	init/init_engine.c										\
+	init/init_mlx.c											\
+	init/set_minirt_folder_as_current_working_directory.c	\
+	\
+	\
 	interpolater/interpolate_main_lines.c	\
 	interpolater/interpolate_ray_tracing.c	\
 	interpolater/interpolate_sub_lines.c	\
@@ -422,6 +428,5 @@ SRC				=\
 	\
 	close_engine.c		\
 	color.c				\
-	init_engine.c		\
 	main.c				\
 	scene.c

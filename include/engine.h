@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:18:38 by tdameros          #+#    #+#             */
-/*   Updated: 2023/09/24 04:01:59 by vfries           ###   ########.fr       */
+/*   Updated: 2023/09/25 17:01:21 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,21 @@ typedef struct s_engine
 	uint64_t				last_frame_start_time;
 }	t_engine;
 
-//	close_engine.c
-int		close_engine(t_engine *engine);
+// init/init_images.c
+int	init_engine_images(t_engine *engine);
 
-//	init_engine.c
-int		init_engine(t_engine *engine, const char *start_up_scene,
-			const char *path_to_minirt_binary);
+//	init/init_engine.c
+int	init_engine(t_engine *engine, const char *start_up_scene,
+		const char *path_to_minirt_binary);
+
+// init/init_mlx.c
+int	init_mlx(t_engine *engine);
+
+// init/set_minirt_folder_as_current_working_directory.c
+int	set_minirt_folder_as_current_working_directory(
+		const char *path_to_minirt_binary);
+
+//	close_engine.c
+int	close_engine(t_engine *engine);
 
 #endif
