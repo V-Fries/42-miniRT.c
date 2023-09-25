@@ -21,7 +21,7 @@ bool	is_point_inside_glyph(t_vector2f point,
 	size_t			contour_start;
 	size_t			i;
 	const t_segment	segment = {point,
-		(t_vector2f){points->bounds.xMax + 100.f, points->bounds.yMax}};
+		(t_vector2f){points->bounds.x_max + 100.f, points->bounds.y_max}};
 	size_t			nb_of_intersected_segments;
 
 	nb_of_intersected_segments = 0;

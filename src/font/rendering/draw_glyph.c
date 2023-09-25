@@ -45,7 +45,7 @@ void	draw_glyph(const t_glyph_generated_points *raw_points,
 			data.y_offset);
 	if (arg.points.points == NULL)
 		return ;
-	arg.current_line = arg.points.bounds.yMin * data.scale;
+	arg.current_line = arg.points.bounds.y_min * data.scale;
 	arg.color = get_t_color_from_uint(data.color);
 	arg.image = data.image;
 	start_threads(&arg, &draw_glyph_routine);
@@ -61,12 +61,12 @@ static void	*draw_glyph_routine(void *arg_void)
 
 	data = get_routine_data(arg_void);
 	mutex_lock(arg_void);
-	while (data->current_line <= data->points.bounds.yMax)
+	while (data->current_line <= data->points.bounds.y_max)
 	{
 		y = data->current_line++;
 		mutex_unlock(arg_void);
-		x = data->points.bounds.xMin - 1;
-		while (++x <= data->points.bounds.xMax)
+		x = data->points.bounds.x_min - 1;
+		while (++x <= data->points.bounds.x_max)
 		{
 			dst = data->image->address + y * data->image->width + x;
 			if (dst < data->image->address)
@@ -104,10 +104,10 @@ static t_glyph_generated_points	get_adjusted_points(
 	}
 	result.nb_of_points = raw_points->nb_of_points;
 	result.bounds = (t_glyph_outline_bounds){
-		.xMin = raw_points->bounds.xMin * scale + x_offset,
-		.xMax = raw_points->bounds.xMax * scale + x_offset + 1,
-		.yMin = raw_points->bounds.yMin * scale + y_offset,
-		.yMax = raw_points->bounds.yMax * scale + y_offset + 1};
+		.x_min = raw_points->bounds.x_min * scale + x_offset,
+		.x_max = raw_points->bounds.x_max * scale + x_offset + 1,
+		.y_min = raw_points->bounds.y_min * scale + y_offset,
+		.y_max = raw_points->bounds.y_max * scale + y_offset + 1};
 	result.nb_of_contours = raw_points->nb_of_contours;
 	result.contours_limits = raw_points->contours_limits;
 	return (result);

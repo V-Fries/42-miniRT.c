@@ -26,6 +26,7 @@
 #include "mlx_wrapper.h"
 #include "object.h"
 #include "interpolater.h"
+#include "draw.h"
 
 #define FPS_GOAL 45.f
 #define FRAME_BEFORE_ADAPTION 20

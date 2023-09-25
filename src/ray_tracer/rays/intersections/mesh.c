@@ -10,15 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "float.h"
-
 #include "ray_tracer/rays.h"
-
-static float	calculate_face_distance(const t_ray *ray, const t_object *mesh,
-					const t_mesh_face *face);
-static float	calculate_moller_triangle_distance(const t_ray *ray, \
-												const t_vector3f vertex[3], \
-												const t_vector3f edge[2]);
 
 t_hit	hit_mesh(const t_ray *ray, const t_object *mesh,
 					const t_hit hit_distance)
