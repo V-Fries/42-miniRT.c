@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 03:05:27 by tdameros          #+#    #+#             */
-/*   Updated: 2023/09/25 17:04:45 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2023/09/25 17:58:50 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define DEFAULT_MIN_RESOLUTION_REDUCTION 1
 #endif
 #ifndef DEFAULT_ANTIALIASING_VALUE
-# define DEFAULT_ANTIALIASING_VALUE true
+# define DEFAULT_ANTIALIASING_VALUE 1
 #endif
 #ifndef DEFAULT_BOUNCES_PER_PIXEL
 # define DEFAULT_BOUNCES_PER_PIXEL 8
