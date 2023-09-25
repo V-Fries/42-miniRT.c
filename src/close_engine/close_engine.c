@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 03:07:36 by tdameros          #+#    #+#             */
-/*   Updated: 2023/09/25 22:00:01 by vfries           ###   ########.fr       */
+/*   Updated: 2023/09/25 22:16:23 by vfries           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	close_engine(t_engine *engine)
 	camera_free(&engine->camera);
 	free(engine->start_up_scene);
 	destroy_mlx(engine);
-	ft_bzero(engine, sizeof(*engine)); // TODO remove me
 	exit(0);
 }
 
