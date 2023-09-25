@@ -6,7 +6,7 @@
 /*   By: vfries <vfries@student.42lyon.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/14 22:19:00 by vfries            #+#    #+#             */
-/*   Updated: 2023/05/14 22:19:00 by vfries           ###   ########lyon.fr   */
+/*   Updated: 2023/09/25 15:00:52 by vfries           ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,8 @@ static int	init_struct_variables(const t_string *file, t_format4 *format4,
 	i += sizeof(uint16_t);
 	format4->length = length;
 	i += sizeof(uint16_t);
-	if (read_uint16_move(file, &i, &format4->language) < 0)
-		return (-1);
-	if (read_uint16_move(file, &i, &format4->seg_count_x2) < 0
+	if (read_uint16_move(file, &i, &format4->language) < 0
+		|| read_uint16_move(file, &i, &format4->seg_count_x2) < 0
 		|| format4->seg_count_x2 % 2 != 0
 		|| length - sizeof(uint16_t) * 8 <= format4->seg_count_x2 * 4)
 		return (-1);
