@@ -27,7 +27,7 @@ A raytracer is a computer graphics technique used to create highly realistic ima
 <table align=center>
 	<thead>
 		<tr>
-			<th colspan=2>Integrate post-processing effects</th>
+			<th colspan=2>Integrated post-processing effects</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -127,7 +127,7 @@ make render
 - **Mouse Scroll** *[GUI Mode]* - Increase or decrease value
 - **Spacebar** - Move the camera up
 - **Shift** - Move the camera down
-- **H** - Hide the gui
+- **H** - Hide the GUI
 - **B** - Switch to the next post-processing effect
 - **T** - Take screenshot
 - **R** - Enable BVH debugger
@@ -139,6 +139,7 @@ make render
 ## 📚 **Resources**
 
 - [Fonts](https://developer.apple.com/fonts/TrueType-Reference-Manual/)
+- [Bézier curves](https://www.youtube.com/watch?v=aVwxzDHniEw&t)
 - [The Cherno](https://www.youtube.com/watch?v=gfW1Fhd9u9Q&list=PLlrATfBNZ98edc5GshdBtREv5asFW3yXl)
 - [Sebastian Lague](https://www.youtube.com/watch?v=Qz0KTGYJtUk)
 - [The Book Series](https://raytracing.github.io/)
