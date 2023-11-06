@@ -68,7 +68,7 @@ A raytracer is a computer graphics technique used to create highly realistic ima
 	</tbody>
 </table>
 
-## Build
+## 🔨 Build
 
 ⚠️ [Needs mlx prerequisites](https://harm-smits.github.io/42docs/libs/minilibx/getting_started.html#installation)
 
